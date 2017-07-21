@@ -1,0 +1,363 @@
+@import url("../plugins/material-desing-icons/material-icons.css") all;
+@font-face {
+    font-family: 'yekan';
+    src: url('../font/Yekan-modified.eot');
+    src: url('../font/Yekan-modified.eot#iefix') format('embedded-opentype'),
+    url('../font/Yekan-modified.woff') format('woff'),
+    url('../font/Yekan-modified.ttf') format('truetype'),
+    url('../font/Yekan-modified.svg#CartoGothicStdBook') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.waitMe_text{
+    font-family: yekan , "Roboto", sans-serif !important;
+}
+body , .navbar , .sidebar  , h2 ,  .popover .popover-title , * , .waitMe_text{
+    font-family: yekan , "Roboto", sans-serif;
+
+}
+.content{
+    direction: rtl;
+}
+.dropdown-menu ul.menu li a{
+    text-align: right;
+    direction: rtl;
+}
+.dropdown-menu ul.menu .icon-circle{
+    float: right;
+}
+.dropdown-menu ul.menu .menu-info{
+    display: inline-block;
+    position: relative;
+    top: 3px;
+    right: 5px;
+    left: auto;
+    text-align: right;
+}
+.progress .progress-bar{
+    float: right;
+}
+.dropdown-menu ul.menu.tasks h4{
+    text-align: right;
+}
+.dropdown-menu ul.menu.tasks h4 small{
+    float: left;
+}
+.sidebar{
+   -webkit-box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.1);
+    right: 0;
+    left: auto;
+}
+section.content{
+    margin: 100px 315px 0  15px;
+}
+.ls-closed .sidebar{
+    margin-left: auto;
+    margin-right: -300px;
+}
+.ls-closed .bars:after, .ls-closed .bars:before {
+    left: auto;
+    right: 20px;
+}
+.overlay-open .sidebar{
+    margin-right: 0;
+}
+.ls-closed section.content{
+    margin-right: 15px;
+}
+.navbar-brand{
+    float: right;
+}
+.navbar-toggle{
+    float: left;
+}
+@media (max-width: 767px) {
+    .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand
+    {
+        margin-left: auto;
+        margin-right: 35px;;
+    }
+}
+@media (min-width: 768px) {
+    .navbar-header{
+        float: right;
+    }
+}
+#mainbox{
+    float: left !important;
+}
+.navbar-right .dropdown-menu{
+    left: 0;
+    right: auto;
+}
+.info-box.hover-expand-effect:after{
+    left: auto;
+    right: 80px;
+}
+.user-info{
+    direction: rtl;
+}
+.btn-group .user-helper-dropdown i.material-icons{
+    position: relative;
+    left: 0;
+}
+.sidebar .user-info .info-container .user-helper-dropdown{
+    left: 10px;
+    right: auto;
+}
+.dropdown-menu > li > a i.material-icons{
+    float: right;
+    margin-left: 7px;
+}
+.dropdown-menu > li > a{
+text-align: right;
+}
+ .sidebar .menu .list li{
+    direction: rtl;
+}
+.sidebar .menu .list li a i{
+    margin-left: 5px;
+}
+.sidebar .menu .list a {
+    direction: rtl;
+}
+#skins .slimScrollDiv{
+    float: left !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.demo-choose-skin{
+    float: left !important;    width: 100% !important;
+}
+.left-sidebar{
+    width: 280px;
+    height: calc(100vh - 70px);
+    position: fixed;
+    left: -300px;
+    top: 70px;
+    background: #fdfdfd;
+    z-index: 11 !important;
+    -webkit-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    -moz-transition: 0.5s;
+    -o-transition: 0.5s;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+}
+.left-sidebar.open {
+    left:  0;
+}
+.right-sidebar .nav-tabs {
+    font-weight: 600;
+    font-size: 13px;
+    width: 100%;
+    margin-left: 2px; }
+.left-sidebar .nav-tabs li {
+    text-align: center; }
+.left-sidebar .nav-tabs li > a {
+    margin-right: 0; }
+.left-sidebar .nav-tabs li:first-child {
+    width: 45%; }
+.left-sidebar .nav-tabs li:last-child {
+    width: 55%; }
+.left-sidebar .nav-tabs + .tab-content {
+    padding: 0; }
+
+.left-sidebar p {
+    margin: 20px 15px 15px 15px;
+    font-weight: bold;
+    text-align: center; }
+
+.left-sidebar #settings .setting-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 20px; }
+.left-sidebar #settings .setting-list li {
+    text-align: right;
+    padding: 15px;
+    position: relative;
+    border-top: 1px solid #eee; }
+.left-sidebar #settings .setting-list li .switch {
+    position: absolute;
+    top: 15px;
+    left: 5px; }
+#settings .slimScrollDiv{
+    float: left !important;
+    width: 100% !important;
+    height: auto !important;
+}
+.card .header .header-dropdown{
+    left: 15px;
+    right: auto;
+}
+.dashboard-stat-list{
+    padding-right:0 ;
+}
+@media (min-width: 1200px) {
+    .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12{
+        float: right !important;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12{
+        float: right !important;
+    }
+}
+@media (min-width: 768px) {
+    .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {
+        float: right !important;
+    }
+}
+.col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12{
+    float: right !important;
+}
+.text-right tr , th {
+    text-align: right;
+}
+.dashboard-donut-chart{
+    font-family: 'yekan' !important;
+}
+@media (max-width: 991px) and (min-width: 768px) {
+    .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+        margin-right: 40px;
+        margin-left: auto;
+    }
+}
+.sidebar .menu .list .ml-menu li.active a.toggled:not(.menu-toggle):before{
+    content: '\E314' !important;
+}
+.sidebar .menu .list .ml-menu li.active a.toggled:not(.menu-toggle){
+    margin-left: auto;
+    margin-right: 5px;
+}
+.panel-switch-btn{
+    left: 20px;
+    right: auto;
+}
+.graph{
+    direction: ltr;
+}
+.input-group{
+    direction: rtl;
+}
+.bootstrap-select.btn-group .dropdown-toggle .filter-option{
+    text-align: right;
+}
+.bootstrap-select.btn-group .dropdown-toggle .caret{
+    right: auto;
+    left: 12px;
+}
+.dropdown-header{
+    text-align: right;
+}
+.form-group .form-line .form-label{
+    left: auto;
+    right: 0;
+}
+.wizard > .steps > ul > li{
+    float: right;
+}
+.list-group-item > .badge{
+    float: left;
+}
+code{
+    direction: ltr;
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle){
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.btn-group > .btn:last-child:not(:first-child), .btn-group > .dropdown-toggle:not(:first-child){
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.list-group{
+    padding-left: inherit;
+    padding-right: 0;
+}
+button.list-group-item{
+    text-align: right;
+}
+.preloader{
+    direction: ltr;
+}
+.sidebar .menu .list .ml-menu li a{
+    padding-left: 0;
+    padding-right: 55px;
+}
+.sidebar .menu .list .ml-menu{
+    padding-right: 0;
+    padding-left: inherit;
+}
+.nav-tabs > li{
+    left: auto;
+    right: -2px;
+}
+.nav-tabs > li{
+    float: right;
+}
+.nav{
+    padding-right: 0;
+    padding-left: inherit;
+}
+.info-box-3 .icon , .info-box-4 .icon{
+    left: 20px;
+    right: auto;
+}
+[type="checkbox"] + label{
+    padding-left: 0;
+    padding-right: 26px;
+}
+[type="checkbox"].filled-in:checked + label:before{
+    left: auto;
+    right: 11px; /*test*/
+}
+[type="checkbox"].filled-in:checked + label:after{
+    right: 0;
+}
+[type="checkbox"].filled-in:not(:checked) + label:before{
+    left: auto;
+    right: 11px;
+}
+[type="checkbox"].filled-in + label:before, [type="checkbox"].filled-in + label:after{
+    left: auto;
+    right: 0;
+}
+[type="checkbox"]:checked + label:before{
+    left:auto;
+    right: 5px;
+}
+[type="checkbox"] + label:before, [type="checkbox"]:not(.filled-in) + label:after{
+    left: auto;
+    right: 0;
+}
+[type="radio"] + label:before, [type="radio"] + label:after{
+    right:0;
+    left: auto;
+}
+[type="radio"]:checked + label {
+    padding-left: 0;
+    padding-right: 26px;
+}
+[type="radio"] + label:before, [type="radio"] + label:after{
+    right: 0;
+    left: auto;
+}
+[type="radio"] + label{
+    padding-right: 26px;
+}
+[type="radio"]:not(:checked) + label{
+    padding-right: 26px;
+    padding-left: 0;
+}
+.sidebar .menu .list a{
+    padding: 7px 13px;
+}
