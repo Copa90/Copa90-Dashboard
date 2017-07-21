@@ -17,8 +17,8 @@ $(function () {
         }
     });
 
-    initRealTimeChart();
-    initDonutChart();
+    // initRealTimeChart();
+    // initDonutChart();
     initSparkline();
 });
 
