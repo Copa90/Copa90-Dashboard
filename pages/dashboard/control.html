@@ -807,7 +807,7 @@
 										</div>
 										<div class="col-md-6 col-md-offset-1">
 											<b style="font-size:12px;"> انتخاب لیگ عمومی </b>
-											<select class="form-control show-tick text-right" title="لیگ‌های مورد نظرتان را انتخاب کنید" multiple data-actions-box="true" data-size=5 data-selected-text-format="count">
+											<select class="form-control show-tick text-right" title="لیگ‌های مورد نظرتان را انتخاب کنید" multiple data-live-search="true" data-actions-box="true" data-size=5 data-selected-text-format="count">
 												<option>خردل</option>
 												<option>سس گوجه</option>
 												<option>طعم</option>
@@ -912,7 +912,7 @@
 									<div class="row clearfix">
 										<div class="col-md-3">
 											<b style="font-size:12px;"> انتخاب وضعیت </b>
-											<select class="form-control show-tick text-right" title="وضعیت‌های مورد نظرتان" multiple data-actions-box="true" data-size=5 data-selected-text-format="count">
+											<select class="form-control show-tick text-right" title="وضعیت‌های مورد نظرتان" multiple data-actions-box="true" data-size=5 data-live-search="true" data-selected-text-format="count"  data-actions-box="true">
 												<option>خردل</option>
 												<option>سس گوجه</option>
 												<option>طعم</option>
@@ -1009,7 +1009,7 @@
 										</div>
 										<div class="col-md-4 col-md-offset-2">
 											<b style="font-size:12px;"> انتخاب وضعیت </b>
-											<select class="form-control show-tick text-right" title="وضعیت‌های مورد نظرتان" data-actions-box="true" data-size=5 data-selected-text-format="count">
+											<select class="form-control show-tick text-right" title="وضعیت‌های مورد نظرتان" data-actions-box="true" data-size=5 data-live-search="true">
 												<option>خردل</option>
 												<option>سس گوجه</option>
 												<option>طعم</option>
@@ -1240,10 +1240,10 @@
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										<div class="col-md-1">
+										<div class="col-md-1 col-md-offset-1">
 										</div>
-										<div class="col-md-4 col-md-offset-1">
-											<b style="font-size:12px;"> نام پکیج </b>
+										<div class="col-md-4">
+											<b style="font-size:12px;"> نام لیگ شخصی </b>
 											<div class="input-group">
 												<div class="form-line">
 													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
@@ -1252,7 +1252,7 @@
 										</div>
 										<div class="col-md-4">
 											<b style="font-size:12px;"> انتخاب سازندگان </b>
-											<select class="form-control show-tick text-right" title="سازندگان مورد نظرتان" multiple data-actions-box="true" data-live-search="true" data-size=5 data-selected-text-format="count">
+											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="سازنده‌هایتان را انتخاب کنید" data-actions-box="true">
 												<option>خردل</option>
 												<option>سس گوجه</option>
 												<option>طعم</option>
@@ -1589,8 +1589,8 @@
 											</div>
 										</div>
 										<div class="col-md-4 col-md-offset-1"> 
-											<b style="font-size:12px;"> سازنده </b>
-											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="سازنده‌هایتان را انتخاب کنید">
+											<b style="font-size:12px;"> انتخاب سازندگان </b>
+											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="سازنده‌هایتان را انتخاب کنید" data-actions-box="true">
 												<option>خردل</option>
 												<option>سس گوجه</option>
 												<option>طعم</option>
@@ -1598,7 +1598,7 @@
 										</div>
 										<div class="col-md-3">
 											<b style="font-size:12px;"> وضعیت </b>
-											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="وضعیت‌های مورد نظرتان">
+											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="وضعیت‌های مورد نظرتان"  data-actions-box="true">
 												<option>خردل</option>
 												<option>سس گوجه</option>
 												<option>طعم</option>
@@ -1761,7 +1761,8 @@
 
 	<!-- Custom Js -->
 	<script src="../../js/admin.js"></script>
-	<!-- <script src="../../js/pages/index.js"></script> -->
+    <!-- <script src="../../js/pages/forms/advanced-form-elements.js"></script> -->
+	<!-- <script src="../../js/pages/index.js"></script>  -->
 
 	<!-- Jquery DataTable Plugin Js -->
 	<script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
