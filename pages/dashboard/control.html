@@ -214,8 +214,6 @@
 								</ul>
 							</li>
 						</ul>
-					</div>
-					<div class="body">
 						<div class="row clearfix">
 							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 							</div>
@@ -236,6 +234,293 @@
 								</ul>
 							</div>
 						</div>
+					</div>
+					<div class="body">
+						<!-- Start of Add Package  -->
+						<div class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-10" style="float: right; position: relative; right: 50%;">
+									<div class="row clearfix" style="float: right; position: relative; right: -50%;">
+										<div class="col-md-4 col-md-offset-1">
+											<b style="font-size:12px;"> نام پکیج </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-3 col-md-offset-1">
+											<b style="font-size:12px;"> نوع ارائه </b>
+											<select class="form-control show-tick text-right">
+												<option>خردل</option>
+												<option>سس گوجه</option>
+												<option>طعم</option>
+											</select>
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> تعداد شانس‌ها </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1 col-md-offset-1">
+										</div>
+										<div class="col-md-4 col-md-offset-1">
+											<b style="font-size:12px;"> زمان شروع فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+												</div>
+											</div>
+										</div> 
+										<div class="col-md-4">
+											<b style="font-size:12px;"> زمان پایان فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1 col-md-offset-1">
+										</div>
+										<div class="col-md-6 col-md-offset-1">
+											<b style="font-size:12px;"> توضیحات فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<textarea rows="1" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن پکیج </button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Add Package  -->
+
+						<!-- Start of Edit Package  -->
+						<div class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-3">
+								</div>
+								<div class="col-md-6">
+									<b style="font-size:12px;"> انتخاب پکیج </b>
+									<select class="form-control show-tick text-right" title="یک پکیج را انتخاب کنید">
+										<option>خردل</option>
+										<option>سس گوجه</option>
+										<option>طعم</option>
+									</select>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<br>
+								<br>
+								<div class="col-md-10" style="float: right; position: relative; right: 50%;">
+									<div class="row clearfix" style="float: right; position: relative; right: -50%;">
+										<div class="col-md-4 col-md-offset-1">
+											<b style="font-size:12px;"> نام پکیج </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> نوع ارائه </b>
+											<select class="form-control show-tick text-right">
+												<option>خردل</option>
+												<option>سس گوجه</option>
+												<option>طعم</option>
+											</select>
+										</div>
+										<div class="col-md-2 col-md-offset-1">
+											<b style="font-size:12px;"> وضعیت </b>
+											<select class="form-control show-tick text-right">
+												<option>خردل</option>
+												<option>سس گوجه</option>
+												<option>طعم</option>
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> تعداد شانس‌ها </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1 col-md-offset-1">
+										</div>
+										<div class="col-md-4 col-md-offset-1">
+											<b style="font-size:12px;"> زمان شروع فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+												</div>
+											</div>
+										</div> 
+										<div class="col-md-4">
+											<b style="font-size:12px;"> زمان پایان فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1 col-md-offset-1">
+										</div>
+										<div class="col-md-6 col-md-offset-1">
+											<b style="font-size:12px;"> توضیحات فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<textarea rows="1" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> ذخیره‌سازی پکیج </button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Edit Package  -->
+
+						<!-- Start of Search Package  -->
+						<div class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-10" style="float: right; position: relative; right: 50%;">
+									<div class="row clearfix" style="float: right; position: relative; right: -50%;">
+										<div class="col-md-4">
+											<b style="font-size:12px;"> نام پکیج </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> نوع ارائه </b>
+											<select class="form-control show-tick text-right">
+												<option>خردل</option>
+												<option>سس گوجه</option>
+												<option>طعم</option>
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> وضعیت </b>
+											<select class="form-control show-tick text-right">
+												<option>خردل</option>
+												<option>سس گوجه</option>
+												<option>طعم</option>
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> حداقل تعداد شانس‌ها </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> حداکثر تعداد شانس‌ها </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" class="form-control text-center" value="100" data-rule="quantity">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-3 col-md-offset-1">
+											<b style="font-size:12px;"> زمان شروع فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+												</div>
+											</div>
+										</div> 
+										<div class="col-md-3 col-md-offset-1">
+											<b style="font-size:12px;"> زمان پایان فروش پکیج </b>
+											<div class="form-group">
+												<div class="form-line">
+													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو پکیج </button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Search Package  -->
+
 					</div>
 				</div>
 			</div>
