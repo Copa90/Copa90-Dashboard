@@ -17,12 +17,18 @@
     <!-- Waves Effect Css -->
     <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
 
+    <!-- Sweetalert Css -->
+    <link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
     <!-- Animation Css -->
     <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
 
     <!-- Custom Css -->
     <link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/rtl.css" rel="stylesheet">
+
+    <!-- Nprogress bar for top in Ajax call-->
+    <link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" />
 </head>
 
 <body class="login-page">
@@ -41,7 +47,7 @@
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="username" placeholder="نام کاربری" required autofocus>
+                            <input type="text" id="username" class="form-control" name="username" placeholder="نام کاربری و یا ایمیل" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -49,7 +55,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="password" placeholder="رمز عبور" required>
+                            <input type="password" id="password" class="form-control" name="password" placeholder="رمز عبور" required>
                         </div>
                     </div>
                     <div class="row">
@@ -59,7 +65,7 @@
                             <label for="rememberme"> مرا به خاطر بسپار </label>
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-block bg-green waves-effect" type="submit">ورود</button>
+                            <button id="login_btn" class="btn btn-block bg-green waves-effect" type="submit">ورود</button>
                         </div>
                     </div>
                 </form>
@@ -73,15 +79,34 @@
     <!-- Bootstrap Core Js -->
     <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
 
+    <!-- Bootstrap Notify Plugin Js -->
+    <script src="../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Jquery Validation Plugin Css -->
+    <script src="../../plugins/jquery-validation/jquery.validate.js"></script>
+
+    <!-- JQuery Steps Plugin Js -->
+    <script src="../../plugins/jquery-steps/jquery.steps.js"></script>
+
+    <!-- Sweet Alert Plugin Js -->
+    <script src="../../plugins/sweetalert/sweetalert.min.js"></script>
+
     <!-- Waves Effect Plugin Js -->
     <script src="../../plugins/node-waves/waves.js"></script>
 
-    <!-- Validation Plugin Js -->
-    <script src="../../plugins/jquery-validation/jquery.validate.js"></script>
-
     <!-- Custom Js -->
-     <script src="../../js/admin.js"></script> 
-    <script src="../../js/pages/examples/sign-in.js"></script>
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/AAA/sign-in-admin.js"></script>
+
+    <!-- Nprogress Plugin Js -->
+    <script src="../../plugins/nprogress/nprogress.js"></script>
+
 </body>
 
 </html>
