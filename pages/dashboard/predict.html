@@ -282,7 +282,7 @@
 							<br>
 							<div class="col-md-12">
 								<!-- Exportable Table -->
-								<table class="table table-bordered table-striped table-hover dataTable js-exportable" id="tab_logic_moreInfo" style="vertical-align:middle;">
+								<table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="tab_logic_moreInfo" style="vertical-align:middle;">
 									<thead>
 										<tr>
 											<th>شماره تخمین</th>
@@ -471,7 +471,7 @@
 							<br>
 							<div class="col-md-12">
 								<!-- Exportable Table -->
-								<table class="table table-bordered table-striped table-hover dataTable js-exportable" id="tab_logic_management" style="vertical-align:middle;">
+								<table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="tab_logic_management" style="vertical-align:middle;">
 									<thead>
 										<tr>
 											<th>شماره پیش‌بینی</th>
@@ -814,23 +814,23 @@
 							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 							</div>
 							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-								<form class="dropzone">
+								<form action="/" id="dp1" class="dropzone">
 									<div class="dz-message">
 										<div class="drag-icon-cph">
 											<i class="material-icons">touch_app</i>
 										</div>
-										<h4>فایل خود را به این قسمت درگ کرده یا با کلیک انتخاب کنید.</h4>
+										<h5>فایل خود را به این قسمت درگ کرده یا با کلیک انتخاب کنید.</h5>
 									</div>
 									<div class="fallback">
-										<input id="new_predict_collection" name="file" type="file" />
+										<input id="new_predict_collection" name="file" type="file" multiple/>
 									</div>
 								</form>
 							</div>
 						</div>
 						<div class="row clearfix">
-							<div class="col-md-1 col-md-offset-3">
+							<div class="col-md-3">
 							</div> 
-							<div class="col-md-4 m-t-10 m-b-10">
+							<div class="col-md-6 m-t-10 m-b-10">
 								<button type="button" id="new_predict_collection_send" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن مجموعه پیش‌بینی </button>
 							</div>
 						</div>
@@ -854,9 +854,9 @@
 							</div>
 						</div>
 						<div class="row clearfix">
-							<div class="col-md-1 col-md-offset-3">
+							<div class="col-md-3">
 							</div> 
-							<div class="col-md-4 m-t-10 m-b-10">
+							<div class="col-md-6 m-t-10 m-b-10">
 								<button type="button" id="get_predict_collection" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> دانلود مجموعه پیش‌بینی </button>
 							</div>
 						</div>
@@ -874,12 +874,12 @@
 							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 							</div>
 							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-								<form class="dropzone">
+								<form action="/" id="dp2" class="dropzone">
 									<div class="dz-message">
 										<div class="drag-icon-cph">
 											<i class="material-icons">touch_app</i>
 										</div>
-										<h4>فایل خود را به این قسمت درگ کرده یا با کلیک انتخاب کنید.</h4>
+										<h5>فایل خود را به این قسمت درگ کرده یا با کلیک انتخاب کنید.</h5>
 									</div>
 									<div class="fallback">
 										<input id="edit_predict_collection" name="file" type="file" />
@@ -888,9 +888,9 @@
 							</div>
 						</div>
 						<div class="row clearfix">
-							<div class="col-md-1 col-md-offset-3">
+							<div class="col-md-3">
 							</div> 
-							<div class="col-md-4 m-t-10 m-b-10">
+							<div class="col-md-6 m-t-10 m-b-10">
 								<button type="button" id="edit_predict_collection_send" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> ذخیره‌سازی مجموعه پیش‌بینی </button>
 							</div>
 						</div>
@@ -1194,8 +1194,8 @@
 
 	<!-- Custom Js -->
 	<script src="../../js/admin.js"></script>
-	<!-- <script src="../../js/dashboard/predict.js"></script>  -->
-    <script src="../../js/pages/charts/morris.js"></script>
+	<script src="../../js/dashboard/predict.js"></script>  
+    <!-- <script src="../../js/pages/charts/morris.js"></script> -->
 
 	<!-- Jquery DataTable Plugin Js -->
 	<script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>

@@ -66,7 +66,7 @@ $(document).ready(function () {
 				localStorage.setItem('adminCoreAccessToken', coreResult.id);
 				localStorage.setItem('adminId', coreResult.userId);
 				NProgress.done();
-				window.location.href = '../dashboard/dasgboard.html'
+				window.location.href = '../dashboard/predict.html'
 			},
 			error: function (xhr, status, error) {
 				NProgress.done();

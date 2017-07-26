@@ -132,8 +132,13 @@ $(document).ready(function () {
 		tabHandler(e)
 	})
 
-	$('.nav-tabs a[id="nav1"]').tab('show')
-
+	$("#PredictStatisticsTab").show()
+	$("#PredictManagementTab").hide()
+	$("#PredictNewTab").hide()
+	$("#PredictUpdateTab").hide()
+	$("#PredictCollecyionTab").hide()
+	$("#PredictExtraInfoTab").hide()
+	
 	initDateTimePicker()
 	initJQueryTable()
 	getAllInfo()
@@ -161,18 +166,14 @@ $(document).ready(function () {
 			date: false
 		})
 
-    Dropzone.options.new_predict_collection = {
+    Dropzone.options.dp1 = {
         paramName: "file",
         maxFilesize: 1
 		}
-    Dropzone.options.new_predict_collection = {
+    Dropzone.options.dp2 = {
         paramName: "file",
         maxFilesize: 1
 		}
-    Dropzone.options.new_predict_collection = {
-        paramName: "file",
-        maxFilesize: 1
-		}			
 	}
 
 	function initJQueryTable() {
@@ -183,6 +184,15 @@ $(document).ready(function () {
 				'copy', 'csv', 'excel', 'pdf', 'print'
 			]
 		})
+
+		$('.js-basic-example').DataTable(
+			{"searching": false,
+				"ordering": false,
+				"pageLength": 4,
+				"iDisplayLength": 4,
+				"lengthChange": false
+			}
+		)
 	}
 
 	function fill_section_update(predictId) {
