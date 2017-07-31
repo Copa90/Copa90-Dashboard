@@ -39,174 +39,323 @@ function fullDateConvertor(myDate) {
 	return ('' + weekday[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes())
 }
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function getUrlVars() {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++) {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
 var coreEngine_url = "http://127.0.0.1:4000/api/"
 
 $(document).ready(function () {
-	var predicts = []
-	var estimates = []
-	var leagues = []
 
-	var adminId, coreAccessToken
-	if (localStorage.getItem('adminId'))
-		adminId = localStorage.getItem('adminId')
-	else
-		return window.location.href = '../AAA/sign-in-admin.html'
+	var foo = getParameterByName('foo');
+	var me = getUrlVars()["me"];
 
-	if (localStorage.getItem('adminCoreAccessToken'))
-		coreAccessToken = localStorage.getItem('adminCoreAccessToken')
-	else
-		return window.location.href = '../AAA/sign-in-admin.html'
+	sharedTitle
+	sharedMobile
 
-	function tabHandler(e) {
-		if ($(e.target).attr('id') === 'nav1') {
-			$("#PredictStatisticsTab").show()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
+	sharedName
+
+	card_total_points
+	card_rem_predicts
+
+	var userId, coreAccessToken
+	if (localStorage.getItem('userId'))
+		userId = localStorage.getItem('userId')
+	else {
+
+	}
+	if (localStorage.getItem('userCoreAccessToken'))
+		coreAccessToken = localStorage.getItem('userCoreAccessToken')
+	else {
+
+	}
+
+	// ------------------------------ //
+	// 		  	Page Controller					//
+	// ------------------------------ //
+	function change_page_scene(pageName) {
+		var pages = ['page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_transaction']
+		for (var i = 0; i < pages.length; i++) {
+			var str = '#' + pages[i]
+			if (pages[i] === pageName)
+				$(str).show()
+			else
+				$(str).hide()
 		}
-		else if ($(e.target).attr('id') === 'nav2') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").show()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav3') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").show()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav4') {
-			if (localStorage.getItem('editablePredictId')) {
-				var predictId = localStorage.getItem('editablePredictId')
-				fill_section_update(predictId)
-				localStorage.removeItem('editablePredictId')
+	}
+
+	// ------------------------------ //
+	// 			  	Selectors							//
+	// ------------------------------ //
+	function fill_champion_selector(championsArray) {
+		$('.champion_selector').find('option').remove()
+		for (var i = 0; i < championsArray.length; i++) {
+			var itemToPush = {
+				id: championsArray[i].id,
+				name: championsArray[i].name
 			}
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").show()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
+			$('.champion_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
 		}
-		else if ($(e.target).attr('id') === 'nav5') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").show()
-			$("#PredictExtraInfoTab").hide()
+	}
+	function fill_challenge_selector(challengesArray) {
+		$('.challenge_selector').find('option').remove()
+		for (var i = 0; i < challengesArray.length; i++) {
+			var itemToPush = {
+				id: challengesArray[i].id,
+				name: challengesArray[i].name
+			}
+			$('.challenge_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
 		}
-		else if ($(e.target).attr('id') === 'nav6') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").show()
+	}
+	function fill_league_selector(leaguesArray) {
+		$('.league_selector').find('option').remove()
+		for (var i = 0; i < leaguesArray.length; i++) {
+			var itemToPush = {
+				id: leaguesArray[i].id,
+				name: leaguesArray[i].name
+			}
+			$('.league_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
 		}
-		else if ($(e.target).attr('id') === 'nav7') {
-			$("#generalInfo").show()
-			$("#accountInfo").hide()
-			$("#sequencerInfo").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav8') {
-			$("#generalInfo").hide()
-			$("#accountInfo").show()
-			$("#sequencerInfo").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav9') {
-			$("#generalInfo").hide()
-			$("#accountInfo").hide()
-			$("#sequencerInfo").show()
+	}
+	// ------------------------------ //
+	// 				  	Shared							//
+	// ------------------------------ //
+	$(document).on("click", ".packagePurchase", function (e) {
+		e.preventDefault()
+		change_page_scene('page_package')
+	})
+	$(document).on("click", ".returnMain", function (e) {
+		e.preventDefault()
+		change_page_scene('page_main_menu')
+	})
+	// ------------------------------ //
+	// 					Main Menue						//
+	// ------------------------------ //
+	$(document).on("click", "#main_menu_prediction_button", function (e) {
+		e.preventDefault()
+		change_page_scene('page_play_room')
+	})
+	$(document).on("click", "#main_menu_challenge_button", function (e) {
+		e.preventDefault()
+		change_page_scene('page_challenge')
+	})
+	$(document).on("click", "#main_menu_champion_button", function (e) {
+		e.preventDefault()
+		change_page_scene('page_private_league')
+	})
+	$(document).on("click", "#main_menu_profile_button", function (e) {
+		e.preventDefault()
+		change_page_scene('page_profile')
+	})
+	$(document).on("click", "#main_menu_statistics_button", function (e) {
+		e.preventDefault()
+		change_page_scene('page_ranking')
+	})
+	// ------------------------------ //
+	// 				  Main Preidct					//
+	// ------------------------------ //
+	$(document).on("click", "#main_predict_accept_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#main_predict_reject_button", function (e) {
+		e.preventDefault()
+
+	})
+	// ------------------------------ //
+	// 			  Personal League					//
+	// ------------------------------ //
+	$(document).on("click", "#edit_personal_league_delete_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#edit_personal_league_delete_save", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#create_personal_league_create_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#join_personal_league_exit_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#join_personal_league_join_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#statistics_personal_league_search_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#statistics_personal_league_result_button", function (e) {
+		e.preventDefault()
+
+	})
+	// ------------------------------ //
+	// 			 Personal Challenge				//
+	// ------------------------------ //
+	$(document).on("click", "#edit_personal_challenge_delete_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#edit_personal_challenge_save_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#create_personal_challenge_create_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#join_personal_challenge_exit_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#join_personal_challenge_join_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#statistics_personal_challenge_search_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#statistics_personal_challenge_result_button", function (e) {
+		e.preventDefault()
+
+	})
+	// ------------------------------ //
+	// 						Play Room						//
+	// ------------------------------ //
+	$(document).on("click", "#play_room_league_start_button", function (e) {
+		e.preventDefault()
+
+	})
+	// ------------------------------ //
+	// 			Ranking Statistics				//
+	// ------------------------------ //
+	$(document).on("click", "#ranking_total_statistics_result_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#ranking_team_statistics_result_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#ranking_league_statistics_search_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#ranking_league_statistics_result_button", function (e) {
+		e.preventDefault()
+
+	})
+	// ------------------------------ //
+	// 						Profile							//
+	// ------------------------------ //
+	$(document).on("click", "#profile_trophy_result_button", function (e) {
+		e.preventDefault()
+
+	})
+	// ------------------------------ //
+	// 						Package							//
+	// ------------------------------ //
+	$(document).on("click", "#P_E_1", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#P_E_2", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#P_E_3", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#P_G_1", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#P_G_2", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#P_G_3", function (e) {
+		e.preventDefault()
+
+	})
+	// ------------------------------ //
+	// 			 		Transaction						//
+	// ------------------------------ //
+	$(document).on("click", "#transaction_result_button", function (e) {
+		e.preventDefault()
+
+	})
+
+	// ------------------------------ //
+	// 				 Tab Controller					//
+	// ------------------------------ //
+	function tabHandler(e) {
+		var select = $(e.target).attr('id')
+		var no = select.replace("nav", "");
+		for (var i = 1; i < 14; i++) {
+			var str = '#nav' + i + '_tab'
+			if (i == Number(no))
+				$(str).show()
+			else
+				$(str).hide()
 		}
 	}
 
 	$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 		tabHandler(e)
-	})
+	})	
 
-	$("#PredictStatisticsTab").show()
-	$("#PredictManagementTab").hide()
-	$("#PredictNewTab").hide()
-	$("#PredictUpdateTab").hide()
-	$("#PredictCollecyionTab").hide()
-	$("#PredictExtraInfoTab").hide()
-	
-    $('.count-to').countTo({
-        formatter: function (value, options) {
-            return Persian_Number(value.toFixed(0))
-        }
-    });
-
-    //Sales count to
-    $('.sales-count-to').countTo({
-        formatter: function (value, options) {
-            return '$' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, ' ').replace('.', ',');
-        }
-    });
-
-
-	// initDateTimePicker()
-	// initJQueryTable()
-	// getAllInfo()
-
-	function initDateTimePicker() {
-		//Textare auto growth
+	// ------------------------------ //
+	// 				 Plugin Utility					//
+	// ------------------------------ //
+	function initUtility() {
+		$('.count-to').countTo({
+				formatter: function (value, options) {
+						return Persian_Number(value.toFixed(0))
+				}
+		})
+		$('.sales-count-to').countTo({
+				formatter: function (value, options) {
+						return '$' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, ' ').replace('.', ',')
+				}
+		})
 		autosize($('textarea.auto-growth'))
-		//Datetimepicker plugin
-		$('.datetimepicker').bootstrapMaterialDatePicker({
-			format: 'dddd DD MMMM YYYY - HH:mm',
-			clearButton: true,
-			weekStart: 1
-		})
+	}	
 
-		$('.datepicker').bootstrapMaterialDatePicker({
-			format: 'dddd DD MMMM YYYY',
-			clearButton: true,
-			weekStart: 1,
-			time: false
-		})
-
-		$('.timepicker').bootstrapMaterialDatePicker({
-			format: 'HH:mm',
-			clearButton: true,
-			date: false
-		})
-
-    Dropzone.options.dp1 = {
-        paramName: "file",
-        maxFilesize: 1
-		}
-    Dropzone.options.dp2 = {
-        paramName: "file",
-        maxFilesize: 1
-		}
-	}
-
-	function initJQueryTable() {
-		//Exportable table
-		$('.js-exportable').DataTable({
-			dom: 'Bfrtip',
-			buttons: [
-				'copy', 'csv', 'excel', 'pdf', 'print'
-			]
-		})
-
-		$('.js-basic-example').DataTable(
-			{"searching": false,
-				"ordering": false,
-				"pageLength": 4,
-				"iDisplayLength": 4,
-				"lengthChange": false
-			}
-		)
+	function doneLoading() {
+		setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 100)
 	}
 
 	function fill_section_update(predictId) {
@@ -594,35 +743,6 @@ $(document).ready(function () {
 		})
 	})
 
-	$("#signOutButton").click(function (e) {
-		e.preventDefault()
-		localStorage.clear()
-		return window.location.href = '../AAA/sign-in-admin.html'
-	})
-
-	$("#update_statistics_section").click(function (e) {
-		e.preventDefault()
-		getAllInfo()
-	})
-	$("#update_moreInfo_section").click(function (e) {
-		e.preventDefault()
-		getAllPredicts()
-	})
-	$("#update_management_section").click(function (e) {
-		e.preventDefault()
-		getAllLeagus()
-		getAllPredicts()
-	})
-	$("#update_new_section").click(function (e) {
-		e.preventDefault()
-		getAllLeagus()
-	})
-	$("#update_update_section").click(function (e) {
-		e.preventDefault()
-		getAllLeagus()
-		getAllPredicts()		
-	})
-
 	$("#button_moreInfo_search").click(function (e) {
 		e.preventDefault()
 		NProgress.start()
@@ -872,7 +992,5 @@ $(document).ready(function () {
 			}
 		})
 	})
-
-	setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 
 })
