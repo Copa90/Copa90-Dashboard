@@ -64,16 +64,8 @@ var coreEngine_url = "http://127.0.0.1:4000/api/"
 
 $(document).ready(function () {
 
-	var foo = getParameterByName('foo');
-	var me = getUrlVars()["me"];
-
-	sharedTitle
-	sharedMobile
-
-	sharedName
-
-	card_total_points
-	card_rem_predicts
+	// var foo = getParameterByName('foo');
+	// var me = getUrlVars()["me"];
 
 	var userId, coreAccessToken
 	if (localStorage.getItem('userId'))
@@ -86,6 +78,8 @@ $(document).ready(function () {
 	else {
 
 	}
+
+	initUtility()
 
 	// ------------------------------ //
 	// 		  	Page Controller					//
@@ -138,6 +132,19 @@ $(document).ready(function () {
 				name: leaguesArray[i].name
 			}
 			$('.league_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+	}
+	function fill_team_selector(teamsArray) {
+		$('.team_selector').find('option').remove()
+		for (var i = 0; i < teamsArray.length; i++) {
+			var itemToPush = {
+				id: teamsArray[i].id,
+				name: teamsArray[i].name
+			}
+			$('.team_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
 			})).selectpicker('refresh')
@@ -351,7 +358,11 @@ $(document).ready(function () {
 						return '$' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, ' ').replace('.', ',')
 				}
 		})
-		autosize($('textarea.auto-growth'))
+
+    var $demoMaskedInput = $('.demo-masked-input');
+
+    $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '09__ ___ ____' });
+    $demoMaskedInput.find('.receivedCode').inputmask('9 9 9 9', { placeholder: '_ _ _ _' });
 	}	
 
 	function doneLoading() {
