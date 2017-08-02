@@ -198,6 +198,10 @@ $(document).ready(function () {
 		}
 	}
 	// ------------------------------ //
+	// 		 	 	Edit Rows Filler				//
+	// ------------------------------ //
+
+	// ------------------------------ //
 	// 				  	Shared							//
 	// ------------------------------ //
 	$(document).on("click", ".packagePurchase", function (e) {
@@ -287,7 +291,7 @@ $(document).ready(function () {
 		e.preventDefault()
 		if (!$("#aaa_signup_fullname").val() || !$("#aaa_signup_username").val() ||
 				!$("#aaa_signup_email").val() || !$("#aaa_signup_password").val() ||
-				!$("#aaa_signup_referrer").val() || !phoneNumber || !$(".team_selector").val()
+				!$("#aaa_signup_referrer").val() || !phoneNumber || !$("#aaa_signup_select_team").val()
 		) {
 			return console.error('required fields error')
 		}
@@ -318,7 +322,7 @@ $(document).ready(function () {
 					contentType: "application/json; charset=utf-8",
 					type: "POST",
 					success: function (verifyResult) {
-						var teamURL = wrapAccessToken(coreEngine_url + 'teams/' + clientResult.id + '/selectFavorite/' +  $(".team_selector").val(), coreAccessToken);
+						var teamURL = wrapAccessToken(coreEngine_url + 'teams/' + clientResult.id + '/selectFavorite/' + $("#aaa_signup_select_team").val(), coreAccessToken);
 						$.ajax({
 							url: teamURL,
 							data: JSON.stringify(data),
@@ -472,31 +476,169 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#edit_personal_league_delete_button", function (e) {
 		e.preventDefault()
-
+		var leagueId = $("#aaa_signup_select_team").val()
+		if (!leagueId) {
+			return console.error('required fields error')
+		}
+		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
+		$.ajax({
+			url: championURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "DELETE",
+			success: function (championResult) {
+				NProgress.done()
+				alert('delete champion done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('delete champion failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
-	$(document).on("click", "#edit_personal_league_delete_save", function (e) {
+	$(document).on("click", "#edit_personal_league_save_button", function (e) {
 		e.preventDefault()
-
+		if (!$("#aaa_signup_select_team").val() || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val() || !$("#edit_personal_league_chances").val()) {
+			return console.error('required fields error')
+		}
+		var leagueId = $("#aaa_signup_select_team").val()
+		var data = {
+			name: $("#edit_personal_league_name").val(),
+			capactiy: $("#edit_personal_league_capacity").val(),
+			reduceChances: $("#edit_personal_league_chances").val()
+		}
+		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
+		$.ajax({
+			url: championURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "PUT",
+			success: function (championResult) {
+				NProgress.done()
+				alert('edit champion done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('edit champion failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#create_personal_league_create_button", function (e) {
 		e.preventDefault()
-
+		if (!userId || !$("#create_personal_league_name").val() || !$("#create_personal_league_capacity").val() || !$("#create_personal_league_chances").val()) {
+			return console.error('required fields error')
+		}
+		var data = {
+			creatorId: userId,
+			name: $("#create_personal_league_name").val(),
+			capactiy: $("#create_personal_league_capacity").val(),
+			reduceChances: $("#create_personal_league_chances").val()
+		}
+		var championURL = wrapAccessToken(coreEngine_url + 'champions', coreAccessToken);
+		$.ajax({
+			url: championURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (championResult) {
+				NProgress.done()
+				alert('create champion done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('create champion failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#join_personal_league_exit_button", function (e) {
 		e.preventDefault()
-
+		var leagueId = $("#join_personal_league_champion_selector").val()
+		if (!leagueId) {
+			return console.error('required fields error')
+		}
+		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
+		$.ajax({
+			url: championURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "DELETE",
+			success: function (championResult) {
+				NProgress.done()
+				alert('delete champion done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('delete champion failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#join_personal_league_join_button", function (e) {
 		e.preventDefault()
-
+		var leagueId = $("#join_personal_league_code").val()
+		if (!leagueId || !userId) {
+			return console.error('required fields error')
+		}
+		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/joinChampion/' + userId, coreAccessToken);
+		$.ajax({
+			url: championURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (championResult) {
+				NProgress.done()
+				alert('join champion done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('join champion failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#statistics_personal_league_search_button", function (e) {
 		e.preventDefault()
-
+		var leagueId = $("#statistics_personal_league_leagueId").val()
+		if (!leagueId) {
+			return console.error('required fields error')
+		}
+		var filter = {
+			where: {
+				'championId': leagueId
+			}
+		}
+		var rankingURL = wrapAccessToken(coreEngine_url + 'rankings', coreAccessToken)
+		var rankingURLWithFilter = wrapFilter(rankingURL, filter)
+		$.ajax({
+			url: rankingURLWithFilter,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "GET",
+			success: function (rankingResult) {
+				NProgress.done()
+				alert('ranking champion done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('ranking champion failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#statistics_personal_league_result_button", function (e) {
 		e.preventDefault()
-
+		console.log('not prepared yet')
 	})
 	// ------------------------------ //
 	// 			 Personal Challenge				//
