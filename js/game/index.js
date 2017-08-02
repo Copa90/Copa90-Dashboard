@@ -64,6 +64,9 @@ var coreEngine_url = "http://127.0.0.1:4000/api/"
 
 $(document).ready(function () {
 
+	var phoneNumber
+	var userClient
+
 	var source = getUrlVars()["source"]
 
 	var userId, coreAccessToken
@@ -110,6 +113,12 @@ $(document).ready(function () {
 				$(str).show()
 			else
 				$(str).hide()
+		}
+		if (pageName === 'page_aaa') {
+			$('#sign-in').show()
+			$('#password').hide()
+			$('#sign-up').hide()
+			$('#phone').hide()
 		}
 	}
 
@@ -184,27 +193,203 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#aaa_send_phone_button", function (e) {
 		e.preventDefault()
+		phoneNumber = $("#aaa_send_phone_phone_number").val()
+		if (!phoneNumber) {
+			return console.error('required fields error')
+		}		
+		alert(phoneNumber)
+		$('#sign-in').hide()
+		$('#password').hide()
+		$('#sign-up').show()
+		$('#phone').hide()
 	})
 	$(document).on("click", "#aaa_send_code_button", function (e) {
 		e.preventDefault()
+		NProgress.start()
+		var code = $("#aaa_send_code_code").val()
+		if (!phoneNumber || !code) {
+			return console.error('required fields error')
+		}		
+		alert(code)
+		var verificationURL = wrapAccessToken(coreEngine_url + 'verifications/verification/' + phoneNumber + '/' + code, coreAccessToken);
+		$.ajax({
+			url: verificationURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (verificationResult) {
+				NProgress.done()
+				alert('verification done')
+				$('#sign-in').show()
+				$('#password').hide()
+				$('#sign-up').hide()
+				$('#phone').hide()
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('verification failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#aaa_send_password_button", function (e) {
 		e.preventDefault()
+		NProgress.start()
+		var phoneNum = $("#aaa_password_phone_number").val()
+		if (!phoneNum) {
+			return console.error('required fields error')
+		}		
+		alert(phoneNum)
+		var passwordURL = wrapAccessToken(coreEngine_url + 'clients/sendPassword/' + phoneNum, coreAccessToken);
+		$.ajax({
+			url: passwordURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (passwordResult) {
+				NProgress.done()
+				alert('password done')
+				$('#sign-in').show()
+				$('#password').hide()
+				$('#sign-up').hide()
+				$('#phone').hide()
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('passsword failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#aaa_signup_button", function (e) {
 		e.preventDefault()
+		if (!$("#aaa_signup_fullname").val() || !$("#aaa_signup_username").val() ||
+				!$("#aaa_signup_email").val() || !$("#aaa_signup_password").val() ||
+				!$("#aaa_signup_referrer").val() || !phoneNumber || !$(".team_selector").val()
+		) {
+			return console.error('required fields error')
+		}
+		var data = {
+			fullName: $("#aaa_signup_fullname").val(),
+			username: $("#aaa_signup_username").val(),
+			email: $("#aaa_signup_email").val(),
+			password: $("#aaa_signup_password").val(),
+			referrer: $("#aaa_signup_referrer").val(),
+			phoneNumber: phoneNumber,
+			time: Math.floor((new Date).getTime())
+		}
+		NProgress.start()
+		alert(JSON.stringify(data))
+		var clientsURL = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken);
+		$.ajax({
+			url: clientsURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (clientResult) {
+				var verifyURL = wrapAccessToken(coreEngine_url + 'verifications/sendVerification/' + phoneNumber, coreAccessToken);
+				$.ajax({
+					url: verifyURL,
+					data: JSON.stringify(data),
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					type: "POST",
+					success: function (verifyResult) {
+						var teamURL = wrapAccessToken(coreEngine_url + 'teams/' + clientResult.id + '/selectFavorite/' +  $(".team_selector").val(), coreAccessToken);
+						$.ajax({
+							url: teamURL,
+							data: JSON.stringify(data),
+							dataType: "json",
+							contentType: "application/json; charset=utf-8",
+							type: "POST",
+							success: function (teamResult) {
+								NProgress.done()
+								alert('client done')
+								userClient = clientResult
+								$('#sign-in').hide()
+								$('#password').hide()
+								$('#sign-up').hide()
+								$('#phone').show()
+								$('#sendPhone').hide()
+								$('#sendCode').show()
+							},
+							error: function (xhr, status, error) {
+								NProgress.done()
+								alert('client failed')
+								alert(xhr.responseText)
+							}
+						})
+					},
+					error: function (xhr, status, error) {
+						NProgress.done()
+						alert('client failed')
+						alert(xhr.responseText)
+					}
+				})
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('client failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#aaa_signin_button", function (e) {
 		e.preventDefault()
+		NProgress.start()
+		var phoneNum = $("#aaa_signin_phone_number").val()
+		var pass = $("#aaa_signin_password").val()
+		if (!phoneNum || !pass) {
+			return console.error('required fields error')
+		}
+		var data = {
+			phoneNumber: phoneNum,
+			password: pass
+		}
+		var loginURL = wrapAccessToken(coreEngine_url + 'clients/login', coreAccessToken)
+		$.ajax({
+			url: loginURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (clientResult) {
+				NProgress.done()
+				alert('login done')
+				change_page_scene('page_main_menu')
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('login failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", ".signinHref", function (e) {
 		e.preventDefault()
+		$('#sign-in').show()
+		$('#password').hide()
+		$('#sign-up').hide()
+		$('#phone').hide()
 	})
 	$(document).on("click", ".signupHref", function (e) {
 		e.preventDefault()
+		$('#sign-in').hide()
+		$('#password').hide()
+		$('#sign-up').hide()
+		$('#phone').show()
+		$('#sendPhone').show()
+		$('#sendCode').hide()
 	})
 	$(document).on("click", ".passwordHref", function (e) {
 		e.preventDefault()
+		$('#sign-in').hide()
+		$('#password').show()
+		$('#sign-up').hide()
+		$('#phone').hide()
 	})
 	// ------------------------------ //
 	// 					Main Menue						//
