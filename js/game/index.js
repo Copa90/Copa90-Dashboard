@@ -64,19 +64,37 @@ var coreEngine_url = "http://127.0.0.1:4000/api/"
 
 $(document).ready(function () {
 
-	// var foo = getParameterByName('foo');
-	// var me = getUrlVars()["me"];
+	var source = getUrlVars()["source"]
 
 	var userId, coreAccessToken
-	if (localStorage.getItem('userId'))
-		userId = localStorage.getItem('userId')
-	else {
 
+	if (!source || source === 'web') {
+		if (localStorage.getItem('userId'))
+			userId = localStorage.getItem('userId')
+		else {
+			change_page_scene('page_aaa')
+			doneLoading()
+		}
+		if (localStorage.getItem('userCoreAccessToken'))
+			coreAccessToken = localStorage.getItem('userCoreAccessToken')
+		else {
+			change_page_scene('page_aaa')
+			doneLoading()
+		}
 	}
-	if (localStorage.getItem('userCoreAccessToken'))
-		coreAccessToken = localStorage.getItem('userCoreAccessToken')
-	else {
-
+	else if (source === 'telegram') {
+		if (getUrlVars()["userId"])
+			userId = getUrlVars()["userId"]
+		else {
+			change_page_scene('page_aaa')
+			doneLoading()
+		}
+		if (getUrlVars()["userCoreAccessToken"])
+			coreAccessToken = getUrlVars()["userCoreAccessToken"]
+		else {
+			change_page_scene('page_aaa')
+			doneLoading()
+		}
 	}
 
 	initUtility()
@@ -85,7 +103,7 @@ $(document).ready(function () {
 	// 		  	Page Controller					//
 	// ------------------------------ //
 	function change_page_scene(pageName) {
-		var pages = ['page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_transaction']
+		var pages = ['page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_transaction']
 		for (var i = 0; i < pages.length; i++) {
 			var str = '#' + pages[i]
 			if (pages[i] === pageName)
@@ -160,6 +178,33 @@ $(document).ready(function () {
 	$(document).on("click", ".returnMain", function (e) {
 		e.preventDefault()
 		change_page_scene('page_main_menu')
+	})
+	// ------------------------------ //
+	// 							AAA								//
+	// ------------------------------ //
+	$(document).on("click", "#aaa_send_phone_button", function (e) {
+		e.preventDefault()
+	})
+	$(document).on("click", "#aaa_send_code_button", function (e) {
+		e.preventDefault()
+	})
+	$(document).on("click", "#aaa_send_password_button", function (e) {
+		e.preventDefault()
+	})
+	$(document).on("click", "#aaa_signup_button", function (e) {
+		e.preventDefault()
+	})
+	$(document).on("click", "#aaa_signin_button", function (e) {
+		e.preventDefault()
+	})
+	$(document).on("click", ".signinHref", function (e) {
+		e.preventDefault()
+	})
+	$(document).on("click", ".signupHref", function (e) {
+		e.preventDefault()
+	})
+	$(document).on("click", ".passwordHref", function (e) {
+		e.preventDefault()
 	})
 	// ------------------------------ //
 	// 					Main Menue						//
@@ -369,6 +414,21 @@ $(document).ready(function () {
 		setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 100)
 	}
 
+	// ------------------------------ //
+	// 		 	 Table Construction				//
+	// ------------------------------ //
+
+
+	// ------------------------------ //
+	// 		 	 	Table Controller				//
+	// ------------------------------ //
+
+
+	// ------------------------------ //
+	// 		 	 		Data Fetchers					//
+	// ------------------------------ //
+
+	
 	function fill_section_update(predictId) {
 		$("#select_update_predict").selectpicker('val', predictId)
 		var model
@@ -389,6 +449,7 @@ $(document).ready(function () {
 			}
 		}
 	}
+
 
 	function fill_graph(leaguesArray, estimatesArray) {
 		function getRandomColor() {
