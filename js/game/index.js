@@ -66,6 +66,7 @@ $(document).ready(function () {
 
 	var phoneNumber
 	var userClient
+	var currentPredict
 
 	var source = getUrlVars()["source"]
 
@@ -98,9 +99,16 @@ $(document).ready(function () {
 			change_page_scene('page_aaa')
 			doneLoading()
 		}
+
+		$('.sharedTitle').hide()
+		$('.sharedMobile').hide()
 	}
 
 	initUtility()
+	
+	if (userId && coreAccessToken) {
+		// get data
+	}
 
 	// ------------------------------ //
 	// 		  	Page Controller					//
@@ -119,6 +127,18 @@ $(document).ready(function () {
 			$('#password').hide()
 			$('#sign-up').hide()
 			$('#phone').hide()
+		}
+		else if (pageName === 'page_challenge') {
+			$('.nav-tabs a[id="nav5"]').tab('show')
+		}
+		else if (pageName === 'page_private_league') {
+			$('.nav-tabs a[id="nav1"]').tab('show')
+		}
+		else if (pageName === 'page_profile') {
+			$('.nav-tabs a[id="nav12"]').tab('show')
+		}
+		else if (pageName === 'page_ranking') {
+			$('.nav-tabs a[id="nav9"]').tab('show')
 		}
 	}
 
@@ -419,11 +439,33 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#main_predict_accept_button", function (e) {
 		e.preventDefault()
-
+		var data = {
+			predtictId: currentPredict.id,
+			clientId: userId,
+			time: Math.floor((new Date).getTime())
+		}
+		var estimateURL = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken);
+		$.ajax({
+			url: estimateURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (estimateResult) {
+				NProgress.done()
+				alert('estimate done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('client failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#main_predict_reject_button", function (e) {
 		e.preventDefault()
-
+		// call for next object
 	})
 	// ------------------------------ //
 	// 			  Personal League					//
