@@ -476,7 +476,7 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#edit_personal_league_delete_button", function (e) {
 		e.preventDefault()
-		var leagueId = $("#aaa_signup_select_team").val()
+		var leagueId = $("#edit_personal_league_leagueId").val()
 		if (!leagueId) {
 			return console.error('required fields error')
 		}
@@ -500,10 +500,10 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#edit_personal_league_save_button", function (e) {
 		e.preventDefault()
-		if (!$("#aaa_signup_select_team").val() || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val() || !$("#edit_personal_league_chances").val()) {
+		var leagueId = $("#aaa_signup_select_team").val()
+		if (!leagueId || !$("#aaa_signup_select_team").val() || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val() || !$("#edit_personal_league_chances").val()) {
 			return console.error('required fields error')
 		}
-		var leagueId = $("#aaa_signup_select_team").val()
 		var data = {
 			name: $("#edit_personal_league_name").val(),
 			capactiy: $("#edit_personal_league_capacity").val(),
@@ -561,23 +561,23 @@ $(document).ready(function () {
 	$(document).on("click", "#join_personal_league_exit_button", function (e) {
 		e.preventDefault()
 		var leagueId = $("#join_personal_league_champion_selector").val()
-		if (!leagueId) {
+		if (!leagueId || !userId) {
 			return console.error('required fields error')
 		}
-		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
+		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/leaveChampion/' + userId, coreAccessToken);
 		$.ajax({
 			url: championURL,
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
-			type: "DELETE",
+			type: "POST",
 			success: function (championResult) {
 				NProgress.done()
-				alert('delete champion done')
+				alert('leave champion done')
 				// call for next object
 			},
 			error: function (xhr, status, error) {
 				NProgress.done()
-				alert('delete champion failed')
+				alert('leave champion failed')
 				alert(xhr.responseText)
 			}
 		})
@@ -645,31 +645,167 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#edit_personal_challenge_delete_button", function (e) {
 		e.preventDefault()
-
+		var challengeId = $("#edit_personal_challenge_challengeId").val()
+		if (!challengeId) {
+			return console.error('required fields error')
+		}
+		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
+		$.ajax({
+			url: challengeURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "DELETE",
+			success: function (challengeResult) {
+				NProgress.done()
+				alert('delete challenge done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('delete challenge failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#edit_personal_challenge_save_button", function (e) {
 		e.preventDefault()
-
+		var challengeId = $("#edit_personal_challenge_challengeId").val()
+		if (!challengeId || !$("#edit_personal_challenge_name").val()) {
+			return console.error('required fields error')
+		}
+		var data = {
+			name: $("#edit_personal_challenge_name").val()
+		}
+		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
+		$.ajax({
+			url: challengeURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "PUT",
+			success: function (challengeResult) {
+				NProgress.done()
+				alert('edit challenge done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('edit challenge failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#create_personal_challenge_create_button", function (e) {
 		e.preventDefault()
-
+		if (!userId || !$("#create_personal_challenge_name").val() || !$("#create_personal_challenge_period").val() || !$("#create_personal_challenge_chances").val()) {
+			return console.error('required fields error')
+		}
+		var data = {
+			creatorId: userId,
+			name: $("#create_personal_challenge_name").val(),
+			period: $("#create_personal_challenge_period").val(),
+			reduceChances: $("#create_personal_challenge_chances").val()
+		}
+		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges', coreAccessToken);
+		$.ajax({
+			url: championURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (championResult) {
+				NProgress.done()
+				alert('create challenge done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('create challenge failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#join_personal_challenge_exit_button", function (e) {
 		e.preventDefault()
-
+		var challengeId = $("#join_personal_league_challenge_selector").val()
+		if (!challengeId || !userId) {
+			return console.error('required fields error')
+		}
+		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/leaveChallenge/' + userId, coreAccessToken);
+		$.ajax({
+			url: challengeURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (challengeResult) {
+				NProgress.done()
+				alert('leave challenge done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('leave challenge failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#join_personal_challenge_join_button", function (e) {
 		e.preventDefault()
-
+		var challengeId = $("#join_personal_league_code").val()
+		if (!challengeId || !userId) {
+			return console.error('required fields error')
+		}
+		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/joinChallenge/' + userId, coreAccessToken);
+		$.ajax({
+			url: challengeURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (challengeResult) {
+				NProgress.done()
+				alert('join challenge done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('join challenge failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#statistics_personal_challenge_search_button", function (e) {
 		e.preventDefault()
-
+		var challengeId = $("#statistics_personal_challenge_challengeId").val()
+		if (!challengeId) {
+			return console.error('required fields error')
+		}
+		var filter = {
+			where: {
+				'championId': challengeId
+			}
+		}
+		var competitionURL = wrapAccessToken(coreEngine_url + 'competitions', coreAccessToken)
+		var competitionURLWithFilter = wrapFilter(competitionURL, filter)
+		$.ajax({
+			url: competitionURLWithFilter,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "GET",
+			success: function (competitionResult) {
+				NProgress.done()
+				alert('competition champion done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('competition champion failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#statistics_personal_challenge_result_button", function (e) {
 		e.preventDefault()
-
+		console.log('not prepared yet')
 	})
 	// ------------------------------ //
 	// 						Play Room						//
@@ -702,7 +838,7 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#profile_trophy_result_button", function (e) {
 		e.preventDefault()
-
+		console.log('not prepared yet')
 	})
 	// ------------------------------ //
 	// 						Package							//
