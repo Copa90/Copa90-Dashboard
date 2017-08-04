@@ -812,26 +812,50 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#play_room_league_start_button", function (e) {
 		e.preventDefault()
-
+		var leagueId = $("#play_room_league_leagueId").val()
+		if (!leagueId) {
+			return console.error('required fields error')
+		}
+		// call next object
 	})
 	// ------------------------------ //
 	// 			Ranking Statistics				//
 	// ------------------------------ //
 	$(document).on("click", "#ranking_total_statistics_result_button", function (e) {
 		e.preventDefault()
-
+		console.log('not prepared yet')
 	})
 	$(document).on("click", "#ranking_team_statistics_result_button", function (e) {
 		e.preventDefault()
-
+		console.log('not prepared yet')
 	})
 	$(document).on("click", "#ranking_league_statistics_search_button", function (e) {
 		e.preventDefault()
-
+		var leagueId = $("#ranking_league_statistics_leagueId").val()
+		if (!leagueId || !userId) {
+			return console.error('required fields error')
+		}
+		var clientURL = wrapAccessToken(coreEngine_url + 'clients/' + userId, coreAccessToken)
+		$.ajax({
+			url: clientURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "GET",
+			success: function (clientResult) {
+				NProgress.done()
+				alert('client checkoint done')
+				// call for next object
+			},
+			error: function (xhr, status, error) {
+				NProgress.done()
+				alert('client checkpoint failed')
+				alert(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", "#ranking_league_statistics_result_button", function (e) {
 		e.preventDefault()
-
+		console.log('not prepared yet')
 	})
 	// ------------------------------ //
 	// 						Profile							//
