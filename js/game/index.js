@@ -71,7 +71,7 @@ $(document).ready(function () {
 	var source = getUrlVars()["source"]
 
 	var userId, coreAccessToken
-
+/*
 	if (!source || source === 'web') {
 		if (localStorage.getItem('userId'))
 			userId = localStorage.getItem('userId')
@@ -103,12 +103,14 @@ $(document).ready(function () {
 		$('.sharedTitle').hide()
 		$('.sharedMobile').hide()
 	}
-
+*/
 	initUtility()
 	
 	if (userId && coreAccessToken) {
 		// get data
 	}
+
+	change_page_scene('page_main_menu')
 
 	// ------------------------------ //
 	// 		  	Page Controller					//
@@ -129,15 +131,19 @@ $(document).ready(function () {
 			$('#phone').hide()
 		}
 		else if (pageName === 'page_challenge') {
+			tabHandler({ target: { id: 'nav5' } })
 			$('.nav-tabs a[id="nav5"]').tab('show')
 		}
 		else if (pageName === 'page_private_league') {
+			tabHandler({ target: { id: 'nav1' } })
 			$('.nav-tabs a[id="nav1"]').tab('show')
 		}
 		else if (pageName === 'page_profile') {
+			tabHandler({ target: { id: 'nav12' } })
 			$('.nav-tabs a[id="nav12"]').tab('show')
 		}
 		else if (pageName === 'page_ranking') {
+			tabHandler({ target: { id: 'nav9' } })
 			$('.nav-tabs a[id="nav9"]').tab('show')
 		}
 	}
@@ -867,27 +873,7 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 						Package							//
 	// ------------------------------ //
-	$(document).on("click", "#P_E_1", function (e) {
-		e.preventDefault()
-
-	})
-	$(document).on("click", "#P_E_2", function (e) {
-		e.preventDefault()
-
-	})
-	$(document).on("click", "#P_E_3", function (e) {
-		e.preventDefault()
-
-	})
-	$(document).on("click", "#P_G_1", function (e) {
-		e.preventDefault()
-
-	})
-	$(document).on("click", "#P_G_2", function (e) {
-		e.preventDefault()
-
-	})
-	$(document).on("click", "#P_G_3", function (e) {
+	$(document).on("click", ".package_purchase", function (e) {
 		e.preventDefault()
 
 	})
@@ -896,7 +882,7 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#transaction_result_button", function (e) {
 		e.preventDefault()
-
+		console.log('not prepared yet')
 	})
 
 	// ------------------------------ //
@@ -904,12 +890,12 @@ $(document).ready(function () {
 	// ------------------------------ //
 	function tabHandler(e) {
 		var select = $(e.target).attr('id')
-		var no = select.replace("nav", "");
+		var no = select.replace("nav", "")
 		for (var i = 1; i < 14; i++) {
 			var str = '#nav' + i + '_tab'
 			if (i == Number(no))
-				$(str).show()
-			else
+				$(str).fadeIn()
+			else 
 				$(str).hide()
 		}
 	}
