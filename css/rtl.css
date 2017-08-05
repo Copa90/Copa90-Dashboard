@@ -361,3 +361,21 @@ button.list-group-item{
 .sidebar .menu .list a{
     padding: 7px 13px;
 }
+
+@keyframes rainbow { 
+    0% { background-position: 0% 100%; }
+    50% { background-position: 100% 200%; }
+    100% {background-position: 0% 100%; }
+}
+.rainbow-progress-bar {
+    position: absolute;
+    left:0;
+    right: 0;
+    top: 0; 
+    bottom: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(124deg, #F44336, #FF5722, #FFC107, #FFEB3B, #8BC34A, #00BCD4, #3F51B5, #9C27B0, #E91E63);
+    background-size: 900% 900%;
+    animation: rainbow 9s ease infinite;
+}
