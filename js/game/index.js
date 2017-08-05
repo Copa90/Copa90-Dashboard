@@ -64,6 +64,7 @@ var coreEngine_url = "http://127.0.0.1:4000/api/"
 
 $(document).ready(function () {
 
+	doneLoading()
 	var phoneNumber
 	var userClient
 	var currentPredict
