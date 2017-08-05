@@ -72,43 +72,38 @@ $(document).ready(function () {
 	var source = getUrlVars()["source"]
 
 	var userId, coreAccessToken
-/*
-	if (!source || source === 'web') {
-		if (localStorage.getItem('userId'))
-			userId = localStorage.getItem('userId')
-		else {
-			change_page_scene('page_aaa')
-			doneLoading()
-		}
-		if (localStorage.getItem('userCoreAccessToken'))
-			coreAccessToken = localStorage.getItem('userCoreAccessToken')
-		else {
-			change_page_scene('page_aaa')
-			doneLoading()
-		}
-	}
-	else if (source === 'telegram') {
-		if (getUrlVars()["userId"])
-			userId = getUrlVars()["userId"]
-		else {
-			change_page_scene('page_aaa')
-			doneLoading()
-		}
-		if (getUrlVars()["userCoreAccessToken"])
-			coreAccessToken = getUrlVars()["userCoreAccessToken"]
-		else {
-			change_page_scene('page_aaa')
-			doneLoading()
-		}
 
-		$('.sharedTitle').hide()
-		$('.sharedMobile').hide()
-	}
-*/
 	initUtility()
 	
-	if (userId && coreAccessToken) {
-		// get data
+	function readFromLocalStorage() {
+		if (localStorage.getItem('userId'))
+			userId = localStorage.getItem('userId')
+		if (localStorage.getItem('userCoreAccessToken'))
+			coreAccessToken = localStorage.getItem('userCoreAccessToken')
+	}
+
+	if (platform.name.includes('Mobile') || source === 'telegram') {
+		$('.sharedTitle').hide()
+		$('.sharedMobile').hide()
+
+		var height = $(window).height()
+		$('.sizeControl').css('max-height', height - 50)
+		$('.sizeControl').css('height', height - 50)
+		$('.positionControl').removeAttr('style')
+		$('.positionControl').css('margin-top', '25px')
+
+		if (source === 'telegram') {
+			if (getUrlVars()["userId"])
+				userId = getUrlVars()["userId"]
+			if (getUrlVars()["userCoreAccessToken"])
+				coreAccessToken = getUrlVars()["userCoreAccessToken"]
+		}
+		else {
+			readFromLocalStorage()
+		}
+	}
+	else {
+		readFromLocalStorage()
 	}
 
 	change_page_scene('page_main_menu')
