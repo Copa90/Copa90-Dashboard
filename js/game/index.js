@@ -106,7 +106,13 @@ $(document).ready(function () {
 		readFromLocalStorage()
 	}
 
-	change_page_scene('page_main_menu')
+	// if (!userId || !coreAccessToken) {
+	// 		change_page_scene('page_aaa')
+	// 		doneLoading()		
+	// }
+	// else {
+		change_page_scene('page_main_menu')
+	// }	
 
 	// ------------------------------ //
 	// 		  	Page Controller					//
@@ -202,7 +208,30 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 	Edit Rows Filler				//
 	// ------------------------------ //
-
+	function fill_edit_challenge(challengeId, challengesArray) {
+		$("#edit_personal_challenge_challengeId").selectpicker('val', challengeId)
+		var model
+		for (var i = 0; i < challengesArray.length; i++) {
+			if (challengesArray[i].id === challengeId) {
+				model = challengesArray[i]
+				$("#edit_personal_challenge_name").val(model.name)
+				break
+			}
+		}
+	}
+	function fill_edit_champion(championId, championsArray) {
+		$("#edit_personal_league_leagueId").selectpicker('val', championId)
+		var model
+		for (var i = 0; i < championsArray.length; i++) {
+			if (championsArray[i].id === championId) {
+				model = championsArray[i]
+				$("#edit_personal_league_name").val(model.name)
+				$("#edit_personal_league_capacity").val(Number(model.capactiy))
+				$("#edit_personal_league_chances").val(Number(model.chances))
+				break
+			}
+		}
+	}
 	// ------------------------------ //
 	// 				  	Shared							//
 	// ------------------------------ //
@@ -939,118 +968,114 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 Table Construction				//
 	// ------------------------------ //
-
-
-	// ------------------------------ //
-	// 		 	 	Table Controller				//
-	// ------------------------------ //
-
-
-	// ------------------------------ //
-	// 		 	 		Data Fetchers					//
-	// ------------------------------ //
-
-	
-	function fill_section_update(predictId) {
-		$("#select_update_predict").selectpicker('val', predictId)
-		var model
-		for (var i = 0; i < predicts.length; i++) {
-			if (predicts[i].id === predictId) {
-				model = predicts[i]
-				$("#select_update_points").val(Number(model.point))
-				$("#select_update_week").val(Number(model.weekNumber))
-				$("#select_update_possibility").val(Number(model.possibility))
-				$("#select_update_explanation").val(model.explanation)
-				$("#select_update_league").selectpicker('val', model.leagueId)
-				$("#select_update_occuerence").selectpicker('val', Number(model.occurrence))
-				$("#select_update_status").selectpicker('val', model.status)
-				$("#select_update_tag").selectpicker('val', model.tags)
-				$("#select_update_beginningTime").val(fullDateConvertor(model.beginningTime))
-				$("#select_update_endingTime").val(fullDateConvertor(model.endingTime))
-				break
-			}
+	function fill_table_challenge(challenge, usersArray) {
+		$('#statistics_personal_challenge_table>tbody').empty()
+		var statusColor
+		if (challenge.status === 'Working') statusColor = 'bg-green'
+		else if (challenge.status === 'Created') statusColor = 'bg-light-blue'
+		else if (challenge.status === 'Finished') statusColor = 'bg-deep-orange'
+		for (var i = 0; i < usersArray.length; i++) {
+			$('#statistics_personal_challenge_table').append('<tr id="addr' + (i) + '"></tr>')
+			$('#addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + challenge.status + '</span></td>'
+			)
 		}
 	}
-
-
-	function fill_graph(leaguesArray, estimatesArray) {
-		function getRandomColor() {
-			var letters = '0123456789ABCDEF'
-			var color = '#'
-			for (var i = 0; i < 6; i++) {
-				color += letters[Math.floor(Math.random() * 16)]
-			}
-			return color
-		}
-		var dataArray = []
-		var colorArray = []
-		var yLable = []
-		for (var i = 0; i < 28; i++) {
-			var model = {}
-			model.days = '' + i
-			for (var j = 0; j < leaguesArray.length; j++) {
-				var counter = 0
-				yLable.push(leaguesArray[j].name)
-				for (var k = 0; k < estimatesArray.length; k++) {
-					if (estimatesArray[k].leagueId === leaguesArray[j].id)
-						counter++
-				}
-				model[leaguesArray[j].name] = counter
-				dataArray.push(model)
-				colorArray.push(getRandomColor())
-			}
-		}
-		Morris.Line({
-				element: 'line_chart',
-				data: dataArray,
-				xkey: 'days',
-				ykeys: yLable,
-				labels: yLable,
-				lineColors: colorArray,
-				lineWidth: 3
-		})
-	}
-
-	function fill_predict_selectors(predictsArray) {
-		$('#select_moreInfo_predict').find('option').remove()
-		$('#select_update_predict').find('option').remove()
-		for (var i = 0; i < predictsArray.length; i++) {
-			var itemToPush = {
-				id: predictsArray[i].id,
-				name: predictsArray[i].explanation
-			}
-			$('#select_moreInfo_predict').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			})).selectpicker('refresh')
-			$('#select_update_predict').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			})).selectpicker('refresh')
+	function fill_table_champion(champion, usersArray) {
+		$('#statistics_personal_league_table>tbody').empty()
+		for (var i = 0; i < usersArray.length; i++) {
+			$('#statistics_personal_league_table').append('<tr id="addr' + (i) + '"></tr>')
+			$('#addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+			)
 		}
 	}
-
-	function fill_league_selectors(leaguesArray) {
-		$('#select_management_league').find('option').remove()
-		$('#select_update_league').find('option').remove()
-		$('#select_new_league').find('option').remove()
-		for (var i = 0; i < leaguesArray.length; i++) {
-			var itemToPush = {
-				id: leaguesArray[i].id,
-				name: leaguesArray[i].name
-			}
-			$('#select_management_league').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			})).selectpicker('refresh')
-			$('#select_update_league').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			})).selectpicker('refresh')
-			$('#select_new_league').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			})).selectpicker('refresh')			
+	function fill_table_totalStatistics(usersArray) {
+		$('#ranking_total_statistics_table>tbody').empty()
+		var rowNo = 0
+		for (var i = 0; i < usersArray.length; i++) {
+			if (usersArray[i].id === userId)
+				rowNo = i
+			$('#ranking_total_statistics_table').append('<tr id="addr' + (i) + '"></tr>')
+			$('#addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+			)
+		}
+		var table = $('#ranking_total_statistics_table')
+    var w = $(window);
+    var row = table.find('tr')
+      .removeClass('active')
+      .eq(+rowNo)
+      .addClass('active')
+    
+    if (row.length){
+      w.scrollTop(row.offset().top - (w.height()/2))
+    }
+	}
+	function fill_table_teamStatistics(usersArray) {
+		$('#ranking_team_statistics_table>tbody').empty()
+		var rowNo = 0
+		for (var i = 0; i < usersArray.length; i++) {
+			if (usersArray[i].id === userId)
+				rowNo = i
+			$('#ranking_team_statistics_table').append('<tr id="addr' + (i) + '"></tr>')
+			$('#addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+			)
+		}
+		var table = $('#ranking_team_statistics_table')
+    var w = $(window);
+    var row = table.find('tr')
+      .removeClass('active')
+      .eq(+rowNo)
+      .addClass('active')
+    
+    if (row.length){
+      w.scrollTop(row.offset().top - (w.height()/2))
+    }
+	}
+	function fill_table_leagueStatistics(usersArray) {
+		$('#ranking_league_statistics_table>tbody').empty()
+		var rowNo = 0
+		for (var i = 0; i < usersArray.length; i++) {
+			if (usersArray[i].id === userId)
+				rowNo = i
+			$('#ranking_league_statistics_table').append('<tr id="addr' + (i) + '"></tr>')
+			$('#addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+			)
+		}
+		var table = $('#ranking_league_statistics_table')
+    var w = $(window);
+    var row = table.find('tr')
+      .removeClass('active')
+      .eq(+rowNo)
+      .addClass('active')
+    
+    if (row.length){
+      w.scrollTop(row.offset().top - (w.height()/2))
+    }
+	}
+	function fill_table_trophies(userLevel) {
+		for (var i = userLevel; i < 11; i++) {
+			var str = '#trophy_' + i
+			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
 	}
 	function fill_table_transaction(price, description, status, refId) {
@@ -1059,6 +1084,12 @@ $(document).ready(function () {
 		$('#transaction_status').var(status)
 		$('#transaction_refId').var(refId)
 	}
+	// ------------------------------ //
+	// 		 	 		Data Fetchers					//
+	// ------------------------------ //
+
+	
+
 
 	function getAllPredicts(callback) {
 		var predictURLWithAT = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken)
@@ -1137,17 +1168,17 @@ $(document).ready(function () {
 	function getAllInfo() {
 		getAllLeagus(function(err, league) {
 			if (err) {
-				$('.page-loader-wrapper').fadeOut()
+				// $('.page-loader-wrapper').fadeOut()
 				return alert(err)
 			}
 			getAllPredicts(function(err, predict) {
 				if (err) {
-					$('.page-loader-wrapper').fadeOut()
+					// $('.page-loader-wrapper').fadeOut()
 					return alert(err)
 				}
 				getAllEstiamtes(function(err, estimate) {
 					if (err) {
-						$('.page-loader-wrapper').fadeOut()
+						// $('.page-loader-wrapper').fadeOut()
 						return alert(err)
 					}
 					fill_graph(league, estimates)
@@ -1155,7 +1186,7 @@ $(document).ready(function () {
 					fill_moreInfo_table(estimate)
 					$("#adminUsername").html(localStorage.getItem('AdminCompanyName'))
 					$("#adminEmail").html(localStorage.getItem('adminEmail'))
-					$('.page-loader-wrapper').fadeOut()
+					// $('.page-loader-wrapper').fadeOut()
 				})
 			})
 		})
