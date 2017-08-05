@@ -1053,6 +1053,12 @@ $(document).ready(function () {
 			})).selectpicker('refresh')			
 		}
 	}
+	function fill_table_transaction(price, description, status, refId) {
+		$('#transaction_price').var(price)
+		$('#transaction_description').var(description)
+		$('#transaction_status').var(status)
+		$('#transaction_refId').var(refId)
+	}
 
 	function getAllPredicts(callback) {
 		var predictURLWithAT = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken)
