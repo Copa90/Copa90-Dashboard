@@ -919,10 +919,21 @@ $(document).ready(function () {
 
     $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '09__ ___ ____' });
     $demoMaskedInput.find('.receivedCode').inputmask('9 9 9 9', { placeholder: '_ _ _ _' });
-	}	
+	}
 
+	function startLoading() {
+		$('.page-loader-wrapper').fadeIn()
+		$('#rainbow-progress-bar1').fadeIn()
+	}
 	function doneLoading() {
-		setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 100)
+		$('.page-loader-wrapper').fadeOut()
+		$('#rainbow-progress-bar1').fadeOut()
+	}
+	function startProgressBar() {
+		$('#rainbow-progress-bar0').fadeIn()
+	}
+	function doneProgressBar() {
+		$('#rainbow-progress-bar0').fadeOut()
 	}
 
 	// ------------------------------ //
