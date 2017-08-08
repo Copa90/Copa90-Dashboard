@@ -21,15 +21,6 @@
 	<!-- Animation Css -->
 	<link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
 
-	<!-- Colorpicker Css -->
-	<link href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet" />
-
-	<!-- Dropzone Css -->
-	<link href="../../plugins/dropzone/dropzone.css" rel="stylesheet">
-
-	<!-- Bootstrap Material Datetime Picker Css -->
-	<link href="../../plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
-
 	<!-- Wait Me Css -->
 	<link href="../../plugins/waitme/waitMe.css" rel="stylesheet" />
 
@@ -48,9 +39,6 @@
 	<!-- noUISlider Css -->
 	<link href="../../plugins/nouislider/nouislider.min.css" rel="stylesheet" />
 
-	<!-- JQuery DataTable Css -->
-	<link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-
 	<!-- Sweetalert Css -->
 	<link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 
@@ -60,9 +48,6 @@
 	<!-- Custom Css -->
 	<link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/rtl.css" rel="stylesheet">
-
-	<!-- Nprogress bar for top in Ajax call-->
-	<link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" />
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
 	<link href="../../css/themes/theme-green.css" rel="stylesheet" />
@@ -280,7 +265,7 @@
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<b style="font-size:12px;"> تیم مورد علاقه‌تان </b>
-										<select id="aaa_signup_select_team" class="team_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید">
+										<select id="aaa_signup_select_team" class="team_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -571,7 +556,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های خصوصی </b>
-										<select id="edit_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید">
+										<select id="edit_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -693,7 +678,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های خصوصی </b>
-										<select id="join_personal_league_champion_selector" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید">
+										<select id="join_personal_league_champion_selector" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -736,7 +721,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های خصوصی </b>
-										<select id="statistics_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید">
+										<select id="statistics_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -818,7 +803,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
-										<select id="edit_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید">
+										<select id="edit_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -868,8 +853,12 @@
 									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
 									</div>
 									<div class="col-lg-4 col-md-5 col-sm-5 col-xs-6">
-										<b style="font-size:12px;"> مدت زمان چالش </b>
-										<select id="create_personal_challenge_period" class="form-control show-tick text-right" data-size=3 title="انتخاب یک زمان">
+										<b style="font-size:12px;"> مدت زمان چالش (روز) </b>
+										<select id="create_personal_challenge_period" class="form-control show-tick text-right" data-size=3 title="انتخاب یک زمان" data-mobile="true">
+											<option>3</option>
+											<option>7</option>
+											<option>10</option>
+											<option>14</option>
 										</select>
 									</div>
 									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4">
@@ -905,7 +894,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
-										<select id="join_personal_league_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید">
+										<select id="join_personal_league_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -948,7 +937,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌ها </b>
-										<select id="statistics_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید">
+										<select id="statistics_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -1036,7 +1025,7 @@
 								</div>
 								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 									<b style="font-size:12px;"> لیگ‌های عمومی </b>
-									<select id="play_room_league_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ عمومی را انتخاب کنید">
+									<select id="play_room_league_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ عمومی را انتخاب کنید" data-mobile="true">
 									</select>
 								</div>
 							</div>
@@ -1151,7 +1140,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های عمومی </b>
-										<select id="ranking_league_statistics_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید">
+										<select id="ranking_league_statistics_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید" data-mobile="true">
 										</select>
 									</div>
 								</div>
@@ -1250,7 +1239,7 @@
 											</div>
 										</div>
 
-										<div class="row clearfix">
+										<div class="row clearfix" id="progressBar_total">
 											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 											</div>											
 											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -1288,7 +1277,7 @@
 											</div>
 										</div>
 
-										<div class="row clearfix">
+										<div class="row clearfix" id="progressBar_week">
 											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 											</div>											
 											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -1326,7 +1315,7 @@
 											</div>
 										</div>
 
-										<div class="row clearfix">
+										<div class="row clearfix" id="progressbar_month">
 											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 											</div>											
 											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -1435,70 +1424,10 @@
 						<div class="cardRainbow rainbow-progress-bar"></div>
 						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
 							<br>
-							<div class="row clearfix">
+							<div class="row clearfix" id="special_pacakge">
 								<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
 									<!-- Wrapper for slides -->
-									<div class="carousel-inner" role="listbox">
-										<div class="item active">
-											<a href="" class="package_purchase">
-												<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;"> 
-												</div> 
-												<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;"> 
-													<div class="card" style="opacity: 0.93; margin-bottom: 0px;">
-														<div class="body bg-orange" style="height:200px;">
-															<div class="row clearfix">
-																<h3 class="text-center m-t-0">زمان محدود</h3>
-															</div>
-															<br>
-															<div class="row clearfix">
-																<h4 class="text-center">۲۷۰ پیش‌بینی‌</h4>
-																<h4 class="text-center">۲۵۰۰۰ تومان</h4>
-															</div>
-														</div>
-													</div>
-												</div> 
-											</a>
-										</div>
-										<div class="item">
-											<a href="" class="package_purchase">
-												<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;"> 
-												</div> 
-												<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;"> 
-													<div class="card" style="opacity: 0.93; margin-bottom: 0px;">
-														<div class="body bg-orange" style="height:200px;">
-															<div class="row clearfix">
-																<h2 class="text-center m-t-0">پیشنهاد ویژه</h2>
-															</div>
-															<div class="row clearfix">
-																<h4 class="text-center">۳۵۰ پیش‌بینی‌</h4>
-																<h4 class="text-center">فقط</h4>
-																<h3 class="text-center">۳۰۰۰۰ تومان</h3>
-															</div>
-														</div>
-													</div>
-												</div> 
-											</a>
-										</div>
-										<div class="item">
-											<a href="" class="package_purchase">
-												<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;"> 
-												</div> 
-												<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;"> 
-													<div class="card" style="opacity: 0.93; margin-bottom: 0px;">
-														<div class="body bg-orange" style="height:200px;">
-															<div class="row clearfix">
-																<h3 class="text-center m-t-0">زمان محدود</h3>
-															</div>
-															<br>
-															<div class="row clearfix">
-																<h4 class="text-center">۲۲۰ پیش‌بینی‌</h4>
-																<h4 class="text-center">۲۰۰۰۰ تومان</h4>
-															</div>
-														</div>
-													</div>
-												</div> 
-											</a>
-										</div>
+									<div class="carousel-inner" role="listbox" id="special_listbox">
 									</div>
 									<!-- Controls -->
 									<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="background-image: none">
@@ -1514,10 +1443,10 @@
 							<br>
 							<br>
 							<br>
-							<div class="row clearfix">
+							<div class="row clearfix" id="general_package">
 								<div id="carousel-example-generic1" class="carousel slide" data-ride="carousel">
 									<!-- Wrapper for slides -->
-									<div class="carousel-inner" role="listbox">
+									<div class="carousel-inner" role="listbox" id="general_listbox">
 										<div class="item active">
 											<a href="" class="package_purchase">
 												<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;"> 
@@ -1603,71 +1532,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- End of Packages -->
-
-			<!-- Start of Transaction  -->
-			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%;" id="page_transaction">
-				<div class="row clearfix">
-					<h2 class="text-center m-t-20 m-b-50 sharedMobile sharedTitle" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
-				</div>
-				<div class="col-lg-3 col-md-3 col-sm-2">
-				</div>
-				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
-                    <div class="card" style="opacity: 0.93;">
-						<div class="cardRainbow rainbow-progress-bar"></div>
-						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
-
-							<!-- Start of Transaction Result -->
-							<div class="row clearfix">
-								<div class="row clearfix m-t-10">
-									<h4 class="text-center">تراکنش مالی خرید محصول</h4>
-									<br>
-									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
-									</div>
-									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
-										<div class="body table-responsive">
-											<table class="table table-striped">
-												<tbody>
-												<tr>
-													<th scope="row">مبلغ تراکنش</th>
-													<td id="transaction_price"> رضا </td>
-												</tr>
-												<tr>
-													<th scope="row">توضحات محصول</th>
-													<td id="transaction_description">حمید</td>
-												</tr>
-												<tr>
-													<th scope="row">وضعیت تراکنش</th>
-													<td id="transaction_status">حمید</td>
-												</tr>
-												<tr>
-													<th scope="row">شماره تراکنش</th>
-													<td id="transaction_refId">حمید</td>
-												</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- End of Transaction Result -->
-
-							<div class="row clearfix" style="bottom:0;">
-								<div class="col-lg-3 col-md-2 col-sm-2">
-								</div>
-								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-									<button type="button" id="transaction_result_button" class="btn bg-light-green btn-block btn-lg waves-effect" disabled> خروجی </button>
-								</div>
-								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-									<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- End of Transaction  -->			
+			<!-- End of Packages -->		
 
 		</div>
     </section>
@@ -1684,12 +1549,6 @@
 	<!-- Slimscroll Plugin Js -->
 	<script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
-	<!-- Bootstrap Colorpicker Js -->
-	<script src="../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-
-	<!-- Dropzone Plugin Js -->
-	<script src="../../plugins/dropzone/dropzone.js"></script>
-
 	<!-- Input Mask Plugin Js -->
 	<script src="../../plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
 
@@ -1704,9 +1563,6 @@
 
 	<!-- Moment Plugin Js -->
 	<script src="../../plugins/momentjs/moment.js"></script>
-
-	<!-- Bootstrap Material Datetime Picker Plugin Js -->
-	<script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
 	<!-- noUISlider Plugin Js -->
 	<script src="../../plugins/nouislider/nouislider.js"></script>
@@ -1735,13 +1591,7 @@
 
     <!-- Demo Js -->
 	<script src="../../js/demo.js"></script>
-	<script src="../../plugins/platform/platform.js"></script>
-	
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
-
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
+	<script src="../../plugins/platform/platform.js"></script>	
 </body>
 
 </html>
