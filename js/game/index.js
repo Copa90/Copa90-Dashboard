@@ -136,7 +136,8 @@ var zarinPal_url = "http://127.0.0.1:4020/api/"
 
 $(document).ready(function () {
 
-	doneLoading()
+	startLoading()
+
 	var phoneNumber
 	var userClient
 	var currentPredict
@@ -187,13 +188,18 @@ $(document).ready(function () {
 		readFromLocalStorage()
 	}
 
-	// if (!userId || !coreAccessToken) {
-	// 		change_page_scene('page_aaa')
-	// 		doneLoading()		
-	// }
-	// else {
-		change_page_scene('page_main_menu')
-	// }	
+	if (!userId || !coreAccessToken) {
+			change_page_scene('page_aaa')
+			doneLoading()
+	}
+	else {
+		getAllInfo(function(err) {
+			doneLoading()
+			if (err)
+				return console.error(err)
+			change_page_scene('page_main_menu')
+		})
+	}	
 
 	// ------------------------------ //
 	// 		  	Page Controller					//
@@ -230,7 +236,6 @@ $(document).ready(function () {
 			$('.nav-tabs a[id="nav9"]').tab('show')
 		}
 	}
-
 	// ------------------------------ //
 	// 			  	Selectors							//
 	// ------------------------------ //
@@ -313,6 +318,20 @@ $(document).ready(function () {
 			}
 		}
 	}
+	function empty_all_fields() {
+		$("#edit_personal_challenge_name").val('')
+		$("#edit_personal_league_name").val('')
+		$("#edit_personal_league_capacity").val(Number('10'))
+		$("#edit_personal_league_chances").val(Number('10'))
+
+		$("#create_personal_challenge_name").val('')
+		$("#create_personal_challenge_chances").val(Number('10'))
+		$("#create_personal_league_name").val('')
+		$("#create_personal_league_capacity").val(Number('10'))
+		$("#create_personal_league_chances").val(Number('10'))
+
+		$("option:selected").removeAttr("selected")
+	}
 	// ------------------------------ //
 	// 				  	Shared							//
 	// ------------------------------ //
@@ -323,6 +342,8 @@ $(document).ready(function () {
 	$(document).on("click", ".returnMain", function (e) {
 		e.preventDefault()
 		change_page_scene('page_main_menu')
+		emoty_all_tables()
+		empty_all_fields()
 	})
 	// ------------------------------ //
 	// 							AAA								//
@@ -331,7 +352,7 @@ $(document).ready(function () {
 		e.preventDefault()
 		phoneNumber = $("#aaa_send_phone_phone_number").val()
 		if (!phoneNumber) {
-			return console.error('required fields error')
+			return warningOperation()
 		}		
 		alert(phoneNumber)
 		$('#sign-in').hide()
@@ -341,12 +362,12 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#aaa_send_code_button", function (e) {
 		e.preventDefault()
-		NProgress.start()
 		var code = $("#aaa_send_code_code").val()
 		if (!phoneNumber || !code) {
-			return console.error('required fields error')
+			return warningOperation()
 		}		
 		alert(code)
+		startProgressBar()
 		var verificationURL = wrapAccessToken(coreEngine_url + 'verifications/verification/' + phoneNumber + '/' + code, coreAccessToken);
 		$.ajax({
 			url: verificationURL,
@@ -355,28 +376,28 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (verificationResult) {
-				NProgress.done()
-				alert('verification done')
+				doneProgressBar()
+				successfulOperation()
 				$('#sign-in').show()
 				$('#password').hide()
 				$('#sign-up').hide()
 				$('#phone').hide()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('verification failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#aaa_send_password_button", function (e) {
 		e.preventDefault()
-		NProgress.start()
 		var phoneNum = $("#aaa_password_phone_number").val()
 		if (!phoneNum) {
-			return console.error('required fields error')
+			return warningOperation()
 		}		
 		alert(phoneNum)
+		startProgressBar()
 		var passwordURL = wrapAccessToken(coreEngine_url + 'clients/sendPassword/' + phoneNum, coreAccessToken);
 		$.ajax({
 			url: passwordURL,
@@ -385,17 +406,17 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (passwordResult) {
-				NProgress.done()
-				alert('password done')
+				doneProgressBar()
+				successfulOperation()
 				$('#sign-in').show()
 				$('#password').hide()
 				$('#sign-up').hide()
 				$('#phone').hide()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('passsword failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -405,7 +426,7 @@ $(document).ready(function () {
 				!$("#aaa_signup_email").val() || !$("#aaa_signup_password").val() ||
 				!$("#aaa_signup_referrer").val() || !phoneNumber || !$("#aaa_signup_select_team").val()
 		) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var data = {
 			fullName: $("#aaa_signup_fullname").val(),
@@ -416,8 +437,8 @@ $(document).ready(function () {
 			phoneNumber: phoneNumber,
 			time: Math.floor((new Date).getTime())
 		}
-		NProgress.start()
 		alert(JSON.stringify(data))
+		startProgressBar()
 		var clientsURL = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken);
 		$.ajax({
 			url: clientsURL,
@@ -442,9 +463,8 @@ $(document).ready(function () {
 							contentType: "application/json; charset=utf-8",
 							type: "POST",
 							success: function (teamResult) {
-								NProgress.done()
-								alert('client done')
-								userClient = clientResult
+								doneProgressBar()
+								successfulOperation()
 								$('#sign-in').hide()
 								$('#password').hide()
 								$('#sign-up').hide()
@@ -453,38 +473,39 @@ $(document).ready(function () {
 								$('#sendCode').show()
 							},
 							error: function (xhr, status, error) {
-								NProgress.done()
-								alert('client failed')
-								alert(xhr.responseText)
+								doneProgressBar()
+								failedOperation()
+								console.error(xhr.responseText)
 							}
 						})
 					},
 					error: function (xhr, status, error) {
-						NProgress.done()
-						alert('client failed')
-						alert(xhr.responseText)
+						doneProgressBar()
+						failedOperation()
+						console.error(xhr.responseText)
 					}
 				})
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('client failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#aaa_signin_button", function (e) {
 		e.preventDefault()
-		NProgress.start()
 		var phoneNum = $("#aaa_signin_phone_number").val()
 		var pass = $("#aaa_signin_password").val()
 		if (!phoneNum || !pass) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var data = {
 			phoneNumber: phoneNum,
 			password: pass
 		}
+		alert(JSON.stringify(data))
+		startProgressBar()
 		var loginURL = wrapAccessToken(coreEngine_url + 'clients/login', coreAccessToken)
 		$.ajax({
 			url: loginURL,
@@ -493,14 +514,20 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (clientResult) {
-				NProgress.done()
-				alert('login done')
-				change_page_scene('page_main_menu')
+				getAllInfo(function(err) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					else {
+						successfulOperation()
+						change_page_scene('page_main_menu')
+					}
+				})
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('login failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -560,6 +587,8 @@ $(document).ready(function () {
 			clientId: userId,
 			time: Math.floor((new Date).getTime())
 		}
+		alert(JSON.stringify(data))
+		startProgressBar()
 		var estimateURL = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken);
 		$.ajax({
 			url: estimateURL,
@@ -568,20 +597,45 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (estimateResult) {
-				NProgress.done()
-				alert('estimate done')
-				// call for next object
+				acceptCount++
+				getNextObject(function(err, result) {
+					doneProgressBar()
+					if (err) {
+						failedOperation()
+						console.error(xhr.responseText)
+					}
+					var total = userClient.accountInfoModel.chances
+					var fill = ((total - acceptCount) / total) * 100
+					var white = 100 - fill
+					$('#main_predict_progress_white').css('width', white.toString() + '%')
+					$('#main_predict_progress_fill').css('width', fill.toString() + '%')
+					if (fill >= 75)
+						$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-deep-orange").addClass("bg-green")
+					else if (fill >= 50)
+						$("#main_predict_progress_fill").removeClass("bg-orange bg-green bg-deep-orange").addClass("bg-yellow")
+					else if (fill >= 25)
+						$("#main_predict_progress_fill").removeClass("bg-green bg-yellow bg-deep-orange").addClass("bg-orange")
+					else 
+						$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-green").addClass("bg-deep-orange")
+				})
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('client failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#main_predict_reject_button", function (e) {
 		e.preventDefault()
-		// call for next object
+		startProgressBar()
+		getNextObject(function(err, result) {
+			doneProgressBar()
+			if (err) {
+				failedOperation()
+				console.error(xhr.responseText)
+			}
+		})
 	})
 	// ------------------------------ //
 	// 			  Personal League					//
@@ -590,8 +644,9 @@ $(document).ready(function () {
 		e.preventDefault()
 		var leagueId = $("#edit_personal_league_leagueId").val()
 		if (!leagueId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
+		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
 		$.ajax({
 			url: championURL,
@@ -599,14 +654,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "DELETE",
 			success: function (championResult) {
-				NProgress.done()
-				alert('delete champion done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('delete champion failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -614,13 +668,14 @@ $(document).ready(function () {
 		e.preventDefault()
 		var leagueId = $("#aaa_signup_select_team").val()
 		if (!leagueId || !$("#aaa_signup_select_team").val() || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val() || !$("#edit_personal_league_chances").val()) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var data = {
 			name: $("#edit_personal_league_name").val(),
 			capactiy: $("#edit_personal_league_capacity").val(),
 			reduceChances: $("#edit_personal_league_chances").val()
 		}
+		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
 		$.ajax({
 			url: championURL,
@@ -629,21 +684,20 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "PUT",
 			success: function (championResult) {
-				NProgress.done()
-				alert('edit champion done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('edit champion failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#create_personal_league_create_button", function (e) {
 		e.preventDefault()
 		if (!userId || !$("#create_personal_league_name").val() || !$("#create_personal_league_capacity").val() || !$("#create_personal_league_chances").val()) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var data = {
 			creatorId: userId,
@@ -651,6 +705,7 @@ $(document).ready(function () {
 			capactiy: $("#create_personal_league_capacity").val(),
 			reduceChances: $("#create_personal_league_chances").val()
 		}
+		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions', coreAccessToken);
 		$.ajax({
 			url: championURL,
@@ -659,14 +714,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				NProgress.done()
-				alert('create champion done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('create champion failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -674,8 +728,9 @@ $(document).ready(function () {
 		e.preventDefault()
 		var leagueId = $("#join_personal_league_champion_selector").val()
 		if (!leagueId || !userId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
+		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/leaveChampion/' + userId, coreAccessToken);
 		$.ajax({
 			url: championURL,
@@ -683,14 +738,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				NProgress.done()
-				alert('leave champion done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('leave champion failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -698,8 +752,9 @@ $(document).ready(function () {
 		e.preventDefault()
 		var leagueId = $("#join_personal_league_code").val()
 		if (!leagueId || !userId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
+		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/joinChampion/' + userId, coreAccessToken);
 		$.ajax({
 			url: championURL,
@@ -707,14 +762,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				NProgress.done()
-				alert('join champion done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('join champion failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -722,13 +776,14 @@ $(document).ready(function () {
 		e.preventDefault()
 		var leagueId = $("#statistics_personal_league_leagueId").val()
 		if (!leagueId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var filter = {
 			where: {
 				'championId': leagueId
 			}
 		}
+		startProgressBar()
 		var rankingURL = wrapAccessToken(coreEngine_url + 'rankings', coreAccessToken)
 		var rankingURLWithFilter = wrapFilter(rankingURL, filter)
 		$.ajax({
@@ -737,14 +792,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "GET",
 			success: function (rankingResult) {
-				NProgress.done()
-				alert('ranking champion done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('ranking champion failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -759,8 +813,9 @@ $(document).ready(function () {
 		e.preventDefault()
 		var challengeId = $("#edit_personal_challenge_challengeId").val()
 		if (!challengeId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
+		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
 		$.ajax({
 			url: challengeURL,
@@ -768,14 +823,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "DELETE",
 			success: function (challengeResult) {
-				NProgress.done()
-				alert('delete challenge done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('delete challenge failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -783,11 +837,12 @@ $(document).ready(function () {
 		e.preventDefault()
 		var challengeId = $("#edit_personal_challenge_challengeId").val()
 		if (!challengeId || !$("#edit_personal_challenge_name").val()) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var data = {
 			name: $("#edit_personal_challenge_name").val()
 		}
+		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
 		$.ajax({
 			url: challengeURL,
@@ -796,28 +851,28 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "PUT",
 			success: function (challengeResult) {
-				NProgress.done()
-				alert('edit challenge done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('edit challenge failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#create_personal_challenge_create_button", function (e) {
 		e.preventDefault()
 		if (!userId || !$("#create_personal_challenge_name").val() || !$("#create_personal_challenge_period").val() || !$("#create_personal_challenge_chances").val()) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var data = {
 			creatorId: userId,
 			name: $("#create_personal_challenge_name").val(),
-			period: $("#create_personal_challenge_period").val(),
+			period: Number($("#create_personal_challenge_period").val()) * 24 * 60 * 60 * 1000,
 			reduceChances: $("#create_personal_challenge_chances").val()
 		}
+		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges', coreAccessToken);
 		$.ajax({
 			url: championURL,
@@ -826,14 +881,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				NProgress.done()
-				alert('create challenge done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('create challenge failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -841,8 +895,9 @@ $(document).ready(function () {
 		e.preventDefault()
 		var challengeId = $("#join_personal_league_challenge_selector").val()
 		if (!challengeId || !userId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
+		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/leaveChallenge/' + userId, coreAccessToken);
 		$.ajax({
 			url: challengeURL,
@@ -850,14 +905,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (challengeResult) {
-				NProgress.done()
-				alert('leave challenge done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('leave challenge failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -865,8 +919,9 @@ $(document).ready(function () {
 		e.preventDefault()
 		var challengeId = $("#join_personal_league_code").val()
 		if (!challengeId || !userId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
+		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/joinChallenge/' + userId, coreAccessToken);
 		$.ajax({
 			url: challengeURL,
@@ -874,14 +929,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (challengeResult) {
-				NProgress.done()
-				alert('join challenge done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('join challenge failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -889,13 +943,14 @@ $(document).ready(function () {
 		e.preventDefault()
 		var challengeId = $("#statistics_personal_challenge_challengeId").val()
 		if (!challengeId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
 		var filter = {
 			where: {
 				'championId': challengeId
 			}
 		}
+		startProgressBar()
 		var competitionURL = wrapAccessToken(coreEngine_url + 'competitions', coreAccessToken)
 		var competitionURLWithFilter = wrapFilter(competitionURL, filter)
 		$.ajax({
@@ -904,14 +959,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "GET",
 			success: function (competitionResult) {
-				NProgress.done()
-				alert('competition champion done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('competition champion failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -928,7 +982,14 @@ $(document).ready(function () {
 		if (!leagueId) {
 			return console.error('required fields error')
 		}
-		// call next object
+		startProgressBar()
+		getNextObject(function(err, result) {
+			doneProgressBar()
+			if (err) {
+				failedOperation()
+				console.error(xhr.responseText)
+			}
+		})
 	})
 	// ------------------------------ //
 	// 			Ranking Statistics				//
@@ -945,8 +1006,9 @@ $(document).ready(function () {
 		e.preventDefault()
 		var leagueId = $("#ranking_league_statistics_leagueId").val()
 		if (!leagueId || !userId) {
-			return console.error('required fields error')
+			return warningOperation()
 		}
+		startProgressBar()
 		var clientURL = wrapAccessToken(coreEngine_url + 'clients/' + userId, coreAccessToken)
 		$.ajax({
 			url: clientURL,
@@ -954,14 +1016,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "GET",
 			success: function (clientResult) {
-				NProgress.done()
-				alert('client checkoint done')
-				// call for next object
+				doneProgressBar()
+				successfulOperation()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
-				alert('client checkpoint failed')
-				alert(xhr.responseText)
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
 			}
 		})
 	})
@@ -981,6 +1042,65 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", ".package_purchase", function (e) {
 		e.preventDefault()
+		var packageId = e.target.id
+		if (!packageId) {
+			return warningOperation()
+		}
+		startProgressBar()
+		var packageURL = wrapAccessToken(coreEngine_url + 'packages/' + packageId, coreAccessToken)
+		$.ajax({
+			url: packageURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "GET",
+			success: function (packageResult) {
+				if (packageResult.status === 'Working') {
+					var data = {
+						MerchantID: MID,
+						Amount: packageResult.price,
+						Email: userClient.email,
+						Mobile: userClient.phoneNumber,
+						CallbackURL: 'http://copa90.ir/transaction.html?source=telegram&userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&amount=' + packageResult.price,
+						Description: {
+							clientId: userId,
+							packageId: packageResult.id
+						}
+					}
+					data.CallbackURL = data.CallbackURL + '&description=' + JSON.stringify(data.Description)
+					var transactionURL = wrapAccessToken(zarinPal_url + 'PaymentGatewayImplementationServiceBinding/PaymentRequest', coreAccessToken)
+					$.ajax({
+						url: packageURL,
+						dataType: "json",
+						data: JSON.stringify(data),
+						contentType: "application/json; charset=utf-8",
+						type: "POST",
+						success: function (transactionResult) {
+							doneProgressBar()
+							if (transactionResult.Status == 100) {
+								window.location.href = 'https://www.zarinpal.com/pg/StartPay/' + transactionResult.Authority
+							}
+							else {
+								failedOperation()
+							}
+						},
+						error: function (xhr, status, error) {
+							doneProgressBar()
+							failedOperation()
+							console.error(xhr.responseText)
+						}
+					})
+				}
+				else {
+					doneProgressBar()
+					failedOperation()
+				}
+			},
+			error: function (xhr, status, error) {
+				doneProgressBar()
+				failedOperation()
+				console.error(xhr.responseText)
+			}
+		})
 	})
 
 	// ------------------------------ //
@@ -1151,550 +1271,316 @@ $(document).ready(function () {
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
 	}
-	function fill_table_transaction(price, description, status, refId) {
-		$('#transaction_price').var(price)
-		$('#transaction_description').var(description)
-		$('#transaction_status').var(status)
-		$('#transaction_refId').var(refId)
+	function emoty_all_tables() {
+		for (var i = 0; i < 11; i++) {
+			var str = '#trophy_' + i
+			$(str).css({"-webkit-filter":'', "filter": ''})
+		}
+		$('#ranking_league_statistics_table>tbody').empty()
+		$('#ranking_team_statistics_table>tbody').empty()
+		$('#ranking_total_statistics_table>tbody').empty()
+		$('#statistics_personal_league_table>tbody').empty()
+		$('#statistics_personal_challenge_table>tbody').empty()
 	}
 	// ------------------------------ //
 	// 		 	 		Data Fetchers					//
 	// ------------------------------ //
-
-	
-
-
-	function getAllPredicts(callback) {
-		var predictURLWithAT = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken)
+	function getAllInfo(callback) {
+		getAllLeagues(function(err, leaguesResult) {
+			if (err)
+				return callback(err)
+			getAllTeams(function(err, teamsResult) {
+				if (err)
+					return callback(err)
+				if (userId && coreAccessToken) {
+					getUserInfo(function(err, userInfo) {
+						if (err)
+							return callback(err)
+						getAllPackages(function(err, packageResult) {
+							if (err)
+								return callback(err)
+							getAllUsersChallanges(function(err, challengeResult) {
+								if (err)
+									return callback(err)
+								getAllUsersChampions(function(err, championResult) {
+									if (err)
+										return callback(err)
+									return callback(null)
+								})
+							})
+						})
+					})
+				}
+				else {
+					return callback(null)
+				}
+			})
+		})
+	}
+	function getUserInfo(callback) {
+		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId, coreAccessToken)
 		$.ajax({
-			url: predictURLWithAT,
+			url: clientURLWithAT,
 			type: "GET",
-			success: function (predictResult) {
-				predicts = predictResult
-				fill_predict_selectors(predicts)
-				callback(null, predicts)
-				NProgress.done()
+			success: function (clientResult) {
+				var estimateURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/estimates', coreAccessToken)
+				$.ajax({
+					url: estimateURLWithAT,
+					type: "GET",
+					success: function (estimateResult) {
+						userClient = clientResult
+						acceptCount = 0
+						$('.sharedName').val(userClient.fullName)
+						$('.card_total_points').val(userClient.accountInfoModel.totalPoints)
+						$('.card_rem_predicts').val(userClient.accountInfoModel.chances)
+						fill_table_trophies(userClient.trophyModel.level)
+						var totalWinCount = 0, totalLoseCount = 0, totalCount = 0, totalPoints = 0
+						var weekWinCount = 0, weekLoseCount = 0, weekCount = 0, weekPoints = 0
+						var monthWinCount = 0, monthLoseCount = 0, monthCount = 0, monthPoints = 0
+						var now = Math.floor((new Date).getTime())
+						var weekDeadline = now - (8 * 24 * 60 * 60 * 1000)
+						var monthDeadline = now - (31 * 24 * 60 * 60 * 1000)
+						for (var i = 0; i < estimateResult.length; i++) {
+							var checkTime = Number(estimateResult[i].checkTime)
+							if (checkTime <= now && checkTime >= weekDeadline) {
+								if (estimateResult[i].status === 'Win') {
+									weekWinCount++
+									weekPoints += estimateResult[i].point
+								}
+								else if (estimateResult[i].status === 'Lose')
+									weekLoseCount++
+								if (estimateResult[i].status !== 'Open')
+									weekCount++
+							}
+							if (checkTime <= now && checkTime >= monthDeadline) {
+								if (estimateResult[i].status === 'Win') {
+									monthWinCount++
+									monthPoints += estimateResult[i].point
+								}
+								else if (estimateResult[i].status === 'Lose')
+									monthLoseCount++
+								if (estimateResult[i].status !== 'Open')
+									monthCount++
+							}
+							if (estimateResult[i].status === 'Win') {
+								totalWinCount++
+								totalPoints += estimateResult[i].point
+							}
+							else if (estimateResult[i].status === 'Lose')
+								totalLoseCount++
+							if (estimateResult[i].status !== 'Open')
+								totalCount++
+						}
+						if (monthCount == 0) {
+							$('#month_points').val(monthPoints)
+							$('#month_predicts').val(monthCount)
+							$('#month_correct_predicts').val(monthWinCount)
+							var correct = (monthWinCount / monthCount) * 100
+							var rem = 100 - correct
+							$('#month_rem').css('width', rem.toString() + '%')
+							$('#month_correct').css('width', correct.toString() + '%')
+						}
+						else {
+							$('#progressbar_month').hide()
+						}
+						if (weekCount == 0) {
+							$('#week_points').val(weekPoints)
+							$('#week_predicts').val(weekCount)
+							$('#week_correct_predicts').val(weekWinCount)
+							var correct = (weekWinCount / weekCount) * 100
+							var rem = 100 - correct
+							$('#week_rem').css('width', rem.toString() + '%')
+							$('#week_correct').css('width', correct.toString() + '%')
+						}
+						else {
+							$('#progressBar_week').hide()
+						}
+						if (totalCount == 0) {
+							$('#total_points').val(totalPoints)
+							$('#total_predicts').val(totalCount)
+							$('#total_correct_predicts').val(totalWinCount)
+							var correct = (totalWinCount / totalCount) * 100
+							var rem = 100 - correct
+							$('#total_rem').css('width', rem.toString() + '%')
+							$('#total_correct').css('width', correct.toString() + '%')
+						}
+						else {
+							$('#progressBar_total').hide()
+						}
+						callback(null, userClient)
+					},
+					error: function (xhr, status, error) {
+						callback(err)
+						alert(xhr.responseText)
+					}
+				})
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
 				alert(xhr.responseText)
 			}
 		})
 	}
-
-	function getAllLeagus(callback) {
+	function getAllLeagues(callback) {
 		var leagueURLWithAT = wrapAccessToken(coreEngine_url + 'leagues', coreAccessToken)
 		$.ajax({
 			url: leagueURLWithAT,
 			type: "GET",
 			success: function (leagueResult) {
-				leagues = leagueResult
-				fill_league_selectors(leagues)
-				callback(null, leagues)
-				NProgress.done()
+				leaguesArray = leagueResult
+				fill_league_selector(leagueResult)
+				callback(null, leaguesArray)
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
 				alert(xhr.responseText)
 			}
 		})
 	}
-
-	function getAllEstiamtes(callback) {
-		var estimateURLWithAT = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken)
+	function getAllTeams(callback) {
+		var teamURLWithAT = wrapAccessToken(coreEngine_url + 'teams', coreAccessToken)
 		$.ajax({
-			url: estimateURLWithAT,
+			url: teamURLWithAT,
 			type: "GET",
-			success: function (estimateResult) {
-				estimates = estimateResult
-				callback(null, estimates)
-				NProgress.done()
+			success: function (teamResult) {
+				teamsArray = teamResult
+				fill_team_selector(teamResult)
+				callback(null, teamsArray)
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
 				alert(xhr.responseText)
 			}
 		})
 	}
-
-	function getEstimatesOfPredict(predictId, callback) {
-		var estimateOfPredictURLWithAT = wrapAccessToken(coreEngine_url + 'estimates?filter={"where":{"predictId": ' + predictId + '}}', coreAccessToken)
+	function getAllUsersChampions(callback) {
+		var userChampionsURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userid + '/champions', coreAccessToken)
 		$.ajax({
-			url: estimateOfPredictURLWithAT,
+			url: userChampionsURLWithAT,
 			type: "GET",
-			success: function (estimateResult) {
-				estimates = estimateResult
-				callback(null, estimates)
-				NProgress.done()
+			success: function (userChampionsResult) {
+				userChampions = userChampionsResult
+				fill_champion_selector(userChampions)
+				callback(null, userChampions)
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
 				alert(xhr.responseText)
 			}
 		})
 	}
-
-	function getAllInfo() {
-		getAllLeagus(function(err, league) {
-			if (err) {
-				// $('.page-loader-wrapper').fadeOut()
-				return alert(err)
+	function getAllUsersChallanges(callback) {
+		var userChallengesURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userid + '/challenges', coreAccessToken)
+		$.ajax({
+			url: userChallengesURLWithAT,
+			type: "GET",
+			success: function (userChallengesResult) {
+				fill_challenge_selector(userChallenges)
+				callback(null, userChallenges)
+			},
+			error: function (xhr, status, error) {
+				callback(err)
+				alert(xhr.responseText)
 			}
-			getAllPredicts(function(err, predict) {
-				if (err) {
-					// $('.page-loader-wrapper').fadeOut()
-					return alert(err)
+		})
+	}
+	function getNextObject(callback) {
+		var nextObjectURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userid + '/nextObject/' + currentLeague, coreAccessToken)
+		$.ajax({
+			url: nextObjectURLWithAT,
+			type: "GET",
+			success: function (nextObjectResult) {
+				currentPredict = nextObjectResult
+				$('#main_predict_remaining').fadeOut()
+				$('#main_predict_point').fadeOut()
+				$('#main_predict_explanation').fadeOut()
+				var hours = (Math.floor((new Date).getTime()) - currentPredict.endingTime) / (1000 * 60 * 60)
+				$('#main_predict_remaining').val(hours)
+				$('#main_predict_point').val(currentPredict.point)
+				$('#main_predict_explanation').val(currentPredict.explanation)
+				$('#main_predict_remaining').fadeIn()
+				$('#main_predict_point').fadeIn()
+				$('#main_predict_explanation').fadeIn()
+				callback(null, currentPredict)
+			},
+			error: function (xhr, status, error) {
+				callback(err)
+				alert(xhr.responseText)
+			}
+		})
+	}
+	function getAllPackages(callback) {
+		var packageURLWithAT = wrapAccessToken(coreEngine_url + 'packages', coreAccessToken)
+		var packageURL = wrapFilter(packageURLWithAT, {'where':{'status': 'Working'}})
+		$.ajax({
+			url: packageURL,
+			type: "GET",
+			success: function (packageResult) {
+				packagesArray = packageResult
+				var specialCount = 0, generalCount = 0
+				var specialArray = [], generalArray = []
+				for (var i = 0; i < packageResult.length; i++) {
+					if (packageResult[i].offer === 'Special') {
+						specialCount++
+						specialArray.psuh(packageResult[i])
+					}
+					else if (packageResult[i].offer === 'General') {
+						generalCount++
+						generalArray.push(packageResult[i])
+					}
 				}
-				getAllEstiamtes(function(err, estimate) {
-					if (err) {
-						// $('.page-loader-wrapper').fadeOut()
-						return alert(err)
-					}
-					fill_graph(league, estimates)
-					fill_management_table(predict)
-					fill_moreInfo_table(estimate)
-					$("#adminUsername").html(localStorage.getItem('AdminCompanyName'))
-					$("#adminEmail").html(localStorage.getItem('adminEmail'))
-					// $('.page-loader-wrapper').fadeOut()
-				})
-			})
-		})
-	}
+				if (generalCount == 0) 
+					$('#general_package').hide()
+				if (specialCount == 0)
+					$('#special_package').hide()
 
-	function fill_management_table(predictsArray) {
-		$('#tab_logic_management>tbody').empty()
-		for (var i = 0; i < predictsArray.length; i++) {
-			var statusColor
-			if (predictsArray[i].status === 'Created') statusColor = 'bg-green'
-			else if (predictsArray[i].status === 'Working') statusColor = 'bg-light-blue'
-			else if (predictsArray[i].status === 'Finished') statusColor = 'bg-deep-orange'
-			$('#tab_logic').append('<tr id="addr' + (i) + '"></tr>')
-			$('#addr' + i).html(
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].id + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].leagueId + '</br>' + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + fullDateConvertor(predictsArray[i].beginningTime) + '</br>' + fullDateConvertor(transactionArray[i].endingTime) + '</td>' +
-				'<td align="center" style="vertical-align: middle; width: 50px; max-width: 100px;">' + predictsArray[i].explanation + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].possibility + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].point + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].weekNumber + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + predictsArray[i].status + '</span></td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].tags + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].occurrence + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 1%;">' +
-				'<button type="button" class="predictEdit m-l-5 m-r-5 btn bg-green waves-effect"><i class="material-icons">mode_edit</i></button>' +
-				'<button type="button" class="predictDelete m-l-5 m-r-5 btn bg-red waves-effect"><i class="material-icons">clear</i></button>' +
-				'</td>'
-			)
-		}
-		$('#tab_logic_management').DataTable()
-	}
-
-	$(document).on("click", ".predictEdit", function (e) {
-		e.preventDefault()
-		var predictId = $(this).parent().siblings().eq(0).text()
-		localStorage.setItem('editablePredictId', predictId)
-		$('.nav-tabs a[id="nav4"]').tab('show')
-	})
-
-	$(document).on("click", ".predictDelete", function (e) {
-		e.preventDefault();
-		var predictId = $(this).parent().siblings().eq(0).text()
-		NProgress.start();
-		swal({
-			title: "آیا مطمئن هستید؟",
-			text: "بعد از حذف کردن یک پیش‌بینی، دیگر قادر به بازگرداندن آن نیستید.",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "بله، حذف کن!",
-			cancelButtonText: "خیر، دست نگه دار!",
-			closeOnConfirm: false,
-			closeOnCancel: true
-		}, function (isConfirm) {
-			if (isConfirm) {
-				var predictURL = wrapAccessToken(coreEngine_url + 'predicts/' + predictId, coreAccessToken)
-				$.ajax({
-					url: predictURL,
-					type: "DELETE",
-					success: function (predictResult) {
-						swal("پاک شد!", "پیش‌بینی مورد نظر شما با موفقیت حذف شد.", "success")
-						getAllCampaigns()
-						NProgress.done()
-					},
-					error: function (xhr, status, error) {
-						NProgress.done()
-						swal("متاسفیم!", "مشکلی پیش آمد، لطفا مجددا تلاش کنید.", "error")
-						alert(xhr.responseText)
-					}
-				})
-			} else
-				NProgress.done()
-		})
-	})
-
-	function fill_moreInfo_table(estimatesArray) {
-		$('#tab_logic_moreInfo>tbody').empty()
-		for (var i = 0; i < estimatesArray.length; i++) {
-			var statusColor
-			if (estimatesArray[i].status === 'Win') statusColor = 'bg-green'
-			else if (estimatesArray[i].status === 'Open') statusColor = 'bg-light-blue'
-			else if (estimatesArray[i].status === 'Lose') statusColor = 'bg-red'
-			$('#tab_logic').append('<tr id="addr' + (i) + '"></tr>')
-			$('#addr' + i).html(
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + estimatesArray[i].id + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + estimatesArray[i].clientId + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + fullDateConvertor(estimatesArray[i].time) + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + fullDateConvertor(estimatesArray[i].checkTime) + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + estimatesArray[i].status + '</span></td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 1%;">' +
-				'<button type="button" class="estimateInfo m-l-5 m-r-5 btn bg-amber waves-effect"><i class="material-icons">details</i></button>' +
-				'<button type="button" class="estimateDelete m-l-5 m-r-5 btn bg-red waves-effect"><i class="material-icons">clear</i></button>' +
-				'</td>'
-			)
-		}
-		$('#tab_logic_moreInfo').DataTable()
-	}
-
-	$(document).on("click", ".estimateInfo", function (e) {
-		e.preventDefault()
-		var clientId = $(this).parent().siblings().eq(1).text()
-		NProgress.start()
-		var clientURL = wrapAccessToken(coreEngine_url + 'clients/' + clientId, coreAccessToken)
-		$.ajax({
-			url: clientURL,
-			type: "GET",
-			success: function (clientResult) {
-				$('#defaultModal .modal-content').removeAttr('class').addClass('modal-content');
-
-				var keys = Object.keys(clientResult.sequencerModel.counter)
-				for (var i = 0; i < keys.length; i++) {
-					var str =	'<div class="col-md-1">' + '</div>' + '<div class="col-md-3 col-md-offset-1">' + '<p>' + '<b style="font-size:12px;">' + keys[i] + '</b>' + '</p>' +
-						'<div class="input-group spinner" data-trigger="spinner">' + '<div class="form-line">' +
-						'<input type="text" class="form-control text-center" value="' + clientResult.sequencerModel.counter[keys[i]] + '" data-rule="quantity" required>' +
-						'</div>' + '<span class="input-group-addon">' + '<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>' +
-						'<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>' + '</span>' + '</div>' + '</div>'
-					$('#sequencer').append(str)
+				function mergeData(packageInfo) {
+					var color = ''
+					if (packageInfo.offer === 'Special')
+						color = 'bg-orange'
+					var str = '<div class="item active">' +
+											'<a href="" class="package_purchase" id="' + packageInfo.id + '">' +
+												'<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;">' +
+												'</div>' +
+												'<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;">' + 
+													'<div class="card" style="opacity: 0.93; margin-bottom: 0px;">' +
+														'<div class="body ' + color + '" style="height:200px;">' +
+															'<div class="row clearfix">' +
+																'<h3 class="text-center m-t-0">' + packageInfo.explanation + '</h3>' +
+															'</div>' +
+															'<br>' +
+															'<div class="row clearfix">' +
+																'<h4 class="text-center">' + packageInfo.chances + '</h4>' +
+																'<h4 class="text-center">' + packageInfo.price + '</h4>' +
+															'</div>' +
+														'</div>' +
+													'</div>' +
+												'</div>' +
+											'</a>' + 
+										'</div>'
+					return str
 				}
 
-				$("#myInfoID").val(clientResult.id)
-				$("#myInfoTime").val(clientResult.time)
-				$("#myInfoUsername").val(clientResult.username)
-				$("#myInfoEmail").val(clientResult.email)
-				$("#myInfoFullName").val(clientResult.fullName)
-				$("#myInfoPhoneNumber").val(clientResult.phoneNumber)
+				for (var i = 0; i < specialArray.length; i++) {
+					var appendix = mergeData(specialArray[i])
+					$('#special_listbox').append(appendix)
+				}
+				if (specialCount != 0)
+					$('#special_listbox').children().first().addClass('active')
 
-				$("#UserAccountInfoChances").attr({
-					"value": clientResult.accountInfoModel.chances
-				})
-				$("#UserAccountInfoTotalWins").attr({
-					"value": clientResult.accountInfoModel.roundWins
-				})
-				$("#UserAccountInfoTotalPoints").attr({
-					"value": clientResult.accountInfoModel.totalPoints
-				})
-				$("#UserAccountInfoEstimates").attr({
-					"value": clientResult.accountInfoModel.totalEstimates
-				})
+				for (var i = 0; i < generalArray.length; i++) {
+					var appendix = mergeData(generalArray[i])
+					$('#general_listbox').append(appendix)
+				}
+				if (generalCount != 0)
+					$('#general_listbox').children().first().addClass('active')
 
-				$('.nav-tabs a[id="nav7"]').tab('show')
-				$('#defaultModal').modal('show')
-				NProgress.done()
+				callback(null, packageResult)
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
+				callback(err)
 				alert(xhr.responseText)
 			}
 		})
-	})
-
-	$(document).on("click", ".estimateDelete", function (e) {
-		e.preventDefault()
-		var estimateId = $(this).parent().siblings().eq(0).text()
-		NProgress.start()
-		swal({
-			title: "آیا مطمئن هستید؟",
-			text: "بعد از حذف کردن یک تخمین، دیگر قادر به بازگرداندن آن نیستید.",
-			type: "warning",
-			showCancelButton: true,
-			confirmButtonColor: "#DD6B55",
-			confirmButtonText: "بله، حذف کن!",
-			cancelButtonText: "خیر، دست نگه دار!",
-			closeOnConfirm: false,
-			closeOnCancel: true
-		}, function (isConfirm) {
-			if (isConfirm) {
-				var estimateURL = wrapAccessToken(coreEngine_url + 'estimates/' + estimateId, coreAccessToken)
-				$.ajax({
-					url: estimateURL,
-					type: "DELETE",
-					success: function (estimateResult) {
-						swal("پاک شد!", "تخمین مورد نظر شما با موفقیت حذف شد.", "success")
-						getAllCampaigns()
-						NProgress.done()
-					},
-					error: function (xhr, status, error) {
-						NProgress.done()
-						swal("متاسفیم!", "مشکلی پیش آمد، لطفا مجددا تلاش کنید.", "error")
-						alert(xhr.responseText)
-					}
-				})
-			} else
-				NProgress.done()
-		})
-	})
-
-	$("#button_moreInfo_search").click(function (e) {
-		e.preventDefault()
-		NProgress.start()
-		var predict
-		if ($('#select_moreInfo_predict').val())
-			predict = $('#select_moreInfo_predict').val()
-		else {
-			NProgress.done();
-			return swal("اوپس!", "شما باید همه ی فیلد های مربوطه و ضروری را پر کنید!", "warning");
-		}
-
-		var estimateURL = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken)
-		var estimateURLWithFilter = wrapFilter(estimateURL, JSON.stringify({'where':{'predictId': predict}}))
-		$.ajax({
-			url: estimateURLWithFilter,
-			type: "GET",
-			success: function (estimateResult) {
-				fill_moreInfo_table(estimateResult)
-				NProgress.done()
-			},
-			error: function (xhr, status, error) {
-				NProgress.done()
-				alert(xhr.responseText)
-			}
-		})
-	})
-
-	$("#button_management_search").click(function (e) {
-		e.preventDefault()
-		var leagues = []
-		var occurrences = []
-		var statuses = []
-		var tags = []
-
-		var minPossibilty, maxPossibility
-		var minWeek, maxWeek
-		var minPoint, maxPoint
-
-		var beginningTime, endingTime
-
-		if ($('#select_management_league').val())
-			leagues = $('#select_management_league').val()
-		if ($('#select_management_occuerence').val())
-			occurrences = $('#select_management_occuerence').val()
-		if ($('#select_management_status').val())
-			statuses = $('#select_management_status').val()
-		if ($('#select_management_tag').val())
-			tags = $('#select_management_tag').val()
-
-		if ($('#select_management_min_possibility').val())
-			minPossibilty = $('#select_management_min_possibility').val()
-		if ($('#select_management_max_possibility').val())
-			maxPossibility = $('#select_management_max_possibility').val()
-
-		if ($('#select_management_min_week').val())
-			minWeek = $('#select_management_min_week').val()
-		if ($('#select_management_max_week').val())
-			maxWeek = $('#select_management_max_week').val()
-
-		if ($('#select_management_min_point').val())
-			minPoint = $('#select_management_min_point').val()
-		if ($('#select_management_max_point').val())
-			maxPoint = $('#select_management_max_point').val()
-
-		if ($('#select_management_beginningTime').val())
-			beginningTime = timeConvertor($('#select_management_beginningTime').val())
-		if ($('#select_management_endingTime').val())
-			endingTime = timeConvertor($('#select_management_endingTime').val())
-
-		var filter = {}
-		if (leagues.length > 0 || occurrences.length > 0 || statuses.length > 0 || tags.length > 0 || beginningTime || endingTime || minPoint || maxPoint || minPossibilty || maxPossibility || minWeek || maxWeek) {
-			filter.where = {}
-			filter.where.and = []
-			if (leagues.length > 0)
-				filter.where.and.push({
-					'league': {
-						'inq': leagues
-					}
-				})
-			if (occurrences.length > 0)
-				filter.where.and.push({
-					'occurrence': {
-						'inq': occurrences
-					}
-				})
-			if (statuses.length > 0)
-				filter.where.and.push({
-					'status': {
-						'inq': statuses
-					}
-				})
-			if (tags.length > 0)
-				filter.where.and.push({
-					'tags': {
-						'inq': tags
-					}
-				})
-			if (beginningTime)
-				filter.where.and.push({
-					'beginningTime': {
-						'gte': beginningTime
-					}
-				})
-			if (endingTime)
-				filter.where.and.push({
-					'endingTime': {
-						'lte': endingTime
-					}
-				})
-
-			if (minPoint)
-				filter.where.and.push({
-					'point': {
-						'gte': minPoint
-					}
-				})
-			if (maxPoint)
-				filter.where.and.push({
-					'point': {
-						'lte': maxPoint
-					}
-				})
-			if (minWeek)
-				filter.where.and.push({
-					'weekNumber': {
-						'gte': minWeek
-					}
-				})
-			if (maxWeek)
-				filter.where.and.push({
-					'weekNumber': {
-						'lte': maxWeek
-					}
-				})
-			if (minPossibilty)
-				filter.where.and.push({
-					'possibility': {
-						'gte': minPossibilty
-					}
-				})
-			if (maxPossibility)
-				filter.where.and.push({
-					'possibility': {
-						'lte': maxPossibility
-					}
-				})
-		}
-
-		var predictURLwithAT = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken)
-		var predictURL = wrapFilter(predictURLwithAT, JSON.stringify(filter))
-		$.ajax({
-			url: predictURL,
-			type: "GET",
-			success: function (predictResult) {
-				fill_management_table(predictResult)
-				NProgress.done()
-			},
-			error: function (xhr, status, error) {
-				NProgress.done()
-				alert(xhr.responseText)
-			}
-		})
-
-	})
-
-	$("#button_new_add").click(function (e) {
-		e.preventDefault()
-		NProgress.start()
-		if (!$('#select_new_league').val() || !$('#select_new_week').val() || !$('#select_new_possiblity').val() || !$('#select_new_points').val() || !$('#select_new_explanation').val() || !$('#select_new_beginningTime').val() || !$('#select_new_endingTime').val() || !$('#select_new_tag').find('option:selected').text()) {
-			NProgress.done()
-			return swal("اوپس!", "شما باید همه ی فیلد های مربوطه و ضروری را پر کنید!", "warning");
-		}
-		var data = {
-			leagueId: $('#select_new_league').val(),
-			explanation: $('#select_new_explanation').val(),
-			tags: $('#select_new_tag').find('option:selected').text(),
-			beginningTime: fullTimeConvertor($('#select_new_beginningTime').val()),
-			endingTime: fullTimeConvertor($('#select_new_endingTime').val()),
-			weekNumber: Number($('#select_new_week').val()),
-			possibility: Number($('#select_new_possiblity').val()),
-			point: Number($('#select_new_points').val())
-		}
-		var predictURL = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken);
-		$.ajax({
-			url: predictURL,
-			data: JSON.stringify(data),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "POST",
-			success: function (predictResult) {
-				getAllInfo()
-				NProgress.done()
-				swal("خیلی خوب!", "شما توانستید یک پیش‌بینی جدید را موفقیت آمیز بیافزایید.", "success")
-			},
-			error: function (xhr, status, error) {
-				NProgress.done()
-				swal("متاسفیم!", "مشکلی پیش آمد، لطفا مجددا تلاش کنید.", "error")
-				alert(xhr.responseText)
-			}
-		})
-	})
-
-	$("#button_update_upgrade").click(function (e) {
-		e.preventDefault()
-		NProgress.start()
-
-		var predictId
-
-		if ($('#select_management_league').val())
-			predictId = $('#select_management_league').val()
-
-		if (!predictId || !$('#select_update_league').val() || !$('#select_update_explanation').val() || !$('#select_update_occuerence').val() ||
-			!$('#select_update_status').val() || !$('#select_update_tag').find('option:selected').text() || !$('#select_update_beginningTime').val() || !$('#select_update_endingTime').val() ||
-			!$('#select_update_week').val() || !$('#select_update_possibility').val() || !$('#select_update_points').val()
-		) {
-			NProgress.done()
-			return swal("اوپس!", "شما باید همه ی فیلد های مربوطه و ضروری را پر کنید!", "warning");
-		}
-		var data = {
-			leagueId: $('#select_update_league').val(),
-			explanation: $('#select_update_explanation').val(),
-			occurrence: $('#select_update_occuerence').val(),
-			status: $('#select_update_status').val(),
-			tags: $('#select_update_tag').find('option:selected').text(),
-			beginningTime: fullTimeConvertor($('#select_update_beginningTime').val()),
-			endingTime: fullTimeConvertor($('#select_update_endingTime').val()),
-			weekNumber: Number($('#select_update_week').val()),
-			possibility: Number($('#select_update_possibility').val()),
-			point: Number($('#select_update_points').val())
-		}
-		var predictURL = wrapAccessToken(coreEngine_url + 'predicts/' + predictId, coreAccessToken);
-		$.ajax({
-			url: predictURL,
-			data: JSON.stringify(data),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "PUT",
-			success: function (predictResult) {
-				getAllInfo()
-				NProgress.done()
-				swal("خیلی خوب!", "شما توانستید یک پیش‌بینی جدید را موفقیت آمیز بیافزایید.", "success")
-			},
-			error: function (xhr, status, error) {
-				NProgress.done()
-				swal("متاسفیم!", "مشکلی پیش آمد، لطفا مجددا تلاش کنید.", "error")
-				alert(xhr.responseText)
-			}
-		})
-	})
-
+	}
 })
