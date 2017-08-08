@@ -238,7 +238,7 @@ $(function () {
     $.AdminBSB.input.activate();
     $.AdminBSB.select.activate();
 
-    setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
+    // setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });
 function Persian_Number(text){
     var en_numbers = ["0","1","2","3","4","5","6","7","8","9"];
