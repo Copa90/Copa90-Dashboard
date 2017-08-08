@@ -132,6 +132,7 @@ function warningOperation() {
 }
 
 var coreEngine_url = "http://127.0.0.1:4000/api/"
+var zarinPal_url = "http://127.0.0.1:4020/api/"
 
 $(document).ready(function () {
 
@@ -139,6 +140,15 @@ $(document).ready(function () {
 	var phoneNumber
 	var userClient
 	var currentPredict
+
+	var acceptCount
+
+	var clientModel
+	var leaguesArray = []
+	var teamsArray = []
+	var userChampions = []
+	var userChallenges = []
+	var packagesArray = []
 
 	var source = getUrlVars()["source"]
 
