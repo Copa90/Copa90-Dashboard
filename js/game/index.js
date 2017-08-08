@@ -199,7 +199,7 @@ $(document).ready(function () {
 	// 		  	Page Controller					//
 	// ------------------------------ //
 	function change_page_scene(pageName) {
-		var pages = ['page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_transaction']
+		var pages = ['page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package']
 		for (var i = 0; i < pages.length; i++) {
 			var str = '#' + pages[i]
 			if (pages[i] === pageName)
@@ -981,14 +981,6 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", ".package_purchase", function (e) {
 		e.preventDefault()
-
-	})
-	// ------------------------------ //
-	// 			 		Transaction						//
-	// ------------------------------ //
-	$(document).on("click", "#transaction_result_button", function (e) {
-		e.preventDefault()
-		console.log('not prepared yet')
 	})
 
 	// ------------------------------ //
