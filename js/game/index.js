@@ -127,6 +127,10 @@ function failedOperation() {
 	showNotification('bg-deep-orange', 'عملیات شما با شکست مواجه شد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
+function warningOperation() {
+	showNotification('bg-orange', 'لطفا همه فیلدهای ضروری را پر کنید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+}
+
 var coreEngine_url = "http://127.0.0.1:4000/api/"
 
 $(document).ready(function () {
