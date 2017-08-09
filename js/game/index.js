@@ -141,6 +141,7 @@ $(document).ready(function () {
 	var phoneNumber
 	var userClient
 	var currentPredict
+	var favTeam
 
 	var acceptCount
 
@@ -150,6 +151,9 @@ $(document).ready(function () {
 	var userChampions = []
 	var userChallenges = []
 	var packagesArray = []
+
+	var userTeamRanking = []
+	var allUsers = []
 
 	var source = getUrlVars()["source"]
 
@@ -189,15 +193,31 @@ $(document).ready(function () {
 	}
 
 	if (!userId || !coreAccessToken) {
-			change_page_scene('page_aaa')
-			doneLoading()
+		change_page_scene('page_aaa')
+		doneLoading()
 	}
 	else {
 		getAllInfo(function(err) {
-			doneLoading()
-			if (err)
-				return console.error(err)
-			change_page_scene('page_main_menu')
+			if (err) {
+				console.error(err)
+				return change_page_scene('page_aaa')
+			}
+			getTeamUsers(favTeam, function(err, result) {
+				if (err) {
+					console.error(err)
+					return change_page_scene('page_aaa')
+				}
+				getAllUsers(function(err) {
+					doneLoading()
+					if (err) {
+						console.error(err)
+						return change_page_scene('page_aaa')
+					}
+					fill_table_totalStatistics(allUsers)
+					fill_table_teamStatistics(userTeamRanking)
+					change_page_scene('page_main_menu')
+				})
+			})
 		})
 	}	
 
@@ -342,7 +362,7 @@ $(document).ready(function () {
 	$(document).on("click", ".returnMain", function (e) {
 		e.preventDefault()
 		change_page_scene('page_main_menu')
-		emoty_all_tables()
+		empty_all_tables()
 		empty_all_fields()
 	})
 	// ------------------------------ //
@@ -354,7 +374,7 @@ $(document).ready(function () {
 		if (!phoneNumber) {
 			return warningOperation()
 		}		
-		alert(phoneNumber)
+		console.log(phoneNumber)
 		$('#sign-in').hide()
 		$('#password').hide()
 		$('#sign-up').show()
@@ -366,7 +386,7 @@ $(document).ready(function () {
 		if (!phoneNumber || !code) {
 			return warningOperation()
 		}		
-		alert(code)
+		console.log(code)
 		startProgressBar()
 		var verificationURL = wrapAccessToken(coreEngine_url + 'verifications/verification/' + phoneNumber + '/' + code, coreAccessToken);
 		$.ajax({
@@ -396,7 +416,7 @@ $(document).ready(function () {
 		if (!phoneNum) {
 			return warningOperation()
 		}		
-		alert(phoneNum)
+		console.log(phoneNum)
 		startProgressBar()
 		var passwordURL = wrapAccessToken(coreEngine_url + 'clients/sendPassword/' + phoneNum, coreAccessToken);
 		$.ajax({
@@ -437,7 +457,7 @@ $(document).ready(function () {
 			phoneNumber: phoneNumber,
 			time: Math.floor((new Date).getTime())
 		}
-		alert(JSON.stringify(data))
+		console.log(JSON.stringify(data))
 		startProgressBar()
 		var clientsURL = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken);
 		$.ajax({
@@ -504,7 +524,7 @@ $(document).ready(function () {
 			phoneNumber: phoneNum,
 			password: pass
 		}
-		alert(JSON.stringify(data))
+		console.log(JSON.stringify(data))
 		startProgressBar()
 		var loginURL = wrapAccessToken(coreEngine_url + 'clients/login', coreAccessToken)
 		$.ajax({
@@ -587,7 +607,7 @@ $(document).ready(function () {
 			clientId: userId,
 			time: Math.floor((new Date).getTime())
 		}
-		alert(JSON.stringify(data))
+		console.log(JSON.stringify(data))
 		startProgressBar()
 		var estimateURL = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken);
 		$.ajax({
@@ -600,10 +620,8 @@ $(document).ready(function () {
 				acceptCount++
 				getNextObject(function(err, result) {
 					doneProgressBar()
-					if (err) {
-						failedOperation()
-						console.error(xhr.responseText)
-					}
+					if (err)
+						return failedOperation()
 					var total = userClient.accountInfoModel.chances
 					var fill = ((total - acceptCount) / total) * 100
 					var white = 100 - fill
@@ -637,6 +655,20 @@ $(document).ready(function () {
 			}
 		})
 	})
+	$(document).on("click", "#main_predict_return_menu", function (e) {
+		e.preventDefault()
+		startProgressBar()
+		getAllInfo(function(err) {
+			doneProgressBar()
+			if (err)
+				return failedOperation()
+			else {
+				change_page_scene('page_main_menu')
+				empty_all_tables()
+				empty_all_fields()
+			}
+		})
+	})
 	// ------------------------------ //
 	// 			  Personal League					//
 	// ------------------------------ //
@@ -646,6 +678,7 @@ $(document).ready(function () {
 		if (!leagueId) {
 			return warningOperation()
 		}
+		console.log(leagueId)
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
 		$.ajax({
@@ -654,8 +687,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "DELETE",
 			success: function (championResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChampions(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -672,9 +709,10 @@ $(document).ready(function () {
 		}
 		var data = {
 			name: $("#edit_personal_league_name").val(),
-			capactiy: $("#edit_personal_league_capacity").val(),
-			reduceChances: $("#edit_personal_league_chances").val()
+			capactiy: Number($("#edit_personal_league_capacity").val()),
+			reduceChances: Number($("#edit_personal_league_chances").val())
 		}
+		console.log(JSON.stringify(data))
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
 		$.ajax({
@@ -684,8 +722,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "PUT",
 			success: function (championResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChampions(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -702,9 +744,10 @@ $(document).ready(function () {
 		var data = {
 			creatorId: userId,
 			name: $("#create_personal_league_name").val(),
-			capactiy: $("#create_personal_league_capacity").val(),
-			reduceChances: $("#create_personal_league_chances").val()
+			capactiy: Number($("#create_personal_league_capacity").val()),
+			reduceChances: Number($("#create_personal_league_chances").val())
 		}
+		console.log(JSON.stringify(data))
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions', coreAccessToken);
 		$.ajax({
@@ -714,8 +757,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChampions(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -730,6 +777,7 @@ $(document).ready(function () {
 		if (!leagueId || !userId) {
 			return warningOperation()
 		}
+		console.log(leagueId)
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/leaveChampion/' + userId, coreAccessToken);
 		$.ajax({
@@ -738,8 +786,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChampions(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -754,6 +806,7 @@ $(document).ready(function () {
 		if (!leagueId || !userId) {
 			return warningOperation()
 		}
+		console.log(leagueId)
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/joinChampion/' + userId, coreAccessToken);
 		$.ajax({
@@ -762,8 +815,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChampions(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -781,8 +838,11 @@ $(document).ready(function () {
 		var filter = {
 			where: {
 				'championId': leagueId
-			}
+			},
+			order: 'points DESC',
+			include: 'clients'
 		}
+		console.log(JSON.stringify(filter))
 		startProgressBar()
 		var rankingURL = wrapAccessToken(coreEngine_url + 'rankings', coreAccessToken)
 		var rankingURLWithFilter = wrapFilter(rankingURL, filter)
@@ -792,6 +852,16 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "GET",
 			success: function (rankingResult) {
+				empty_all_tables()
+				var userArray = []
+				for (var i = 0; i < rankingResult.length; i++) {
+					userArray.push(rankingResult[i].client)
+				}
+				for (var i = 0; i < userChampions.length; i++) {
+					if (userChampions[i].id === leagueId) {
+						fill_table_challenge(userChampions[i], userArray)
+					}
+				}
 				doneProgressBar()
 				successfulOperation()
 			},
@@ -815,6 +885,7 @@ $(document).ready(function () {
 		if (!challengeId) {
 			return warningOperation()
 		}
+		console.log(challengeId)
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
 		$.ajax({
@@ -823,8 +894,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "DELETE",
 			success: function (challengeResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChallanges(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -842,6 +917,7 @@ $(document).ready(function () {
 		var data = {
 			name: $("#edit_personal_challenge_name").val()
 		}
+		console.log(JSON.stringify(data))
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
 		$.ajax({
@@ -851,8 +927,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "PUT",
 			success: function (challengeResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChallanges(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -873,6 +953,7 @@ $(document).ready(function () {
 			reduceChances: $("#create_personal_challenge_chances").val()
 		}
 		startProgressBar()
+		console.log(JSON.stringify(data))
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges', coreAccessToken);
 		$.ajax({
 			url: championURL,
@@ -881,8 +962,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (championResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChallanges(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -897,6 +982,7 @@ $(document).ready(function () {
 		if (!challengeId || !userId) {
 			return warningOperation()
 		}
+		console.log(challengeId)
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/leaveChallenge/' + userId, coreAccessToken);
 		$.ajax({
@@ -905,8 +991,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (challengeResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChallanges(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -921,6 +1011,7 @@ $(document).ready(function () {
 		if (!challengeId || !userId) {
 			return warningOperation()
 		}
+		console.log(challengeId)
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/joinChallenge/' + userId, coreAccessToken);
 		$.ajax({
@@ -929,8 +1020,12 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (challengeResult) {
-				doneProgressBar()
-				successfulOperation()
+				getAllUsersChallanges(function(err, result) {
+					doneProgressBar()
+					if (err)
+						return failedOperation()
+					successfulOperation()
+				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -948,8 +1043,11 @@ $(document).ready(function () {
 		var filter = {
 			where: {
 				'championId': challengeId
-			}
+			},
+			order: 'points DESC',
+			include: 'clients'
 		}
+		console.log(JSON.stringify(filter))
 		startProgressBar()
 		var competitionURL = wrapAccessToken(coreEngine_url + 'competitions', coreAccessToken)
 		var competitionURLWithFilter = wrapFilter(competitionURL, filter)
@@ -959,6 +1057,16 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "GET",
 			success: function (competitionResult) {
+				empty_all_tables()
+				var userArray = []
+				for (var i = 0; i < competitionResult.length; i++) {
+					userArray.push(competitionResult[i].client)
+				}
+				for (var i = 0; i < userChallenges.length; i++) {
+					if (userChallenges[i].id === challengeId) {
+						fill_table_challenge(userChallenges[i], userArray)
+					}
+				}
 				doneProgressBar()
 				successfulOperation()
 			},
@@ -982,13 +1090,13 @@ $(document).ready(function () {
 		if (!leagueId) {
 			return console.error('required fields error')
 		}
+		console.log(leagueId)
 		startProgressBar()
 		getNextObject(function(err, result) {
 			doneProgressBar()
-			if (err) {
-				failedOperation()
-				console.error(xhr.responseText)
-			}
+			if (err)
+				return failedOperation()
+			change_page_scene('page_main_prediction')
 		})
 	})
 	// ------------------------------ //
@@ -1008,23 +1116,23 @@ $(document).ready(function () {
 		if (!leagueId || !userId) {
 			return warningOperation()
 		}
+		console.log(leagueId)
 		startProgressBar()
-		var clientURL = wrapAccessToken(coreEngine_url + 'clients/' + userId, coreAccessToken)
-		$.ajax({
-			url: clientURL,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "GET",
-			success: function (clientResult) {
-				doneProgressBar()
-				successfulOperation()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				failedOperation()
-				console.error(xhr.responseText)
+		empty_all_tables()
+		var leagueArray = []
+		function compare(a, b){
+			return Number(b[leagueId]) - Number(a[leagueId])
+		}
+		for (var i = 0; i < allUsers.length; i++) {
+			if (allUsers[i].checkpointModel.leagues[leagueId]) {
+				var model = allUsers[i]
+				model[leagueId] = Number(allUsers[i].checkpointModel.leagues[leagueId])
+				leagueArray.push(allUsers[i])
 			}
-		})
+		}
+		leagueArray.sort(compare)
+		fill_table_leagueStatistics(leagueArray)
+		doneProgressBar()
 	})
 	$(document).on("click", "#ranking_league_statistics_result_button", function (e) {
 		e.preventDefault()
@@ -1271,7 +1379,7 @@ $(document).ready(function () {
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
 	}
-	function emoty_all_tables() {
+	function empty_all_tables() {
 		for (var i = 0; i < 11; i++) {
 			var str = '#trophy_' + i
 			$(str).css({"-webkit-filter":'', "filter": ''})
@@ -1407,6 +1515,7 @@ $(document).ready(function () {
 						else {
 							$('#progressBar_total').hide()
 						}
+						favTeam = userClient.favTeam.teamId
 						callback(null, userClient)
 					},
 					error: function (xhr, status, error) {
@@ -1583,4 +1692,45 @@ $(document).ready(function () {
 			}
 		})
 	}
+
+	function getAllUsers(callback) {
+		var filter = {
+			order: 'accountInfoModel.totalPoints DESC'
+		}
+		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken)
+		var clientWithFilter = wrapFilter(clientURLWithAT, JSON.stringify(filter))
+		$.ajax({
+			url: clientWithFilter,
+			type: "GET",
+			success: function (clientResult) {
+				allUsers = clientResult
+				callback(null, clientResult)
+			},
+			error: function (xhr, status, error) {
+				callback(err)
+				alert(xhr.responseText)
+			}
+		})
+	}
+
+	function getTeamUsers(teamId, callback) {
+		var filter = {
+			order: 'accountInfoModel.totalPoints DESC'
+		}
+		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'teams/' + teamId + '/clients', coreAccessToken)
+		var clientWithFilter = wrapFilter(clientURLWithAT, JSON.stringify(filter))
+		$.ajax({
+			url: clientWithFilter,
+			type: "GET",
+			success: function (clientResult) {
+				userTeamRanking = clientResult
+				callback(null, clientResult)
+			},
+			error: function (xhr, status, error) {
+				callback(err)
+				alert(xhr.responseText)
+			}
+		})		
+	}
+	
 })
