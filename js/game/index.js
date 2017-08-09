@@ -198,21 +198,15 @@ $(document).ready(function () {
 	}
 	else {
 		getAllInfo(function(err) {
-			if (err) {
-				console.error(err)
+			if (err)
 				return change_page_scene('page_aaa')
-			}
 			getTeamUsers(favTeam, function(err, result) {
-				if (err) {
-					console.error(err)
+				if (err)
 					return change_page_scene('page_aaa')
-				}
 				getAllUsers(function(err) {
 					doneLoading()
-					if (err) {
-						console.error(err)
+					if (err)
 						return change_page_scene('page_aaa')
-					}
 					fill_table_totalStatistics(allUsers)
 					fill_table_teamStatistics(userTeamRanking)
 					change_page_scene('page_main_menu')
@@ -649,10 +643,8 @@ $(document).ready(function () {
 		startProgressBar()
 		getNextObject(function(err, result) {
 			doneProgressBar()
-			if (err) {
-				failedOperation()
-				console.error(xhr.responseText)
-			}
+			if (err)
+				return failedOperation()
 		})
 	})
 	$(document).on("click", "#main_predict_return_menu", function (e) {
@@ -1520,13 +1512,13 @@ $(document).ready(function () {
 					},
 					error: function (xhr, status, error) {
 						callback(err)
-						alert(xhr.responseText)
+						console.error(xhr.responseText)
 					}
 				})
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1542,7 +1534,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1558,7 +1550,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1574,7 +1566,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1589,7 +1581,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1614,7 +1606,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1688,7 +1680,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1708,7 +1700,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})
 	}
@@ -1728,7 +1720,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				alert(xhr.responseText)
+				console.error(xhr.responseText)
 			}
 		})		
 	}
