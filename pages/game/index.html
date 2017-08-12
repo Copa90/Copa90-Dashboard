@@ -107,7 +107,7 @@
 													<i class="material-icons">phone_iphone</i>
 												</span>
 												<div class="form-line">
-													<input type="text" id=aaa_send_phone_phone_number"" class="form-control mobile-phone-number text-center font-17" dir="ltr"  placeholder="Ex: 0912 123 4567">
+													<input type="text" id="aaa_send_phone_phone_number" class="form-control mobile-phone-number text-center font-17" dir="ltr"  placeholder="Ex: 0912 123 4567">
 												</div>
 											</div>
 										</div>
@@ -121,6 +121,21 @@
 									</div>
 								</div>
 								<div id="sendCode">
+									<div class="row clearfix demo-masked-input">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>شماره موبایل</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">phone_iphone</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="aaa_send_code_phone" class="form-control mobile-phone-number text-center font-17" dir="ltr"  placeholder="Ex: 0912 123 4567">
+												</div>
+											</div>
+										</div>
+									</div>
 									<div class="row clearfix demo-masked-input">
 										<div class="col-lg-2 col-md-1 col-sm-1">
 										</div>
@@ -150,7 +165,7 @@
 											<a href="" class="signinHref text-center" style="text-align: center;"> وارد حسابتان شوید </a>
 										</div>
 										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-left">
-											<a href="" class="signupHref text-center" style="text-align: center;"> ثبت نام کنید </a>
+											<a href="" class="passwordHref text-center" style="text-align: center;"> فراموشی رمز عبور </a>
 										</div>
 									</div>
 								</div>
@@ -165,7 +180,7 @@
 										<div class="col-lg-2 col-md-1 col-sm-1">
 										</div>
 										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
-											<b>شماره تلفن موبایل</b>
+											<b>شماره موبایل</b>
 											<div class="input-group">
 												<span class="input-group-addon">
 													<i class="material-icons">phone_iphone</i>
@@ -218,7 +233,7 @@
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<div class="form-group form-float">
 											<div class="form-line">
-												<input id="aaa_signup_username" type="text" class="form-control">
+												<input id="aaa_signup_username" dir="ltr" type="text" class="form-control">
 												<label class="form-label">نام کاربری</label>
 											</div>
 										</div>
@@ -230,7 +245,7 @@
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<div class="form-group form-float">
 											<div class="form-line">
-												<input id="aaa_signup_email" type="email" class="form-control">
+												<input id="aaa_signup_email" type="email" dir="ltr" class="form-control">
 												<label class="form-label">ایمیل</label>
 											</div>
 										</div>
@@ -242,7 +257,7 @@
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<div class="form-group form-float">
 											<div class="form-line">
-												<input id="aaa_signup_password" type="password" class="form-control">
+												<input id="aaa_signup_password" dir="ltr" type="password" class="form-control">
 												<label class="form-label">رمز عبور</label>
 											</div>
 										</div>
@@ -254,7 +269,7 @@
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<div class="form-group form-float">
 											<div class="form-line">
-												<input id="aaa_signup_referrer" type="text" class="form-control">
+												<input id="aaa_signup_referrer" dir="ltr" type="text" class="form-control">
 												<label class="form-label">کد معرف</label>
 											</div>
 										</div>
@@ -265,7 +280,7 @@
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<b style="font-size:12px;"> تیم مورد علاقه‌تان </b>
-										<select id="aaa_signup_select_team" class="team_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید" data-mobile="true">
+										<select id="aaa_signup_select_team" class="team_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -302,7 +317,7 @@
 												<i class="material-icons">phone_iphone</i>
 											</span>
 											<div class="form-line">
-												<input type="text" id="aaa_signin_phone_number" class="form-control mobile-phone-number" dir="ltr"  placeholder="Ex: 0912 123 4567">
+												<input type="text" id="aaa_signin_phone_number" class="form-control mobile-phone-number text-center font-17" dir="ltr"  placeholder="Ex: 0912 123 4567">
 											</div>
 										</div>
 									</div>
@@ -317,7 +332,7 @@
 												<i class="material-icons">vpn_key</i>
 											</span>
 											<div class="form-line">
-												<input type="text" id="aaa_signin_password" class="form-control" dir="ltr"  placeholder="Ex: 123456">
+												<input type="password" id="aaa_signin_password" class="form-control text-center font-17" dir="ltr"  placeholder="Ex: 123456">
 											</div>
 										</div>
 									</div>
@@ -331,10 +346,13 @@
 								</div>
 								<div class="row m-t-15 m-b--20">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-right">
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-right">
 											<a href="" class="signupHref text-center" style="text-align: center;"> ثبت نام کنید </a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-left">
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-center">
+											<a href="" class="sendCodeHref text-center" style="text-align: center;"> ارسال کد </a>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-left">
 											<a href="" class="passwordHref text-center" style="text-align: center;"> فراموشی رمز عبور </a>
 										</div>
 									</div>
@@ -491,7 +509,7 @@
 									<div class="progress" style="height:5px;">
 										<div id="main_predict_progress_white" class="progress-bar" style="width: 25%; color:white; background-color:white;">
 										</div>
-										<div id="main_predict_progress_fill" class="progress-bar bg-orange progress-bar-striped active" style="width: 75%">
+										<div id="main_predict_progress_fill" class="progress-bar bg-green progress-bar-striped active" style="width: 100%">
 										</div>
 									</div>
 								</div>
@@ -556,7 +574,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های خصوصی </b>
-										<select id="edit_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" data-mobile="true">
+										<select id="edit_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -678,7 +696,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های خصوصی </b>
-										<select id="join_personal_league_champion_selector" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" data-mobile="true">
+										<select id="join_personal_league_champion_selector" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -721,7 +739,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های خصوصی </b>
-										<select id="statistics_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" data-mobile="true">
+										<select id="statistics_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ خصوصی را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -803,7 +821,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
-										<select id="edit_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" data-mobile="true">
+										<select id="edit_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -854,7 +872,7 @@
 									</div>
 									<div class="col-lg-4 col-md-5 col-sm-5 col-xs-6">
 										<b style="font-size:12px;"> مدت زمان چالش (روز) </b>
-										<select id="create_personal_challenge_period" class="form-control show-tick text-right" data-size=3 title="انتخاب یک زمان" data-mobile="true">
+										<select id="create_personal_challenge_period" class="form-control show-tick text-right" data-size=3 title="انتخاب یک زمان" >
 											<option>3</option>
 											<option>7</option>
 											<option>10</option>
@@ -894,7 +912,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
-										<select id="join_personal_league_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" data-mobile="true">
+										<select id="join_personal_league_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -937,7 +955,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌ها </b>
-										<select id="statistics_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" data-mobile="true">
+										<select id="statistics_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1025,7 +1043,7 @@
 								</div>
 								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 									<b style="font-size:12px;"> لیگ‌های عمومی </b>
-									<select id="play_room_league_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ عمومی را انتخاب کنید" data-mobile="true">
+									<select id="play_room_league_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ عمومی را انتخاب کنید" >
 									</select>
 								</div>
 							</div>
@@ -1140,7 +1158,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های عمومی </b>
-										<select id="ranking_league_statistics_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید" data-mobile="true">
+										<select id="ranking_league_statistics_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1425,7 +1443,7 @@
 						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
 							<br>
 							<div class="row clearfix" id="special_pacakge">
-								<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+								<div id="carousel-example-generic" class="" data-ride="carousel">
 									<!-- Wrapper for slides -->
 									<div class="carousel-inner" role="listbox" id="special_listbox">
 									</div>
@@ -1444,71 +1462,10 @@
 							<br>
 							<br>
 							<div class="row clearfix" id="general_package">
-								<div id="carousel-example-generic1" class="carousel slide" data-ride="carousel">
+								<div id="carousel-example-generic1" class="" data-ride="carousel">
 									<!-- Wrapper for slides -->
 									<div class="carousel-inner" role="listbox" id="general_listbox">
-										<div class="item active">
-											<a href="" class="package_purchase">
-												<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;"> 
-												</div> 
-												<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;"> 
-													<div class="card" style="opacity: 0.93; margin-bottom: 0px;">
-														<div class="body" style="height:170px;">
-															<div class="row clearfix">
-																<h3 class="text-center m-t-0">پکیج شانس‌ها</h3>
-															</div>
-															<br>
-															<div class="row clearfix">
-																<h4 class="text-center">۵۰ پیش‌بینی‌</h4>
-																<h4 class="text-center">۵۰۰۰ تومان</h4>
-															</div>
-														</div>
-													</div>
-												</div> 
-											</a>
-										</div>
-										<div class="item">
-											<a href="" class="package_purchase">
-												<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;"> 
-												</div> 
-												<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;"> 
-													<div class="card" style="opacity: 0.93; margin-bottom: 0px;">
-														<div class="body" style="height:170px;">
-															<div class="row clearfix">
-																<h3 class="text-center m-t-0">پکیج شانس‌ها</h3>
-															</div>
-															<br>
-															<div class="row clearfix">
-																<h4 class="text-center">۱۵۰ پیش‌بینی‌</h4>
-																<h4 class="text-center">۱۳۰۰۰ تومان</h4>
-															</div>
-														</div>
-													</div>
-												</div> 
-											</a>
-										</div>
-										<div class="item">
-											<a href="" class="package_purchase">
-												<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;"> 
-												</div> 
-												<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;"> 
-													<div class="card" style="opacity: 0.93; margin-bottom: 0px;">
-														<div class="body" style="height:170px;">
-															<div class="row clearfix">
-																<h3 class="text-center m-t-0">پکیج شانس‌ها</h3>
-															</div>
-															<br>
-															<div class="row clearfix">
-																<h4 class="text-center">۱۰۰ پیش‌بینی‌</h4>
-																<h4 class="text-center">۹۰۰۰ تومان</h4>
-															</div>
-														</div>
-													</div>
-												</div> 
-											</a>
-										</div>
 									</div>
-
 									<!-- Controls -->
 									<a class="left carousel-control" href="#carousel-example-generic1" role="button" data-slide="prev" style="background-image: none">
 										<span class="glyphicon glyphicon-chevron-left" style="color:grey;" aria-hidden="true"></span>
