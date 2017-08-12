@@ -144,6 +144,16 @@ var zarinPal_url = "http://127.0.0.1:4020/api/"
 
 $(document).ready(function () {
 
+	$(document).ajaxError(function myErrorHandler(event, x, ajaxOptions, thrownError) {
+		if (x.status == 401) {
+			localStorage.clear()
+			change_page_scene('page_aaa')
+			authenticationRequiredOperation()
+			doneLoading()
+			doneProgressBar()
+		}
+	})
+
 	startLoading()
 
 	var phoneNumber
