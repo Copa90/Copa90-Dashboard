@@ -317,7 +317,7 @@ $(document).ready(function () {
 	}
 	function fill_challenge_selector(challengesArray) {
 		$('#edit_personal_challenge_challengeId').find('option').remove()
-		$('#join_personal_league_challenge_selector').find('option').remove()
+		$('#join_personal_challenge_selector').find('option').remove()
 		$('#statistics_personal_challenge_challengeId').find('option').remove()
 		for (var i = 0; i < challengesArray.length; i++) {
 			var itemToPush = {
@@ -334,7 +334,7 @@ $(document).ready(function () {
 				id: challengesArray[i].id,
 				name: challengesArray[i].name
 			}
-			$('#join_personal_league_challenge_selector').append($('<option>', {
+			$('#join_personal_challenge_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
 			})).selectpicker('refresh')
@@ -1079,7 +1079,7 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#join_personal_challenge_exit_button", function (e) {
 		e.preventDefault()
-		var challengeId = $("#join_personal_league_challenge_selector").val()
+		var challengeId = $("#join_personal_challenge_selector").val()
 		if (!challengeId || !userId) {
 			return warningOperation()
 		}
@@ -1350,11 +1350,29 @@ $(document).ready(function () {
 	// 				 Plugin Utility					//
 	// ------------------------------ //
 	function initUtility() {
-    var $demoMaskedInput = $('.demo-masked-input');
+    var clipboard = new Clipboard('.btn');
+    clipboard.on('success', function(e) {
+      console.log(e);
+    })
+    clipboard.on('error', function(e) {
+      console.log(e);
+		})
+			
+		var $demoMaskedInput = $('.demo-masked-input');
 
     $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '09__ ___ ____' });
     $demoMaskedInput.find('.receivedCode').inputmask('9 9 9 9', { placeholder: '_ _ _ _' });
 	}
+
+	$('#join_personal_league_champion_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		var selected = $(this).find('option').eq(clickedIndex).val()
+		$('#personal_league_clipboard').val(selected)
+	})
+
+	$('#join_personal_challenge_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		var selected = $(this).find('option').eq(clickedIndex).val()
+		$('#challenge_clipboard').val(selected)
+	})
 
 	function startLoading() {
 		$('.page-loader-wrapper').fadeIn()

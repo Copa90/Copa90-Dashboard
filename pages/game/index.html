@@ -700,6 +700,21 @@
 										</select>
 									</div>
 								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7">
+										<b style="font-size:12px;"> کد عضویت </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="personal_league_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این لیگ خصوصی" disabled> 
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 m-b-10">
+										<button data-clipboard-target="#personal_league_clipboard" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
+									</div>
+								</div>
 								<div class="row clearfix">
 									<div class="col-lg-5 col-md-4 col-sm-4 col-xs-4">
 									</div>
@@ -912,8 +927,23 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
-										<select id="join_personal_league_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
+										<select id="join_personal_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
 										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7">
+										<b style="font-size:12px;"> کد عضویت </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="challenge_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این چالش" disabled> 
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 m-b-10">
+										<button data-clipboard-target="#challenge_clipboard" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
 									</div>
 								</div>
 								<div class="row clearfix">
@@ -1538,6 +1568,9 @@
 
 	<!-- Waves Effect Plugin Js -->
 	<script src="../../plugins/node-waves/waves.js"></script>
+
+	<!-- Clipbaord JS -->
+	<script src="../../plugins/clipboard/dist/clipboard.min.js"></script> 
 
     <!-- Jquery CountTo Plugin Js -->
     <script src="../../plugins/jquery-countto/jquery.countTo.js"></script>
