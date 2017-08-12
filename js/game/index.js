@@ -131,6 +131,10 @@ function warningOperation() {
 	showNotification('bg-orange', 'لطفا همه فیلدهای ضروری را پر کنید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
+function predictOverOperation() {
+	showNotification('bg-amber', 'پیش‌بینی‌ جدیدی برای این لیگ موجود نمی‌باشد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+}
+
 var coreEngine_url = "http://127.0.0.1:4000/api/"
 var zarinPal_url = "http://127.0.0.1:4020/api/"
 
