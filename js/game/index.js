@@ -132,7 +132,11 @@ function warningOperation() {
 }
 
 function predictOverOperation() {
-	showNotification('bg-amber', 'پیش‌بینی‌ جدیدی برای این لیگ موجود نمی‌باشد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+	showNotification('bg-orange', 'پیش‌بینی‌ جدیدی برای این لیگ موجود نمی‌باشد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+}
+
+function authenticationRequiredOperation() {
+	showNotification('bg-deep-orange', 'عذرخواهی میکنیم! نیاز است که مجددا وارد شوید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
 var coreEngine_url = "http://127.0.0.1:4000/api/"
