@@ -146,6 +146,7 @@ $(document).ready(function () {
 	var userClient
 	var currentPredict
 	var favTeam
+	var predictIndex
 
 	var acceptCount
 
@@ -156,8 +157,12 @@ $(document).ready(function () {
 	var userChallenges = []
 	var packagesArray = []
 
+	var predictsArray = []
+
 	var userTeamRanking = []
 	var allUsers = []
+
+	var currentLeague
 
 	var source = getUrlVars()["source"]
 
@@ -197,8 +202,13 @@ $(document).ready(function () {
 	}
 
 	if (!userId || !coreAccessToken) {
-		change_page_scene('page_aaa')
-		doneLoading()
+		getAllTeams(function(err, teamsResult) {
+			if (err)
+				return console.error(err)
+			change_page_scene('page_aaa')
+			doneProgressBar()
+			doneLoading()
+		})
 	}
 	else {
 		getAllInfo(function(err) {
@@ -207,14 +217,11 @@ $(document).ready(function () {
 			getTeamUsers(favTeam, function(err, result) {
 				if (err)
 					return change_page_scene('page_aaa')
-				getAllUsers(function(err) {
-					doneLoading()
-					if (err)
-						return change_page_scene('page_aaa')
-					fill_table_totalStatistics(allUsers)
-					fill_table_teamStatistics(userTeamRanking)
-					change_page_scene('page_main_menu')
-				})
+				doneLoading()
+				doneProgressBar()
+				fill_table_totalStatistics(allUsers)
+				fill_table_teamStatistics(userTeamRanking)
+				change_page_scene('page_main_menu')
 			})
 		})
 	}	
@@ -232,7 +239,7 @@ $(document).ready(function () {
 				$(str).hide()
 		}
 		if (pageName === 'page_aaa') {
-			$('#sign-in').show()
+			$('#sign-in').fadeIn()
 			$('#password').hide()
 			$('#sign-up').hide()
 			$('#phone').hide()
@@ -258,52 +265,107 @@ $(document).ready(function () {
 	// 			  	Selectors							//
 	// ------------------------------ //
 	function fill_champion_selector(championsArray) {
-		$('.champion_selector').find('option').remove()
+		$('#edit_personal_league_leagueId').find('option').remove()
+		$('#join_personal_league_champion_selector').find('option').remove()
+		$('#statistics_personal_league_leagueId').find('option').remove()
 		for (var i = 0; i < championsArray.length; i++) {
 			var itemToPush = {
 				id: championsArray[i].id,
 				name: championsArray[i].name
 			}
-			$('.champion_selector').append($('<option>', {
+			$('#edit_personal_league_leagueId').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+		for (var i = 0; i < championsArray.length; i++) {
+			var itemToPush = {
+				id: championsArray[i].id,
+				name: championsArray[i].name
+			}
+			$('#join_personal_league_champion_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+		for (var i = 0; i < championsArray.length; i++) {
+			var itemToPush = {
+				id: championsArray[i].id,
+				name: championsArray[i].name
+			}
+			$('#statistics_personal_league_leagueId').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
 			})).selectpicker('refresh')
 		}
 	}
 	function fill_challenge_selector(challengesArray) {
-		$('.challenge_selector').find('option').remove()
+		$('#edit_personal_challenge_challengeId').find('option').remove()
+		$('#join_personal_league_challenge_selector').find('option').remove()
+		$('#statistics_personal_challenge_challengeId').find('option').remove()
 		for (var i = 0; i < challengesArray.length; i++) {
 			var itemToPush = {
 				id: challengesArray[i].id,
 				name: challengesArray[i].name
 			}
-			$('.challenge_selector').append($('<option>', {
+			$('#edit_personal_challenge_challengeId').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+		for (var i = 0; i < challengesArray.length; i++) {
+			var itemToPush = {
+				id: challengesArray[i].id,
+				name: challengesArray[i].name
+			}
+			$('#join_personal_league_challenge_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+		for (var i = 0; i < challengesArray.length; i++) {
+			var itemToPush = {
+				id: challengesArray[i].id,
+				name: challengesArray[i].name
+			}
+			$('#statistics_personal_challenge_challengeId').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
 			})).selectpicker('refresh')
 		}
 	}
 	function fill_league_selector(leaguesArray) {
-		$('.league_selector').find('option').remove()
+		$('#play_room_league_leagueId').find('option').remove()
+		$('#ranking_league_statistics_leagueId').find('option').remove()
 		for (var i = 0; i < leaguesArray.length; i++) {
 			var itemToPush = {
 				id: leaguesArray[i].id,
 				name: leaguesArray[i].name
 			}
-			$('.league_selector').append($('<option>', {
+			$('#play_room_league_leagueId').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+		for (var i = 0; i < leaguesArray.length; i++) {
+			var itemToPush = {
+				id: leaguesArray[i].id,
+				name: leaguesArray[i].name
+			}
+			$('#ranking_league_statistics_leagueId').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
 			})).selectpicker('refresh')
 		}
 	}
 	function fill_team_selector(teamsArray) {
-		$('.team_selector').find('option').remove()
+		$('#aaa_signup_select_team').find('option').remove()
 		for (var i = 0; i < teamsArray.length; i++) {
 			var itemToPush = {
 				id: teamsArray[i].id,
 				name: teamsArray[i].name
 			}
-			$('.team_selector').append($('<option>', {
+			$('#aaa_signup_select_team').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
 			})).selectpicker('refresh')
@@ -368,35 +430,35 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#aaa_send_phone_button", function (e) {
 		e.preventDefault()
-		phoneNumber = $("#aaa_send_phone_phone_number").val()
-		if (!phoneNumber) {
+		phoneNumber = $("#aaa_send_phone_phone_number").val().replace(' ', '').replace(' ', '')
+		console.log(phoneNumber)
+		if (!phoneNumber || phoneNumber.includes('_')) {
 			return warningOperation()
 		}		
-		console.log(phoneNumber)
 		$('#sign-in').hide()
 		$('#password').hide()
-		$('#sign-up').show()
+		$('#sign-up').fadeIn()
 		$('#phone').hide()
 	})
 	$(document).on("click", "#aaa_send_code_button", function (e) {
 		e.preventDefault()
-		var code = $("#aaa_send_code_code").val()
-		if (!phoneNumber || !code) {
+		var code = $("#aaa_send_code_code").val().replace(' ', '').replace(' ', '').replace(' ', '')
+		var phoneNum = $("#aaa_send_code_phone").val().replace(' ', '').replace(' ', '')
+		if (!phoneNum || !code || phoneNum.includes('_') || code.includes('_')) {
 			return warningOperation()
 		}		
-		console.log(code)
 		startProgressBar()
-		var verificationURL = wrapAccessToken(coreEngine_url + 'verifications/verification/' + phoneNumber + '/' + code, coreAccessToken);
+		var verificationURL = coreEngine_url + 'verifications/' + phoneNum + '/verify/' + code
+		console.log(verificationURL)
 		$.ajax({
 			url: verificationURL,
-			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (verificationResult) {
 				doneProgressBar()
 				successfulOperation()
-				$('#sign-in').show()
+				$('#sign-in').fadeIn()
 				$('#password').hide()
 				$('#sign-up').hide()
 				$('#phone').hide()
@@ -404,29 +466,28 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#aaa_send_password_button", function (e) {
 		e.preventDefault()
-		var phoneNum = $("#aaa_password_phone_number").val()
-		if (!phoneNum) {
+		var phoneNum = $("#aaa_password_phone_number").val().replace(' ', '').replace(' ', '')
+		if (!phoneNum || phoneNum.includes('_')) {
 			return warningOperation()
 		}		
 		console.log(phoneNum)
 		startProgressBar()
-		var passwordURL = wrapAccessToken(coreEngine_url + 'clients/sendPassword/' + phoneNum, coreAccessToken);
+		var passwordURL = coreEngine_url + 'clients/sendPassword/' + phoneNum
 		$.ajax({
 			url: passwordURL,
-			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (passwordResult) {
 				doneProgressBar()
 				successfulOperation()
-				$('#sign-in').show()
+				$('#sign-in').fadeIn()
 				$('#password').hide()
 				$('#sign-up').hide()
 				$('#phone').hide()
@@ -434,7 +495,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -442,22 +503,23 @@ $(document).ready(function () {
 		e.preventDefault()
 		if (!$("#aaa_signup_fullname").val() || !$("#aaa_signup_username").val() ||
 				!$("#aaa_signup_email").val() || !$("#aaa_signup_password").val() ||
-				!$("#aaa_signup_referrer").val() || !phoneNumber || !$("#aaa_signup_select_team").val()
+				!phoneNumber || !$("#aaa_signup_select_team").val()
 		) {
 			return warningOperation()
 		}
 		var data = {
-			fullName: $("#aaa_signup_fullname").val(),
+			fullname: $("#aaa_signup_fullname").val(),
 			username: $("#aaa_signup_username").val(),
 			email: $("#aaa_signup_email").val(),
 			password: $("#aaa_signup_password").val(),
-			referrer: $("#aaa_signup_referrer").val(),
 			phoneNumber: phoneNumber,
 			time: Math.floor((new Date).getTime())
 		}
+		if ($("#aaa_signup_referrer").val())
+			data.referrer = $("#aaa_signup_referrer").val()
 		console.log(JSON.stringify(data))
 		startProgressBar()
-		var clientsURL = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken);
+		var clientsURL = coreEngine_url + 'clients'
 		$.ajax({
 			url: clientsURL,
 			data: JSON.stringify(data),
@@ -465,18 +527,17 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (clientResult) {
-				var verifyURL = wrapAccessToken(coreEngine_url + 'verifications/sendVerification/' + phoneNumber, coreAccessToken);
+				var verifyURL = coreEngine_url + 'verifications/' + phoneNumber + '/sendVerification/'
+				console.log(verifyURL)
 				$.ajax({
 					url: verifyURL,
-					data: JSON.stringify(data),
 					dataType: "json",
 					contentType: "application/json; charset=utf-8",
 					type: "POST",
 					success: function (verifyResult) {
-						var teamURL = wrapAccessToken(coreEngine_url + 'teams/' + clientResult.id + '/selectFavorite/' + $("#aaa_signup_select_team").val(), coreAccessToken);
+						var teamURL = coreEngine_url + 'teams/' + clientResult.id + '/selectFavorite/' + $("#aaa_signup_select_team").val()
 						$.ajax({
 							url: teamURL,
-							data: JSON.stringify(data),
 							dataType: "json",
 							contentType: "application/json; charset=utf-8",
 							type: "POST",
@@ -488,34 +549,34 @@ $(document).ready(function () {
 								$('#sign-up').hide()
 								$('#phone').show()
 								$('#sendPhone').hide()
-								$('#sendCode').show()
+								$('#sendCode').fadeIn()
 							},
 							error: function (xhr, status, error) {
 								doneProgressBar()
 								failedOperation()
-								console.error(xhr.responseText)
+								console.log(xhr.responseText)
 							}
 						})
 					},
 					error: function (xhr, status, error) {
 						doneProgressBar()
 						failedOperation()
-						console.error(xhr.responseText)
+						console.log(xhr.responseText)
 					}
 				})
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#aaa_signin_button", function (e) {
 		e.preventDefault()
-		var phoneNum = $("#aaa_signin_phone_number").val()
+		var phoneNum = $("#aaa_signin_phone_number").val().replace(' ', '').replace(' ', '')
 		var pass = $("#aaa_signin_password").val()
-		if (!phoneNum || !pass) {
+		if (!phoneNum || !pass || phoneNum.includes('_')) {
 			return warningOperation()
 		}
 		var data = {
@@ -524,7 +585,7 @@ $(document).ready(function () {
 		}
 		console.log(JSON.stringify(data))
 		startProgressBar()
-		var loginURL = wrapAccessToken(coreEngine_url + 'clients/login', coreAccessToken)
+		var loginURL = coreEngine_url + 'clients/login'
 		$.ajax({
 			url: loginURL,
 			data: JSON.stringify(data),
@@ -532,12 +593,17 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (clientResult) {
+				coreAccessToken = clientResult.id
+				userId = clientResult.userId
 				getAllInfo(function(err) {
 					doneProgressBar()
 					if (err)
 						return failedOperation()
 					else {
-						successfulOperation()
+						if (source !== 'telegram') {
+							localStorage.setItem('userCoreAccessToken', coreAccessToken)
+							localStorage.setItem('userId', userId)
+						}
 						change_page_scene('page_main_menu')
 					}
 				})
@@ -545,13 +611,13 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", ".signinHref", function (e) {
 		e.preventDefault()
-		$('#sign-in').show()
+		$('#sign-in').fadeIn()
 		$('#password').hide()
 		$('#sign-up').hide()
 		$('#phone').hide()
@@ -561,16 +627,25 @@ $(document).ready(function () {
 		$('#sign-in').hide()
 		$('#password').hide()
 		$('#sign-up').hide()
-		$('#phone').show()
-		$('#sendPhone').show()
+		$('#phone').fadeIn()
+		$('#sendPhone').fadeIn()
 		$('#sendCode').hide()
 	})
 	$(document).on("click", ".passwordHref", function (e) {
 		e.preventDefault()
 		$('#sign-in').hide()
-		$('#password').show()
+		$('#password').fadeIn()
 		$('#sign-up').hide()
 		$('#phone').hide()
+	})
+	$(document).on("click", ".sendCodeHref", function (e) {
+		e.preventDefault()
+		$('#sign-in').hide()
+		$('#password').hide()
+		$('#sign-up').hide()
+		$('#phone').fadeIn()
+		$('#sendPhone').hide()
+		$('#sendCode').fadeIn()
 	})
 	// ------------------------------ //
 	// 					Main Menue						//
@@ -616,10 +691,9 @@ $(document).ready(function () {
 			type: "POST",
 			success: function (estimateResult) {
 				acceptCount++
-				getNextObject(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
+				if (predictIndex < predictsArray.length) {
+					currentPredict = predictsArray[predictIndex]
+					predictIndex++
 					var total = userClient.accountInfoModel.chances
 					var fill = ((total - acceptCount) / total) * 100
 					var white = 100 - fill
@@ -633,23 +707,34 @@ $(document).ready(function () {
 						$("#main_predict_progress_fill").removeClass("bg-green bg-yellow bg-deep-orange").addClass("bg-orange")
 					else 
 						$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-green").addClass("bg-deep-orange")
-				})
+					displayPredict()
+				}
+				else {
+					change_page_scene('page_play_room')
+					predictOverOperation()
+				}
+				doneProgressBar()
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
 	$(document).on("click", "#main_predict_reject_button", function (e) {
 		e.preventDefault()
 		startProgressBar()
-		getNextObject(function(err, result) {
-			doneProgressBar()
-			if (err)
-				return failedOperation()
-		})
+		if (predictIndex < predictsArray.length) {
+			currentPredict = predictsArray[predictIndex]
+			predictIndex++
+			displayPredict()
+		}
+		else {
+			change_page_scene('page_play_room')
+			predictOverOperation()
+		}
+		doneProgressBar()
 	})
 	$(document).on("click", "#main_predict_return_menu", function (e) {
 		e.preventDefault()
@@ -693,7 +778,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -728,7 +813,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -763,7 +848,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -792,7 +877,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -821,7 +906,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -841,7 +926,7 @@ $(document).ready(function () {
 		console.log(JSON.stringify(filter))
 		startProgressBar()
 		var rankingURL = wrapAccessToken(coreEngine_url + 'rankings', coreAccessToken)
-		var rankingURLWithFilter = wrapFilter(rankingURL, filter)
+		var rankingURLWithFilter = wrapFilter(rankingURL, JSON.stringify(filter))
 		$.ajax({
 			url: rankingURLWithFilter,
 			dataType: "json",
@@ -864,7 +949,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -900,7 +985,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -933,7 +1018,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -968,7 +1053,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -997,7 +1082,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1026,7 +1111,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1046,7 +1131,7 @@ $(document).ready(function () {
 		console.log(JSON.stringify(filter))
 		startProgressBar()
 		var competitionURL = wrapAccessToken(coreEngine_url + 'competitions', coreAccessToken)
-		var competitionURLWithFilter = wrapFilter(competitionURL, filter)
+		var competitionURLWithFilter = wrapFilter(competitionURL, JSON.stringify(filter))
 		$.ajax({
 			url: competitionURLWithFilter,
 			dataType: "json",
@@ -1069,7 +1154,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1087,12 +1172,27 @@ $(document).ready(function () {
 			return console.error('required fields error')
 		}
 		console.log(leagueId)
+		currentLeague = leagueId
 		startProgressBar()
-		getNextObject(function(err, result) {
+		getNextObjectArray(function(err, result) {
 			doneProgressBar()
 			if (err)
 				return failedOperation()
-			change_page_scene('page_main_prediction')
+			if (result.length == 0) {
+				return predictOverOperation()
+			}
+			else {
+				$('#main_predict_remaining').hide()
+				$('#main_predict_point').hide()
+				$('#main_predict_explanation').hide()
+				$('#main_predict_progress_white').css('width', '0%')
+				$('#main_predict_progress_fill').css('width', '100%')
+				predictIndex = 0
+				currentPredict = result[predictIndex]
+				predictIndex++
+				change_page_scene('page_main_prediction')
+				displayPredict()
+			}
 		})
 	})
 	// ------------------------------ //
@@ -1190,7 +1290,7 @@ $(document).ready(function () {
 						error: function (xhr, status, error) {
 							doneProgressBar()
 							failedOperation()
-							console.error(xhr.responseText)
+							console.log(xhr.responseText)
 						}
 					})
 				}
@@ -1202,7 +1302,7 @@ $(document).ready(function () {
 			error: function (xhr, status, error) {
 				doneProgressBar()
 				failedOperation()
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1230,17 +1330,6 @@ $(document).ready(function () {
 	// 				 Plugin Utility					//
 	// ------------------------------ //
 	function initUtility() {
-		$('.count-to').countTo({
-				formatter: function (value, options) {
-						return Persian_Number(value.toFixed(0))
-				}
-		})
-		$('.sales-count-to').countTo({
-				formatter: function (value, options) {
-						return '$' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, ' ').replace('.', ',')
-				}
-		})
-
     var $demoMaskedInput = $('.demo-masked-input');
 
     $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '09__ ___ ____' });
@@ -1256,10 +1345,10 @@ $(document).ready(function () {
 		$('#rainbow-progress-bar1').fadeOut()
 	}
 	function startProgressBar() {
-		$('#rainbow-progress-bar0').fadeIn()
+		$('.cardRainbow').fadeIn()
 	}
 	function doneProgressBar() {
-		$('#rainbow-progress-bar0').fadeOut()
+		$('.cardRainbow').fadeOut()
 	}
 
 	// ------------------------------ //
@@ -1276,7 +1365,7 @@ $(document).ready(function () {
 			$('#addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + challenge.status + '</span></td>'
 			)
@@ -1289,7 +1378,7 @@ $(document).ready(function () {
 			$('#addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
 			)
 		}
@@ -1304,7 +1393,7 @@ $(document).ready(function () {
 			$('#addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
 			)
 		}
@@ -1329,7 +1418,7 @@ $(document).ready(function () {
 			$('#addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
 			)
 		}
@@ -1354,7 +1443,7 @@ $(document).ready(function () {
 			$('#addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullName + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
 			)
 		}
@@ -1370,7 +1459,7 @@ $(document).ready(function () {
     }
 	}
 	function fill_table_trophies(userLevel) {
-		for (var i = userLevel; i < 11; i++) {
+		for (var i = userLevel + 1; i < 11; i++) {
 			var str = '#trophy_' + i
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
@@ -1385,6 +1474,18 @@ $(document).ready(function () {
 		$('#ranking_total_statistics_table>tbody').empty()
 		$('#statistics_personal_league_table>tbody').empty()
 		$('#statistics_personal_challenge_table>tbody').empty()
+	}
+	function displayPredict() {
+		$('#main_predict_remaining').fadeOut()
+		$('#main_predict_point').fadeOut()
+		$('#main_predict_explanation').fadeOut()
+		var hours = Math.round((Math.floor((new Date).getTime()) - currentPredict.endingTime) / (1000 * 60 * 60))
+		$('#main_predict_remaining').html(hours)
+		$('#main_predict_point').html(currentPredict.point)
+		$('#main_predict_explanation').html(currentPredict.explanation)
+		$('#main_predict_remaining').fadeIn()
+		$('#main_predict_point').fadeIn()
+		$('#main_predict_explanation').fadeIn()
 	}
 	// ------------------------------ //
 	// 		 	 		Data Fetchers					//
@@ -1434,9 +1535,18 @@ $(document).ready(function () {
 					success: function (estimateResult) {
 						userClient = clientResult
 						acceptCount = 0
-						$('.sharedName').val(userClient.fullName)
-						$('.card_total_points').val(userClient.accountInfoModel.totalPoints)
-						$('.card_rem_predicts').val(userClient.accountInfoModel.chances)
+						$('.sharedName').html(userClient.fullname)
+						$(".card_total_points").attr({
+							"data-to": userClient.accountInfoModel.totalPoints.toString()
+						})
+						$(".card_rem_predicts").attr({
+							"data-to": userClient.accountInfoModel.chances.toString()
+						})
+						$('.count-to').countTo({
+								formatter: function (value, options) {
+										return Persian_Number(value.toFixed(0))
+								}
+						})
 						fill_table_trophies(userClient.trophyModel.level)
 						var totalWinCount = 0, totalLoseCount = 0, totalCount = 0, totalPoints = 0
 						var weekWinCount = 0, weekLoseCount = 0, weekCount = 0, weekPoints = 0
@@ -1475,10 +1585,10 @@ $(document).ready(function () {
 							if (estimateResult[i].status !== 'Open')
 								totalCount++
 						}
-						if (monthCount == 0) {
-							$('#month_points').val(monthPoints)
-							$('#month_predicts').val(monthCount)
-							$('#month_correct_predicts').val(monthWinCount)
+						$('#month_points').html(monthPoints)
+						$('#month_predicts').html(monthCount)
+						$('#month_correct_predicts').html(monthWinCount)
+						if (monthCount != 0) {
 							var correct = (monthWinCount / monthCount) * 100
 							var rem = 100 - correct
 							$('#month_rem').css('width', rem.toString() + '%')
@@ -1487,10 +1597,10 @@ $(document).ready(function () {
 						else {
 							$('#progressbar_month').hide()
 						}
-						if (weekCount == 0) {
-							$('#week_points').val(weekPoints)
-							$('#week_predicts').val(weekCount)
-							$('#week_correct_predicts').val(weekWinCount)
+						$('#week_points').html(weekPoints)
+						$('#week_predicts').html(weekCount)
+						$('#week_correct_predicts').html(weekWinCount)
+						if (weekCount != 0) {
 							var correct = (weekWinCount / weekCount) * 100
 							var rem = 100 - correct
 							$('#week_rem').css('width', rem.toString() + '%')
@@ -1499,10 +1609,10 @@ $(document).ready(function () {
 						else {
 							$('#progressBar_week').hide()
 						}
-						if (totalCount == 0) {
-							$('#total_points').val(totalPoints)
-							$('#total_predicts').val(totalCount)
-							$('#total_correct_predicts').val(totalWinCount)
+						$('#total_points').html(totalPoints)
+						$('#total_predicts').html(totalCount)
+						$('#total_correct_predicts').html(totalWinCount)
+						if (totalCount != 0) {
 							var correct = (totalWinCount / totalCount) * 100
 							var rem = 100 - correct
 							$('#total_rem').css('width', rem.toString() + '%')
@@ -1511,18 +1621,18 @@ $(document).ready(function () {
 						else {
 							$('#progressBar_total').hide()
 						}
-						favTeam = userClient.favTeam.teamId
+						favTeam = userClient.teamId
 						callback(null, userClient)
 					},
 					error: function (xhr, status, error) {
-						callback(err)
-						console.error(xhr.responseText)
+						callback(error)
+						console.log(xhr.responseText)
 					}
 				})
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -1538,7 +1648,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(err)
-				console.error(xhr.responseText)
+				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -1553,13 +1663,13 @@ $(document).ready(function () {
 				callback(null, teamsArray)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})
 	}
 	function getAllUsersChampions(callback) {
-		var userChampionsURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userid + '/champions', coreAccessToken)
+		var userChampionsURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/champions', coreAccessToken)
 		$.ajax({
 			url: userChampionsURLWithAT,
 			type: "GET",
@@ -1569,13 +1679,13 @@ $(document).ready(function () {
 				callback(null, userChampions)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})
 	}
 	function getAllUsersChallanges(callback) {
-		var userChallengesURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userid + '/challenges', coreAccessToken)
+		var userChallengesURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/challenges', coreAccessToken)
 		$.ajax({
 			url: userChallengesURLWithAT,
 			type: "GET",
@@ -1584,39 +1694,29 @@ $(document).ready(function () {
 				callback(null, userChallenges)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})
 	}
-	function getNextObject(callback) {
-		var nextObjectURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userid + '/nextObject/' + currentLeague, coreAccessToken)
+	function getNextObjectArray(callback) {
+		var nextObjectURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/nextObject/' + currentLeague, coreAccessToken)
 		$.ajax({
 			url: nextObjectURLWithAT,
 			type: "GET",
 			success: function (nextObjectResult) {
-				currentPredict = nextObjectResult
-				$('#main_predict_remaining').fadeOut()
-				$('#main_predict_point').fadeOut()
-				$('#main_predict_explanation').fadeOut()
-				var hours = (Math.floor((new Date).getTime()) - currentPredict.endingTime) / (1000 * 60 * 60)
-				$('#main_predict_remaining').val(hours)
-				$('#main_predict_point').val(currentPredict.point)
-				$('#main_predict_explanation').val(currentPredict.explanation)
-				$('#main_predict_remaining').fadeIn()
-				$('#main_predict_point').fadeIn()
-				$('#main_predict_explanation').fadeIn()
-				callback(null, currentPredict)
+				predictsArray = nextObjectResult
+				callback(null, predictsArray)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})
 	}
 	function getAllPackages(callback) {
 		var packageURLWithAT = wrapAccessToken(coreEngine_url + 'packages', coreAccessToken)
-		var packageURL = wrapFilter(packageURLWithAT, {'where':{'status': 'Working'}})
+		var packageURL = wrapFilter(packageURLWithAT, JSON.stringify({'where':{'status': 'Working'}}))
 		$.ajax({
 			url: packageURL,
 			type: "GET",
@@ -1627,7 +1727,7 @@ $(document).ready(function () {
 				for (var i = 0; i < packageResult.length; i++) {
 					if (packageResult[i].offer === 'Special') {
 						specialCount++
-						specialArray.psuh(packageResult[i])
+						specialArray.push(packageResult[i])
 					}
 					else if (packageResult[i].offer === 'General') {
 						generalCount++
@@ -1670,28 +1770,33 @@ $(document).ready(function () {
 					var appendix = mergeData(specialArray[i])
 					$('#special_listbox').append(appendix)
 				}
-				if (specialCount != 0)
+				if (specialCount != 0) {
+					$('#special_listbox').parent().addClass('carousel').addClass('slide')
 					$('#special_listbox').children().first().addClass('active')
+				}
 
 				for (var i = 0; i < generalArray.length; i++) {
 					var appendix = mergeData(generalArray[i])
 					$('#general_listbox').append(appendix)
 				}
-				if (generalCount != 0)
+				if (generalCount != 0) {
+					$('#general_listbox').parent().addClass('carousel').addClass('slide')
 					$('#general_listbox').children().first().addClass('active')
+				}
 
 				callback(null, packageResult)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})
 	}
 
 	function getAllUsers(callback) {
 		var filter = {
-			order: 'accountInfoModel.totalPoints DESC'
+			order: 'accountInfoModel.totalPoints DESC',
+			skip: '7'
 		}
 		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken)
 		var clientWithFilter = wrapFilter(clientURLWithAT, JSON.stringify(filter))
@@ -1703,8 +1808,8 @@ $(document).ready(function () {
 				callback(null, clientResult)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -1723,8 +1828,8 @@ $(document).ready(function () {
 				callback(null, clientResult)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
-				console.error(xhr.responseText)
+				callback(error)
+				console.log(xhr.responseText)
 			}
 		})		
 	}
