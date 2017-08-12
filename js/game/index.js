@@ -1333,7 +1333,7 @@ $(document).ready(function () {
 	function tabHandler(e) {
 		var select = $(e.target).attr('id')
 		var no = select.replace("nav", "")
-		for (var i = 1; i < 14; i++) {
+		for (var i = 1; i < 15; i++) {
 			var str = '#nav' + i + '_tab'
 			if (i == Number(no))
 				$(str).fadeIn()
@@ -1680,6 +1680,12 @@ $(document).ready(function () {
 							$('#progressBar_total').hide()
 						}
 						favTeam = userClient.teamId
+						$('#user_data_profile_image').attr('src', coreEngine_url + userClient.profilePath)
+						$('#user_data_phone_number').val(Persian_Number(userClient.phoneNumber.toString()))
+						$('#user_data_name').val('@' + userClient.username)
+						$('#user_data_code').val(userClient.id)
+						$('#user_data_email').val(userClient.email)
+						$('#user_data_date').val(fullDateConvertor(userClient.time))
 						callback(null, userClient)
 					},
 					error: function (xhr, status, error) {

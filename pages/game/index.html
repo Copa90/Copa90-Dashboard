@@ -707,7 +707,7 @@
 										<b style="font-size:12px;"> کد عضویت </b>
 										<div class="input-group">
 											<div class="form-line">
-												<input id="personal_league_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این لیگ خصوصی" disabled> 
+												<input id="personal_league_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این لیگ خصوصی" readonly> 
 											</div>
 										</div>
 									</div>
@@ -938,7 +938,7 @@
 										<b style="font-size:12px;"> کد عضویت </b>
 										<div class="input-group">
 											<div class="form-line">
-												<input id="challenge_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این چالش" disabled> 
+												<input id="challenge_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این چالش" readonly> 
 											</div>
 										</div>
 									</div>
@@ -1245,10 +1245,13 @@
 								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
 									<div class="row clearfix">
 										<ul class="nav nav-tabs tab-col-teal" role="tablist">
-											<li role="presentation" class="active col-sm-6 col-md-6 col-lg-6 col-xs-6 p-r-0 p-l-0">
-												<a href="#" class="text-center p-r-0 p-l-0" id="nav12" data-toggle="tab" style="font-size: 15px;">اطلاعات</a>
+											<li role="presentation" class="active col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav12" data-toggle="tab" style="font-size: 15px;">داده‌ها</a>
 											</li>
-											<li role="presentation" class="col-sm-6 col-md-6 col-lg-6 col-xs-6 p-r-0 p-l-0">
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav14" data-toggle="tab" style="font-size: 15px;">اطلاعات</a>
+											</li>
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
 												<a href="#" class="text-center p-r-0 p-l-0" id="nav13" data-toggle="tab" style="font-size: 15px;">دستاوردها</a>
 											</li>
 										</ul>
@@ -1381,6 +1384,98 @@
 								</div>
 							</div>
 							<!-- End of Total Statistics -->
+
+							<!-- Start of User Data -->
+							<div class="row clearfix" id="nav14_tab">
+								<div class="row clearfix m-t-10">
+
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+											<div class="logo text-center"> 
+												<div class="image">
+													<img id="user_data_profile_image" class="img-circle" src="../../images/golden.png" width="215" height="200" alt="User" />
+												</div>
+											</div> 
+										</div>
+									</div>
+									<div class="row clearfix">
+										<h2 class="text-center m-t-10 m-b-20 sharedName">علیرضا عربی</h2>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> نام کاربری </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_name" dir="ltr" type="text" class="form-control text-center" placeholder="یک نام پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7 m-b-0">
+											<b style="font-size:12px;"> کد معرفی به دوستان </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_code" type="text" dir="ltr" value="" class="form-control text-center" placeholder="یک کد معرفی به دوستان" readonly> 
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+											<button data-clipboard-target="#user_data_code" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10 text-center">
+											<small class="text-center" style="text-align: center" align="center">با اشتراک کد معرفی به دوستان خود، ۵ پیش‌بینی‌ جایزه به آن ها جایزه دهید و خودتان هم ۵ پیش‌بینی‌ هدیه بگیرید.</small>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> ایمیل </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_email" type="text" dir="ltr" class="form-control text-center" placeholder="یک ایمیل پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> شماره تماس </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_phone_number" dir="ltr" type="text" class="form-control text-center font-15" placeholder="یک شماره پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> تاریخ ثبت‌نام </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_date" type="text" dir="ltr" class="form-control text-center" placeholder="یک تاریخ پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End of User Data -->
 
 							<!-- Start of Trophies -->
 							<div class="row clearfix" id="nav13_tab">
