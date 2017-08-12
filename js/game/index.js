@@ -240,6 +240,8 @@ $(document).ready(function () {
 		})
 	}	
 
+	getAllUsers(function(err, result) {})
+
 	// ------------------------------ //
 	// 		  	Page Controller					//
 	// ------------------------------ //
@@ -618,6 +620,8 @@ $(document).ready(function () {
 							localStorage.setItem('userCoreAccessToken', coreAccessToken)
 							localStorage.setItem('userId', userId)
 						}
+						fill_table_totalStatistics(allUsers)
+						fill_table_teamStatistics(userTeamRanking)
 						change_page_scene('page_main_menu')
 					}
 				})
@@ -690,7 +694,7 @@ $(document).ready(function () {
 	$(document).on("click", "#main_predict_accept_button", function (e) {
 		e.preventDefault()
 		var data = {
-			predtictId: currentPredict.id,
+			predictId: currentPredict.id,
 			clientId: userId,
 			time: Math.floor((new Date).getTime())
 		}
@@ -758,6 +762,8 @@ $(document).ready(function () {
 			if (err)
 				return failedOperation()
 			else {
+				fill_table_totalStatistics(allUsers)
+				fill_table_teamStatistics(userTeamRanking)
 				change_page_scene('page_main_menu')
 				empty_all_tables()
 				empty_all_fields()
@@ -1228,7 +1234,6 @@ $(document).ready(function () {
 		}
 		console.log(leagueId)
 		startProgressBar()
-		empty_all_tables()
 		var leagueArray = []
 		function compare(a, b){
 			return Number(b[leagueId]) - Number(a[leagueId])
@@ -1241,6 +1246,7 @@ $(document).ready(function () {
 			}
 		}
 		leagueArray.sort(compare)
+		preferedLeague = leagueId
 		fill_table_leagueStatistics(leagueArray)
 		doneProgressBar()
 	})
@@ -1369,46 +1375,46 @@ $(document).ready(function () {
 	// 		 	 Table Construction				//
 	// ------------------------------ //
 	function fill_table_challenge(challenge, usersArray) {
-		$('#statistics_personal_challenge_table>tbody').empty()
+		$('#statistics_personal_challenge_table tbody').empty()
 		var statusColor
 		if (challenge.status === 'Working') statusColor = 'bg-green'
 		else if (challenge.status === 'Created') statusColor = 'bg-light-blue'
 		else if (challenge.status === 'Finished') statusColor = 'bg-deep-orange'
 		for (var i = 0; i < usersArray.length; i++) {
-			$('#statistics_personal_challenge_table').append('<tr id="addr' + (i) + '"></tr>')
-			$('#addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+			$('#statistics_personal_challenge_table').append('<tr id="spct_addr' + (i) + '"></tr>')
+			$('#spct_addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + challenge.status + '</span></td>'
 			)
 		}
 	}
 	function fill_table_champion(champion, usersArray) {
-		$('#statistics_personal_league_table>tbody').empty()
+		$('#statistics_personal_league_table tbody').empty()
 		for (var i = 0; i < usersArray.length; i++) {
-			$('#statistics_personal_league_table').append('<tr id="addr' + (i) + '"></tr>')
-			$('#addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+			$('#statistics_personal_league_table').append('<tr id="splt_addr' + (i) + '"></tr>')
+			$('#splt_addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 		}
 	}
 	function fill_table_totalStatistics(usersArray) {
-		$('#ranking_total_statistics_table>tbody').empty()
+		$('#ranking_total_statistics_table tbody').empty()
 		var rowNo = 0
 		for (var i = 0; i < usersArray.length; i++) {
 			if (usersArray[i].id === userId)
 				rowNo = i
-			$('#ranking_total_statistics_table').append('<tr id="addr' + (i) + '"></tr>')
-			$('#addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+			$('#ranking_total_statistics_table').append('<tr id="rtst_addr' + (i) + '"></tr>')
+			$('#rtst_addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 		}
 		var table = $('#ranking_total_statistics_table')
@@ -1423,17 +1429,17 @@ $(document).ready(function () {
     }
 	}
 	function fill_table_teamStatistics(usersArray) {
-		$('#ranking_team_statistics_table>tbody').empty()
+		$('#ranking_team_statistics_table tbody').empty()
 		var rowNo = 0
 		for (var i = 0; i < usersArray.length; i++) {
 			if (usersArray[i].id === userId)
 				rowNo = i
-			$('#ranking_team_statistics_table').append('<tr id="addr' + (i) + '"></tr>')
-			$('#addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+			$('#ranking_team_statistics_table').append('<tr id="rtst2_addr' + (i) + '"></tr>')
+			$('#rtst2_addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 		}
 		var table = $('#ranking_team_statistics_table')
@@ -1448,17 +1454,18 @@ $(document).ready(function () {
     }
 	}
 	function fill_table_leagueStatistics(usersArray) {
-		$('#ranking_league_statistics_table>tbody').empty()
+		$('#ranking_league_statistics_table tbody').empty()
 		var rowNo = 0
 		for (var i = 0; i < usersArray.length; i++) {
 			if (usersArray[i].id === userId)
 				rowNo = i
-			$('#ranking_league_statistics_table').append('<tr id="addr' + (i) + '"></tr>')
-			$('#addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;" scope="row">' + i + '</th>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+			$('#ranking_league_statistics_table').append('<tr id="rl2st_addr' + (i) + '"></tr>')
+			var p = usersArray[i].checkpointModel.leagues[preferedLeague]
+			$('#rl2st_addr' + i).html(
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].accountInfoModel.totalPoints + '</td>'
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(p.toString()) + ' امتیاز </td>'
 			)
 		}
 		var table = $('#ranking_league_statistics_table')
@@ -1473,33 +1480,39 @@ $(document).ready(function () {
     }
 	}
 	function fill_table_trophies(userLevel) {
-		for (var i = userLevel + 1; i < 11; i++) {
+		for (var i = Number(userLevel) + 1; i < 11; i++) {
 			var str = '#trophy_' + i
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
 	}
 	function empty_all_tables() {
-		for (var i = 0; i < 11; i++) {
-			var str = '#trophy_' + i
-			$(str).css({"-webkit-filter":'', "filter": ''})
-		}
-		$('#ranking_league_statistics_table>tbody').empty()
-		$('#ranking_team_statistics_table>tbody').empty()
-		$('#ranking_total_statistics_table>tbody').empty()
-		$('#statistics_personal_league_table>tbody').empty()
-		$('#statistics_personal_challenge_table>tbody').empty()
+		$('#ranking_league_statistics_table tbody').empty()
+		$('#ranking_team_statistics_table tbody').empty()
+		$('#ranking_total_statistics_table tbody').empty()
+		$('#statistics_personal_league_table tbody').empty()
+		$('#statistics_personal_challenge_table tbody').empty()
 	}
 	function displayPredict() {
 		$('#main_predict_remaining').fadeOut()
 		$('#main_predict_point').fadeOut()
 		$('#main_predict_explanation').fadeOut()
-		var hours = Math.round((Math.floor((new Date).getTime()) - currentPredict.endingTime) / (1000 * 60 * 60))
-		$('#main_predict_remaining').html(hours)
-		$('#main_predict_point').html(currentPredict.point)
-		$('#main_predict_explanation').html(currentPredict.explanation)
-		$('#main_predict_remaining').fadeIn()
-		$('#main_predict_point').fadeIn()
-		$('#main_predict_explanation').fadeIn()
+		function showContent() {
+			$('#main_predict_remaining').fadeIn()
+			$('#main_predict_point').fadeIn()
+			$('#main_predict_explanation').fadeIn()
+			var hours = Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
+			$('#main_predict_remaining').html(Persian_Number(hours.toString()) + ' ساعت ')
+			$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
+			$('#main_predict_explanation').html(currentPredict.explanation)
+		}
+		if (predictIndex <= 1) {
+			showContent()
+		}
+		else {
+			setTimeout(function () { 
+				showContent()
+			}, 350);
+		}
 	}
 	// ------------------------------ //
 	// 		 	 		Data Fetchers					//
@@ -1557,6 +1570,19 @@ $(document).ready(function () {
 							"data-to": userClient.accountInfoModel.chances.toString()
 						})
 						$('.count-to').countTo({
+								refreshInterval: 500,
+								formatter: function (value, options) {
+										return Persian_Number(value.toFixed(0))
+								}
+						})
+						$('.card_total_points').countTo({
+								to: userClient.accountInfoModel.totalPoints,
+								formatter: function (value, options) {
+										return Persian_Number(value.toFixed(0))
+								}
+						})
+						$('.card_rem_predicts').countTo({
+								to: userClient.accountInfoModel.chances,
 								formatter: function (value, options) {
 										return Persian_Number(value.toFixed(0))
 								}
@@ -1599,9 +1625,9 @@ $(document).ready(function () {
 							if (estimateResult[i].status !== 'Open')
 								totalCount++
 						}
-						$('#month_points').html(monthPoints)
-						$('#month_predicts').html(monthCount)
-						$('#month_correct_predicts').html(monthWinCount)
+						$('#month_points').html(Persian_Number(monthPoints.toString()))
+						$('#month_predicts').html(Persian_Number(monthCount.toString()))
+						$('#month_correct_predicts').html(Persian_Number(monthWinCount.toString()))
 						if (monthCount != 0) {
 							var correct = (monthWinCount / monthCount) * 100
 							var rem = 100 - correct
@@ -1611,9 +1637,9 @@ $(document).ready(function () {
 						else {
 							$('#progressbar_month').hide()
 						}
-						$('#week_points').html(weekPoints)
-						$('#week_predicts').html(weekCount)
-						$('#week_correct_predicts').html(weekWinCount)
+						$('#week_points').html(Persian_Number(weekPoints.toString()))
+						$('#week_predicts').html(Persian_Number(weekCount.toString()))
+						$('#week_correct_predicts').html(Persian_Number(weekWinCount.toString()))
 						if (weekCount != 0) {
 							var correct = (weekWinCount / weekCount) * 100
 							var rem = 100 - correct
@@ -1623,9 +1649,9 @@ $(document).ready(function () {
 						else {
 							$('#progressBar_week').hide()
 						}
-						$('#total_points').html(totalPoints)
-						$('#total_predicts').html(totalCount)
-						$('#total_correct_predicts').html(totalWinCount)
+						$('#total_points').html(Persian_Number(totalPoints.toString()))
+						$('#total_predicts').html(Persian_Number(totalCount.toString()))
+						$('#total_correct_predicts').html(Persian_Number(totalWinCount.toString()))
 						if (totalCount != 0) {
 							var correct = (totalWinCount / totalCount) * 100
 							var rem = 100 - correct
@@ -1809,8 +1835,7 @@ $(document).ready(function () {
 
 	function getAllUsers(callback) {
 		var filter = {
-			order: 'accountInfoModel.totalPoints DESC',
-			skip: '7'
+			skip: '6'
 		}
 		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken)
 		var clientWithFilter = wrapFilter(clientURLWithAT, JSON.stringify(filter))
@@ -1819,7 +1844,12 @@ $(document).ready(function () {
 			type: "GET",
 			success: function (clientResult) {
 				allUsers = clientResult
-				callback(null, clientResult)
+				function compare(a, b){
+					return Number(b.accountInfoModel.totalPoints) - Number(a.accountInfoModel.totalPoints)
+				}
+				allUsers.sort(compare)
+				console.log(allUsers)
+				callback(null, allUsers)
 			},
 			error: function (xhr, status, error) {
 				callback(error)
