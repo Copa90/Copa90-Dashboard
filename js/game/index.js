@@ -233,14 +233,16 @@ $(document).ready(function () {
 					return change_page_scene('page_aaa')
 				doneLoading()
 				doneProgressBar()
-				fill_table_totalStatistics(allUsers)
 				fill_table_teamStatistics(userTeamRanking)
 				change_page_scene('page_main_menu')
 			})
+			getAllUsers(function(err, result) {
+				if (err)
+					return change_page_scene('page_aaa')
+				fill_table_totalStatistics(allUsers)
+			})
 		})
 	}	
-
-	getAllUsers(function(err, result) {})
 
 	// ------------------------------ //
 	// 		  	Page Controller					//
@@ -565,6 +567,7 @@ $(document).ready(function () {
 								$('#sign-up').hide()
 								$('#phone').show()
 								$('#sendPhone').hide()
+								$('#aaa_send_code_phone').val(phoneNumber)
 								$('#sendCode').fadeIn()
 							},
 							error: function (xhr, status, error) {
@@ -612,18 +615,24 @@ $(document).ready(function () {
 				coreAccessToken = clientResult.id
 				userId = clientResult.userId
 				getAllInfo(function(err) {
-					doneProgressBar()
 					if (err)
 						return failedOperation()
-					else {
+					getTeamUsers(favTeam, function(err, result) {
+						doneProgressBar()
+						if (err)
+							return failedOperation()
+						fill_table_teamStatistics(userTeamRanking)
 						if (source !== 'telegram') {
 							localStorage.setItem('userCoreAccessToken', coreAccessToken)
 							localStorage.setItem('userId', userId)
 						}
-						fill_table_totalStatistics(allUsers)
-						fill_table_teamStatistics(userTeamRanking)
-						change_page_scene('page_main_menu')
-					}
+						getAllUsers(function(err, result) {
+							if (err)
+								return failedOperation()
+							fill_table_totalStatistics(allUsers)
+						})
+					})
+					change_page_scene('page_main_menu')
 				})
 			},
 			error: function (xhr, status, error) {
@@ -762,8 +771,6 @@ $(document).ready(function () {
 			if (err)
 				return failedOperation()
 			else {
-				fill_table_totalStatistics(allUsers)
-				fill_table_teamStatistics(userTeamRanking)
 				change_page_scene('page_main_menu')
 				empty_all_tables()
 				empty_all_fields()
@@ -1239,11 +1246,10 @@ $(document).ready(function () {
 			return Number(b[leagueId]) - Number(a[leagueId])
 		}
 		for (var i = 0; i < allUsers.length; i++) {
-			if (allUsers[i].checkpointModel.leagues[leagueId]) {
-				var model = allUsers[i]
-				model[leagueId] = Number(allUsers[i].checkpointModel.leagues[leagueId])
-				leagueArray.push(allUsers[i])
-			}
+			var model = allUsers[i]
+			model[leagueId] = Number(allUsers[i].checkpointModel.leagues[leagueId] || '0')
+			allUsers[i].checkpointModel.leagues[leagueId] = model[leagueId] || 0
+			leagueArray.push(allUsers[i])
 		}
 		leagueArray.sort(compare)
 		preferedLeague = leagueId
@@ -1504,9 +1510,6 @@ $(document).ready(function () {
 		}
 	}
 	function empty_all_tables() {
-		$('#ranking_league_statistics_table tbody').empty()
-		$('#ranking_team_statistics_table tbody').empty()
-		$('#ranking_total_statistics_table tbody').empty()
 		$('#statistics_personal_league_table tbody').empty()
 		$('#statistics_personal_challenge_table tbody').empty()
 	}
@@ -1680,7 +1683,7 @@ $(document).ready(function () {
 							$('#progressBar_total').hide()
 						}
 						favTeam = userClient.teamId
-						$('#user_data_profile_image').attr('src', coreEngine_url + userClient.profilePath)
+						$('#user_data_profile_image').attr('src', coreEngine_url + (userClient.profilePath || ('containers/' + userClient.id + '/download/profile.png')))
 						$('#user_data_phone_number').val(Persian_Number(userClient.phoneNumber.toString()))
 						$('#user_data_name').val('@' + userClient.username)
 						$('#user_data_code').val(userClient.id)
