@@ -139,8 +139,9 @@ function authenticationRequiredOperation() {
 	showNotification('bg-deep-orange', 'عذرخواهی میکنیم! نیاز است که مجددا وارد شوید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
-var coreEngine_url = "http://127.0.0.1:4000/api/"
-var zarinPal_url = "http://127.0.0.1:4020/api/"
+var coreEngine_url = "http://149.202.30.89:4000/api/"
+var zarinPal_url = "http://149.202.30.89:4020/api/"
+var coreURL = 'http://149.202.30.89/'
 
 $(document).ready(function () {
 
@@ -1315,12 +1316,13 @@ $(document).ready(function () {
 			type: "GET",
 			success: function (packageResult) {
 				if (packageResult.status === 'Working') {
+					var callbackBaseURI = coreURL + 'transaction.html'
 					var data = {
 						MerchantID: MID,
 						Amount: packageResult.price,
 						Email: userClient.email,
 						Mobile: userClient.phoneNumber,
-						CallbackURL: 'http://copa90.ir/transaction.html?source=telegram&userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&amount=' + packageResult.price,
+						CallbackURL: callbackBaseURI + '?source=telegram&userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&amount=' + packageResult.price,
 						Description: {
 							clientId: userId,
 							packageId: packageResult.id
