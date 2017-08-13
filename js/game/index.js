@@ -416,13 +416,16 @@ $(document).ready(function () {
 			if (championsArray[i].id === championId) {
 				model = championsArray[i]
 				$("#edit_personal_league_name").val(model.name)
-				$("#edit_personal_league_capacity").val(Number(model.capactiy))
-				$("#edit_personal_league_chances").val(Number(model.chances))
+				$("#edit_personal_league_capacity").val(Number(model.capacity))
+				$("#edit_personal_league_chances").val(Number(model.reduceChances))
 				break
 			}
 		}
 	}
 	function empty_all_fields() {
+		$("#join_personal_challenge_code").val('')
+		$("#join_personal_league_join_button").val('')
+
 		$("#edit_personal_challenge_name").val('')
 		$("#edit_personal_league_name").val('')
 		$("#edit_personal_league_capacity").val(Number('10'))
@@ -434,7 +437,9 @@ $(document).ready(function () {
 		$("#create_personal_league_capacity").val(Number('10'))
 		$("#create_personal_league_chances").val(Number('10'))
 
-		$("option:selected").removeAttr("selected")
+		$('select').selectpicker('deselectAll')
+		$('select').selectpicker('val', '')
+		$('select').selectpicker('refresh')
 	}
 	// ------------------------------ //
 	// 				  	Shared							//
@@ -445,9 +450,15 @@ $(document).ready(function () {
 	})
 	$(document).on("click", ".returnMain", function (e) {
 		e.preventDefault()
-		change_page_scene('page_main_menu')
-		empty_all_tables()
-		empty_all_fields()
+		startProgressBar()
+		getUserInfo(function(err, result) {
+			doneProgressBar()
+			if (err)
+				return change_page_scene('page_aaa')
+			change_page_scene('page_main_menu')
+			empty_all_tables()
+			empty_all_fields()
+		})
 	})
 	// ------------------------------ //
 	// 							AAA								//
@@ -817,13 +828,13 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#edit_personal_league_save_button", function (e) {
 		e.preventDefault()
-		var leagueId = $("#aaa_signup_select_team").val()
-		if (!leagueId || !$("#aaa_signup_select_team").val() || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val() || !$("#edit_personal_league_chances").val()) {
+		var leagueId = $("#edit_personal_league_leagueId").val()
+		if (!leagueId || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val() || !$("#edit_personal_league_chances").val()) {
 			return warningOperation()
 		}
 		var data = {
 			name: $("#edit_personal_league_name").val(),
-			capactiy: Number($("#edit_personal_league_capacity").val()),
+			capacity: Number($("#edit_personal_league_capacity").val()),
 			reduceChances: Number($("#edit_personal_league_chances").val())
 		}
 		console.log(JSON.stringify(data))
@@ -841,6 +852,7 @@ $(document).ready(function () {
 					if (err)
 						return failedOperation()
 					successfulOperation()
+					empty_all_fields()
 				})
 			},
 			error: function (xhr, status, error) {
@@ -858,7 +870,7 @@ $(document).ready(function () {
 		var data = {
 			creatorId: userId,
 			name: $("#create_personal_league_name").val(),
-			capactiy: Number($("#create_personal_league_capacity").val()),
+			capacity: Number($("#create_personal_league_capacity").val()),
 			reduceChances: Number($("#create_personal_league_chances").val())
 		}
 		console.log(JSON.stringify(data))
@@ -875,6 +887,7 @@ $(document).ready(function () {
 					doneProgressBar()
 					if (err)
 						return failedOperation()
+					empty_all_fields()
 					successfulOperation()
 				})
 			},
@@ -953,8 +966,7 @@ $(document).ready(function () {
 			where: {
 				'championId': leagueId
 			},
-			order: 'points DESC',
-			include: 'clients'
+			include: 'clientRel'
 		}
 		console.log(JSON.stringify(filter))
 		startProgressBar()
@@ -969,15 +981,19 @@ $(document).ready(function () {
 				empty_all_tables()
 				var userArray = []
 				for (var i = 0; i < rankingResult.length; i++) {
-					userArray.push(rankingResult[i].client)
+					userArray.push(rankingResult[i].clientRel)
 				}
+				console.log(userArray)
 				for (var i = 0; i < userChampions.length; i++) {
 					if (userChampions[i].id === leagueId) {
-						fill_table_challenge(userChampions[i], userArray)
+						function compare(a, b){
+							return Number(b.accountInfoModel.totalPoints) - Number(a.accountInfoModel.totalPoints)
+						}
+						userArray.sort(compare)
+						fill_table_champion(userChampions[i], userArray)
 					}
 				}
 				doneProgressBar()
-				successfulOperation()
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -1046,6 +1062,7 @@ $(document).ready(function () {
 					if (err)
 						return failedOperation()
 					successfulOperation()
+					empty_all_fields()
 				})
 			},
 			error: function (xhr, status, error) {
@@ -1070,7 +1087,7 @@ $(document).ready(function () {
 		console.log(JSON.stringify(data))
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges', coreAccessToken);
 		$.ajax({
-			url: championURL,
+			url: challengeURL,
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
@@ -1081,6 +1098,7 @@ $(document).ready(function () {
 					if (err)
 						return failedOperation()
 					successfulOperation()
+					empty_all_fields()
 				})
 			},
 			error: function (xhr, status, error) {
@@ -1121,7 +1139,7 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#join_personal_challenge_join_button", function (e) {
 		e.preventDefault()
-		var challengeId = $("#join_personal_league_code").val()
+		var challengeId = $("#join_personal_challenge_code").val()
 		if (!challengeId || !userId) {
 			return warningOperation()
 		}
@@ -1156,10 +1174,9 @@ $(document).ready(function () {
 		}
 		var filter = {
 			where: {
-				'championId': challengeId
+				'challengeId': challengeId
 			},
-			order: 'points DESC',
-			include: 'clients'
+			include: 'clientRel'
 		}
 		console.log(JSON.stringify(filter))
 		startProgressBar()
@@ -1174,15 +1191,22 @@ $(document).ready(function () {
 				empty_all_tables()
 				var userArray = []
 				for (var i = 0; i < competitionResult.length; i++) {
-					userArray.push(competitionResult[i].client)
+					var challenges = {}
+					challenges[competitionResult[i].challengeId] = competitionResult[i].points
+					competitionResult[i].clientRel.challenges = challenges
+					userArray.push(competitionResult[i].clientRel)
 				}
+				console.log(userArray)
 				for (var i = 0; i < userChallenges.length; i++) {
 					if (userChallenges[i].id === challengeId) {
+						function compare(a, b){
+							return Number(b.accountInfoModel.totalPoints) - Number(a.accountInfoModel.totalPoints)
+						}
+						userArray.sort(compare)
 						fill_table_challenge(userChallenges[i], userArray)
 					}
 				}
 				doneProgressBar()
-				successfulOperation()
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
@@ -1386,6 +1410,16 @@ $(document).ready(function () {
 		$('#challenge_clipboard').val(selected)
 	})
 
+	$('#edit_personal_league_leagueId').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		var selected = $(this).find('option').eq(clickedIndex).val()
+		fill_edit_champion(selected, userChampions)
+	})
+
+	$('#edit_personal_challenge_challengeId').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		var selected = $(this).find('option').eq(clickedIndex).val()
+		fill_edit_challenge(selected, userChallenges)
+	})
+
 	function startLoading() {
 		$('.page-loader-wrapper').fadeIn()
 		$('#rainbow-progress-bar1').fadeIn()
@@ -1410,14 +1444,17 @@ $(document).ready(function () {
 		if (challenge.status === 'Working') statusColor = 'bg-green'
 		else if (challenge.status === 'Created') statusColor = 'bg-light-blue'
 		else if (challenge.status === 'Finished') statusColor = 'bg-deep-orange'
+		var str = ''
+		if (source !== 'telegram' && !platform.name.includes('Mobile'))
+			str = '<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + challenge.status + '</span></td>'
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#statistics_personal_challenge_table').append('<tr id="spct_addr' + (i) + '"></tr>')
 			$('#spct_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + challenge.status + '</span></td>'
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number((usersArray[i].challenges[challenge.id]).toString()) + ' امتیاز </td>' +
+				str
 			)
 		}
 	}
@@ -1763,6 +1800,7 @@ $(document).ready(function () {
 			url: userChallengesURLWithAT,
 			type: "GET",
 			success: function (userChallengesResult) {
+				userChallenges = userChallengesResult
 				fill_challenge_selector(userChallenges)
 				callback(null, userChallenges)
 			},
