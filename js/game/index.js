@@ -147,6 +147,8 @@ $(document).ready(function () {
 	$(document).ajaxError(function myErrorHandler(event, x, ajaxOptions, thrownError) {
 		if (x.status == 401) {
 			localStorage.clear()
+			empty_all_fields()
+			empty_all_tables()
 			change_page_scene('page_aaa')
 			authenticationRequiredOperation()
 			doneLoading()
@@ -287,14 +289,16 @@ $(document).ready(function () {
 		$('#join_personal_league_champion_selector').find('option').remove()
 		$('#statistics_personal_league_leagueId').find('option').remove()
 		for (var i = 0; i < championsArray.length; i++) {
-			var itemToPush = {
-				id: championsArray[i].id,
-				name: championsArray[i].name
+			if (championsArray[i].creatorId === userId) {
+				var itemToPush = {
+					id: championsArray[i].id,
+					name: championsArray[i].name
+				}
+				$('#edit_personal_league_leagueId').append($('<option>', {
+					value: itemToPush.id,
+					text: itemToPush.name
+				})).selectpicker('refresh')
 			}
-			$('#edit_personal_league_leagueId').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			})).selectpicker('refresh')
 		}
 		for (var i = 0; i < championsArray.length; i++) {
 			var itemToPush = {
@@ -322,14 +326,16 @@ $(document).ready(function () {
 		$('#join_personal_challenge_selector').find('option').remove()
 		$('#statistics_personal_challenge_challengeId').find('option').remove()
 		for (var i = 0; i < challengesArray.length; i++) {
-			var itemToPush = {
-				id: challengesArray[i].id,
-				name: challengesArray[i].name
+			if (challengesArray[i].creatorId === userId) {
+				var itemToPush = {
+					id: challengesArray[i].id,
+					name: challengesArray[i].name
+				}
+				$('#edit_personal_challenge_challengeId').append($('<option>', {
+					value: itemToPush.id,
+					text: itemToPush.name
+				})).selectpicker('refresh')
 			}
-			$('#edit_personal_challenge_challengeId').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			})).selectpicker('refresh')
 		}
 		for (var i = 0; i < challengesArray.length; i++) {
 			var itemToPush = {
