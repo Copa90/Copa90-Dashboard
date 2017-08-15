@@ -1454,11 +1454,12 @@ $(document).ready(function () {
 			$('#spct_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number((usersArray[i].challenges[challenge.id]).toString()) + ' امتیاز </td>' +
 				str
 			)
 		}
+		fixUITable()
 	}
 	function fill_table_champion(champion, usersArray) {
 		$('#statistics_personal_league_table tbody').empty()
@@ -1467,10 +1468,11 @@ $(document).ready(function () {
 			$('#splt_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 		}
+		fixUITable()
 	}
 	function fill_table_totalStatistics(usersArray) {
 		$('#ranking_total_statistics_table tbody').empty()
@@ -1482,7 +1484,7 @@ $(document).ready(function () {
 			$('#rtst_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 		}
@@ -1495,7 +1497,8 @@ $(document).ready(function () {
     
     if (row.length){
       w.scrollTop(row.offset().top - (w.height()/2))
-    }
+		}
+		fixUITable()
 	}
 	function fill_table_teamStatistics(usersArray) {
 		$('#ranking_team_statistics_table tbody').empty()
@@ -1507,7 +1510,7 @@ $(document).ready(function () {
 			$('#rtst2_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 		}
@@ -1520,7 +1523,8 @@ $(document).ready(function () {
     
     if (row.length){
       w.scrollTop(row.offset().top - (w.height()/2))
-    }
+		}
+		fixUITable()
 	}
 	function fill_table_leagueStatistics(usersArray) {
 		$('#ranking_league_statistics_table tbody').empty()
@@ -1533,7 +1537,7 @@ $(document).ready(function () {
 			$('#rl2st_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '@</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(p.toString()) + ' امتیاز </td>'
 			)
 		}
@@ -1546,13 +1550,21 @@ $(document).ready(function () {
     
     if (row.length){
       w.scrollTop(row.offset().top - (w.height()/2))
-    }
+		}
+		fixUITable()
+	}
+	function fixUITable() {
+		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
+		if (platform.name.includes('Mobile') || source === 'telegram' || $(window).width() <= 400) {
+			$('.mobileCell').hide()
+		}
 	}
 	function fill_table_trophies(userLevel) {
 		for (var i = Number(userLevel) + 1; i < 11; i++) {
 			var str = '#trophy_' + i
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
+		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
 	}
 	function empty_all_tables() {
 		$('#statistics_personal_league_table tbody').empty()
