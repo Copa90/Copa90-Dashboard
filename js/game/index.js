@@ -163,6 +163,20 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min
 }
 
+function detectmob() { 
+ if( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ || navigator.userAgent.match(/Windows Phone/i)
+ ){
+    return true;
+  }
+ else {
+    return false;
+  }
+}
 
 // var coreEngine_url = "http://185.105.186.68:4000/api/"
 // var zarinPal_url = "http://185.105.186.68:4020/api/"
