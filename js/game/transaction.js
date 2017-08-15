@@ -116,11 +116,11 @@ function warningOperation() {
 }
 
 var coreEngine_url = "http://185.105.186.68:4000/api/"
-var zarinPal_url = "http://185.105.186.68:4020/api/"
+var zarinPal_url = "http://185.105.186.68:4010/api/"
 var coreURL = 'http://copa90.ir/'
 
 // var coreEngine_url = "http://127.0.0.1:4000/api/"
-// var zarinPal_url = "http://127.0.0.1:4020/api/"
+// var zarinPal_url = "http://127.0.0.1:4010/api/"
 // var coreURL = 'http://copa90.ir/'
 
 $(document).ready(function () {
