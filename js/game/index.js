@@ -1916,7 +1916,7 @@ $(document).ready(function () {
 				callback(null, leaguesArray)
 			},
 			error: function (xhr, status, error) {
-				callback(err)
+				callback(error)
 				console.log(xhr.responseText)
 			}
 		})
