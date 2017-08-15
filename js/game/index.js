@@ -1854,22 +1854,38 @@ $(document).ready(function () {
 
 				function mergeData(packageInfo) {
 					var color = ''
-					if (packageInfo.offer === 'Special')
+					var spec1 = ''
+					var spec2 = ''
+					if (packageInfo.offer === 'Special') {
+						spec1 =  	'<h6 class="text-center font-bold" style="text-align: center;"> بسته </h6>' +
+										 	'<h6 class="text-center" style="text-align: center;"> ویژه </h6>'
+						var hour = Math.round((Math.floor(packageInfo.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
+						spec2 =	 	'<h6 class="text-center font-bold" style="text-align: center;"> باقی‌مانده </h6>' +
+											'<h6 class="text-center" style="text-align: center;"> ' + Persian_Number(hour.toString()) + ' ساعت</h6>'
 						color = 'bg-orange'
-					var str = '<div class="item active">' +
+					}
+					var str = '<div class="item">' +
 											'<a href="" class="package_purchase" id="' + packageInfo.id + '">' +
 												'<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;">' +
 												'</div>' +
 												'<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;">' + 
 													'<div class="card" style="opacity: 0.93; margin-bottom: 0px;">' +
-														'<div class="body ' + color + '" style="height:200px;">' +
+														'<div class="body ' + color + '" style="max-height:250px;">' +
+															'<h3 class="text-center m-t-0">' + packageInfo.name + '</h3>' +
 															'<div class="row clearfix">' +
-																'<h3 class="text-center m-t-0">' + packageInfo.explanation + '</h3>' +
+																'<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">' +
+																	spec1 +
+																'</div>' +
+																'<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">' +
+																	'<h5 class="text-center m-t-20" style="line-height: 200%;">' + packageInfo.explanation + '</h5>' +
+																'</div>' +
+																'<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">' +
+																	spec2 +
+																'</div>' +
 															'</div>' +
-															'<br>' +
 															'<div class="row clearfix">' +
-																'<h4 class="text-center">' + packageInfo.chances + '</h4>' +
-																'<h4 class="text-center">' + packageInfo.price + '</h4>' +
+																'<h4 class="text-center">' + Persian_Number(packageInfo.chances.toString()) + ' - پیش‌بینی</h4>' +
+																'<h4 class="text-center">' + Persian_Number(packageInfo.price.toString()) + ' -  تومان</h4>' +
 															'</div>' +
 														'</div>' +
 													'</div>' +
