@@ -186,7 +186,7 @@ var coreURL = 'http://copa90.ir/'
 // var zarinPal_url = "http://127.0.0.1:4020/api/"
 // var coreURL = 'http://copa90.ir/'
 
-var MID = ''
+var MID = 'f988546a-817c-11e7-803b-005056a205be'
 
 $(document).ready(function () {
 
