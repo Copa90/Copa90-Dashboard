@@ -200,7 +200,6 @@ $(document).ready(function () {
 			doneLoading()
 			doneProgressBar()
 		}
-		console.log(x.responseJSON.error.message)
 	})
 
 	startLoading()
@@ -240,7 +239,7 @@ $(document).ready(function () {
 			coreAccessToken = localStorage.getItem('userCoreAccessToken')
 	}
 
-	if (platform.name.includes('Mobile') || source === 'telegram') {
+	if (platform.name.includes('Mobile') || source === 'telegram' || detectmob()) {
 		$('.sharedTitle').hide()
 		$('.sharedMobile').hide()
 
@@ -554,6 +553,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -583,6 +586,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -643,6 +650,10 @@ $(document).ready(function () {
 							},
 							error: function (xhr, status, error) {
 								doneProgressBar()
+								if (xhr.responseJSON)
+									if (xhr.responseJSON.error)
+										if (xhr.responseJSON.error.message.includes('خطا')) 
+											return failedOperationByString(xhr.responseJSON.error.message)
 								failedOperation()
 								console.log(xhr.responseText)
 							}
@@ -650,6 +661,10 @@ $(document).ready(function () {
 					},
 					error: function (xhr, status, error) {
 						doneProgressBar()
+						if (xhr.responseJSON)
+							if (xhr.responseJSON.error)
+								if (xhr.responseJSON.error.message.includes('خطا')) 
+									return failedOperationByString(xhr.responseJSON.error.message)
 						failedOperation()
 						console.log(xhr.responseText)
 					}
@@ -657,6 +672,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -708,6 +727,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -815,6 +838,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -875,6 +902,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -911,6 +942,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -948,6 +983,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -977,6 +1016,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1006,6 +1049,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1052,6 +1099,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1088,6 +1139,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1122,6 +1177,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1159,8 +1218,11 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1188,8 +1250,11 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1217,6 +1282,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1266,6 +1335,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1402,6 +1475,10 @@ $(document).ready(function () {
 						},
 						error: function (xhr, status, error) {
 							doneProgressBar()
+							if (xhr.responseJSON)
+								if (xhr.responseJSON.error)
+									if (xhr.responseJSON.error.message.includes('خطا')) 
+										return failedOperationByString(xhr.responseJSON.error.message)
 							failedOperation()
 							console.log(xhr.responseText)
 						}
@@ -1414,6 +1491,10 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
 				failedOperation()
 				console.log(xhr.responseText)
 			}
@@ -1511,7 +1592,7 @@ $(document).ready(function () {
 		else if (challenge.status === 'Created') statusColor = 'bg-light-blue'
 		else if (challenge.status === 'Finished') statusColor = 'bg-deep-orange'
 		var str = ''
-		if (source !== 'telegram' && !platform.name.includes('Mobile'))
+		if (source !== 'telegram' && !platform.name.includes('Mobile') && !detectmob())
 			str = '<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + challenge.status + '</span></td>'
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#statistics_personal_challenge_table').append('<tr id="spct_addr' + (i) + '"></tr>')
@@ -1619,7 +1700,7 @@ $(document).ready(function () {
 	}
 	function fixUITable() {
 		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
-		if (platform.name.includes('Mobile') || source === 'telegram' || $(window).width() <= 400) {
+		if (platform.name.includes('Mobile') || source === 'telegram' || $(window).width() <= 400 || detectmob()) {
 			$('.mobileCell').hide()
 		}
 	}
