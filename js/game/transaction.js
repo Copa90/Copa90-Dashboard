@@ -81,7 +81,7 @@ function showNotification(colorName, text, placementFrom, placementAlign, animat
 		type: colorName,
 		allow_dismiss: allowDismiss,
 		newest_on_top: true,
-		timer: 1000,
+		timer: 3500,
 		placement: {
 			from: placementFrom,
 			align: placementAlign
@@ -178,9 +178,6 @@ $(document).ready(function () {
 	if (!userId || !coreAccessToken || !authority || !status || !amount || !description) {
 		failedOperation()
 		doneLoading()
-		setTimeout(function () {
-			window.location.href = './index.html'
-		}, 2000);
 	}
 	else {
 		if (status === 'OK') {
@@ -211,9 +208,6 @@ $(document).ready(function () {
 		else {
 			failedOperation()
 			doneLoading()
-			setTimeout(function () {
-				window.location.href = './index.html'
-			}, 2000);			
 		}
 	}
 
@@ -231,14 +225,22 @@ $(document).ready(function () {
 
 	function fill_table_transaction(price, description, status, refId) {
 		$('#transaction_price').var(price)
-		$('#transaction_description').var(description)
+		var desc = JSON.parse(description)
+		var str1 = 'ClientID: ' + desc.clientId
+		var str2 = 'PackageID: ' + desc.packageId
+		$('#transaction_description').var(str1 + '<br>' + str2)
 		$('#transaction_status').var(status)
 		$('#transaction_refId').var(refId)
+		fixUITable()
 	}
 	function emoty_all_tables() {
-		$('#transaction_price').var('')
-		$('#transaction_description').var('')
-		$('#transaction_status').var('')
-		$('#transaction_refId').var('')
+		$('#transaction_price').var('خطا در پرداخت: معتبر نیست')
+		$('#transaction_description').var('خطا در پرداخت: معتبر نیست')
+		$('#transaction_status').var('خطا در پرداخت: معتبر نیست')
+		$('#transaction_refId').var('خطا در پرداخت: معتبر نیست')
 	}
+	function fixUITable() {
+		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
+	}
+
 })
