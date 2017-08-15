@@ -6264,7 +6264,7 @@ fieldset[disabled] .form-control {
     color: #444; }
   .page-loader-wrapper .loader {
     position: relative;
-    top: calc(50% - 30px); }
+    top: calc(30% - 30px); }
 
 /* Preloaders ================================== */
 .md-preloader .pl-red {
