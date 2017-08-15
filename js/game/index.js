@@ -127,6 +127,10 @@ function failedOperation() {
 	showNotification('bg-deep-orange', 'عملیات شما با شکست مواجه شد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
+function failedOperationByString(sentence) {
+	showNotification('bg-deep-orange', sentence, 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+}
+
 function warningOperation() {
 	showNotification('bg-orange', 'لطفا همه فیلدهای ضروری را پر کنید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
@@ -139,9 +143,12 @@ function authenticationRequiredOperation() {
 	showNotification('bg-deep-orange', 'عذرخواهی میکنیم! نیاز است که مجددا وارد شوید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
-var coreEngine_url = "http://149.202.30.89:4000/api/"
-var zarinPal_url = "http://149.202.30.89:4020/api/"
-var coreURL = 'http://149.202.30.89/'
+function getRandomInt(min, max) {
+	min = Math.ceil(min)
+	max = Math.floor(max)
+	return Math.floor(Math.random() * (max - min)) + min
+}
+
 var hintArray = [
 	"با ارسال کد معرفی برای دوستانتان، ۵ پیش بینی رایگان هدیه بگیرید",
 	"در لیگ مورد علاقه‌ی خود امتیاز کسب کنید و جایزه بگیرید",
@@ -156,6 +163,16 @@ var hintArray = [
 var hintNo = getRandomInt(0, hintArray.length)
 $('#hint_box_description').html(hintArray[hintNo])
 
+// var coreEngine_url = "http://185.105.186.68:4000/api/"
+// var zarinPal_url = "http://185.105.186.68:4020/api/"
+// var coreURL = 'http://copa90.ir/'
+
+var coreEngine_url = "http://127.0.0.1:4000/api/"
+var zarinPal_url = "http://127.0.0.1:4020/api/"
+var coreURL = 'http://copa90.ir/'
+
+var MID = ''
+
 $(document).ready(function () {
 
 	$(document).ajaxError(function myErrorHandler(event, x, ajaxOptions, thrownError) {
@@ -168,6 +185,7 @@ $(document).ready(function () {
 			doneLoading()
 			doneProgressBar()
 		}
+		console.log(x.responseJSON.error.message)
 	})
 
 	startLoading()
@@ -216,6 +234,8 @@ $(document).ready(function () {
 		$('.sizeControl').css('height', height - 50)
 		$('.positionControl').removeAttr('style')
 		$('.positionControl').css('margin-top', '25px')
+
+		prepareMobileEnv()
 
 		if (source === 'telegram') {
 			if (getUrlVars()["userId"])
@@ -437,6 +457,11 @@ $(document).ready(function () {
 		}
 	}
 	function empty_all_fields() {
+		$("#personal_league_create_clipboard").val('')
+		$("#challenge_create_clipboard").val('')
+		$("#personal_league_clipboard").val('')
+		$("#challenge_clipboard").val('')
+
 		$("#join_personal_challenge_code").val('')
 		$("#join_personal_league_join_button").val('')
 
@@ -902,6 +927,7 @@ $(document).ready(function () {
 					if (err)
 						return failedOperation()
 					empty_all_fields()
+					$("#personal_league_create_clipboard").val(championResult.id)
 					successfulOperation()
 				})
 			},
@@ -1095,7 +1121,7 @@ $(document).ready(function () {
 			creatorId: userId,
 			name: $("#create_personal_challenge_name").val(),
 			period: Number($("#create_personal_challenge_period").val()) * 24 * 60 * 60 * 1000,
-			reduceChances: $("#create_personal_challenge_chances").val()
+			reduceChances: Number($("#create_personal_challenge_chances").val())
 		}
 		startProgressBar()
 		console.log(JSON.stringify(data))
@@ -1106,13 +1132,14 @@ $(document).ready(function () {
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
-			success: function (championResult) {
+			success: function (challengeResult) {
 				getAllUsersChallanges(function(err, result) {
 					doneProgressBar()
 					if (err)
 						return failedOperation()
-					successfulOperation()
 					empty_all_fields()
+					$("#challenge_create_clipboard").val(challengeResult.id)
+					successfulOperation()
 				})
 			},
 			error: function (xhr, status, error) {
@@ -1316,7 +1343,7 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", ".package_purchase", function (e) {
 		e.preventDefault()
-		var packageId = e.target.id
+    var packageId = $(this).attr('id');
 		if (!packageId) {
 			return warningOperation()
 		}
@@ -1409,6 +1436,7 @@ $(document).ready(function () {
       console.log(e);
 		})
 			
+		$('.btn').css({"padding-left":'0px', "padding-right": '0px'})
 		var $demoMaskedInput = $('.demo-masked-input');
 
     $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '09__ ___ ____' });
@@ -1448,6 +1476,14 @@ $(document).ready(function () {
 	}
 	function doneProgressBar() {
 		$('.cardRainbow').fadeOut()
+	}
+
+	function prepareMobileEnv() {
+		for (var i = 1; i < 15; i++) {
+			var str = '#nav' + i
+			$(str).addClass('p-l-0').addClass('p-r-0')
+		}
+		$('.btn').removeClass('btn-lg').addClass('btn-md')
 	}
 
 	// ------------------------------ //
