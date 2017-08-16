@@ -178,13 +178,13 @@ function detectmob() {
   }
 }
 
-// var coreEngine_url = "http://185.105.186.68:4000/api/"
-// var zarinPal_url = "http://185.105.186.68:4010/api/"
-// var coreURL = 'http://copa90.ir/'
-
-var coreEngine_url = "http://127.0.0.1:4000/api/"
-var zarinPal_url = "http://127.0.0.1:4010/api/"
+var coreEngine_url = "http://185.105.186.68:4000/api/"
+var zarinPal_url = "http://185.105.186.68:4010/api/"
 var coreURL = 'http://copa90.ir/'
+
+// var coreEngine_url = "http://127.0.0.1:4000/api/"
+// var zarinPal_url = "http://127.0.0.1:4010/api/"
+// var coreURL = 'http://copa90.ir/'
 
 var MID = 'f988546a-817c-11e7-803b-005056a205be'
 
@@ -570,7 +570,7 @@ $(document).ready(function () {
 		}		
 		console.log(phoneNum)
 		startProgressBar()
-		var passwordURL = coreEngine_url + 'clients/sendPassword/' + phoneNum
+		var passwordURL = coreEngine_url + 'clients/' + phoneNum + '/sendPassword'
 		$.ajax({
 			url: passwordURL,
 			dataType: "json",
