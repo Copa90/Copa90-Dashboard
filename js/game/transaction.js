@@ -141,18 +141,10 @@ $(document).ready(function () {
 	var status = getUrlVars()["Status"]
 	var authority = getUrlVars()["Authority"]
 	var amount = getUrlVars()["amount"]
-	var description = getUrlVars()["description"]
-
-	var userId, coreAccessToken
-
-	function readFromLocalStorage() {
-		if (localStorage.getItem('userId'))
-			userId = localStorage.getItem('userId')
-		if (localStorage.getItem('userCoreAccessToken'))
-			coreAccessToken = localStorage.getItem('userCoreAccessToken')
-	}
-
-	if (!userId || !coreAccessToken || !authority || !status || !amount || !description) {
+	var userId = getUrlVars()["userId"]
+	var coreAccessToken = getUrlVars()["userCoreAccessToken"]
+	
+	if (!userId || !coreAccessToken || !authority || !status || !amount) {
 		failedOperation()
 		doneLoading()
 	}
@@ -175,7 +167,7 @@ $(document).ready(function () {
 					console.log(JSON.stringify(verificationResult))
 					successfulOperation()
 					doneLoading()
-					fill_table_transaction(amount, description, verificationResult.Status, verificationResult.RefID)
+					fill_table_transaction(amount, authority,verificationResult.Status, verificationResult.RefID)
 				},
 				error: function (xhr, status, error) {
 					doneLoading()
@@ -203,21 +195,18 @@ $(document).ready(function () {
 		window.location.href = './index.html'
 	})
 
-	function fill_table_transaction(price, description, status, refId) {
-		$('#transaction_price').var(price)
-		var desc = JSON.parse(description)
-		var str1 = 'ClientID: ' + desc.clientId
-		var str2 = 'PackageID: ' + desc.packageId
-		$('#transaction_description').var(str1 + '<br>' + str2)
-		$('#transaction_status').var(status)
-		$('#transaction_refId').var(refId)
+	function fill_table_transaction(price, auth, status, refId) {
+		$('#transaction_price').html(price)
+		$('#transaction_status').html(status)
+		$('#transaction_description').html(auth)
+		$('#transaction_refId').html(refId)
 		fixUITable()
 	}
 	function emoty_all_tables() {
-		$('#transaction_price').var('خطا در پرداخت: معتبر نیست')
-		$('#transaction_description').var('خطا در پرداخت: معتبر نیست')
-		$('#transaction_status').var('خطا در پرداخت: معتبر نیست')
-		$('#transaction_refId').var('خطا در پرداخت: معتبر نیست')
+		$('#transaction_price').html('خطا در پرداخت: معتبر نیست')
+		$('#transaction_status').html('خطا در پرداخت: معتبر نیست')
+		$('#transaction_description').html('خطا در پرداخت: معتبر نیست')
+		$('#transaction_refId').html('خطا در پرداخت: معتبر نیست')
 	}
 	function fixUITable() {
 		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
