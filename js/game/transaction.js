@@ -189,6 +189,7 @@ $(document).ready(function () {
 				Authority: authority,
 				Amount: amount
 			}
+			console.log(JSON.stringify(data))
 			$.ajax({
 				url: verificationURLWithAT,
 				dataType: "json",
