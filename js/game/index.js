@@ -914,13 +914,12 @@ $(document).ready(function () {
 	$(document).on("click", "#edit_personal_league_save_button", function (e) {
 		e.preventDefault()
 		var leagueId = $("#edit_personal_league_leagueId").val()
-		if (!leagueId || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val() || !$("#edit_personal_league_chances").val()) {
+		if (!leagueId || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val()) {
 			return warningOperation()
 		}
 		var data = {
 			name: $("#edit_personal_league_name").val(),
-			capacity: Number($("#edit_personal_league_capacity").val()),
-			reduceChances: Number($("#edit_personal_league_chances").val())
+			capacity: Number($("#edit_personal_league_capacity").val())
 		}
 		console.log(JSON.stringify(data))
 		startProgressBar()
@@ -953,14 +952,13 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#create_personal_league_create_button", function (e) {
 		e.preventDefault()
-		if (!userId || !$("#create_personal_league_name").val() || !$("#create_personal_league_capacity").val() || !$("#create_personal_league_chances").val()) {
+		if (!userId || !$("#create_personal_league_name").val() || !$("#create_personal_league_capacity").val()) {
 			return warningOperation()
 		}
 		var data = {
 			creatorId: userId,
 			name: $("#create_personal_league_name").val(),
-			capacity: Number($("#create_personal_league_capacity").val()),
-			reduceChances: Number($("#create_personal_league_chances").val())
+			capacity: Number($("#create_personal_league_capacity").val())
 		}
 		console.log(JSON.stringify(data))
 		startProgressBar()
