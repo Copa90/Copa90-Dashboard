@@ -178,13 +178,13 @@ function detectmob() {
   }
 }
 
-var coreEngine_url = "http://185.105.186.68:4000/api/"
-var zarinPal_url = "http://185.105.186.68:4010/api/"
-var coreURL = 'http://copa90.ir/'
-
-// var coreEngine_url = "http://127.0.0.1:4000/api/"
-// var zarinPal_url = "http://127.0.0.1:4010/api/"
+// var coreEngine_url = "http://185.105.186.68:4000/api/"
+// var zarinPal_url = "http://185.105.186.68:4010/api/"
 // var coreURL = 'http://copa90.ir/'
+
+var coreEngine_url = "http://127.0.0.1:4000/api/"
+var zarinPal_url = "http://127.0.0.1:4010/api/"
+var coreURL = 'http://copa90.ir/'
 
 var MID = 'f988546a-817c-11e7-803b-005056a205be'
 
@@ -1354,11 +1354,16 @@ $(document).ready(function () {
 	$(document).on("click", "#play_room_league_start_button", function (e) {
 		e.preventDefault()
 		var leagueId = $("#play_room_league_leagueId").val()
-		if (!leagueId) {
+		var tag = $("#play_room_league_tag").val()
+		if (!leagueId || !tag) {
 			return console.error('required fields error')
 		}
-		console.log(leagueId)
+		console.log(tag)
 		currentLeague = leagueId
+		var tagSt = ''
+		if (tag === 'هفتگی') tagSt = 'Week'
+		else if (tag === 'زنده') tagSt = 'Live'
+		else if (tag === 'فصلی') tagSt = 'Season'
 		startProgressBar()
 		getNextObjectArray(function(err, result) {
 			doneProgressBar()
@@ -1374,8 +1379,17 @@ $(document).ready(function () {
 				$('#main_predict_explanation').hide()
 				$('#main_predict_progress_white').css('width', '0%')
 				$('#main_predict_progress_fill').css('width', '100%')
+				var resultSet = []
+				for (var k = 0; k < result.length; k++) {
+					if (result[k].tag === tagSt)
+						resultSet.push(result[k])
+				}
+				if (resultSet.length == 0) {
+					return predictOverOperation()
+				}
+				predictsArray = resultSet
 				predictIndex = 0
-				currentPredict = result[predictIndex]
+				currentPredict = predictsArray[predictIndex]
 				predictIndex++
 				change_page_scene('page_main_prediction')
 				displayPredict()
