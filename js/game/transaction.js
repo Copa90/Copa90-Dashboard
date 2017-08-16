@@ -172,6 +172,7 @@ $(document).ready(function () {
 				contentType: "application/json; charset=utf-8",
 				type: "POST",
 				success: function (verificationResult) {
+					console.log(JSON.stringify(verificationResult))
 					successfulOperation()
 					doneLoading()
 					fill_table_transaction(amount, description, verificationResult.Status, verificationResult.RefID)
@@ -179,6 +180,7 @@ $(document).ready(function () {
 				error: function (xhr, status, error) {
 					doneLoading()
 					failedOperation()
+					console.log(JSON.stringify(xhr))
 					console.error(xhr.responseText)
 				}
 			})
