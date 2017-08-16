@@ -1364,6 +1364,7 @@ $(document).ready(function () {
 			doneProgressBar()
 			if (err)
 				return failedOperation()
+			console.log(result)
 			if (result.length == 0) {
 				return predictOverOperation()
 			}
@@ -1378,6 +1379,33 @@ $(document).ready(function () {
 				predictIndex++
 				change_page_scene('page_main_prediction')
 				displayPredict()
+			}
+		})
+	})
+	$(document).on("click", "#main_predict_estimates_button", function (e) {
+		e.preventDefault()
+		startProgressBar()
+		var estimateURL = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/estimates', coreAccessToken)
+		$.ajax({
+			url: estimateURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "GET",
+			success: function (estimateResult) {
+				empty_all_tables()
+				fill_table_estimates(estimateResult.reverse())
+				$('#defaultModal .modal-content').removeAttr('class').addClass('modal-content')
+				$('#defaultModal').modal('show')		
+				doneProgressBar()
+			},
+			error: function (xhr, status, error) {
+				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
+				failedOperation()
+				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1443,6 +1471,7 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "GET",
 			success: function (packageResult) {
+				console.log(JSON.stringify(packageResult))
 				if (packageResult.status === 'Working') {
 					var callbackBaseURI = coreURL + 'transaction.html'
 					var data = {
@@ -1457,14 +1486,16 @@ $(document).ready(function () {
 						}
 					}
 					data.CallbackURL = data.CallbackURL + '&description=' + JSON.stringify(data.Description)
+					console.log(JSON.stringify(data))
 					var transactionURL = wrapAccessToken(zarinPal_url + 'PaymentGatewayImplementationServiceBinding/PaymentRequest', coreAccessToken)
 					$.ajax({
-						url: packageURL,
+						url: transactionURL,
 						dataType: "json",
 						data: JSON.stringify(data),
 						contentType: "application/json; charset=utf-8",
 						type: "POST",
 						success: function (transactionResult) {
+							console.log(JSON.stringify(transactionResult))
 							doneProgressBar()
 							if (transactionResult.Status == 100) {
 								window.location.href = 'https://www.zarinpal.com/pg/StartPay/' + transactionResult.Authority
@@ -1535,7 +1566,7 @@ $(document).ready(function () {
 		$('.btn').css({"padding-left":'0px', "padding-right": '0px'})
 		var $demoMaskedInput = $('.demo-masked-input');
 
-    $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '09__ ___ ____' });
+    $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '0___ ___ ____' });
     $demoMaskedInput.find('.receivedCode').inputmask('9 9 9 9', { placeholder: '_ _ _ _' });
 	}
 
@@ -1585,6 +1616,24 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 Table Construction				//
 	// ------------------------------ //
+	function fill_table_estimates(estimatesArray) {
+		$('#play_room_estimates tbody').empty()
+		var width = $('#play_room_estimates tbody').width() - 200
+		for (var i = 0; i < estimatesArray.length; i++) {
+			var statusColor
+			if (estimatesArray[i].status === 'Win') statusColor = 'col-teal'
+			else if (estimatesArray[i].status === 'Open') statusColor = 'col-indigo'
+			else if (estimatesArray[i].status === 'Lose') statusColor = 'col-red'	
+			$('#play_room_estimates').append('<tr id="pre_addr' + (i) + '"></tr>')
+			
+			$('#pre_addr' + i).html(
+				'<td class="font-bold mobileCell ' + statusColor + '" align="center" style="vertical-align: middle; width: 75px;">' + (estimatesArray[i].leagueName || 'ناموجود') + '</td>' +				
+				'<td class="' + statusColor + '" align="center" style="vertical-align: middle; width: ' + width + 'px; word-wrap:break-word;">' + (estimatesArray[i].explanation || 'ناموجود') + '</td>' +
+				'<td class="font-bold ' + statusColor + '" align="center" style="vertical-align: middle; width: 50px;">' + Persian_Number((estimatesArray[i].point || 0).toString()) + '</td>'
+			)
+		}
+		fixUITable()
+	}
 	function fill_table_challenge(challenge, usersArray) {
 		$('#statistics_personal_challenge_table tbody').empty()
 		var statusColor
@@ -1714,6 +1763,7 @@ $(document).ready(function () {
 	function empty_all_tables() {
 		$('#statistics_personal_league_table tbody').empty()
 		$('#statistics_personal_challenge_table tbody').empty()
+		$('#play_room_estimates tbody').empty()
 	}
 	function displayPredict() {
 		$('#main_predict_remaining').fadeOut()
@@ -1975,6 +2025,7 @@ $(document).ready(function () {
 			url: nextObjectURLWithAT,
 			type: "GET",
 			success: function (nextObjectResult) {
+				console.log(nextObjectResult)
 				predictsArray = nextObjectResult
 				callback(null, predictsArray)
 			},
@@ -2034,7 +2085,7 @@ $(document).ready(function () {
 																	spec1 +
 																'</div>' +
 																'<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">' +
-																	'<h5 class="text-center m-t-20" style="line-height: 200%;">' + packageInfo.explanation + '</h5>' +
+																	'<h5 class="text-center m-t-20" style="line-height: 200%;" hidden>' + packageInfo.explanation + '</h5>' +
 																'</div>' +
 																'<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">' +
 																	spec2 +
