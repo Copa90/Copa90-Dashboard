@@ -1494,10 +1494,10 @@ $(document).ready(function () {
 						Email: userClient.email,
 						Mobile: userClient.phoneNumber,
 						CallbackURL: callbackBaseURI + '?source=telegram&userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&amount=' + packageResult.price,
-						Description: {
+						Description: JSON.stringify({
 							clientId: userId,
 							packageId: packageResult.id
-						}
+						})
 					}
 					data.CallbackURL = data.CallbackURL + '&description=' + JSON.stringify(data.Description)
 					console.log(JSON.stringify(data))
