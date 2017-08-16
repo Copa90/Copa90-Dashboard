@@ -187,7 +187,7 @@ $(document).ready(function () {
 			var data = {
 				MerchantID: MID,
 				Authority: authority,
-				Amount: amonut
+				Amount: amount
 			}
 			$.ajax({
 				url: verificationURLWithAT,
