@@ -1493,7 +1493,7 @@ $(document).ready(function () {
 						Amount: packageResult.price,
 						Email: userClient.email,
 						Mobile: userClient.phoneNumber,
-						CallbackURL: callbackBaseURI + '?source=telegram&userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&amount=' + packageResult.price,
+						CallbackURL: callbackBaseURI + '?userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&amount=' + packageResult.price,
 						Description: JSON.stringify({
 							clientId: userId,
 							packageId: packageResult.id

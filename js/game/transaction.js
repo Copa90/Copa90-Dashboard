@@ -138,7 +138,6 @@ $(document).ready(function () {
 		$('#rainbow-progress-bar1').fadeOut()
 	}
 
-	var source = getUrlVars()["source"]
 	var status = getUrlVars()["Status"]
 	var authority = getUrlVars()["Authority"]
 	var amount = getUrlVars()["amount"]
@@ -151,30 +150,6 @@ $(document).ready(function () {
 			userId = localStorage.getItem('userId')
 		if (localStorage.getItem('userCoreAccessToken'))
 			coreAccessToken = localStorage.getItem('userCoreAccessToken')
-	}
-
-	if (platform.name.includes('Mobile') || source === 'telegram') {
-		$('.sharedTitle').hide()
-		$('.sharedMobile').hide()
-
-		var height = $(window).height()
-		$('.sizeControl').css('max-height', height - 50)
-		$('.sizeControl').css('height', height - 50)
-		$('.positionControl').removeAttr('style')
-		$('.positionControl').css('margin-top', '25px')
-
-		if (source === 'telegram') {
-			if (getUrlVars()["userId"])
-				userId = getUrlVars()["userId"]
-			if (getUrlVars()["userCoreAccessToken"])
-				coreAccessToken = getUrlVars()["userCoreAccessToken"]
-		}
-		else {
-			readFromLocalStorage()
-		}
-	}
-	else {
-		readFromLocalStorage()
 	}
 
 	if (!userId || !coreAccessToken || !authority || !status || !amount || !description) {
