@@ -893,7 +893,7 @@ $(document).ready(function () {
 			if (err)
 				return failedOperation()
 			else {
-				change_page_scene('page_main_menu')
+				change_page_scene('page_play_room')
 				empty_all_tables()
 				empty_all_fields()
 			}
@@ -1685,7 +1685,12 @@ $(document).ready(function () {
 		var $demoMaskedInput = $('.demo-masked-input');
 
     $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '0___ ___ ____' });
-    $demoMaskedInput.find('.receivedCode').inputmask('9 9 9 9', { placeholder: '_ _ _ _' });
+		$demoMaskedInput.find('.receivedCode').inputmask('9 9 9 9', { placeholder: '_ _ _ _' });
+
+		$('[data-toggle="tooltip"]').tooltip({
+			container: 'body',
+			delay: {show : 1000, hide : 0}
+		})
 	}
 
 	$('#join_personal_league_champion_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
