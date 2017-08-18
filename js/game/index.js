@@ -208,7 +208,8 @@ $(document).ready(function () {
 	var userClient
 	var currentPredict
 	var favTeam
-	var predictIndex
+
+	var liveIndex, weekIndex, seasonIndex
 
 	var acceptCount
 
@@ -220,6 +221,9 @@ $(document).ready(function () {
 	var packagesArray = []
 
 	var predictsArray = []
+	var weeklyPredict = []
+	var livePredict = []
+	var seasonPredict = []
 
 	var userTeamRanking = []
 	var allUsers = []
@@ -812,9 +816,19 @@ $(document).ready(function () {
 			type: "POST",
 			success: function (estimateResult) {
 				acceptCount++
-				if (predictIndex < predictsArray.length) {
-					currentPredict = predictsArray[predictIndex]
-					predictIndex++
+				if ((weekEnable && weekIndex < weeklyPredict.length) || (liveEnable && liveIndex < livePredict.length) || (seasonEnable && seasonIndex < seasonPredict.length)) {
+					if (weekEnable && weekIndex < weeklyPredict.length) {
+						currentPredict = weeklyPredict[weekIndex]
+						weekIndex++
+					}
+					else if (liveEnable && liveIndex < livePredict.length) {
+						currentPredict = livePredict[liveIndex]
+						liveIndex++
+					}
+					else if (seasonEnable && seasonIndex < seasonPredict.length) {
+						currentPredict = seasonPredict[seasonIndex]
+						seasonIndex++
+					}
 					var total = userClient.accountInfoModel.chances
 					var fill = ((total - acceptCount) / total) * 100
 					var white = 100 - fill
@@ -850,9 +864,19 @@ $(document).ready(function () {
 	$(document).on("click", "#main_predict_reject_button", function (e) {
 		e.preventDefault()
 		startProgressBar()
-		if (predictIndex < predictsArray.length) {
-			currentPredict = predictsArray[predictIndex]
-			predictIndex++
+		if ((weekEnable && weekIndex < weeklyPredict.length) || (liveEnable && liveIndex < livePredict.length) || (seasonEnable && seasonIndex < seasonPredict.length)) {
+			if (weekEnable && weekIndex < weeklyPredict.length) {
+				currentPredict = weeklyPredict[weekIndex]
+				weekIndex++
+			}
+			else if (liveEnable && liveIndex < livePredict.length) {
+				currentPredict = livePredict[liveIndex]
+				liveIndex++
+			}
+			else if (seasonEnable && seasonIndex < seasonPredict.length) {
+				currentPredict = seasonPredict[seasonIndex]
+				seasonIndex++
+			}
 			displayPredict()
 		}
 		else {
@@ -1352,16 +1376,10 @@ $(document).ready(function () {
 	$(document).on("click", "#play_room_league_start_button", function (e) {
 		e.preventDefault()
 		var leagueId = $("#play_room_league_leagueId").val()
-		var tag = $("#play_room_league_tag").val()
-		if (!leagueId || !tag) {
+		if (!leagueId) {
 			return console.error('required fields error')
 		}
-		console.log(tag)
 		currentLeague = leagueId
-		var tagSt = ''
-		if (tag === 'هفتگی') tagSt = 'Week'
-		else if (tag === 'زنده') tagSt = 'Live'
-		else if (tag === 'فصلی') tagSt = 'Season'
 		startProgressBar()
 		getNextObjectArray(function(err, result) {
 			doneProgressBar()
@@ -1377,19 +1395,47 @@ $(document).ready(function () {
 				$('#main_predict_explanation').hide()
 				$('#main_predict_progress_white').css('width', '0%')
 				$('#main_predict_progress_fill').css('width', '100%')
-				var resultSet = []
+				weeklyPredict = []
+				seasonPredict = []
+				livePredict = []
 				for (var k = 0; k < result.length; k++) {
-					if (result[k].tag === tagSt)
-						resultSet.push(result[k])
+					if (result[k].tag === 'Week')
+						weeklyPredict.push(result[k])
+					else if (result[k].tag === 'Live')
+						livePredict.push(result[k])
+					else if (result[k].tag === 'Season')
+						seasonPredict.push(result[k])
 				}
-				if (resultSet.length == 0) {
-					return predictOverOperation()
-				}
-				predictsArray = resultSet
-				predictIndex = 0
-				currentPredict = predictsArray[predictIndex]
-				predictIndex++
+				liveIndex = 0
+				seasonIndex = 0
+				weekIndex = 0
 				change_page_scene('page_main_prediction')
+				if (weeklyPredict.length == 0) {
+					if (livePredict.length != 0) {
+						$('.nav-tabs a[id="nav16"]').tab('show')
+						currentPredict = livePredict[0]
+						weekEnable = false
+						liveEnable = true
+						seasonEnable = false
+						liveIndex++
+					}
+					else if (seasonPredict.length != 0) {
+						$('.nav-tabs a[id="nav17"]').tab('show')
+						currentPredict = seasonPredict[0]
+						weekEnable = false
+						liveEnable = false
+						seasonEnable = true
+						seasonIndex++
+					}
+				}
+				else {
+					$('.nav-tabs a[id="nav15"]').tab('show')
+					currentPredict = weeklyPredict[0]
+					weekEnable = true
+					liveEnable = false
+					seasonEnable = false
+					weekIndex++
+				}
 				displayPredict()
 			}
 		})
@@ -1549,9 +1595,69 @@ $(document).ready(function () {
 	// ------------------------------ //
 	function tabHandler(e) {
 		var select = $(e.target).attr('id')
+		if (select === 'nav15') {
+			$('#main_predict_remaining').fadeOut()
+			$('#main_predict_point').fadeOut()
+			$('#main_predict_explanation').fadeOut()
+			if (weeklyPredict.length === 0)
+				return predictOverOperation()
+			if (weekIndex >= weeklyPredict.length)
+				return predictOverOperation()
+			currentPredict = weeklyPredict[weekIndex]
+			weekEnable = true
+			liveEnable = false
+			seasonEnable = false
+			displayPredict()
+		}
+		else if (select === 'nav16') {
+			$('#main_predict_remaining').fadeOut()
+			$('#main_predict_point').fadeOut()
+			$('#main_predict_explanation').fadeOut()
+			startProgressBar()
+			getNextObjectArray(function(err, result) {
+				doneProgressBar()
+				if (err)
+					return failedOperation()
+				console.log(result)
+				if (result.length == 0) {
+					return predictOverOperation()
+				}
+				else {
+					livePredict = []
+					for (var k = 0; k < result.length; k++) {
+						if (result[k].tag === 'Live')
+							livePredict.push(result[k])
+					}
+					if (livePredict == 0)
+						return predictOverOperation()
+					currentPredict = livePredict[0]
+					weekEnable = false
+					liveEnable = true
+					seasonEnable = false
+					liveIndex = 1
+					displayPredict()
+				}
+			})	
+		}
+		else if (select === 'nav17') {
+			$('#main_predict_remaining').fadeOut()
+			$('#main_predict_point').fadeOut()
+			$('#main_predict_explanation').fadeOut()
+			if (seasonPredict.length == 0)
+				return predictOverOperation()
+			if (seasonIndex >= seasonPredict.length)
+				return predictOverOperation()
+			currentPredict = seasonPredict[seasonIndex]
+			weekEnable = false
+			liveEnable = false
+			seasonEnable = true
+			displayPredict()
+		}
 		var no = select.replace("nav", "")
-		for (var i = 1; i < 15; i++) {
+		for (var i = 1; i < 18; i++) {
 			var str = '#nav' + i + '_tab'
+			if (i == 16 || i == 17 || i == 15)
+				continue
 			if (i == Number(no))
 				$(str).fadeIn()
 			else 
@@ -1790,7 +1896,7 @@ $(document).ready(function () {
 			$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
 			$('#main_predict_explanation').html(currentPredict.explanation)
 		}
-		if (predictIndex <= 1) {
+		if ((weekEnable && weekIndex <= 1) || (liveEnable && liveIndex <= 1) || (seasonEnable && seasonIndex <= 1)) {
 			showContent()
 		}
 		else {
@@ -2037,6 +2143,7 @@ $(document).ready(function () {
 			url: nextObjectURLWithAT,
 			type: "GET",
 			success: function (nextObjectResult) {
+				nextObjectResult.reverse()
 				console.log(nextObjectResult)
 				predictsArray = nextObjectResult
 				callback(null, predictsArray)
