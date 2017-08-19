@@ -873,7 +873,7 @@ $(document).ready(function () {
 	$(document).on("click", "#main_predict_reject_button", function (e) {
 		e.preventDefault()
 		startProgressBar()
-		if ((weekEnable && weekIndex < weeklyPredict.length) || (liveEnable && liveIndex < livePredict.length) || (seasonEnable && seasonIndex < seasonPredict.length)) {
+		if ((weekEnable && ((weekIndex + 1) < weeklyPredict.length)) || (liveEnable && ((liveIndex + 1) < livePredict.length)) || (seasonEnable && ((seasonIndex + 1) < seasonPredict.length))) {
 			if (weekEnable && weekIndex < weeklyPredict.length) {
 				weekIndex++
 				currentPredict = weeklyPredict[weekIndex]
@@ -1429,7 +1429,6 @@ $(document).ready(function () {
 						weekEnable = false
 						liveEnable = true
 						seasonEnable = false
-						liveIndex++
 					}
 					else if (seasonPredict.length != 0) {
 						$('.nav-tabs a[id="nav17"]').tab('show')
@@ -1438,7 +1437,6 @@ $(document).ready(function () {
 						weekEnable = false
 						liveEnable = false
 						seasonEnable = true
-						seasonIndex++
 					}
 				}
 				else {
@@ -1448,7 +1446,6 @@ $(document).ready(function () {
 					weekEnable = true
 					liveEnable = false
 					seasonEnable = false
-					weekIndex++
 				}
 				displayPredict()
 				timerID = setInterval(function() {
@@ -1525,9 +1522,12 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 						Profile							//
 	// ------------------------------ //
-	$(document).on("click", "#profile_trophy_result_button", function (e) {
+	$(document).on("click", "#profile_signOut_button", function (e) {
 		e.preventDefault()
-		console.log('not prepared yet')
+		userId = ''
+		coreAccessToken = ''
+		localStorage.clear()
+		change_page_scene('page_aaa')
 	})
 	// ------------------------------ //
 	// 						Package							//
@@ -1633,6 +1633,7 @@ $(document).ready(function () {
 	function tabHandler(e) {
 		var select = $(e.target).attr('id')
 		if (select === 'nav15') {
+			$('#main_predict_live_section').hide()
 			if (weeklyPredict.length == 0) {
 				$('#main_predict_div_body').fadeOut()
 				$('#main_predict_remaining').show()
@@ -1652,7 +1653,6 @@ $(document).ready(function () {
 			$('#main_predict_remaining').hide()
 			$('#main_predict_point').hide()
 			$('#main_predict_explanation').hide()
-			$('#main_predict_live_section').hide()
 			currentPredict = weeklyPredict[weekIndex]
 			weekEnable = true
 			liveEnable = false
@@ -1713,11 +1713,12 @@ $(document).ready(function () {
 				weekEnable = false
 				liveEnable = true
 				seasonEnable = false
-				liveIndex = 1
+				liveIndex = 0
 				displayPredict()
 			})	
 		}
 		else if (select === 'nav17') {
+			$('#main_predict_live_section').hide()
 			if (seasonPredict.length == 0) {
 				$('#main_predict_div_body').fadeOut()
 				$('#main_predict_remaining').show()
@@ -1737,7 +1738,6 @@ $(document).ready(function () {
 			$('#main_predict_remaining').hide()
 			$('#main_predict_point').hide()
 			$('#main_predict_explanation').hide()
-			$('#main_predict_live_section').hide()
 			currentPredict = seasonPredict[seasonIndex]
 			weekEnable = false
 			liveEnable = false
@@ -2252,7 +2252,13 @@ $(document).ready(function () {
 			url: nextObjectURLWithAT,
 			type: "GET",
 			success: function (nextObjectResult) {
-				nextObjectResult.reverse()
+				livePredict = []
+				weeklyPredict = []
+				seasonPredict = []
+				function compare(a, b){
+					return Number(b.beginningTime) - Number(a.beginningTime)
+				}
+				nextObjectResult.sort(compare)
 				console.log(nextObjectResult)
 				predictsArray = nextObjectResult
 				callback(null, predictsArray)
