@@ -2164,10 +2164,11 @@ $(document).ready(function () {
 						$('#user_data_name').val(userClient.username)
 						$('#user_data_code').val(userClient.id)
 						$('#user_data_email').val(userClient.email)
-						var JDate = require('jdate')
-						var jdate = new JDate(new Date(Number(userClient.time)))
-						var st = jdate.format('dddd') + Persian_Number(jdate.format('DD').toString()) + jdate.format('MMMM') + Persian_Number(jdate.format('YYYY').toString())
-						$('#user_data_date').val(st)
+						// var JDate = require('jdate')
+						// var jdate = new JDate(new Date(Number(userClient.time)))
+						// var st = jdate.format('dddd') + Persian_Number(jdate.format('DD').toString()) + jdate.format('MMMM') + Persian_Number(jdate.format('YYYY').toString())
+						// $('#user_data_date').val(st)
+						$('#user_data_date').val(fullDateConvertor(userClient.time))
 						callback(null, userClient)
 					},
 					error: function (xhr, status, error) {
