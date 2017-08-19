@@ -204,6 +204,9 @@ $(document).ready(function () {
 
 	startLoading()
 
+	var timerID
+	var updateEnable
+
 	var phoneNumber
 	var userClient
 	var currentPredict
@@ -894,6 +897,8 @@ $(document).ready(function () {
 	$(document).on("click", "#main_predict_return_menu", function (e) {
 		e.preventDefault()
 		startProgressBar()
+		if (timerID)
+			clearInterval(timerID)
 		getAllInfo(function(err) {
 			doneProgressBar()
 			if (err)
@@ -1391,7 +1396,6 @@ $(document).ready(function () {
 			doneProgressBar()
 			if (err)
 				return failedOperation()
-			console.log(result)
 			if (result.length == 0) {
 				return predictOverOperation()
 			}
@@ -1420,6 +1424,7 @@ $(document).ready(function () {
 				if (weeklyPredict.length == 0) {
 					if (livePredict.length != 0) {
 						$('.nav-tabs a[id="nav16"]').tab('show')
+						$('#main_predict_live_section').show()
 						currentPredict = livePredict[0]
 						weekEnable = false
 						liveEnable = true
@@ -1428,6 +1433,7 @@ $(document).ready(function () {
 					}
 					else if (seasonPredict.length != 0) {
 						$('.nav-tabs a[id="nav17"]').tab('show')
+						$('#main_predict_live_section').hide()
 						currentPredict = seasonPredict[0]
 						weekEnable = false
 						liveEnable = false
@@ -1437,6 +1443,7 @@ $(document).ready(function () {
 				}
 				else {
 					$('.nav-tabs a[id="nav15"]').tab('show')
+					$('#main_predict_live_section').hide()
 					currentPredict = weeklyPredict[0]
 					weekEnable = true
 					liveEnable = false
@@ -1444,6 +1451,9 @@ $(document).ready(function () {
 					weekIndex++
 				}
 				displayPredict()
+				timerID = setInterval(function() {
+					updateLivePredicts()
+				}, 60 * 1000); 
 			}
 		})
 	})
@@ -1598,6 +1608,26 @@ $(document).ready(function () {
 	})
 
 	// ------------------------------ //
+	// 		 CheckBox Controller				//
+	// ------------------------------ //
+	$('input[type=checkbox]').change(
+		function() {
+			console.log(this.checked)
+			if (timerID)
+				clearInterval(timerID)
+			if (this.checked) {
+				timerID = setInterval(function() {
+					updateLivePredicts()
+				}, 60 * 1000); 
+			}
+		}
+	)
+	function updateLivePredicts() {
+		updateEnable = true
+		tabHandler({ target: { id: 'nav16' } })	
+	}
+
+	// ------------------------------ //
 	// 				 Tab Controller					//
 	// ------------------------------ //
 	function tabHandler(e) {
@@ -1622,6 +1652,7 @@ $(document).ready(function () {
 			$('#main_predict_remaining').hide()
 			$('#main_predict_point').hide()
 			$('#main_predict_explanation').hide()
+			$('#main_predict_live_section').hide()
 			currentPredict = weeklyPredict[weekIndex]
 			weekEnable = true
 			liveEnable = false
@@ -1634,39 +1665,56 @@ $(document).ready(function () {
 				doneProgressBar()
 				if (err)
 					return failedOperation()
-				console.log(result)
+				if (!liveEnable && updateEnable && result.length == 0) {
+					updateEnable = false
+					return console.log('no new predict for this league')
+				}
 				if (result.length == 0) {
+					updateEnable = false
 					$('#main_predict_div_body').fadeOut()
 					$('#main_predict_remaining').show()
 					$('#main_predict_point').show()
-					$('#main_predict_explanation').show()		
+					$('#main_predict_explanation').show()
 					return predictOverOperation()
 				}
-				else {
-					livePredict = []
-					for (var k = 0; k < result.length; k++) {
-						if (result[k].tag === 'Live')
-							livePredict.push(result[k])
-					}
-					if (livePredict == 0) {
-						$('#main_predict_div_body').fadeOut()
-						$('#main_predict_remaining').show()
-						$('#main_predict_point').show()
-						$('#main_predict_explanation').show()			
-						return predictOverOperation()
-					}
-					pageToggle = true
-					$('#main_predict_div_body').show()
-					$('#main_predict_remaining').hide()
-					$('#main_predict_point').hide()
-					$('#main_predict_explanation').hide()
-					currentPredict = livePredict[0]
-					weekEnable = false
-					liveEnable = true
-					seasonEnable = false
-					liveIndex = 1
-					displayPredict()
+				livePredict = []
+				for (var k = 0; k < result.length; k++) {
+					if (result[k].tag === 'Live')
+						livePredict.push(result[k])
 				}
+				if (!liveEnable && updateEnable) {
+					updateEnable = false
+					if (livePredict.length == 0) 
+						return console.log('update live predict zero length')
+					else 
+						return console.log('update live predict completed successfuly')
+				}
+				if (livePredict.length == 0) {
+					updateEnable = false
+					$('#main_predict_div_body').fadeOut()
+					$('#main_predict_remaining').show()
+					$('#main_predict_point').show()
+					$('#main_predict_explanation').show()			
+					return predictOverOperation()
+				}
+				updateEnable = false
+				pageToggle = true
+				$('#main_predict_div_body').show()
+				$('#main_predict_remaining').hide()
+				$('#main_predict_point').hide()
+				$('#main_predict_explanation').hide()
+				$('#main_predict_live_section').show()
+				if (timerID)
+					clearInterval(timerID)
+				timerID = setInterval(function() {
+					updateLivePredicts()
+				}, 60 * 1000); 
+				currentPredict = livePredict[0]
+				weekEnable = false
+				liveEnable = true
+				seasonEnable = false
+				liveIndex = 1
+				displayPredict()
 			})	
 		}
 		else if (select === 'nav17') {
@@ -1689,6 +1737,7 @@ $(document).ready(function () {
 			$('#main_predict_remaining').hide()
 			$('#main_predict_point').hide()
 			$('#main_predict_explanation').hide()
+			$('#main_predict_live_section').hide()
 			currentPredict = seasonPredict[seasonIndex]
 			weekEnable = false
 			liveEnable = false
