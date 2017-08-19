@@ -1,4 +1,6 @@
-var coreEngine_url = "http://127.0.0.1:4000/api/clients/login";
+var coreEngine_url = "http://185.105.186.68:4000/api/clients/login"
+
+// var coreEngine_url = "http://127.0.0.1:4000/api/clients/login";
 
 $(document).ready(function () {
 	function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
@@ -70,8 +72,7 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				NProgress.done();
-				showNotification('alert-danger', 'Oops! Something went wrong, Please try again somehow later.', 'top', 'right', 'animated fadeIn', 'animated fadeOut');
-				alert(xhr.responseText);
+				showNotification('alert-danger', 'مشکلی در ورود شما ایجاد شده است، مجددا تکرار فرمائید', 'top', 'right', 'animated fadeIn', 'animated fadeOut');
 			}
 		});
 	});
