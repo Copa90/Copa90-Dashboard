@@ -39,9 +39,93 @@ function fullDateConvertor(myDate) {
 	return ('' + weekday[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes())
 }
 
-var coreEngine_url = "http://127.0.0.1:4000/api/"
+function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
+	if (colorName === null || colorName === '') {
+		colorName = 'bg-black';
+	}
+	if (text === null || text === '') {
+		text = 'Turning standard Bootstrap alerts';
+	}
+	if (animateEnter === null || animateEnter === '') {
+		animateEnter = 'animated fadeInDown';
+	}
+	if (animateExit === null || animateExit === '') {
+		animateExit = 'animated fadeOutUp';
+	}
+	var allowDismiss = true;
+
+	$.notify({
+		message: text
+	}, {
+		type: colorName,
+		allow_dismiss: allowDismiss,
+		newest_on_top: true,
+		timer: 1000,
+		placement: {
+			from: placementFrom,
+			align: placementAlign
+		},
+		animate: {
+			enter: animateEnter,
+			exit: animateExit
+		},
+		template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} ' + (allowDismiss ? "p-r-35" : "") + '" role="alert">' +
+			'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+			'<span data-notify="icon"></span> ' +
+			'<span data-notify="title">{1}</span> ' +
+			'<span data-notify="message">{2}</span>' +
+			'<div class="progress" data-notify="progressbar">' +
+			'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+			'</div>' +
+			'<a href="{3}" target="{4}" data-notify="url"></a>' +
+			'</div>'
+	});
+}
+
+function successfulOperation() {
+	showNotification('bg-cyan', 'عملیات شما با موفقیت انجام شد', 'bottom', 'left', 'animated fadeIn', 'animated fadeOut')
+}
+
+function failedOperation() {
+	showNotification('bg-deep-orange', 'عملیات شما با شکست مواجه شد', 'bottom', 'left', 'animated fadeIn', 'animated fadeOut')
+}
+
+function failedOperationByString(sentence) {
+	showNotification('bg-deep-orange', sentence, 'bottom', 'left', 'animated fadeIn', 'animated fadeOut')
+}
+
+function warningOperation() {
+	showNotification('bg-orange', 'لطفا همه فیلدهای ضروری را پر کنید', 'bottom', 'left', 'animated fadeIn', 'animated fadeOut')
+}
+
+function authenticationRequiredOperation() {
+	showNotification('bg-deep-orange', 'عذرخواهی میکنیم! نیاز است که مجددا وارد شوید', 'bottom', 'left', 'animated fadeIn', 'animated fadeOut')
+}
+
+var coreEngine_url = "http://185.105.186.68:4000/api/"
+var zarinPal_url = "http://185.105.186.68:4010/api/"
+var coreURL = 'http://copa90.ir/'
+
+// var coreEngine_url = "http://127.0.0.1:4000/api/"
+// var zarinPal_url = "http://127.0.0.1:4010/api/"
+// var coreURL = 'http://copa90.ir/'
 
 $(document).ready(function () {
+
+	$(document).ajaxError(function myErrorHandler(event, x, ajaxOptions, thrownError) {
+		doneProgressBar()
+		if (x.responseJSON)
+			if (x.responseJSON.error)
+				if (x.responseJSON.error.message.includes('خطا')) 
+					return failedOperationByString(x.responseJSON.error.message)
+		if (x.status == 401) {
+			localStorage.clear()
+			window.location.href = '../AAA/sign-in-admin.html'
+			return authenticationRequiredOperation()
+		}
+		failedOperation()
+	})
+
 	var predicts = []
 	var estimates = []
 	var leagues = []
@@ -57,134 +141,76 @@ $(document).ready(function () {
 	else
 		return window.location.href = '../AAA/sign-in-admin.html'
 
+	getAllInfo()
+
+	tabHandler({ target: { id: 'nav1' } })
+	$('.nav-tabs a[id="nav1"]').tab('show')
+
+	initDateTimePicker()
+	initJQueryTable()
+
+	// ------------------------------ //
+	// 				 Tab Controller					//
+	// ------------------------------ //	
 	function tabHandler(e) {
-		if ($(e.target).attr('id') === 'nav1') {
-			$("#PredictStatisticsTab").show()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav2') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").show()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav3') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").show()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav4') {
+		var select = $(e.target).attr('id')
+		if (select === 'nav4') {
 			if (localStorage.getItem('editablePredictId')) {
 				var predictId = localStorage.getItem('editablePredictId')
 				fill_section_update(predictId)
 				localStorage.removeItem('editablePredictId')
 			}
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").show()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").hide()
 		}
-		else if ($(e.target).attr('id') === 'nav5') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").show()
-			$("#PredictExtraInfoTab").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav6') {
-			$("#PredictStatisticsTab").hide()
-			$("#PredictManagementTab").hide()
-			$("#PredictNewTab").hide()
-			$("#PredictUpdateTab").hide()
-			$("#PredictCollecyionTab").hide()
-			$("#PredictExtraInfoTab").show()
-		}
-		else if ($(e.target).attr('id') === 'nav7') {
-			$("#generalInfo").show()
-			$("#accountInfo").hide()
-			$("#sequencerInfo").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav8') {
-			$("#generalInfo").hide()
-			$("#accountInfo").show()
-			$("#sequencerInfo").hide()
-		}
-		else if ($(e.target).attr('id') === 'nav9') {
-			$("#generalInfo").hide()
-			$("#accountInfo").hide()
-			$("#sequencerInfo").show()
+		var no = select.replace("nav", "")
+		for (var i = 1; i < 10; i++) {
+			var str = '#nav' + i + '_tab'
+			if (i == Number(no))
+				$(str).fadeIn()
+			else 
+				$(str).hide()
 		}
 	}
-
 	$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
 		tabHandler(e)
 	})
 
-	$("#PredictStatisticsTab").show()
-	$("#PredictManagementTab").hide()
-	$("#PredictNewTab").hide()
-	$("#PredictUpdateTab").hide()
-	$("#PredictCollecyionTab").hide()
-	$("#PredictExtraInfoTab").hide()
-	
-	initDateTimePicker()
-	initJQueryTable()
-	getAllInfo()
-
+	// ------------------------------ //
+	// 		 	 			Utility							//
+	// ------------------------------ //
 	function initDateTimePicker() {
-		//Textare auto growth
 		autosize($('textarea.auto-growth'))
-		//Datetimepicker plugin
 		$('.datetimepicker').bootstrapMaterialDatePicker({
 			format: 'dddd DD MMMM YYYY - HH:mm',
 			clearButton: true,
 			weekStart: 1
 		})
-
 		$('.datepicker').bootstrapMaterialDatePicker({
 			format: 'dddd DD MMMM YYYY',
 			clearButton: true,
 			weekStart: 1,
 			time: false
 		})
-
 		$('.timepicker').bootstrapMaterialDatePicker({
 			format: 'HH:mm',
 			clearButton: true,
 			date: false
 		})
-
     Dropzone.options.dp1 = {
-        paramName: "file",
-        maxFilesize: 1
+			paramName: "file",
+			maxFilesize: 1
 		}
     Dropzone.options.dp2 = {
-        paramName: "file",
-        maxFilesize: 1
+			paramName: "file",
+			maxFilesize: 1
 		}
 	}
-
 	function initJQueryTable() {
-		//Exportable table
 		$('.js-exportable').DataTable({
 			dom: 'Bfrtip',
 			buttons: [
 				'copy', 'csv', 'excel', 'pdf', 'print'
 			]
 		})
-
 		$('.js-basic-example').DataTable(
 			{"searching": false,
 				"ordering": false,
@@ -194,6 +220,19 @@ $(document).ready(function () {
 			}
 		)
 	}
+	function startProgressBar() {
+		$('.cardRainbow').fadeIn()
+	}
+	function doneProgressBar() {
+		$('.cardRainbow').fadeOut()
+	}
+	// ------------------------------ //
+	// 		 	 	Edit Rows Filler				//
+	// ------------------------------ //
+	$('#select_update_predict').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		var selected = $(this).find('option').eq(clickedIndex).val()
+		fill_section_update(selected)
+	})
 
 	function fill_section_update(predictId) {
 		$("#select_update_predict").selectpicker('val', predictId)
@@ -208,7 +247,7 @@ $(document).ready(function () {
 				$("#select_update_league").selectpicker('val', model.leagueId)
 				$("#select_update_occuerence").selectpicker('val', Number(model.occurrence))
 				$("#select_update_status").selectpicker('val', model.status)
-				$("#select_update_tag").selectpicker('val', model.tags)
+				$("#select_update_tag").selectpicker('val', model.tag)
 				$("#select_update_beginningTime").val(fullDateConvertor(model.beginningTime))
 				$("#select_update_endingTime").val(fullDateConvertor(model.endingTime))
 				break
@@ -254,6 +293,9 @@ $(document).ready(function () {
 		})
 	}
 
+	// ------------------------------ //
+	// 			  	Selectors							//
+	// ------------------------------ //
 	function fill_predict_selectors(predictsArray) {
 		$('#select_moreInfo_predict').find('option').remove()
 		$('#select_update_predict').find('option').remove()
@@ -272,7 +314,6 @@ $(document).ready(function () {
 			})).selectpicker('refresh')
 		}
 	}
-
 	function fill_league_selectors(leaguesArray) {
 		$('#select_management_league').find('option').remove()
 		$('#select_update_league').find('option').remove()
@@ -297,76 +338,75 @@ $(document).ready(function () {
 		}
 	}
 
+	// ------------------------------ //
+	// 					Data Fetch						//
+	// ------------------------------ //
 	function getAllPredicts(callback) {
 		var predictURLWithAT = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken)
+		startProgressBar()
 		$.ajax({
 			url: predictURLWithAT,
 			type: "GET",
 			success: function (predictResult) {
 				predicts = predictResult
 				fill_predict_selectors(predicts)
+				doneProgressBar()
 				callback(null, predicts)
-				NProgress.done()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
-				alert(xhr.responseText)
 			}
 		})
 	}
 
 	function getAllLeagus(callback) {
 		var leagueURLWithAT = wrapAccessToken(coreEngine_url + 'leagues', coreAccessToken)
+		startProgressBar()
 		$.ajax({
 			url: leagueURLWithAT,
 			type: "GET",
 			success: function (leagueResult) {
 				leagues = leagueResult
 				fill_league_selectors(leagues)
+				doneProgressBar()
 				callback(null, leagues)
-				NProgress.done()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
-				alert(xhr.responseText)
 			}
 		})
 	}
 
 	function getAllEstiamtes(callback) {
 		var estimateURLWithAT = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken)
+		startProgressBar()
 		$.ajax({
 			url: estimateURLWithAT,
 			type: "GET",
 			success: function (estimateResult) {
 				estimates = estimateResult
+				doneProgressBar()
 				callback(null, estimates)
-				NProgress.done()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
-				alert(xhr.responseText)
 			}
 		})
 	}
 
 	function getEstimatesOfPredict(predictId, callback) {
 		var estimateOfPredictURLWithAT = wrapAccessToken(coreEngine_url + 'estimates?filter={"where":{"predictId": ' + predictId + '}}', coreAccessToken)
+		startProgressBar()
 		$.ajax({
 			url: estimateOfPredictURLWithAT,
 			type: "GET",
 			success: function (estimateResult) {
 				estimates = estimateResult
+				doneProgressBar()
 				callback(null, estimates)
-				NProgress.done()
 			},
 			error: function (xhr, status, error) {
-				NProgress.done()
 				callback(err)
-				alert(xhr.responseText)
 			}
 		})
 	}
@@ -398,6 +438,74 @@ $(document).ready(function () {
 		})
 	}
 
+	// ------------------------------ //
+	// 		 	 	General Buttons					//
+	// ------------------------------ //
+	$("#signOutButton").click(function (e) {
+		e.preventDefault()
+		localStorage.clear()
+		return window.location.href = '../AAA/sign-in-admin.html'
+	})
+	$("#update_statistics_section").click(function (e) {
+		e.preventDefault()
+		getAllInfo()
+	})
+	$("#update_moreInfo_section").click(function (e) {
+		e.preventDefault()
+		getAllPredicts(function(err, result) {})
+	})
+	$("#update_management_section").click(function (e) {
+		e.preventDefault()
+		getAllLeagus(function(err, result) {})
+		getAllPredicts(function(err, result) {})
+	})
+	function empty_new_section() {
+		$("#select_new_league").selectpicker('val', '')
+		$("#select_new_explanation").val('')
+		$("#select_new_tag").selectpicker('val', '')
+		$("#select_new_period").selectpicker('val', '')
+		$("#select_new_beginningTime").val('')
+		$("#select_new_endingTime").val('')
+		$("#select_new_week").val(10)
+		$("#select_new_possiblity").val(10)
+		$("#select_new_points").val(10)
+	}
+	$("#update_new_section").click(function (e) {
+		e.preventDefault()
+		empty_new_section()
+		getAllLeagus(function(err, result) {})
+	})
+	$("#empty_new_section").click(function (e) {
+		e.preventDefault()
+		empty_new_section()
+	})
+	function empty_update_section() {
+		$("#select_update_predict").selectpicker('val', '')
+		$("#select_update_points").val(10)
+		$("#select_update_week").val(10)
+		$("#select_update_possibility").val(10)
+		$("#select_update_explanation").val('')
+		$("#select_update_league").selectpicker('val', '')
+		$("#select_update_occuerence").selectpicker('val', '')
+		$("#select_update_status").selectpicker('val', '')
+		$("#select_update_tag").selectpicker('val', '')
+		$("#select_update_beginningTime").val('')
+		$("#select_update_endingTime").val('')
+	}
+	$("#update_update_section").click(function (e) {
+		e.preventDefault()
+		empty_update_section()
+		getAllLeagus(function(err, result) {})
+		getAllPredicts(function(err, result) {})
+	})
+	$("#empty_update_section").click(function (e) {
+		e.preventDefault()
+		empty_update_section()
+	})
+
+	// ------------------------------ //
+	// 		 	 Table Construction				//
+	// ------------------------------ //
 	function fill_management_table(predictsArray) {
 		$('#tab_logic_management>tbody').empty()
 		for (var i = 0; i < predictsArray.length; i++) {
@@ -409,13 +517,13 @@ $(document).ready(function () {
 			$('#addr' + i).html(
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].id + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].leagueId + '</br>' + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + fullDateConvertor(predictsArray[i].beginningTime) + '</br>' + fullDateConvertor(transactionArray[i].endingTime) + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + fullDateConvertor(predictsArray[i].beginningTime) + '</br>' + fullDateConvertor(predictsArray[i].endingTime) + '</td>' +
 				'<td align="center" style="vertical-align: middle; width: 50px; max-width: 100px;">' + predictsArray[i].explanation + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].possibility + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].point + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].weekNumber + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + predictsArray[i].status + '</span></td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].tags + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].tag + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + predictsArray[i].occurrence + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 1%;">' +
 				'<button type="button" class="predictEdit m-l-5 m-r-5 btn bg-green waves-effect"><i class="material-icons">mode_edit</i></button>' +
@@ -580,35 +688,6 @@ $(document).ready(function () {
 		})
 	})
 
-	$("#signOutButton").click(function (e) {
-		e.preventDefault()
-		localStorage.clear()
-		return window.location.href = '../AAA/sign-in-admin.html'
-	})
-
-	$("#update_statistics_section").click(function (e) {
-		e.preventDefault()
-		getAllInfo()
-	})
-	$("#update_moreInfo_section").click(function (e) {
-		e.preventDefault()
-		getAllPredicts()
-	})
-	$("#update_management_section").click(function (e) {
-		e.preventDefault()
-		getAllLeagus()
-		getAllPredicts()
-	})
-	$("#update_new_section").click(function (e) {
-		e.preventDefault()
-		getAllLeagus()
-	})
-	$("#update_update_section").click(function (e) {
-		e.preventDefault()
-		getAllLeagus()
-		getAllPredicts()		
-	})
-
 	$("#button_moreInfo_search").click(function (e) {
 		e.preventDefault()
 		NProgress.start()
@@ -702,7 +781,7 @@ $(document).ready(function () {
 				})
 			if (tags.length > 0)
 				filter.where.and.push({
-					'tags': {
+					'tag': {
 						'inq': tags
 					}
 				})
@@ -776,21 +855,40 @@ $(document).ready(function () {
 
 	$("#button_new_add").click(function (e) {
 		e.preventDefault()
-		NProgress.start()
-		if (!$('#select_new_league').val() || !$('#select_new_week').val() || !$('#select_new_possiblity').val() || !$('#select_new_points').val() || !$('#select_new_explanation').val() || !$('#select_new_beginningTime').val() || !$('#select_new_endingTime').val() || !$('#select_new_tag').find('option:selected').text()) {
-			NProgress.done()
+		startProgressBar()
+		if (!$('#select_new_league').val() || !$('#select_new_week').val() || !$('#select_new_possiblity').val() || !$('#select_new_points').val() || !$('#select_new_explanation').val() || !$('#select_new_tag').val()) {
+			doneProgressBar()
 			return swal("اوپس!", "شما باید همه ی فیلد های مربوطه و ضروری را پر کنید!", "warning");
 		}
 		var data = {
 			leagueId: $('#select_new_league').val(),
 			explanation: $('#select_new_explanation').val(),
-			tags: $('#select_new_tag').find('option:selected').text(),
-			beginningTime: fullTimeConvertor($('#select_new_beginningTime').val()),
-			endingTime: fullTimeConvertor($('#select_new_endingTime').val()),
+			tag: $('#select_new_tag').val(),
 			weekNumber: Number($('#select_new_week').val()),
 			possibility: Number($('#select_new_possiblity').val()),
 			point: Number($('#select_new_points').val())
 		}
+		if (data.tag === 'Live') {
+			if (!$('#select_new_period').val()) {
+				doneProgressBar()
+				return warningOperation()
+			}
+			else {
+				data.beginningTime = (new Date).getTime()
+				data.endingTime = data.beginningTime + Number($('#select_new_period').val())
+			}
+		}
+		else {
+			if (!$('#select_new_beginningTime').val() || !$('#select_new_endingTime').val()) {
+				doneProgressBar()
+				return warningOperation()
+			}
+			else {
+				data.beginningTime = fullTimeConvertor($('#select_new_beginningTime').val())
+				data.endingTime = fullTimeConvertor($('#select_new_endingTime').val())
+			}
+		}
+		console.log(JSON.stringify(data))
 		var predictURL = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken);
 		$.ajax({
 			url: predictURL,
@@ -800,39 +898,32 @@ $(document).ready(function () {
 			type: "POST",
 			success: function (predictResult) {
 				getAllInfo()
-				NProgress.done()
-				swal("خیلی خوب!", "شما توانستید یک پیش‌بینی جدید را موفقیت آمیز بیافزایید.", "success")
-			},
-			error: function (xhr, status, error) {
-				NProgress.done()
-				swal("متاسفیم!", "مشکلی پیش آمد، لطفا مجددا تلاش کنید.", "error")
-				alert(xhr.responseText)
+				doneProgressBar()
+				successfulOperation()
+				empty_new_section()
 			}
 		})
 	})
 
 	$("#button_update_upgrade").click(function (e) {
 		e.preventDefault()
-		NProgress.start()
-
+		startProgressBar()
 		var predictId
-
-		if ($('#select_management_league').val())
-			predictId = $('#select_management_league').val()
-
+		if ($('#select_update_predict').val())
+			predictId = $('#select_update_predict').val()
 		if (!predictId || !$('#select_update_league').val() || !$('#select_update_explanation').val() || !$('#select_update_occuerence').val() ||
-			!$('#select_update_status').val() || !$('#select_update_tag').find('option:selected').text() || !$('#select_update_beginningTime').val() || !$('#select_update_endingTime').val() ||
+			!$('#select_update_status').val() || !$('#select_update_tag').val() || !$('#select_update_beginningTime').val() || !$('#select_update_endingTime').val() ||
 			!$('#select_update_week').val() || !$('#select_update_possibility').val() || !$('#select_update_points').val()
 		) {
-			NProgress.done()
-			return swal("اوپس!", "شما باید همه ی فیلد های مربوطه و ضروری را پر کنید!", "warning");
+			doneProgressBar()
+			return warningOperation()
 		}
 		var data = {
 			leagueId: $('#select_update_league').val(),
 			explanation: $('#select_update_explanation').val(),
 			occurrence: $('#select_update_occuerence').val(),
 			status: $('#select_update_status').val(),
-			tags: $('#select_update_tag').find('option:selected').text(),
+			tag: $('#select_update_tag').val(),
 			beginningTime: fullTimeConvertor($('#select_update_beginningTime').val()),
 			endingTime: fullTimeConvertor($('#select_update_endingTime').val()),
 			weekNumber: Number($('#select_update_week').val()),
@@ -848,13 +939,9 @@ $(document).ready(function () {
 			type: "PUT",
 			success: function (predictResult) {
 				getAllInfo()
-				NProgress.done()
-				swal("خیلی خوب!", "شما توانستید یک پیش‌بینی جدید را موفقیت آمیز بیافزایید.", "success")
-			},
-			error: function (xhr, status, error) {
-				NProgress.done()
-				swal("متاسفیم!", "مشکلی پیش آمد، لطفا مجددا تلاش کنید.", "error")
-				alert(xhr.responseText)
+				doneProgressBar()
+				successfulOperation()
+				empty_update_section()
 			}
 		})
 	})
