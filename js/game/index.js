@@ -415,6 +415,10 @@ $(document).ready(function () {
 	function fill_league_selector(leaguesArray) {
 		$('#play_room_league_leagueId').find('option').remove()
 		$('#ranking_league_statistics_leagueId').find('option').remove()
+		$('#play_room_league_leagueId').append($('<option>', {
+			value: 'every',
+			text: 'همه‌ی لیگ‌ها'
+		})).selectpicker('refresh')
 		for (var i = 0; i < leaguesArray.length; i++) {
 			var itemToPush = {
 				id: leaguesArray[i].id,
