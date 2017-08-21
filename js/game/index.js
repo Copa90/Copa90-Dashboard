@@ -1662,6 +1662,7 @@ $(document).ready(function () {
 		else if (select === 'nav16') {
 			startProgressBar()
 			getNextObjectArray(function(err, result) {
+				$('#main_predict_live_section').show()
 				doneProgressBar()
 				if (err)
 					return failedOperation()
@@ -1703,7 +1704,6 @@ $(document).ready(function () {
 				$('#main_predict_remaining').hide()
 				$('#main_predict_point').hide()
 				$('#main_predict_explanation').hide()
-				$('#main_predict_live_section').show()
 				if (timerID)
 					clearInterval(timerID)
 				timerID = setInterval(function() {
@@ -1983,10 +1983,12 @@ $(document).ready(function () {
 		function showContent() {
 			var hours = Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
 			var str = ''
-			if (hours < 24)
+			if (hours < 1)
+				str = Persian_Number(Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
+			else if (hours <= 24 && hours >= 1)
 				str = Persian_Number(hours.toString()) + ' ساعت '
 			else 
-				str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز و ' + Persian_Number(Math.round(Math.floor(hours % 24)).toString()) + ' ساعت '
+				str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
 			$('#main_predict_remaining').html(str)
 			$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
 			$('#main_predict_explanation').html(currentPredict.explanation)
@@ -2164,11 +2166,12 @@ $(document).ready(function () {
 						$('#user_data_name').val(userClient.username)
 						$('#user_data_code').val(userClient.id)
 						$('#user_data_email').val(userClient.email)
-						// var JDate = require('jdate')
-						// var jdate = new JDate(new Date(Number(userClient.time)))
-						// var st = jdate.format('dddd') + Persian_Number(jdate.format('DD').toString()) + jdate.format('MMMM') + Persian_Number(jdate.format('YYYY').toString())
-						// $('#user_data_date').val(st)
-						$('#user_data_date').val(fullDateConvertor(userClient.time))
+						var t = moment(Number(userClient.time)).format('YYYY/M/D HH:mm').toString()
+						moment.loadPersian({usePersianDigits: true})
+						var m = moment(t, 'YYYY/M/D HH:mm').format('jYYYY/jM/jD HH:mm').toString()
+						moment.loadPersian({usePersianDigits: false})
+						var res = m.split(" ")
+						$('#user_data_date').val(res[1] + '   تاریخ   ' + res[0] + '   ساعت   ')
 						callback(null, userClient)
 					},
 					error: function (xhr, status, error) {
@@ -2253,9 +2256,6 @@ $(document).ready(function () {
 			url: nextObjectURLWithAT,
 			type: "GET",
 			success: function (nextObjectResult) {
-				livePredict = []
-				weeklyPredict = []
-				seasonPredict = []
 				function compare(a, b){
 					return Number(b.beginningTime) - Number(a.beginningTime)
 				}
