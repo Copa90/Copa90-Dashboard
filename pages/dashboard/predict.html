@@ -66,23 +66,30 @@
 </head>
 
 <body class="theme-green">
+
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="preloader">
-            <div class="spinner-layer pl-teal">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
-        <p>لطفا صبر کنید</p>
-    </div>
+	<div id="rainbow-progress-bar1" class="rainbow-progress-bar"></div>
+	<div class="loader">
+		<div class="preloader">
+			<div class="spinner-layer pl-teal">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<h5>لطفا کمی صبر کنید</h5>
+		<br>
+		<h4>شما در حال اتصال به سرورهای کوپا ۹۰ می‌باشید</h4>
+	</div>
 </div>
 <!-- #END# Page Loader -->
+
 <!-- Overlay For Sidebars -->
 <div class="overlay"></div>
 <!-- #END# Overlay For Sidebars -->
@@ -92,7 +99,7 @@
         <div class="navbar-header">
             <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
             <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" style="font-size:25px;" href="./dashboard.html">پنل مدیریت کوپا ۹۰</a>
+            <a class="navbar-brand" style="font-size:25px;" href="./predict.html">پنل مدیریت کوپا ۹۰</a>
         </div>
     </div>
 </nav>
@@ -163,7 +170,7 @@
             <div class="copyright">
                 <a href="javascript:void(0);">سیستم پیش‌بینی مسابقات ورزشی کوپا ۹۰</a>
             </div>
-            <div class="version">
+            <div class="version version_controlling">
                 <b>ورژن: </b> اول
             </div>
         </div>
@@ -246,6 +253,7 @@
 								</a>
 								<ul class="dropdown-menu pull-left">
 									<li><a href="javascript:void(0);" id="update_moreInfo_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_moreInfo_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -280,7 +288,7 @@
 							<br>
 							<div class="col-md-12">
 								<!-- Exportable Table -->
-								<table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="tab_logic_moreInfo" style="vertical-align:middle;">
+								<table class="table table-bordered table-striped table-hover" id="tab_logic_moreInfo" style="vertical-align:middle;">
 									<thead>
 										<tr>
 											<th>شماره تخمین</th>
@@ -316,6 +324,7 @@
 								</a>
 								<ul class="dropdown-menu pull-left">
 									<li><a href="javascript:void(0);" id="update_management_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_management_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -332,22 +341,32 @@
 									<div class="row clearfix">
 										<div class="col-md-3">
 											<b style="font-size:12px;"> انتخاب لیگ </b>
-											<select id="select_management_league" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="لیگ‌های مورد نظرتان را انتخاب کنید" data-actions-box="true">
+											<select id="select_management_league" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="لیگ‌های مورد نظرتان" data-actions-box="true">
 											</select>
 										</div>
 										<div class="col-md-3">
 											<b style="font-size:12px;"> شرایط وقوع </b>
 											<select id="select_management_occuerence" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="واقعه‌های مورد نظرتان" data-actions-box="true">
+												<option value="0">باز</option>
+												<option value="1">برد</option>
+												<option value="2">باخت</option>	
 											</select>
 										</div> 
 										<div class="col-md-3">
 											<b style="font-size:12px;"> وضعیت پیش‌بینی </b>
 											<select id="select_management_status" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="وضعیت‌های مورد نظرتان" data-actions-box="true">
+												<option value="Created">ایجاد شده</option>
+												<option value="Working">در حال کار</option>
+												<option value="Closed">بسته شده</option>
+												<option value="Finished">قطعی شده</option>	
 											</select>
 										</div>
 										<div class="col-md-3">
 											<b style="font-size:12px;"> تگ‌های پیش‌بینی </b>
 											<select id="select_management_tag" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="تگ‌های مورد نظرتان" data-actions-box="true">
+												<option value="Week">هفتگی</option>
+												<option value="Live">زنده</option>
+												<option value="Season">فصلی</option>
 											</select>
 										</div>
 									</div>
@@ -363,7 +382,7 @@
 											<b style="font-size:12px;"> حداقل احتمال وقوع </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input id="select_management_min_possibility" type="text" class="form-control text-center" value="10" data-rule="quantity">
+													<input id="select_management_min_possibility" type="text" class="form-control text-center" value="1" data-rule="quantity">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -375,7 +394,7 @@
 											<b style="font-size:12px;"> حداکثر احتمال وقوع </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input id="select_management_max_possibility" type="text" class="form-control text-center" value="100" data-rule="quantity">
+													<input id="select_management_max_possibility" type="text" class="form-control text-center" value="999" data-rule="quantity">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -387,7 +406,7 @@
 											<b style="font-size:12px;"> حداقل شماره هفته </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input id="select_management_min_week" type="text" class="form-control text-center" value="10" data-rule="quantity">
+													<input id="select_management_min_week" type="text" class="form-control text-center" value="1" data-rule="quantity">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -399,7 +418,7 @@
 											<b style="font-size:12px;"> حداکثر شماره هفته </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input id="select_management_max_week" type="text" class="form-control text-center" value="100" data-rule="quantity">
+													<input id="select_management_max_week" type="text" class="form-control text-center" value="999" data-rule="quantity">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -411,7 +430,7 @@
 											<b style="font-size:12px;"> حداقل امتیاز </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input id="select_management_min_point" type="text" class="form-control text-center" value="10" data-rule="quantity">
+													<input id="select_management_min_point" type="text" class="form-control text-center" value="1" data-rule="quantity">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -423,7 +442,7 @@
 											<b style="font-size:12px;"> حداکثر امتیاز </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input id="select_management_max_point" type="text" class="form-control text-center" value="100" data-rule="quantity">
+													<input id="select_management_max_point" type="text" class="form-control text-center" value="999" data-rule="quantity">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -442,7 +461,7 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان شروع پیش‌بینی </b>
+											<b style="font-size:12px;"> زمان شروع پیش‌بینی  <button id="popover_handler_1" type="button" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
 													<input type="text" id="select_management_beginningTime" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
@@ -450,7 +469,7 @@
 											</div>
 										</div> 
 										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان پایان پیش‌بینی </b>
+											<b style="font-size:12px;"> زمان پایان پیش‌بینی  <button id="popover_handler_2" type="button" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
 													<input type="text" id="select_management_endingTime" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
@@ -469,27 +488,21 @@
 						<div class="row clearfix">
 							<br>
 							<div class="col-md-12">
-								<!-- Exportable Table -->
-								<table class="table table-bordered table-striped table-hover js-basic-example dataTable" id="tab_logic_management" style="vertical-align:middle;">
+								<table class="table table-bordered table-striped table-hover" id="tab_logic_management" style="vertical-align:middle;">
 									<thead>
 										<tr>
-											<th>شماره پیش‌بینی</th>
-											<th>شماره لیگ</th>
+											<th>شماره پیش‌بینی و لیگ</th>
 											<th>دوره</th>
 											<th>متن</th>
-											<th>احتمال</th>
-											<th>امتیاز</th>
-											<th>هفته</th>
+											<th>اطلاعات</th>
 											<th>وضعیت</th>
-											<th>تگ‌ها</th>
-											<th>وقوع</th>
+											<th>تکمیل</th>
 											<th>عملیات</th>
 										</tr>
 									</thead>
 									<tbody>
 									</tbody>
 								</table>
-								<!-- #END# Exportable Table -->
 							</div>
 						</div>
 
@@ -601,12 +614,12 @@
 											<b style="font-size:12px;"> تگ‌های پیش‌بینی </b>
 											<select id="select_new_tag" class="form-control show-tick text-right" data-live-search="true" data-selected-text-format="count" data-size=5 title="تگ‌های مورد نظرتان" data-actions-box="true">
 												<option value="Week">هفتگی</option>
-												<option value="Live">زنده</option>
+												<option value="Live" selected>زنده</option>
 												<option value="Season">فصلی</option>
 											</select>
 										</div>	
 										<div class="col-md-3">
-											<b style="font-size:12px;"> زمان شروع پیش‌بینی (غیر از زنده) </b>
+											<b style="font-size:12px;"> زمان شروع پیش‌بینی (غیر از زنده) <button id="popover_handler_3" type="button" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
 													<input id="select_new_beginningTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
@@ -614,7 +627,7 @@
 											</div>
 										</div> 
 										<div class="col-md-3">
-											<b style="font-size:12px;"> زمان پایان پیش‌بینی (غیر از زنده)</b>
+											<b style="font-size:12px;"> زمان پایان پیش‌بینی (غیر از زنده) <button id="popover_handler_4" type="button" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
 													<input id="select_new_endingTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
@@ -754,7 +767,7 @@
 										</div> 
 										<div class="col-md-4">
 											<b style="font-size:12px;"> تگ‌های پیش‌بینی </b>
-											<select id="select_update_tag" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="تگ‌های مورد نظرتان">
+											<select id="select_update_tag" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تگ را انتخاب کنید">
 												<option value="Week">هفتگی</option>
 												<option value="Live">زنده</option>
 												<option value="Season">فصلی</option>
@@ -798,7 +811,7 @@
 										<div class="col-md-1 col-md-offset-2">
 										</div>
 										<div class="col-md-3">
-											<b style="font-size:12px;"> زمان شروع پیش‌بینی </b>
+											<b style="font-size:12px;"> زمان شروع پیش‌بینی  <button type="button" id="popover_handler_5" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
 													<input id="select_update_beginningTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
@@ -806,7 +819,7 @@
 											</div>
 										</div> 
 										<div class="col-md-3">
-											<b style="font-size:12px;"> زمان پایان پیش‌بینی </b>
+											<b style="font-size:12px;"> زمان پایان پیش‌بینی  <button type="button" id="popover_handler_6" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
 													<input id="select_update_endingTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
@@ -832,7 +845,7 @@
 		</div>
 
 		<div id="nav5_tab" class="row clearfix">
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="card">
 					<div class="cardRainbow rainbow-progress-bar"></div>
 					<div class="header">
@@ -844,15 +857,15 @@
 							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 							</div>
 							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-								<form action="/" id="dp1" class="dropzone">
+								<form action="http://www.google.com" id="dp1" class="dropzone" max-files="1">
 									<div class="dz-message">
 										<div class="drag-icon-cph">
 											<i class="material-icons">touch_app</i>
 										</div>
 										<h5>فایل خود را به این قسمت درگ کرده یا با کلیک انتخاب کنید.</h5>
 									</div>
-									<div class="fallback">
-										<input id="new_predict_collection" name="file" type="file" multiple/>
+									<div class="fallback text-center">
+										<input id="new_predict_collection" class="text-center" name="file" type="file"/>
 									</div>
 								</form>
 							</div>
@@ -867,68 +880,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-				<div class="card">
-					<div class="cardRainbow rainbow-progress-bar"></div>
-					<div class="header">
-						<h2>دانلود جدول مجموعه پیش‌بینی‌ها</h2>
-					</div>
-					<div class="body">
-						<div class="row clearfix">
-							<br>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-							</div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-								<b style="font-size:12px;"> وضعیت پیش‌بینی </b>
-								<select id="select_collection_status" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک وضعیت را انتخاب کنید">
-								</select>
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-3">
-							</div> 
-							<div class="col-md-6 m-t-10 m-b-10">
-								<button type="button" id="get_predict_collection" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> دانلود مجموعه پیش‌بینی </button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-				<div class="card">
-					<div class="cardRainbow rainbow-progress-bar"></div>
-					<div class="header">
-						<h2>افزودن مجموعه نتایج پیش‌بینی</h2>
-					</div>
-					<div class="body">
-						<div class="row clearfix">
-							<br>
-							<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-							</div>
-							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-								<form action="/" id="dp2" class="dropzone">
-									<div class="dz-message">
-										<div class="drag-icon-cph">
-											<i class="material-icons">touch_app</i>
-										</div>
-										<h5>فایل خود را به این قسمت درگ کرده یا با کلیک انتخاب کنید.</h5>
-									</div>
-									<div class="fallback">
-										<input id="edit_predict_collection" name="file" type="file" />
-									</div>
-								</form>
-							</div>
-						</div>
-						<div class="row clearfix">
-							<div class="col-md-3">
-							</div> 
-							<div class="col-md-6 m-t-10 m-b-10">
-								<button type="button" id="edit_predict_collection_send" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> ذخیره‌سازی مجموعه پیش‌بینی </button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 
 		<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
@@ -938,7 +889,8 @@
 						<h4 class="modal-title" id="defaultModalLabel"></h4>
 					</div>
 					<div class="row clearfix">
-						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-md-offset-2">
+						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+						<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
 							<ul class="nav nav-tabs nav-justified tab-col-pink" role="tablist">
 								<li role="presentation" class="active">
 									<a href="#" id="nav7" data-toggle="tab">اطلاعات عمومی کاربر</a>
@@ -947,7 +899,10 @@
 									<a href="#" id="nav8" data-toggle="tab">اطلاعات پیش‌بینی‌های کاربر</a>
 								</li>
 								<li role="presentation">
-									<a href="#" id="nav9" data-toggle="tab">اطلاعات ترتیب‌شمار کاربر</a>
+									<a href="#" id="nav9" data-toggle="tab">اطلاعات امتیازات کاربر</a>
+								</li>
+								<li role="presentation">
+									<a href="#" id="nav10" data-toggle="tab">اطلاعات معرفی‌های کاربر</a>
 								</li>
 							</ul>
 						</div>
@@ -977,7 +932,7 @@
 													<i class="material-icons">next_week</i>
 												</span>
 												<div class="form-line">
-													<input type="text" id="myInfoID" class="form-control key" placeholder="Sample Identifier" required disabled>
+													<input type="text" id="myInfoID" class="form-control key text-center" placeholder="Sample Identifier" required disabled>
 												</div>
 											</div>
 										</div>
@@ -990,7 +945,7 @@
 													<i class="material-icons">next_week</i>
 												</span>
 												<div class="form-line">
-													<input type="text" id="myInfoTime" class="form-control key" placeholder="Sample Identifier" required disabled>
+													<input type="text" id="myInfoTime" class="form-control key text-center" placeholder="Sample Identifier" required disabled>
 												</div>
 											</div>
 										</div>
@@ -1008,7 +963,7 @@
 													<i class="material-icons">next_week</i>
 												</span>
 												<div class="form-line">
-													<input type="text" id="myInfoUsername" class="form-control key" placeholder="Sample Username" required disabled>
+													<input type="text" id="myInfoUsername" class="form-control key text-center" placeholder="Sample Username" required disabled>
 												</div>
 											</div>
 										</div>
@@ -1021,7 +976,7 @@
 													<i class="material-icons">next_week</i>
 												</span>
 												<div class="form-line">
-													<input type="text" id="myInfoEmail" class="form-control key" placeholder="Sample Email" required disabled>
+													<input type="text" id="myInfoEmail" class="form-control key text-center" placeholder="Sample Email" required disabled>
 												</div>
 											</div>
 										</div>
@@ -1039,7 +994,7 @@
 													<i class="material-icons">next_week</i>
 												</span>
 												<div class="form-line">
-													<input type="text" id="myInfoFullName" class="form-control key" placeholder="Sample Company" required disabled>
+													<input type="text" id="myInfoFullName" class="form-control key text-center" placeholder="Sample Company" required disabled>
 												</div>
 											</div>
 										</div>
@@ -1052,7 +1007,7 @@
 													<i class="material-icons">next_week</i>
 												</span>
 												<div class="form-line">
-													<input type="text" id="myInfoPhoneNumber" class="form-control key" placeholder="Sample IP" required disabled>
+													<input type="text" id="myInfoPhoneNumber" class="form-control key text-center" placeholder="Sample IP" required disabled>
 												</div>
 											</div>
 										</div>
@@ -1074,15 +1029,15 @@
 								</div>
 								<div class="body">
 									<div class="row clearfix">
-										<div class="col-md-1">
+										<div class="col-md-2">
 										</div>
-										<div class="col-md-3 col-md-offset-1">
+										<div class="col-md-3">
 											<p>
 												<b style="font-size:12px;">تعداد پیش‌بینی‌ها</b>
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoChances" class="form-control text-center" value="100" data-rule="quantity" required>
+													<input type="text" id="UserAccountInfoChances" class="form-control text-center" value="100" data-rule="quantity" required disabled>
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1090,13 +1045,14 @@
 												</span>
 											</div>
 										</div>
-										<div class="col-md-3 col-md-offset-1">
+										<div class="col-md-2"></div>
+										<div class="col-md-3">
 											<p>
 												<b style="font-size:12px;">تعداد برد‌ها</b>
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoTotalWins" class="form-control text-center" value="100" data-rule="quantity" required>
+													<input type="text" id="UserAccountInfoTotalWins" class="form-control text-center" value="100" data-rule="quantity" required disabled>
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1106,15 +1062,15 @@
 										</div>
 									</div>
 									<div class="row clearfix">
-										<div class="col-md-1">
+										<div class="col-md-2">
 										</div>
-										<div class="col-md-3 col-md-offset-1">
+										<div class="col-md-3">
 											<p>
 												<b style="font-size:12px;">مجموع امتیازات</b>
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoTotalPoints" class="form-control text-center" value="100" data-rule="quantity" required>
+													<input type="text" id="UserAccountInfoTotalPoints" class="form-control text-center" value="100" data-rule="quantity" required disabled>
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1122,13 +1078,45 @@
 												</span>
 											</div>
 										</div>
-										<div class="col-md-3 col-md-offset-1">
+										<div class="col-md-2"></div>
+										<div class="col-md-3">
 											<p>
 												<b style="font-size:12px;">مجموع تخمین‌ها</b>
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoEstimates" class="form-control text-center" value="100" data-rule="quantity" required>
+													<input type="text" id="UserAccountInfoEstimates" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">آخرین زمان سطح امتیازی</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoLevelTime" class="form-control key text-center" placeholder="Sample IP" required disabled>
+												</div>
+											</div>	
+										</div>
+										<div class="col-md-3">
+											<p>
+												<b style="font-size:12px;">سطح امتیازی کاربر</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoLevel" class="form-control text-center" value="100" data-rule="quantity" required disabled>
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1149,12 +1137,57 @@
 							<div class="card">
 								<div class="header">
 									<h2>
-										اطلاعات ترتیب‌شمار کاربر
+										اطلاعات امتیازات در لیگ
 									</h2>
 								</div>
 								<div class="body">
-									<div id="sequencer" class="row clearfix">
-
+									<div class="row clearfix">
+										<br>
+										<div class="col-md-1"></div>
+										<div class="col-md-10">
+											<table class="table table-bordered table-striped table-hover" id="UserStatsLeagues" style="vertical-align:middle;">
+												<thead>
+													<tr>
+														<th>شماره لیگ</th>
+														<th>اسم لیگ</th>
+														<th>امتیاز کاربر</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="nav10_tab" class="row clearfix">
+						<br>
+						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+						</div>
+						<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+							<div class="card">
+								<div class="header">
+									<h2>
+										اطلاعات معرفی‌های کاربر
+									</h2>
+								</div>
+								<div class="body">
+									<div class="row clearfix">
+										<br>
+										<div class="col-md-1"></div>
+										<div class="col-md-10">
+											<table class="table table-bordered table-striped table-hover" id="UserStatsReferrals" style="vertical-align:middle;">
+												<thead>
+													<tr>
+														<th>شماره اشخاص معرفی شده</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -1206,6 +1239,10 @@
 	<!-- Bootstrap Material Datetime Picker Plugin Js -->
 	<script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
+	<!-- Jalali Date Plugin Js -->
+	<script src="../../plugins/moment/moment.js"></script>
+	<script src="../../plugins/moment-jalaali/build/moment-jalaali.js"></script>
+
 	<!-- noUISlider Plugin Js -->
 	<script src="../../plugins/nouislider/nouislider.js"></script>
 
@@ -1227,18 +1264,6 @@
 	<!-- Custom Js -->
 	<script src="../../js/admin.js"></script>
 	<script src="../../js/dashboard/predict.js"></script>  
-    <!-- <script src="../../js/pages/charts/morris.js"></script> -->
-
-	<!-- Jquery DataTable Plugin Js -->
-	<script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
-	<script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
 
 	<!-- Demo Js -->
 	<script src="../../js/demo.js"></script>
