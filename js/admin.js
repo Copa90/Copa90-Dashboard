@@ -238,6 +238,8 @@ $(function () {
     $.AdminBSB.input.activate();
     $.AdminBSB.select.activate();
 
+    $('.version_controlling').html('&nbsp;&nbsp; Ver. 1.0.5 &nbsp;&nbsp;')
+
     // setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });
 function Persian_Number(text){
