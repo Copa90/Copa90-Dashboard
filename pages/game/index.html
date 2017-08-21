@@ -1229,6 +1229,7 @@
 
 							<!-- Start of Team Statistics -->
 							<div class="row clearfix" id="nav11_tab" style="overflow-x: hidden;">
+								<h4 class="text-center" id="ranking_team_statistics_team_name"></h4>
 								<div class="row clearfix m-t-10">
 									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
 									</div>
@@ -1713,12 +1714,195 @@
                         </div>
                     </div>
                 </div>
-            </div>			
+            </div>	
 
 			<div class="row clearfix sharedMobile m-r-20" style="position:absolute;bottom:0;background-color: black">
 				<h6 class="version_controlling m-t-0 m-b-0" style="color:white; padding-top:5px; padding-bottom:5px;">&nbsp;&nbsp;Ver. 1.0.2&nbsp;&nbsp;</h6>
 			</div>
 		</div>
+
+		<div class="row clearfix m-l-45 m-b-30" style="position:absolute; bottom:0; left:0;">
+			<button id="learning_section_button" style="padding-right: 0px;padding-left: 0px;padding-top: 0px;padding-bottom: 0px;" type="button" class="font-16 bg-deep-orange btn-circle-lg btn-circle waves-effect waves-circle waves-float">راهنما</button>
+		</div>
+
+		<div class="modal fade" id="learningBox" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title" dir="rtl">راهنما و آموزش بازی</h3>
+					</div>
+					<div class="modal-body">
+						<h4 style="line-height: 250%;" class="text-center">بعد از اینکه ثبت‌نام کردی و با شماره‌ی موبایل خودت وارد شدی، تو صفحه اصلی چند تا دکمه می‌بینی</h4>
+						<br>
+						<div class="row clearfix m-t-20">
+							<div class="col-lg-1 col-md-1 col-sm-1">
+							</div>
+							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-group" id="accordion_10" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-col-blue">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps1" aria-expanded="false" aria-controls="collaps1">شروع پیش‌بینی‌ها</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن.</h5>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															از لیستِ لیگ‌های عمومی‌، لیگ مورد علاقه‌ات رو انتخاب کن، یا گزینه همه لیگ‌ها رو بزن که کل پیش‌بینی‌ها برات باز بشن. شروع رو که بزنی، وارد صفحه‌ی ثبت پیش‌بینی‌ میشی. اونجا سه تا تب می‌بینی: هفتگی، زنده و فصلی.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">هفتگی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															پیش‌بینی‌های هفتگی برای بازیایی هستن که چند روز دیگه تو لیگ‌های مختلف برگزار میشن. مثلا شنبه، هفته‌ی جدید لیگ‌ها برگزار میشه. چند روز قبلش وارد بخش پیش‌بینی‌های هفتگی میشی و اتفاقاتی که حدس می‌زنی رخ بده رو تایید می‌کنی. زمان باقیمونده برای اینکه پیش‌بینی رو تایید یا رد کنی بالای اون نوشته شده. امتیاز پیش‌بینی هم هست. هرچی احتمال وقوع یه اتفاق کمتر باشه، امتیاز بیشتری براش وجود داره. مثلا اگه پیش‌بینی مربوط به گلزنی یه مدافع رو تایید کنی و اون مدافع گل بزنه، امتیاز بالایی می‌گیری. هر پیش‌بینی‌ای که تایید می‌کنی، یکی از شانس‌های ثبت پیش‌بینی‌ات کم میشه. اما اگه پیش‌بینی رو رد کنی شانسی کم نمیشه.  دونه‌دونه پیش‌بینی‌ها رو تایید یا رد کن تا پیغامِ “پیش‌بینی‌ جدیدی برای این لیگ موجود نمی‌باشد” رو ببینی، که یعنی همه پیش‌بینی‌های مربوط به اون لیگ رو خوندی. این وسط اگه شانس‌های پیش‌بینی‌ات تموم شد، می‌تونی خرید بسته رو بزنی و بسته بگیری.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">زنده</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															ساعت اوج برگزاری بازیای فوتبال، ساعت اوج استفاده از این بخشه! مثل بعدازظهرای شنبه یکشنبه، یا سه‌شنبه‌‌ چهارشنبه‌ شبایی که لیگ قهرمانان برگزار میشه. الان که وارد تب زنده بشی، احتمالا پیش‌بینی‌ای وجود نداره. این بخش برای زمانیه که بازیای فوتبال دارن برگزار میشن و تو باید لحظه‌به‌لحظه پیش‌بینی‌های زنده رو دنبال کنی. با توجه به اتفاقاتی که میفته، پیش‌بینی جدید اضافه میشه. ویژگی پیش‌بینی‌های زنده اینه که فرصت شما برای تاییدشون خیلی کمه. شاید نیم ساعت، شاید ۲۰ دقیقه یا حتی فقط ۵ دقیقه! مثلا اتلتیکومادرید نیمه اول دو گل عقب میفته، بین دو نیمه یه پیش‌بینی اضافه میشه که “اتلتیکومادرید از این بازی امتیاز می‌گیره” و تو با توجه به احتمال وقوع این اتفاق و امتیازی که براش در نظر گرفته شده، ۱۵ دقیقه وقت داری اونو تایید یا رد کنی. یه دکمه هم برای فعال کردن رفرش خودکار صفحه وجود داره که اگه روی حالت فعال باشه، هر پیش‌بینی جدیدی که اضافه بشه خودبه‌خود روی صفحه به نمایش درمیاد. خلاصه اینکه بازیای فوتبال که شروع شد، پیش‌بینی‌های زنده کوپا۹۰ رو فراموش نکن!
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">فصلی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															پیش‌بینی‌هایی که اینجا ثبت می‌کنید به این زودیا نتیجه‌اش معلوم نمیشه، اما امتیاز زیادی داره. چیزایی مثه اینکه بایرن‌مونیخ قهرمان لیگ قهرمانان اروپا میشه؟ یا ایگواین می‌تونه ۲۰ تا گل بزنه تو سری آ بزنه؟ فرصت برای تایید یا رد این پیش‌بینی‌ها زیاد نیست و فقط دو سه هفته ابتدایی لیگ‌ها رو زمان دارید. اما آخر فصل، اگه درست پیش‌بینی کرده باشید، امتیاز خیلی خیلی خیلی زیادی می‌گیرید!
+													</p>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-light-blue">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps2" aria-expanded="false" aria-controls="collaps2">لیگ شخصی</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">لیگ بساز، دوستانت رو دعوت کن و امتیازت را با اونا مقایسه کن.</h5>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															این بخش برای اینه که بتونی هر هفته امتیازت رو با دوستانت تو یه جدول مقایسه کنی. اگه فوتبال‌فانتزی‌باز هستی قطعا می‌دونی لیگ شخصی چه جوریاس.۴ تا تب داریم:
+													</p>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															از دومی شروع کنیم! تب جدید. اینجا می‌تونی یه لیگ شخصی جدید بسازی. اول یه اسم برای لیگت انتخاب می‌کنی، ظرفیت نفراتی که می‌تونن عضوش بشن رو مشخص می‌کنی و دکمه‌ی ایجاد رو می‌زنی. داخل باکسِ کد عضویت، یه کد به نمایش درمیاد. دکمه کپی رو می‌زنی و کد رو برای هرکسی که می‌خوای تو لیگت باشه ارسال می‌کنی.
+													</p>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															حالا میریم تب چهارم، عضویت! فرض کن دوستت یه لیگ ساخته و کد عضویت رو برات فرستاده. تب عضویت رو که باز کنی، پایینش نوشته کد لیگ شخصی، کدی که دوستت فرستاده رو اونجا وارد می‌کنی و عضویت رو می‌زنی. از این لحظه عضو یک لیگ شخصی شدی. اگه خواستی از لیگی که عضوش شدی خارج بشی، لیست بالاتر تو این تب، لیگ‌های شخصی رو باز می‌کنی، لیگ رو انتخاب می‌کنی و خروج رو می‌زنی.
+													</p>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															تب اول، رده‌‌بندی هست که وقتی لیگ‌ شخصی مدنظرت رو از لیست انتخاب کنی، جدول رده‌بندی و امتیازات اون لیگ باز میشه. چه اونایی که خودت ساختی، و چه اونایی که دوستانت ساختن و تو از طریق کد عضوش شدی.
+													</p>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															می‌مونه تب سوم که تغییرات باشه. از لیست لیگ‌های شخصی، لیگی که خودت ساختی رو انتخاب می‌کنی و اگه خواستی اسم لیگ یا ظرفیتش رو تغییر میدی. تغییرات با دکمه ثبت، ذخیره میشن. اینجا می‌تونی لیگ شخصی‌ای که ساختی رو حذف کنی.
+													</p>					
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-light-green">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps3" aria-expanded="false" aria-controls="collaps3">اطلاعات کاربری</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">آمار و ارقام پیش‌بینی‌هایی که ثبت کردی، دستاوردها و اطلاعات ثبت‌نامت اینجاست.</h5>
+													<br>
+													<h5 dir="rtl" class="font-bold">داده‌ها</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															جزئیات پیش‌بینی‌هایی که ثبت کردی تو این بخشه. امتیاز، تعداد پیش‌بینی‌هایی که ثبت کردی و تعداد پیش‌بینی‌های درستت. این آمار رو برای هفته و ماه هم می‌تونی ببینی.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">اطلاعات</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															مشخصات ثبت‌نام تو، مثل نام کاربری، ایمیل و شماره تماس اینجا مشخصه. یه کد معرفی مختص تو هم هست که اگه دوستانت با اون کد ثبت‌نام کنن، ۵ شانس پیش‌بینی هدیه می‌گیری!
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">دستاوردها</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															پیشرفت تو در کوپا۹۰ اینجا مشخص میشه. با کسب امتیازات بیشتر، دستاوردهای جدیدی برات باز میشن.
+													</p>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-lime">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps4" aria-expanded="false" aria-controls="collaps4">رده‌بندی</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">رتبه‌‌ات تو جدول امتیازات مجموع و جداول مربوط به لیگ‌ها و تیم‌های مختلف رو اینجا ببین.</h5>
+													<br>
+													<h5 dir="rtl" class="font-bold">رده‌بندی کلی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															توی این جدول کاربرها بر اساس مجموع امتیازاتشون توی لیگ‌های مختلف و هفته‌های مختلف، رده‌بندی میشن.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">رده‌بندی لیگ</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															رتبه‌ی تو بر اساس امتیازاتی که از پیش‌بینی‌های هر لیگ بدست آوردی، به صورت مجزا نشون داده میشه.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">رده‌بندی تیمی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															اینجا هم رده‌بندی بر اساس تیم‌ مورد علاقه‌ی شماست!
+													</p>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-yellow">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps5" aria-expanded="false" aria-controls="collaps5">جوایز</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">رتبه‌‌ات در جدول امتیازاتِ مجموع و جداول مربوط به لیگ‌ها و تیم‌های مختلف رو اینجا ببین.</h5>
+													<br>
+													<h5 dir="rtl" class="font-bold">جوایز</h5>
+													<p dir="rtl">
+															کوپا۹۰ جوایز هفتگی و ماهانه و فصلی زیادی داره که جزئیاتش توی این بخش اومده.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">برندگان</h5>
+													<p dir="rtl">
+															کاربرایی که جوایز کوپا۹۰ رو می‌برن، توی این تب اعلام میشن.
+													</p>
+												</div>
+                                            </div>
+										</div>
+                                        <div class="panel panel-col-amber">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps6" aria-expanded="false" aria-controls="collaps6">خرید بسته</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">بسته بخر، شانس‌های پیش‌بینی‌ات رو افزایش بده تا امتیاز بیشتری بگیری.</h5>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															برای افزایش شانس‌های ثبت‌ پیش‌بینی، بسته پیش‌بینی مورد نظرت رو انتخاب کن. سه بسته‌ی طلایی، نقره‌ای و برنزی به صورت ثابت وجود داره، و بسته‌های پیشنهادی ما برای مدت زمان کوتاه.
+													</p>
+												</div>
+                                            </div>
+                                        </div>
+									</div>
+                                </div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">بستن</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
     </section>
 

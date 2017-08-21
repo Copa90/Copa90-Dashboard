@@ -315,6 +315,12 @@ $(document).ready(function () {
 			else
 				$(str).hide()
 		}
+		if (source === 'telegram' || platform.name.includes('Mobile') || detectmob()) {
+			if (pageName === 'page_aaa' || pageName === 'page_main_menu')
+				$('#learning_section_button').fadeIn()
+			else 
+				$('#learning_section_button').hide()
+		}
 		if (pageName === 'page_aaa') {
 			$('#sign-in').fadeIn()
 			$('#password').hide()
@@ -1909,6 +1915,12 @@ $(document).ready(function () {
 		fixUITable()
 	}
 	function fill_table_teamStatistics(usersArray) {
+		for (var i = 0; i < teamsArray.length; i++)
+		if (teamsArray[i].id === favTeam) {
+			var n = teamsArray[i].name
+			$('#ranking_team_statistics_team_name').html(' جدول رنده‌بندی تیم ' + n)
+			break
+		}
 		$('#ranking_team_statistics_table tbody').empty()
 		var rowNo = 0
 		for (var i = 0; i < usersArray.length; i++) {
@@ -2410,4 +2422,10 @@ $(document).ready(function () {
 		})		
 	}
 	
+	$(document).on("click", "#learning_section_button", function (e) {
+		e.preventDefault()
+		$('#learningBox .modal-content').removeAttr('class').addClass('modal-content')
+		$('#learningBox').modal('show')
+	})
+
 })
