@@ -94,8 +94,32 @@
 	<!-- #END# Page Loader -->
 
     <section class="">
-        <div class="content container-fluid">
+        <div class="content container-fluid" style="overflow-x:hidden;">
 			
+			<!-- Start of Demo  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_demo">
+				<div class="row clearfix" id="demo_title">
+					<h1 class="text-center" style="color:white;">به کوپا ۹۰</h1>
+					<br>
+					<h1 class="text-center" style="color:white;">خوش آمدید</h1>
+				</div>
+				<div class="row clearfix text-center" id="demo_window_image" style="overflow-x:hidden;">
+					<img class="windowDemoImage" src="../../images/demo_ipad.png" style="width: 30%; max-height: 100%;" alt="demo">
+					<img class="mobileDemoImage" id="demo_mobile_frame" src="../../images/mobile.png" style="width: 80%; max-height:60%; overflow-x:hidden; z-index:1;" alt="demo">
+					<div id="demo_guide_image" style="position:absolute; top:1px; left:1px; z-index:10; overflow-y:scroll;">
+						<img style="overflow-y:scroll; width:100%; overflow-y:scroll;" src="../../images/guide.png"></img>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="col-lg-5 col-md-5 col-sm-4 col-xs-2">
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 m-t-30 m-b-50">
+						<button type="button" id="demo_start_game_button" class="btn bg-green btn-block btn-md waves-effect"> بزن بریم بازی رو شروع کنیم </button>
+					</div>
+				</div>
+			</div>
+			<!-- End of Demo  -->
+
 			<!-- Start of AAA  -->
 			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_aaa">
 				<div class="row clearfix sharedTitle sharedMobile">

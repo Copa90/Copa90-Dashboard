@@ -278,7 +278,7 @@ $(document).ready(function () {
 		getAllTeams(function(err, teamsResult) {
 			if (err)
 				return console.error(err)
-			change_page_scene('page_aaa')
+			change_page_scene('page_demo')
 			doneProgressBar()
 			doneLoading()
 		})
@@ -307,7 +307,7 @@ $(document).ready(function () {
 	// 		  	Page Controller					//
 	// ------------------------------ //
 	function change_page_scene(pageName) {
-		var pages = ['page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package']
+		var pages = ['page_demo', 'page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package']
 		for (var i = 0; i < pages.length; i++) {
 			var str = '#' + pages[i]
 			if (pages[i] === pageName)
@@ -316,7 +316,7 @@ $(document).ready(function () {
 				$(str).hide()
 		}
 		if (source === 'telegram' || platform.name.includes('Mobile') || detectmob()) {
-			if (pageName === 'page_aaa' || pageName === 'page_main_menu')
+			if (pageName === 'page_aaa' || pageName === 'page_main_menu' || pageName === 'page_demo')
 				$('#learning_section_button').fadeIn()
 			else 
 				$('#learning_section_button').hide()
@@ -326,6 +326,38 @@ $(document).ready(function () {
 			$('#password').hide()
 			$('#sign-up').hide()
 			$('#phone').hide()
+		}
+		else if (pageName === 'page_demo') {
+			$('#demo_window_image').hide()
+			$('#demo_start_game_button').hide()
+			$('#demo_title').fadeIn()
+			setTimeout(function () {
+				$('#demo_title').fadeOut(); 
+				setTimeout(function () {
+					if (source === 'telegram' || platform.name.includes('Mobile') || detectmob()) {
+						$('.windowDemoImage').hide()
+						$('#demo_window_image').fadeIn()
+						setTimeout(function () { 
+							$('.mobileDemoImage').show()
+							var w = (Number($('#demo_mobile_frame').width()) * (0.83))
+							var h = (Number($('#demo_mobile_frame').height()) * (0.64))
+							$('#demo_guide_image').css({'width': (w.toString() + 'px'), 'height': (h.toString() + 'px')})
+							var position = $('#demo_mobile_frame').position()
+							var l = (($(window).width() - w) / 2) + 2
+							console.log(position.top)
+							var t = ($('#demo_mobile_frame').height() * 0.12) + position.top + ($('#demo_mobile_frame').height() * 0.066) + 3
+							$('#demo_guide_image').css({'top': (t.toString() + 'px'),'left': (l.toString() + 'px')})
+						}, 350);
+					}
+					else {
+						$('.windowDemoImage').show()
+						$('.mobileDemoImage').hide()
+						$('#demo_guide_image').hide()
+					}
+					$('#demo_window_image').fadeIn();
+					$('#demo_start_game_button').fadeIn(); 
+				}, 400);
+			}, 1200);		
 		}
 		else if (pageName === 'page_challenge') {
 			tabHandler({ target: { id: 'nav5' } })
@@ -519,6 +551,10 @@ $(document).ready(function () {
 	$(document).on("click", ".packagePurchase", function (e) {
 		e.preventDefault()
 		change_page_scene('page_package')
+	})
+	$(document).on("click", "#demo_start_game_button", function (e) {
+		e.preventDefault()
+		change_page_scene('page_aaa')
 	})
 	$(document).on("click", ".returnMain", function (e) {
 		e.preventDefault()
