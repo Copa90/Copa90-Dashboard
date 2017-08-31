@@ -191,21 +191,24 @@ var MID = 'f988546a-817c-11e7-803b-005056a205be'
 $(document).ready(function () {
 
 	$(document).ajaxError(function myErrorHandler(event, x, ajaxOptions, thrownError) {
-		if (x.status == 401) {
+		if (timerID)
+			clearInterval(timerID)	
+		if (x.status == 401 || x.status == 404) {
 			localStorage.clear()
 			empty_all_fields()
 			empty_all_tables()
 			change_page_scene('page_aaa')
 			authenticationRequiredOperation()
-			doneLoading()
-			doneProgressBar()
 		}
+		doneLoading()
+		doneProgressBar()
 	})
 
 	startLoading()
 
 	var timerID
 	var updateEnable
+	var liveEnable
 
 	var phoneNumber
 	var userClient
@@ -226,9 +229,13 @@ $(document).ready(function () {
 	var packagesArray = []
 
 	var predictsArray = []
+	var mocksArray = []
 	var weeklyPredict = []
 	var livePredict = []
 	var seasonPredict = []
+
+	var exactsArray = []
+	var exactChoice = {}
 
 	var userTeamRanking = []
 	var allUsers = []
@@ -307,7 +314,7 @@ $(document).ready(function () {
 	// 		  	Page Controller					//
 	// ------------------------------ //
 	function change_page_scene(pageName) {
-		var pages = ['page_demo', 'page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package']
+		var pages = ['page_demo', 'page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_award']
 		for (var i = 0; i < pages.length; i++) {
 			var str = '#' + pages[i]
 			if (pages[i] === pageName)
@@ -315,8 +322,10 @@ $(document).ready(function () {
 			else
 				$(str).hide()
 		}
+		$('.version_controlling').show()
 		if (source === 'telegram' || platform.name.includes('Mobile') || detectmob()) {
-			if (pageName === 'page_aaa' || pageName === 'page_main_menu' || pageName === 'page_demo')
+			$('#learning_section_parent').removeClass('m-l-45 m-b-30').addClass('m-l-20 m-b-15')
+			if (pageName === 'page_aaa' || pageName === 'page_main_menu')
 				$('#learning_section_button').fadeIn()
 			else 
 				$('#learning_section_button').hide()
@@ -335,10 +344,12 @@ $(document).ready(function () {
 				$('#demo_title').fadeOut(); 
 				setTimeout(function () {
 					if (source === 'telegram' || platform.name.includes('Mobile') || detectmob()) {
+						$('.version_controlling').hide()
 						$('.windowDemoImage').hide()
 						$('#demo_window_image').fadeIn()
 						setTimeout(function () { 
 							$('.mobileDemoImage').show()
+							$('#demo_mobile_frame').css({'height': (Number($('#demo_mobile_frame').width()) * (2.07)).toString() + 'px'})
 							var w = (Number($('#demo_mobile_frame').width()) * (0.83))
 							var h = (Number($('#demo_mobile_frame').height()) * (0.64))
 							$('#demo_guide_image').css({'width': (w.toString() + 'px'), 'height': (h.toString() + 'px')})
@@ -375,10 +386,62 @@ $(document).ready(function () {
 			tabHandler({ target: { id: 'nav9' } })
 			$('.nav-tabs a[id="nav9"]').tab('show')
 		}
+		else if (pageName === 'page_award') {
+			tabHandler({ target: { id: 'nav19' } })
+			$('.nav-tabs a[id="nav19"]').tab('show')
+		}
 	}
 	// ------------------------------ //
 	// 			  	Selectors							//
 	// ------------------------------ //
+	function fill_exact_selector(exactsArray) {
+		$('#main_exact_selector').find('option').remove()
+		for (var i = 0; i < exactsArray.length; i++) {
+			var itemToPush = {
+				id: exactsArray[i].id,
+				name: exactsArray[i].name
+			}
+			$('#main_exact_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+	}
+	function fill_exact_answer_selector(answersArray) {
+		$('#main_exact_first_answer_selector').find('option').remove()
+		$('#main_exact_second_answer_selector').find('option').remove()
+		$('#main_exact_third_answer_selector').find('option').remove()
+		for (var i = 0; i < answersArray.length; i++) {
+			var itemToPush = {
+				id: i.toString(),
+				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.first.toString()) + ' امتیاز'
+			}
+			$('#main_exact_first_answer_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+		for (var i = 0; i < answersArray.length; i++) {
+			var itemToPush = {
+				id: i.toString(),
+				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.second.toString()) + ' امتیاز'
+			}
+			$('#main_exact_second_answer_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+		for (var i = 0; i < answersArray.length; i++) {
+			var itemToPush = {
+				id: i.toString(),
+				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.third.toString()) + ' امتیاز'
+			}
+			$('#main_exact_third_answer_selector').append($('<option>', {
+				value: itemToPush.id,
+				text: itemToPush.name
+			})).selectpicker('refresh')
+		}
+	}
 	function fill_champion_selector(championsArray) {
 		$('#edit_personal_league_leagueId').find('option').remove()
 		$('#join_personal_league_champion_selector').find('option').remove()
@@ -568,6 +631,20 @@ $(document).ready(function () {
 			empty_all_fields()
 		})
 	})
+	function redirect_total_point() {
+		change_page_scene('page_profile')
+	}
+	function redirect_total_chances() {
+		change_page_scene('page_package')
+	}
+	function redirect_profile_image() {
+		change_page_scene('page_profile')
+		tabHandler({ target: { id: 'nav14' } })
+		$('.nav-tabs a[id="nav14"]').tab('show')
+	}
+	$(".card_total_points").parent().parent().parent().click(redirect_total_point)
+	$(".card_rem_predicts").parent().parent().parent().click(redirect_total_chances)
+	$("#main_menu_profile_image").click(redirect_profile_image)
 	// ------------------------------ //
 	// 							AAA								//
 	// ------------------------------ //
@@ -652,15 +729,21 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#aaa_signup_button", function (e) {
 		e.preventDefault()
+		var re = '^[a-z0-9_]{3,15}$'
 		if (!$("#aaa_signup_fullname").val() || !$("#aaa_signup_username").val() ||
 				!$("#aaa_signup_email").val() || !$("#aaa_signup_password").val() ||
 				!phoneNumber || !$("#aaa_signup_select_team").val()
 		) {
 			return warningOperation()
 		}
+		var patt = new RegExp(re)
+		var uname = $("#aaa_signup_username").val().toLowerCase()
+		if (!patt.test(uname)) {
+			return failedOperationByString('خطا! نام کاربری باید حتما به انگلیسی وارد شود')
+		}
 		var data = {
 			fullname: $("#aaa_signup_fullname").val(),
-			username: $("#aaa_signup_username").val(),
+			username: uname,
 			email: $("#aaa_signup_email").val(),
 			password: $("#aaa_signup_password").val(),
 			phoneNumber: phoneNumber,
@@ -846,8 +929,12 @@ $(document).ready(function () {
 		e.preventDefault()
 		change_page_scene('page_ranking')
 	})
+	$(document).on("click", "#main_menu_awards_button", function (e) {
+		e.preventDefault()
+		change_page_scene('page_award')
+	})
 	// ------------------------------ //
-	// 				  Main Preidct					//
+	// 				  Main predict					//
 	// ------------------------------ //
 	$(document).on("click", "#main_predict_accept_button", function (e) {
 		e.preventDefault()
@@ -893,6 +980,7 @@ $(document).ready(function () {
 						$("#main_predict_progress_fill").removeClass("bg-green bg-yellow bg-deep-orange").addClass("bg-orange")
 					else 
 						$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-green").addClass("bg-deep-orange")
+					clearPredict()
 					displayPredict()
 				}
 				else {
@@ -928,6 +1016,7 @@ $(document).ready(function () {
 				seasonIndex++
 				currentPredict = seasonPredict[seasonIndex]
 			}
+			clearPredict()
 			displayPredict()
 		}
 		else {
@@ -951,6 +1040,101 @@ $(document).ready(function () {
 				empty_all_fields()
 			}
 		})
+	})
+	$(document).on("click", "#main_exact_accept_button", function (e) {
+		e.preventDefault()
+		var verb, choiceURL
+		if (!currentExact || !userId || (!$('#main_exact_first_answer_selector').find('option:selected').text() && !$('#main_exact_second_answer_selector').find('option:selected').text() && !$('#main_exact_third_answer_selector').find('option:selected').text())) {
+			return warningOperation()
+		}
+		var ans1, ans2, ans3
+		for (var i = 0; i < currentExact.selectors.length; i++) {
+			if (i.toString() === $('#main_exact_first_answer_selector').find('option:selected').val())
+				ans1 = currentExact.selectors[i].choice
+			if (i.toString() === $('#main_exact_second_answer_selector').find('option:selected').val())
+				ans2 = currentExact.selectors[i].choice
+			if (i.toString() === $('#main_exact_third_answer_selector').find('option:selected').val())
+				ans3 = currentExact.selectors[i].choice
+		}
+
+		var byEdit = 0
+		if (!$('#main_exact_first_answer_selector').prop('disabled') && $('#main_exact_first_answer_selector').val())
+			byEdit++
+		if (!$('#main_exact_second_answer_selector').prop('disabled') && $('#main_exact_second_answer_selector').val())
+			byEdit++
+		if ($('#main_exact_third_answer_selector').prop('disabled') && $('#main_exact_third_answer_selector').val())
+			byEdit++
+
+		acceptCount += byEdit
+
+		var data = {
+			clientId: userId,
+			exactId: currentExact.id,
+			firstOption: {
+				choice: ans1
+			},
+			secondOption: {
+				choice: ans2
+			},
+			thirdOption: {
+				choice: ans3
+			},
+			time: Math.floor((new Date).getTime())
+		}
+		if (!exactChoice) {
+			choiceURL = wrapAccessToken(coreEngine_url + 'choices', coreAccessToken);
+			verb = 'POST'
+		}
+		else {
+			data.id = exactChoice.id
+			choiceURL = wrapAccessToken(coreEngine_url + 'choices/' + exactChoice.id, coreAccessToken);
+			verb = 'PUT'
+		}
+		console.log(JSON.stringify(data))
+		startProgressBar()
+		$.ajax({
+			url: choiceURL,
+			data: JSON.stringify(data),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: verb,
+			success: function (choiceResult) {
+				console.log(byEdit)
+				clearExact()
+				showExact()
+				var total = userClient.accountInfoModel.chances
+				var fill = ((total - acceptCount) / total) * 100
+				var white = 100 - fill
+				$('#main_predict_progress_white').css('width', white.toString() + '%')
+				$('#main_predict_progress_fill').css('width', fill.toString() + '%')
+				if (fill >= 75)
+					$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-deep-orange").addClass("bg-green")
+				else if (fill >= 50)
+					$("#main_predict_progress_fill").removeClass("bg-orange bg-green bg-deep-orange").addClass("bg-yellow")
+				else if (fill >= 25)
+					$("#main_predict_progress_fill").removeClass("bg-green bg-yellow bg-deep-orange").addClass("bg-orange")
+				else 
+					$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-green").addClass("bg-deep-orange")
+				doneProgressBar()
+				successfulOperation()
+			},
+			error: function (xhr, status, error) {
+				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
+				failedOperation()
+				console.log(xhr.responseText)
+			}
+		})
+	})
+	$(document).on("click", "#main_predict_mocks_anchor", function (e) {
+		e.preventDefault()
+		empty_all_tables()
+		fill_table_mocks(mocksArray)
+		$('#mockLiveModal .modal-content').removeAttr('class').addClass('modal-content')
+		$('#mockLiveModal').modal('show')		
 	})
 	// ------------------------------ //
 	// 			  Personal League					//
@@ -1426,28 +1610,32 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 						Play Room						//
 	// ------------------------------ //
-	$(document).on("click", "#play_room_league_start_button", function (e) {
-		e.preventDefault()
-		var leagueId = $("#play_room_league_leagueId").val()
-		if (!leagueId) {
-			return warningOperation()
-		}
-		currentLeague = leagueId
+	function getDataAndFill() {
 		startProgressBar()
-		getNextObjectArray(function(err, result) {
+		getNextObjectArray(function(err, result, exacts) {
 			doneProgressBar()
 			if (err)
 				return failedOperation()
-			if (result.length == 0) {
-				return predictOverOperation()
+			$('#main_predict_league_name').html('‌ پیش‌بینی‌های ' + $("#play_room_league_leagueId option:selected").text())
+			if (!updateEnable) {
+				$('#main_predict_progress_white').css('width', '0%')
+				$('#main_predict_progress_fill').css('width', '100%')	
+			}
+			if (result.length == 0 && exacts.length == 0) {
+				$("#nav15").attr({"data-toggle":''})
+				$('#nav15').parent().addClass('disabled')
+				$("#nav17").attr({"data-toggle":''})
+				$('#nav17').parent().addClass('disabled')
+				$("#nav18").attr({"data-toggle":''})
+				$('#nav18').parent().addClass('disabled')
+				weekEnable = false
+				liveEnable = true
+				seasonEnable = false
+				change_page_scene('page_main_prediction')
+				$('.nav-tabs a[id="nav16"]').tab('show')
+				tabHandler({ target: { id: 'nav16' } })
 			}
 			else {
-				$('#main_predict_league_name').html('‌ پیش‌بینی‌های ' + $("#play_room_league_leagueId option:selected").text())
-				$('#main_predict_remaining').hide()
-				$('#main_predict_point').hide()
-				$('#main_predict_explanation').hide()
-				$('#main_predict_progress_white').css('width', '0%')
-				$('#main_predict_progress_fill').css('width', '100%')
 				weeklyPredict = []
 				seasonPredict = []
 				livePredict = []
@@ -1459,42 +1647,94 @@ $(document).ready(function () {
 					else if (result[k].tag === 'Season')
 						seasonPredict.push(result[k])
 				}
+				if (weeklyPredict.length == 0) {
+					$("#nav15").attr({"data-toggle":''})
+					$('#nav15').parent().addClass('disabled')
+				}
+				else {
+					$("#nav15").attr({"data-toggle":'tab'})
+					$('#nav15').parent().removeClass('disabled')
+				}
+				if (seasonPredict.length == 0) {
+					$("#nav17").attr({"data-toggle":''})
+					$('#nav17').parent().addClass('disabled')
+				}
+				else {
+					$("#nav17").attr({"data-toggle":'tab'})
+					$('#nav17').parent().removeClass('disabled')
+				}
+				if (exacts.length == 0) {
+					$("#nav18").attr({"data-toggle":''})
+					$('#nav18').parent().addClass('disabled')
+				}
+				else {
+					$("#nav18").attr({"data-toggle":'tab'})
+					$('#nav18').parent().removeClass('disabled')					
+				}				
 				liveIndex = 0
 				seasonIndex = 0
-				weekIndex = 0
+				weekIndex = 0				
 				change_page_scene('page_main_prediction')
-				if (weeklyPredict.length == 0) {
-					if (livePredict.length != 0) {
-						$('.nav-tabs a[id="nav16"]').tab('show')
-						$('#main_predict_live_section').show()
-						currentPredict = livePredict[0]
+				if (updateEnable) {
+					if (livePredict.length != 0 && liveEnable) {
 						weekEnable = false
 						liveEnable = true
 						seasonEnable = false
+						$('.nav-tabs a[id="nav16"]').tab('show')
+						tabHandler({ target: { id: 'nav16' } })
 					}
-					else if (seasonPredict.length != 0) {
-						$('.nav-tabs a[id="nav17"]').tab('show')
-						$('#main_predict_live_section').hide()
-						currentPredict = seasonPredict[0]
-						weekEnable = false
-						liveEnable = false
-						seasonEnable = true
-					}
+					updateEnable = false
 				}
 				else {
-					$('.nav-tabs a[id="nav15"]').tab('show')
-					$('#main_predict_live_section').hide()
-					currentPredict = weeklyPredict[0]
-					weekEnable = true
-					liveEnable = false
-					seasonEnable = false
+					if (weeklyPredict.length == 0) {
+						if (livePredict.length != 0 || liveEnable) {
+							weekEnable = false
+							liveEnable = true
+							seasonEnable = false
+							$('.nav-tabs a[id="nav16"]').tab('show')
+							tabHandler({ target: { id: 'nav16' } })
+						}
+						else if (seasonPredict.length != 0) {
+							weekEnable = false
+							liveEnable = false
+							seasonEnable = true
+							$('.nav-tabs a[id="nav17"]').tab('show')
+							tabHandler({ target: { id: 'nav17' } })
+						}
+						else if (exacts.length != 0) {
+							liveEnable = false
+							seasonEnable = false
+							weekEnable = false
+							$('.nav-tabs a[id="nav18"]').tab('show')
+							tabHandler({ target: { id: 'nav18' } })
+						}
+					}
+					else {
+						weekEnable = true
+						liveEnable = false
+						seasonEnable = false
+						$('.nav-tabs a[id="nav15"]').tab('show')
+						tabHandler({ target: { id: 'nav15' } })
+					}	
 				}
-				displayPredict()
-				timerID = setInterval(function() {
-					updateLivePredicts()
-				}, 60 * 1000); 
 			}
+			if (timerID)
+				clearInterval(timerID)	
+			timerID = setInterval(function() {
+				updateLivePredicts()
+			}, 60 * 1000); 
 		})
+	}
+	$(document).on("click", "#play_room_league_start_button", function (e) {
+		e.preventDefault()
+		var leagueId = $("#play_room_league_leagueId").val()
+		if (!leagueId) {
+			return warningOperation()
+		}
+		currentLeague = leagueId
+		clearExact()
+		clearPredict()
+		getDataAndFill()
 	})
 	$(document).on("click", "#main_predict_estimates_button", function (e) {
 		e.preventDefault()
@@ -1666,7 +1906,7 @@ $(document).ready(function () {
 	)
 	function updateLivePredicts() {
 		updateEnable = true
-		tabHandler({ target: { id: 'nav16' } })	
+		getDataAndFill()
 	}
 
 	// ------------------------------ //
@@ -1675,121 +1915,63 @@ $(document).ready(function () {
 	function tabHandler(e) {
 		var select = $(e.target).attr('id')
 		if (select === 'nav15') {
-			$('#main_predict_live_section').hide()
-			if (weeklyPredict.length == 0) {
-				$('#main_predict_div_body').fadeOut()
-				$('#main_predict_remaining').show()
-				$('#main_predict_point').show()
-				$('#main_predict_explanation').show()	
-				return predictOverOperation()
-			}
-			if (weekIndex >= weeklyPredict.length) {
-				$('#main_predict_div_body').fadeOut()
-				$('#main_predict_remaining').show()
-				$('#main_predict_point').show()
-				$('#main_predict_explanation').show()	
-				return predictOverOperation()
-			}
-			pageToggle = true
-			$('#main_predict_div_body').show()
-			$('#main_predict_remaining').hide()
-			$('#main_predict_point').hide()
-			$('#main_predict_explanation').hide()
-			currentPredict = weeklyPredict[weekIndex]
+			clearExact()
+			clearPredict()
 			weekEnable = true
 			liveEnable = false
 			seasonEnable = false
+			if (weeklyPredict.length == 0 || weekIndex >= weeklyPredict.length) {
+				return predictOverOperation()
+			}
+			currentPredict = weeklyPredict[weekIndex]
 			displayPredict()
 		}
 		else if (select === 'nav16') {
-			startProgressBar()
-			getNextObjectArray(function(err, result) {
-				$('#main_predict_live_section').show()
-				doneProgressBar()
-				if (err)
-					return failedOperation()
-				if (!liveEnable && updateEnable && result.length == 0) {
-					updateEnable = false
-					return console.log('no new predict for this league')
-				}
-				if (result.length == 0) {
-					updateEnable = false
-					$('#main_predict_div_body').fadeOut()
-					$('#main_predict_remaining').show()
-					$('#main_predict_point').show()
-					$('#main_predict_explanation').show()
-					return predictOverOperation()
-				}
-				livePredict = []
-				for (var k = 0; k < result.length; k++) {
-					if (result[k].tag === 'Live')
-						livePredict.push(result[k])
-				}
-				if (!liveEnable && updateEnable) {
-					updateEnable = false
-					if (livePredict.length == 0) 
-						return console.log('update live predict zero length')
-					else 
-						return console.log('update live predict completed successfuly')
-				}
-				if (livePredict.length == 0) {
-					updateEnable = false
-					$('#main_predict_div_body').fadeOut()
-					$('#main_predict_remaining').show()
-					$('#main_predict_point').show()
-					$('#main_predict_explanation').show()			
-					return predictOverOperation()
-				}
+			clearPredict()
+			clearExact()
+			weekEnable = false
+			liveEnable = true
+			seasonEnable = false
+			$('#main_predict_live_section').show()
+			if (!liveEnable && updateEnable) {
 				updateEnable = false
-				pageToggle = true
-				$('#main_predict_div_body').show()
-				$('#main_predict_remaining').hide()
-				$('#main_predict_point').hide()
-				$('#main_predict_explanation').hide()
-				if (timerID)
-					clearInterval(timerID)
-				timerID = setInterval(function() {
-					updateLivePredicts()
-				}, 60 * 1000); 
-				currentPredict = livePredict[0]
-				weekEnable = false
-				liveEnable = true
-				seasonEnable = false
-				liveIndex = 0
-				displayPredict()
-			})	
+				return;
+			}
+			$('#main_predict_live_section').show()
+			if (livePredict.length == 0 || liveIndex >= livePredict.length) {
+				return predictOverOperation()
+			}
+			currentPredict = livePredict[liveIndex]
+			displayPredict()
 		}
 		else if (select === 'nav17') {
-			$('#main_predict_live_section').hide()
-			if (seasonPredict.length == 0) {
-				$('#main_predict_div_body').fadeOut()
-				$('#main_predict_remaining').show()
-				$('#main_predict_point').show()
-				$('#main_predict_explanation').show()	
-				return predictOverOperation()
-			}
-			if (seasonIndex >= seasonPredict.length) {
-				$('#main_predict_div_body').fadeOut()
-				$('#main_predict_remaining').show()
-				$('#main_predict_point').show()
-				$('#main_predict_explanation').show()	
-				return predictOverOperation()
-			}
-			pageToggle = true
-			$('#main_predict_div_body').show()
-			$('#main_predict_remaining').hide()
-			$('#main_predict_point').hide()
-			$('#main_predict_explanation').hide()
-			currentPredict = seasonPredict[seasonIndex]
+			clearPredict()
+			clearExact()
 			weekEnable = false
 			liveEnable = false
 			seasonEnable = true
+			if (seasonPredict.length == 0 || seasonIndex >= seasonPredict.length) {
+				return predictOverOperation()
+			}
+			currentPredict = seasonPredict[seasonIndex]
 			displayPredict()
 		}
+		else if (select === 'nav18') {
+			clearPredict()
+			clearExact()
+			weekEnable = false
+			liveEnable = false
+			seasonEnable = false
+			if (exactsArray.length == 0) {
+				return predictOverOperation()
+			}
+			showExact()
+			fill_exact_selector(exactsArray)
+		}
 		var no = select.replace("nav", "")
-		for (var i = 1; i < 18; i++) {
+		for (var i = 1; i < 21; i++) {
 			var str = '#nav' + i + '_tab'
-			if (i == 16 || i == 17 || i == 15)
+			if (i == 16 || i == 17 || i == 15 || i == 18)
 				continue
 			if (i == Number(no))
 				$(str).fadeIn()
@@ -1846,6 +2028,19 @@ $(document).ready(function () {
 		fill_edit_challenge(selected, userChallenges)
 	})
 
+	$('#main_exact_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		var selected = $(this).find('option').eq(clickedIndex).val()
+		for (var i = 0; i < exactsArray.length; i++) {
+			if (exactsArray[i].id === selected) {
+				currentExact = exactsArray[i]
+				clearExact()
+				showExact()
+				displayExact(function(result){})
+				break
+			}
+		}
+	})
+
 	function startLoading() {
 		$('.page-loader-wrapper').fadeIn()
 		$('#rainbow-progress-bar1').fadeIn()
@@ -1872,6 +2067,16 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 Table Construction				//
 	// ------------------------------ //
+	function fill_table_mocks(mocksArray) {
+		$('#main_prediction_live_mocks tbody').empty()
+		for (var i = 0; i < mocksArray.length; i++) {
+			$('#main_prediction_live_mocks').append('<tr id="mplm_addr' + (i) + '"></tr>')
+			$('#mplm_addr' + i).html(
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + mocksArray[i].explanation + '</td>'			
+			)
+		}
+		fixUITable()		
+	}
 	function fill_table_estimates(estimatesArray) {
 		$('#play_room_estimates tbody').empty()
 		var width = $('#play_room_estimates tbody').width() - 200
@@ -2026,40 +2231,105 @@ $(document).ready(function () {
 		$('#statistics_personal_league_table tbody').empty()
 		$('#statistics_personal_challenge_table tbody').empty()
 		$('#play_room_estimates tbody').empty()
+		$('#main_prediction_live_mocks tbody').empty()
+	}
+	function clearExact() {
+		$('#main_exact_selector').selectpicker('val', '')
+		$('#main_exact_div_body').hide()
+		$('#main_exact_select_section').hide()
+	}
+	function showExact() {
+		$('#main_exact_select_section').show()
+	}
+	function displayExact(callback) {
+		startProgressBar()
+		var hours = Math.round((Math.floor(currentExact.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
+		var str = ''
+		if (hours < 1)
+			str = Persian_Number(Math.round((Math.floor(currentExact.endingTime - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
+		else if (hours <= 24 && hours >= 1)
+			str = Persian_Number(hours.toString()) + ' ساعت '
+		else 
+			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
+		var filter = {
+			'where': {
+				'and': [
+					{'exactId': currentExact.id},
+					{'clientId': userId}
+				]
+			}
+		}
+		var choiceWithAT = wrapAccessToken(coreEngine_url + 'choices', coreAccessToken)
+		var choiceURL = wrapFilter(choiceWithAT, JSON.stringify(filter))
+		$.ajax({
+			url: choiceURL,
+			type: "GET",
+			success: function (choiceResult) {
+				console.log(choiceResult)
+				$('#main_exact_remaining').html(str)
+				$('#main_exact_topic').html(currentExact.name)
+				$('#main_exact_div_body').show()
+				$('#main_exact_select_section').show()
+				fill_exact_answer_selector(currentExact.selectors)
+				$('#main_exact_first_answer_selector').prop('disabled', false)
+				$('#main_exact_second_answer_selector').prop('disabled', false)
+				$('#main_exact_third_answer_selector').prop('disabled', false)
+				exactChoice = undefined
+				doneProgressBar()
+
+				if (choiceResult.length == 0)
+					return
+
+				exactChoice = choiceResult[0]
+
+				for (var i = 0; i < currentExact.selectors.length; i++) {
+					if (currentExact.selectors[i].choice === exactChoice.firstOption.choice)
+						$('#main_exact_first_answer_selector').selectpicker('val', i.toString())
+					if (currentExact.selectors[i].choice === exactChoice.secondOption.choice)
+						$('#main_exact_second_answer_selector').selectpicker('val', i.toString())
+					if (currentExact.selectors[i].choice === exactChoice.thirdOption.choice)
+						$('#main_exact_third_answer_selector').selectpicker('val', i.toString())
+				}		
+
+				for (var i = 0; i < currentExact.selectors.length; i++) {
+					if (currentExact.selectors[i].choice === exactChoice.firstOption.choice) 
+						$('#main_exact_first_answer_selector').prop('disabled', true)
+					if (currentExact.selectors[i].choice === exactChoice.secondOption.choice)
+						$('#main_exact_second_answer_selector').prop('disabled', true)
+					if (currentExact.selectors[i].choice === exactChoice.thirdOption.choice)
+						$('#main_exact_third_answer_selector').prop('disabled', true)
+				}
+
+				$('#main_exact_first_answer_selector').selectpicker('refresh')
+				$('#main_exact_second_answer_selector').selectpicker('refresh')
+				$('#main_exact_third_answer_selector').selectpicker('refresh')
+
+				callback(1)
+			},
+			error: function (xhr, status, error) {
+				doneProgressBar()
+				console.log(xhr.responseText)
+				callback(0)
+			}
+		})
+	}
+	function clearPredict() {
+		$('#main_predict_div_body').hide()
+		$('#main_predict_live_section').hide()
 	}
 	function displayPredict() {
-		function showContent() {
-			var hours = Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
-			var str = ''
-			if (hours < 1)
-				str = Persian_Number(Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
-			else if (hours <= 24 && hours >= 1)
-				str = Persian_Number(hours.toString()) + ' ساعت '
-			else 
-				str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
-			$('#main_predict_remaining').html(str)
-			$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
-			$('#main_predict_explanation').html(currentPredict.explanation)
-			$('#main_predict_div_body').show()			
-			$('#main_predict_remaining').fadeIn()
-			$('#main_predict_point').fadeIn()
-			$('#main_predict_explanation').fadeIn()
-		}
-		if ((weekEnable && weekIndex <= 1) || (liveEnable && liveIndex <= 1) || (seasonEnable && seasonIndex <= 1) || pageToggle) {
-			$('#main_predict_remaining').hide()
-			$('#main_predict_point').hide()
-			$('#main_predict_explanation').hide()	
-			showContent()
-			pageToggle = false
-		}
-		else {
-			$('#main_predict_remaining').fadeOut()
-			$('#main_predict_point').fadeOut()
-			$('#main_predict_explanation').fadeOut()	
-			setTimeout(function () { 
-				showContent()
-			}, 350);
-		}
+		var hours = Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
+		var str = ''
+		if (hours < 1)
+			str = Persian_Number(Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
+		else if (hours <= 24 && hours >= 1)
+			str = Persian_Number(hours.toString()) + ' ساعت '
+		else 
+			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
+		$('#main_predict_remaining').html(str)
+		$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
+		$('#main_predict_explanation').html(currentPredict.explanation)
+		$('#main_predict_div_body').show()
 	}
 	// ------------------------------ //
 	// 		 	 		Data Fetchers					//
@@ -2304,13 +2574,43 @@ $(document).ready(function () {
 			url: nextObjectURLWithAT,
 			type: "GET",
 			success: function (nextObjectResult) {
-				function compare(a, b){
-					return Number(b.beginningTime) - Number(a.beginningTime)
+				var filter = {
+					'where': {
+						'and': [
+							{'status': "Working"}
+						]
+					}
 				}
-				nextObjectResult.sort(compare)
-				console.log(nextObjectResult)
-				predictsArray = nextObjectResult
-				callback(null, predictsArray)
+				if (currentLeague !== 'every')
+					filter.where.and.push({'leagueId': currentLeague})
+				var exactURLWithAT = wrapAccessToken(coreEngine_url + 'exacts', coreAccessToken)
+				var exactURL = wrapFilter(exactURLWithAT, JSON.stringify(filter))
+				$.ajax({
+					url: exactURL,
+					type: "GET",
+					success: function (exactResult) {
+						function compare(a, b){
+							return Number(b.beginningTime) - Number(a.beginningTime)
+						}
+						nextObjectResult.sort(compare)
+						console.log(nextObjectResult)
+						console.log(exactResult)
+						mocksArray = []
+						predictsArray = []
+						for (var k = 0; k < nextObjectResult.length; k++) {
+							if (nextObjectResult[k].tag === 'Mock')
+								mocksArray.push(nextObjectResult[k])
+							else 
+								predictsArray.push(nextObjectResult[k])
+						}
+						exactsArray = exactResult
+						callback(null, predictsArray, exactsArray)
+					},
+					error: function (xhr, status, error) {
+						callback(error)
+						console.log(xhr.responseText)
+					}
+				})
 			},
 			error: function (xhr, status, error) {
 				callback(error)
@@ -2375,8 +2675,8 @@ $(document).ready(function () {
 																'</div>' +
 															'</div>' +
 															'<div class="row clearfix">' +
-																'<h4 class="text-center">' + Persian_Number(packageInfo.chances.toString()) + ' - پیش‌بینی</h4>' +
-																'<h4 class="text-center">' + Persian_Number(packageInfo.price.toString()) + ' -  تومان</h4>' +
+																'<h4 class="text-center">' + Persian_Number(packageInfo.chances.toString()) + ' پیش‌بینی</h4>' +
+																'<h4 class="text-center">' + Persian_Number((packageInfo.price / 1000).toString()) + ' هزار تومان</h4>' +
 															'</div>' +
 														'</div>' +
 													'</div>' +
