@@ -149,6 +149,12 @@
                         <i class="material-icons">home</i>
                         <span>پنل کنترل پیش‌بینی‌ها</span>
                     </a>
+				</li>
+                <li>
+                    <a href="./exact.html">
+                        <i class="material-icons">home</i>
+                        <span>پنل کنترل پیش‌بینی‌های دقیق</span>
+                    </a>
                 </li>
                 <li disabled>
                     <a href="./transaction.html" style="pointer-events: none;">
@@ -367,6 +373,7 @@
 												<option value="Week">هفتگی</option>
 												<option value="Live">زنده</option>
 												<option value="Season">فصلی</option>
+												<option value="Mock">پوشش زنده</option>
 											</select>
 										</div>
 									</div>
@@ -616,6 +623,7 @@
 												<option value="Week">هفتگی</option>
 												<option value="Live" selected>زنده</option>
 												<option value="Season">فصلی</option>
+												<option value="Mock">پوشش زنده</option>
 											</select>
 										</div>	
 										<div class="col-md-3">
@@ -643,8 +651,8 @@
 												<option value="1200000">۲۰ دقیقه</option>
 												<option value="1500000">۳۰ دقیقه</option>
 												<option value="1800000">۳۵ دقیقه</option>
-												<option value="210000">۴۰ دقیقه</option>
-												<option value="240000">۴۵ دقیقه</option>
+												<option value="2100000">۴۰ دقیقه</option>
+												<option value="2400000">۴۵ دقیقه</option>
 											</select>
 										</div>	
 									</div>
@@ -771,6 +779,7 @@
 												<option value="Week">هفتگی</option>
 												<option value="Live">زنده</option>
 												<option value="Season">فصلی</option>
+												<option value="Mock">پوشش زنده</option>
 											</select>
 										</div>
 										<div class="col-md-3">
@@ -1062,9 +1071,9 @@
 										</div>
 									</div>
 									<div class="row clearfix">
-										<div class="col-md-2">
+										<div class="col-md-1">
 										</div>
-										<div class="col-md-3">
+										<div class="col-md-4">
 											<p>
 												<b style="font-size:12px;">مجموع امتیازات</b>
 											</p>
@@ -1078,7 +1087,6 @@
 												</span>
 											</div>
 										</div>
-										<div class="col-md-2"></div>
 										<div class="col-md-3">
 											<p>
 												<b style="font-size:12px;">مجموع تخمین‌ها</b>
@@ -1086,6 +1094,20 @@
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
 													<input type="text" id="UserAccountInfoEstimates" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<p>
+												<b style="font-size:12px;">مجموع انتخاب‌ها</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoChoices" class="form-control text-center" value="100" data-rule="quantity" required disabled>
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
