@@ -106,13 +106,13 @@ function countryCodeToLeagueId(code) {
 	else if (code == "ELE") 	return '5992c2461098a97b42e3bf61'
 }
 
-var coreEngine_url 	= "http://185.105.186.68:4000/api/"
-var zarinPal_url 		= "http://185.105.186.68:4010/api/"
-var coreURL 				= 'http://copa90.ir/'
-
-// var coreEngine_url 	= "http://127.0.0.1:4000/api/"
-// var zarinPal_url 		= "http://127.0.0.1:4010/api/"
+// var coreEngine_url 	= "http://185.105.186.68:4000/api/"
+// var zarinPal_url 		= "http://185.105.186.68:4010/api/"
 // var coreURL 				= 'http://copa90.ir/'
+
+var coreEngine_url 	= "http://127.0.0.1:4000/api/"
+var zarinPal_url 		= "http://127.0.0.1:4010/api/"
+var coreURL 				= 'http://copa90.ir/'
 
 $(document).ready(function () {
 
@@ -678,6 +678,7 @@ $(document).ready(function () {
 			if (predictsArray[i].tag === 'Live') tagName = 'زنده'
 			else if (predictsArray[i].tag === 'Season') tagName = 'فصلی'
 			else if (predictsArray[i].tag === 'Week') tagName = 'هفتگی'
+			else if (predictsArray[i].tag === 'Mock') {tagName = 'پوشش زنده'; disableText = 'disabled'}
 			var occurrenceName
 			if (predictsArray[i].occurrence == 0) {occurrenceName = 'باز';}
 			else if (predictsArray[i].occurrence == 1) {occurrenceName = 'برد'; disableText = 'disabled'}
@@ -793,9 +794,14 @@ $(document).ready(function () {
 					url: predictURL,
 					type: "DELETE",
 					success: function (predictResult) {
-						successfulOperation()
-						$(e.target).closest('tr').children('td,th').css('background-color','#FCFCC5')
-						doneProgressBar()
+						getAllPredicts(function(err) {
+							doneProgressBar()
+							if (err)
+								return failedOperation()
+							successfulOperation()
+							$(e.target).closest('tr').children('td,th').css('background-color','#FCFCC5')
+							doneProgressBar()	
+						})		
 					}
 				})
 			}
@@ -809,7 +815,7 @@ $(document).ready(function () {
 			else if (estimatesArray[i].status === 'Open') {statusColor = 'bg-light-blue'; statusText = 'باز'}
 			else if (estimatesArray[i].status === 'Lose') {statusColor = 'bg-red'; statusText = 'بازنده'}
 			var checkTime = 'بررسی نشده'
-			if (Number(estimatesArray[i].checkTime) == 0)
+			if (Number(estimatesArray[i].checkTime) != 0)
 				checkTime = fullDateConvertorJalali(estimatesArray[i].checkTime)
 			$('#tab_logic_moreInfo').append('<tr id="tlmi_addr' + (i) + '"></tr>')
 			$('#tlmi_addr' + i).html(
@@ -848,6 +854,7 @@ $(document).ready(function () {
 				$("#UserAccountInfoTotalWins").val(clientResult.accountInfoModel.roundWins)
 				$("#UserAccountInfoTotalPoints").val(clientResult.accountInfoModel.totalPoints)
 				$("#UserAccountInfoEstimates").val(clientResult.accountInfoModel.totalEstimates)
+				$("#UserAccountInfoChoices").val((clientResult.accountInfoModel.totalChoices || 0))
 				$("#UserAccountInfoLevelTime").val(fullDateConvertorJalali(clientResult.trophyModel.time))
 				$("#UserAccountInfoLevel").val(clientResult.trophyModel.level)
 				doneProgressBar()
@@ -1092,6 +1099,11 @@ $(document).ready(function () {
 				data.endingTime = fullTimeConvertor($('#select_new_endingTime').val())
 			}
 		}
+		if (data.tag === 'Mock') {
+			data.weekNumber = 1
+			data.possibility = 1
+			data.point = 1
+		}
 		console.log(JSON.stringify(data))
 		var predictURL = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken);
 		$.ajax({
@@ -1137,6 +1149,13 @@ $(document).ready(function () {
 			possibility: Number($('#select_update_possibility').val()),
 			point: Number($('#select_update_points').val())
 		}
+		if (data.tag === 'Mock') {
+			data.weekNumber = 1
+			data.possibility = 1
+			data.point = 1
+			data.occurrence = 0			
+		}
+
 		var predictURL = wrapAccessToken(coreEngine_url + 'predicts/' + predictId, coreAccessToken);
 		$.ajax({
 			url: predictURL,
