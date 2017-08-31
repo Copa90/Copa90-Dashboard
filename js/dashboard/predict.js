@@ -106,13 +106,13 @@ function countryCodeToLeagueId(code) {
 	else if (code == "ELE") 	return '5992c2461098a97b42e3bf61'
 }
 
-// var coreEngine_url 	= "http://185.105.186.68:4000/api/"
-// var zarinPal_url 		= "http://185.105.186.68:4010/api/"
-// var coreURL 				= 'http://copa90.ir/'
-
-var coreEngine_url 	= "http://127.0.0.1:4000/api/"
-var zarinPal_url 		= "http://127.0.0.1:4010/api/"
+var coreEngine_url 	= "http://185.105.186.68:4000/api/"
+var zarinPal_url 		= "http://185.105.186.68:4010/api/"
 var coreURL 				= 'http://copa90.ir/'
+
+// var coreEngine_url 	= "http://127.0.0.1:4000/api/"
+// var zarinPal_url 		= "http://127.0.0.1:4010/api/"
+// var coreURL 				= 'http://copa90.ir/'
 
 $(document).ready(function () {
 
