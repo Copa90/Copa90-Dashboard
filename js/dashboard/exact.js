@@ -796,6 +796,7 @@ $(document).ready(function () {
 			else if (exactsArray[i].topic === 'Champion') topicName = 'قهرمان'
 			else if (exactsArray[i].topic === 'RunnerUp') topicName = 'نائب قهرمان'
 			else if (exactsArray[i].topic === 'TopAssist') topicName = 'آقای پاس گل'
+			else if (exactsArray[i].topic === 'FirstFiredCoach') topicName = 'اولین مربی اخراجی'
 			var labelName
 			if (exactsArray[i].label === 'Team') labelName = 'تیم'
 			else if (exactsArray[i].label === 'League') labelName = 'لیگ'
