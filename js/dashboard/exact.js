@@ -110,6 +110,7 @@ $(document).ready(function () {
 
 	var exacts = []
 	var leagues = []
+	var coaches = []
 	var teams = []
 	var players = []
 	var choices = []
@@ -232,6 +233,8 @@ $(document).ready(function () {
 			fill_answer_selectors(true, teams)
 		else if (selected === 'League')
 			fill_answer_selectors(true, leagues)
+		else if (selected === 'Coach')
+			fill_answer_selectors(true, coaches)
 	})
 	function fill_section_update(exactId) {
 		$("#select_update_exact").selectpicker('val', exactId)
@@ -246,6 +249,8 @@ $(document).ready(function () {
 					fill_answer_selectors(false, teams)
 				else if (selected === 'League')
 					fill_answer_selectors(false, leagues)	
+				else if (selected === 'Coach')
+					fill_answer_selectors(false, coaches)	
 				$("#select_update_league").selectpicker('val', model.leagueId)
 				$("#select_update_topic").selectpicker('val', model.topic)
 				$("#select_update_answer").selectpicker('val', model.answer)
@@ -408,6 +413,22 @@ $(document).ready(function () {
 		})
 	}
 
+	function getAllCoaches(callback) {
+		var coachURLWithAT = wrapAccessToken(coreEngine_url + 'coaches', coreAccessToken)
+		$.ajax({
+			url: coachURLWithAT,
+			type: "GET",
+			success: function (coachResult) {
+				coaches = coachResult
+				callback(null, coaches)
+			},
+			error: function (xhr, status, error) {
+				callback(error)
+				console.log(xhr.responseText)
+			}
+		})
+	}
+
 	function getAllLeagus(callback) {
 		var leagueURLWithAT = wrapAccessToken(coreEngine_url + 'leagues', coreAccessToken)
 		$.ajax({
@@ -505,29 +526,33 @@ $(document).ready(function () {
 	}
 
 	function getAllInfo(callback) {
-		getAllLeagus(function(err, league) {
+		getAllCoaches(function(err, coach) {
 			if (err)
 				return callback(err)
-			getAllTeams(function(err, team) {
+			getAllLeagus(function(err, league) {
 				if (err)
 					return callback(err)
-				getAllPlayers(function(err, player) {
+				getAllTeams(function(err, team) {
 					if (err)
 						return callback(err)
-					getAllExacts(function(err, exact) {
+					getAllPlayers(function(err, player) {
 						if (err)
 							return callback(err)
-						getAllChoices(function(err, choice) {
+						getAllExacts(function(err, exact) {
 							if (err)
 								return callback(err)
-							fill_graph(league, exact)
-							$("#adminUsername").html(localStorage.getItem('AdminCompanyName'))
-							$("#adminEmail").html(localStorage.getItem('adminEmail'))
-							return callback(null, league, team, player, exact, choice)
-						})
-					})						
+							getAllChoices(function(err, choice) {
+								if (err)
+									return callback(err)
+								fill_graph(league, exact)
+								$("#adminUsername").html(localStorage.getItem('AdminCompanyName'))
+								$("#adminEmail").html(localStorage.getItem('adminEmail'))
+								return callback(null, league, team, player, exact, choice, coach)
+							})
+						})						
+					})
 				})
-			})
+			})				
 		})
 	}
 
@@ -610,22 +635,28 @@ $(document).ready(function () {
 		e.preventDefault()
 		startProgressBar()
 		empty_management_section()
-		getAllLeagus(function(err, result) {
+		getAllCoaches(function(err, result) {
 			if (err) {
 				doneProgressBar()
 				return failedOperation()
 			}
-			getAllTeams(function(err, result) {
+			getAllLeagus(function(err, result) {
 				if (err) {
 					doneProgressBar()
 					return failedOperation()
 				}
-				getAllPlayers(function(err, result) {
-					doneProgressBar()
-					if (err)
+				getAllTeams(function(err, result) {
+					if (err) {
+						doneProgressBar()
 						return failedOperation()
+					}
+					getAllPlayers(function(err, result) {
+						doneProgressBar()
+						if (err)
+							return failedOperation()
+					})
 				})
-			})
+			})				
 		})
 	})
 	$("#empty_management_section").click(function (e) {
@@ -654,22 +685,28 @@ $(document).ready(function () {
 		e.preventDefault()
 		startProgressBar()
 		empty_new_section()
-		getAllLeagus(function(err, result) {
+		getAllCoaches(function(err, result) {
 			if (err) {
 				doneProgressBar()
 				return failedOperation()
 			}
-			getAllTeams(function(err, result) {
+			getAllLeagus(function(err, result) {
 				if (err) {
 					doneProgressBar()
 					return failedOperation()
 				}
-				getAllPlayers(function(err, result) {
-					doneProgressBar()
-					if (err)
+				getAllTeams(function(err, result) {
+					if (err) {
+						doneProgressBar()
 						return failedOperation()
+					}
+					getAllPlayers(function(err, result) {
+						doneProgressBar()
+						if (err)
+							return failedOperation()
+					})
 				})
-			})
+			})				
 		})
 	})
 	$("#empty_new_section").click(function (e) {
@@ -699,28 +736,34 @@ $(document).ready(function () {
 		e.preventDefault()
 		startProgressBar()
 		empty_update_section()
-		getAllLeagus(function(err, result) {
+		getAllCoaches(function(err, result) {
 			if (err) {
 				doneProgressBar()
 				return failedOperation()
 			}
-			getAllTeams(function(err, result) {
+			getAllLeagus(function(err, result) {
 				if (err) {
 					doneProgressBar()
 					return failedOperation()
 				}
-				getAllPlayers(function(err, result) {
+				getAllTeams(function(err, result) {
 					if (err) {
 						doneProgressBar()
 						return failedOperation()
 					}
-					getAllExacts(function(err, result) {
-						doneProgressBar()
-						if (err)
-							return failedOperation()								
+					getAllPlayers(function(err, result) {
+						if (err) {
+							doneProgressBar()
+							return failedOperation()
+						}
+						getAllExacts(function(err, result) {
+							doneProgressBar()
+							if (err)
+								return failedOperation()								
+						})
 					})
 				})
-			})
+			})				
 		})
 	})
 	$("#empty_update_section").click(function (e) {
