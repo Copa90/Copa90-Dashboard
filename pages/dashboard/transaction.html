@@ -54,36 +54,38 @@
 	<!-- Sweetalert Css -->
 	<link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 
+    <!-- Morris Css -->
+    <link href="../../plugins/morrisjs/morris.css" rel="stylesheet" />
+
 	<!-- Custom Css -->
 	<link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/rtl.css" rel="stylesheet">
 
-	<!-- Nprogress bar for top in Ajax call-->
-	<link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" />
-
-	<!-- Nprogress bar for top in Ajax call-->
-	<link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" /> </head>
-
-    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+	<!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="../../css/themes/theme-green.css" rel="stylesheet" />
 </head>
 
 <body class="theme-green">
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="preloader">
-            <div class="spinner-layer pl-teal">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
-        <p>لطفا صبر کنید</p>
-    </div>
+	<div id="rainbow-progress-bar1" class="rainbow-progress-bar"></div>
+	<div class="loader">
+		<div class="preloader">
+			<div class="spinner-layer pl-teal">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<h5>لطفا کمی صبر کنید</h5>
+		<br>
+		<h4>شما در حال اتصال به سرورهای کوپا ۹۰ می‌باشید</h4>
+	</div>
 </div>
 <!-- #END# Page Loader -->
 <!-- Overlay For Sidebars -->
@@ -95,7 +97,7 @@
         <div class="navbar-header">
             <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
             <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" style="font-size:25px;" href="./dashboard.html">پنل مدیریت کوپا ۹۰</a>
+            <a class="navbar-brand" style="font-size:25px;" href="./transaction.html">پنل مدیریت کوپا ۹۰</a>
         </div>
     </div>
 </nav>
@@ -109,8 +111,8 @@
                 <img src="../../images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حسام شمسی</div>
-                <div class="email">hesam@example.com</div>
+                <div id="adminUsername" class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حسام شمسی</div>
+                <div id="adminEmail" class="email">hesam@example.com</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-left">
@@ -118,7 +120,7 @@
                         <li role="seperator" class="divider"></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">favorite</i> زبان ها </a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i> خروج </a></li>
+                        <li><a href="javascript:void(0);" id="signOutButton"><i class="material-icons">input</i> خروج </a></li>
                     </ul>
                 </div>
             </div>
@@ -128,14 +130,14 @@
         <div class="menu">
             <ul class="list">
                 <li class="header" dir="rtl">منو اصلی</li>
-                <li>
-                    <a href="./dashboard.html">
+                <li disabled>
+                    <a href="./dashboard.html" style="pointer-events: none;">
                         <i class="material-icons">home</i>
                         <span>پنل مدیریت داده های آماری</span>
                     </a>
                 </li>
-                <li>
-                    <a href="./control.html">
+                <li disabled>
+                    <a href="./control.html" style="pointer-events: none;">
                         <i class="material-icons">home</i>
                         <span>پنل کنترلی سیستم</span>
                     </a>
@@ -146,14 +148,20 @@
                         <span>پنل کنترل پیش‌بینی‌ها</span>
                     </a>
                 </li>
-                <li class="active">
+                <li>
+                    <a href="./exact.html">
+                        <i class="material-icons">home</i>
+                        <span>پنل کنترل پیش‌بینی‌های دقیق</span>
+                    </a>
+                </li>
+				<li class="active">
                     <a href="./transaction.html">
                         <i class="material-icons">home</i>
                         <span>پنل مدیریت تراکنش‌های مالی ثبت شده</span>
                     </a>
 				</li>
-                <li>
-                    <a href="./trophy.html">
+                <li disabled>
+                    <a href="./trophy.html" style="pointer-events: none;">
                         <i class="material-icons">home</i>
                         <span>پنل مدیریت برندگان و جوایز</span>
                     </a>
@@ -188,13 +196,10 @@
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<ul class="nav nav-tabs nav-justified tab-col-blue" role="tablist">
 									<li role="presentation" class="active">
-										<a href="#LeagueStatistics" id="nav1" data-toggle="tab" style="font-size: 18px;">داده‌های آماری</a>
+										<a href="#" id="nav1" data-toggle="tab" style="font-size: 18px;">داده‌های آماری</a>
 									</li>
 									<li role="presentation">
-										<a href="#MyLeague" id="nav2" data-toggle="tab" style="font-size: 18px;">مدیریت تراکنش‌ها</a>
-									</li>
-									<li role="presentation">
-										<a href="#UpdateLeague" id="nav3" data-toggle="tab" style="font-size: 18px;">اطلاعات تکمیلی</a>
+										<a href="#" id="nav2" data-toggle="tab" style="font-size: 18px;">مدیریت تراکنش‌ها</a>
 									</li>
 								</ul>
 							</div>
@@ -204,7 +209,7 @@
 			</div>
 		</div>
 
-		<div class="row clearfix">
+		<div id="nav1_tab" class="row clearfix">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="card">
 					<div class="header">
@@ -215,68 +220,19 @@
 									<i class="material-icons">more_vert</i>
 								</a>
 								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="update_statistics_section">به روز رسانی</a></li>
 								</ul>
 							</li>
 						</ul>
 					</div>
 					<div class="body">
+						<div id="line_chart" class="graph"></div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="row clearfix">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="card">
-					<div class="header">
-						<h2>اطلاعات تکمیلی تراکنش‌های مالی</h2>
-						<ul class="header-dropdown m-r--5">
-							<li class="dropdown">
-								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									<i class="material-icons">more_vert</i>
-								</a>
-								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-					<div class="body">
-
-						<!-- Start of More Info Transaction  -->
-						<div class="row clearfix">
-							<br>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-1">
-										</div>
-										<div class="col-md-6 col-md-offset-2">
-											<b style="font-size:12px;"> انتخاب تراکنش مالی </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تراکنش را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی تراکنش </button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End of More Info Transaction  -->
-
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="row clearfix">
+		<div id="nav2_tab" class="row clearfix">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="card">
 					<div class="header">
@@ -287,14 +243,15 @@
 									<i class="material-icons">more_vert</i>
 								</a>
 								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="update_management_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_management_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
 					</div>
 					<div class="body">
 
-						<!-- Start of Search Owner League  -->
+						<!-- Start of Search Transaction  -->
 						<div class="row clearfix">
 							<br>
 							<div class="row clearfix">
@@ -302,21 +259,23 @@
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										<div class="col-md-2">
+										<div class="col-md-1">
 										</div>
-										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> وضعیت تراکنش </b>
-											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="وضعیت‌های مورد نظرتان" data-actions-box="true">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> پکیج‌ها </b>
+											<select id="select_management_package_selector" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="پکیج‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> کاربران </b>
+											<select id="select_management_client_selector" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="کاربران مورد نظرتان" data-actions-box="true">
 											</select>
 										</div>
 										<div class="col-md-2">
-											<b style="font-size:12px;"> حداقل پول </b>
+											<b style="font-size:12px;"> حداقل قیمت </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
+													<input id="select_management_min_price" type="text" class="form-control text-center" value="10" data-rule="quantity"data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -325,10 +284,10 @@
 											</div>
 										</div>
 										<div class="col-md-2">
-											<b style="font-size:12px;"> حداکثر پول </b>
+											<b style="font-size:12px;"> حداکثر قیمت </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" class="form-control text-center" value="100" data-rule="quantity">
+													<input id="select_management_max_price" type="text" class="form-control text-center" value="100000" data-rule="quantity"data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -347,30 +306,395 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان شروع </b>
+											<b style="font-size:12px;"> زمان شروع ثبت تراکنش <button id="popover_handler_1" type="button" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input type="text" id="select_management_beginningTime" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
 										</div> 
 										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان پایان </b>
+											<b style="font-size:12px;"> زمان پایان ثبت تراکنش <button id="popover_handler_2" type="button" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input type="text" id="select_management_endingTime" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
 										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو تراکنش </button>
+											<button type="button" id="button_management_search" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو تراکنش </button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- End of Search Owner League  -->
+						<!-- End of Search Transaction  -->
 
+						<div class="row clearfix">
+							<br>
+							<div class="col-md-12">
+								<table class="table table-bordered table-striped table-hover" id="tab_logic_management" style="vertical-align:middle;">
+									<thead>
+										<tr>
+											<th>شماره تراکنش</th>
+											<th>زمان</th>
+											<th>قیمت</th>
+											<th>وضعیت تراکنش</th>
+											<th>شماره ثبت</th>
+											<th>کد رهگیری</th>
+											<th>اطلاعات تراکنش</th>
+											<th>عملیات</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="defaultModalLabel"></h4>
+					</div>
+					<div class="row clearfix">
+						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+						<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+							<ul class="nav nav-tabs nav-justified tab-col-pink" role="tablist">
+								<li role="presentation" class="active">
+									<a href="#" id="nav3" data-toggle="tab">اطلاعات عمومی کاربر</a>
+								</li>
+								<li role="presentation">
+									<a href="#" id="nav4" data-toggle="tab">اطلاعات پیش‌بینی‌های کاربر</a>
+								</li>
+								<li role="presentation">
+									<a href="#" id="nav5" data-toggle="tab">اطلاعات امتیازات کاربر</a>
+								</li>
+								<li role="presentation">
+									<a href="#" id="nav6" data-toggle="tab">اطلاعات معرفی‌های کاربر</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<br>
+					<div id="nav3_tab" class="row clearfix">
+						<br>
+						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+						</div>
+						<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+							<div class="card">
+								<div class="header">
+									<h2>
+										اطلاعات عمومی کاربر
+									</h2>
+								</div>
+								<div class="body">
+									<div class="row clearfix">
+										<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">شناسه منحصر به فرد</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="myInfoID" class="form-control key text-center" placeholder="Sample Identifier" required disabled>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">زمان ثبت نام</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="myInfoTime" class="form-control key text-center" placeholder="Sample Identifier" required disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<br>
+										<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">نام کاربری</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="myInfoUsername" class="form-control key text-center" placeholder="Sample Username" required disabled>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">ایمیل</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="myInfoEmail" class="form-control key text-center" placeholder="Sample Email" required disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<br>
+										<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">نام و نام‌خانوادگی</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="myInfoFullName" class="form-control key text-center" placeholder="Sample Company" required disabled>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">شماره موبایل</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="myInfoPhoneNumber" class="form-control key text-center" placeholder="Sample IP" required disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="nav4_tab" class="row clearfix">
+						<br>
+						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+						</div>
+						<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+							<div class="card">
+								<div class="header">
+									<h2>
+										اطلاعات پیش‌بینی‌های کاربر
+									</h2>
+								</div>
+								<div class="body">
+									<div class="row clearfix">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-4">
+											<p>
+												<b style="font-size:12px;">آخرین زمان ورود</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoLastLogin" class="form-control key text-center" placeholder="Sample IP" required disabled>
+												</div>
+											</div>	
+										</div>
+										<div class="col-md-3">
+											<p>
+												<b style="font-size:12px;">تعداد پیش‌بینی‌ها</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoChances" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<p>
+												<b style="font-size:12px;">تعداد برد‌ها</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoTotalWins" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-4">
+											<p>
+												<b style="font-size:12px;">مجموع امتیازات</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoTotalPoints" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<p>
+												<b style="font-size:12px;">مجموع تخمین‌ها</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoEstimates" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<p>
+												<b style="font-size:12px;">مجموع انتخاب‌ها</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoChoices" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-5">
+											<p>
+												<b style="font-size:12px;">آخرین زمان سطح امتیازی</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoLevelTime" class="form-control key text-center" placeholder="Sample IP" required disabled>
+												</div>
+											</div>	
+										</div>
+										<div class="col-md-3">
+											<p>
+												<b style="font-size:12px;">سطح امتیازی کاربر</b>
+											</p>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoLevel" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="nav5_tab" class="row clearfix">
+						<br>
+						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+						</div>
+						<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+							<div class="card">
+								<div class="header">
+									<h2>
+										اطلاعات امتیازات در لیگ
+									</h2>
+								</div>
+								<div class="body">
+									<div class="row clearfix">
+										<br>
+										<div class="col-md-1"></div>
+										<div class="col-md-10">
+											<table class="table table-bordered table-striped table-hover" id="UserStatsLeagues" style="vertical-align:middle;">
+												<thead>
+													<tr>
+														<th>شماره لیگ</th>
+														<th>اسم لیگ</th>
+														<th>امتیاز کاربر</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="nav6_tab" class="row clearfix">
+						<br>
+						<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+						</div>
+						<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+							<div class="card">
+								<div class="header">
+									<h2>
+										اطلاعات معرفی‌های کاربر
+									</h2>
+								</div>
+								<div class="body">
+									<div class="row clearfix">
+										<br>
+										<div class="col-md-1"></div>
+										<div class="col-md-10">
+											<table class="table table-bordered table-striped table-hover" id="UserStatsReferrals" style="vertical-align:middle;">
+												<thead>
+													<tr>
+														<th>شماره اشخاص معرفی شده</th>
+													</tr>
+												</thead>
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">بستن</button>
 					</div>
 				</div>
 			</div>
@@ -394,9 +718,6 @@
 	<!-- Bootstrap Colorpicker Js -->
 	<script src="../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
 
-	<!-- Dropzone Plugin Js -->
-	<script src="../../plugins/dropzone/dropzone.js"></script>
-
 	<!-- Input Mask Plugin Js -->
 	<script src="../../plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
 
@@ -414,6 +735,10 @@
 
 	<!-- Bootstrap Material Datetime Picker Plugin Js -->
 	<script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+	<!-- Jalali Date Plugin Js -->
+	<script src="../../plugins/moment/moment.js"></script>
+	<script src="../../plugins/moment-jalaali/build/moment-jalaali.js"></script>
 
 	<!-- noUISlider Plugin Js -->
 	<script src="../../plugins/nouislider/nouislider.js"></script>
@@ -435,18 +760,7 @@
 
 	<!-- Custom Js -->
 	<script src="../../js/admin.js"></script>
-	<!-- <script src="../../js/pages/index.js"></script> -->
-
-	<!-- Jquery DataTable Plugin Js -->
-	<script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
-	<script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+	<script src="../../js/dashboard/transaction.js"></script>  
 
 	<!-- Demo Js -->
 	<script src="../../js/demo.js"></script>
@@ -454,11 +768,10 @@
 	<!-- Autosize Plugin Js -->
 	<script src="../../plugins/autosize/autosize.js"></script>
 
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
+	<!-- Morris Plugin Js -->
+    <script src="../../plugins/raphael/raphael.min.js"></script>
+    <script src="../../plugins/morrisjs/morris.js"></script>
 
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
 </body>
 
 </html>
