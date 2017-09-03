@@ -221,6 +221,14 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 	Edit Rows Filler				//
 	// ------------------------------ //
+	$("#new_first_point").spinner('changing', function(e, newVal, oldVal) {
+		$('#select_new_second_point').val(Math.round(Number(newVal) * 2 / 3))
+		$('#select_new_third_point').val(Math.round(Number(newVal) / 3)) 
+	})
+	$("#update_first_point").spinner('changing', function(e, newVal, oldVal) {
+		$('#select_update_second_point').val(Math.round(Number(newVal) * 2 / 3))
+		$('#select_update_third_point').val(Math.round(Number(newVal) / 3)) 
+  })
 	$('#select_update_exact').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
 		var selected = $(this).find('option').eq(clickedIndex).val()
 		fill_section_update(selected)
@@ -996,6 +1004,10 @@ $(document).ready(function () {
 				$("#myInfoEmail").val(clientResult.email)
 				$("#myInfoFullName").val(clientResult.fullname)
 				$("#myInfoPhoneNumber").val(clientResult.phoneNumber)
+				if (clientResult.accountInfoModel.lastLogin)
+					$("#UserAccountInfoLastLogin").val(fullDateConvertorJalali(clientResult.accountInfoModel.lastLogin))
+				else
+					$("#UserAccountInfoLastLogin").val('ثبت نشده')
 				$("#UserAccountInfoChances").val(clientResult.accountInfoModel.chances)
 				$("#UserAccountInfoTotalWins").val(clientResult.accountInfoModel.roundWins)
 				$("#UserAccountInfoTotalPoints").val(clientResult.accountInfoModel.totalPoints)
