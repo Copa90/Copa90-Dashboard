@@ -370,6 +370,9 @@ $(document).ready(function () {
 				}, 400);
 			}, 1200);		
 		}
+		else if (pageName === 'page_play_room') {
+			$("#play_room_league_leagueId").selectpicker('val', 'every')
+		}
 		else if (pageName === 'page_challenge') {
 			tabHandler({ target: { id: 'nav5' } })
 			$('.nav-tabs a[id="nav5"]').tab('show')
@@ -1035,9 +1038,9 @@ $(document).ready(function () {
 			if (err)
 				return failedOperation()
 			else {
-				change_page_scene('page_play_room')
 				empty_all_tables()
 				empty_all_fields()
+				change_page_scene('page_play_room')
 			}
 		})
 	})
