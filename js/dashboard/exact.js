@@ -116,6 +116,8 @@ $(document).ready(function () {
 	var choices = []
 	var allAns = []
 
+	var editableExact
+
 	var newOptions = []
 	var updateOptions = []
 
@@ -230,6 +232,7 @@ $(document).ready(function () {
 		$('#select_update_third_point').val(Math.round(Number(newVal) / 3)) 
   })
 	$('#select_update_exact').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		editableExact = {}
 		var selected = $(this).find('option').eq(clickedIndex).val()
 		fill_section_update(selected)
 	})
@@ -250,6 +253,7 @@ $(document).ready(function () {
 		for (var i = 0; i < exacts.length; i++) {
 			if (exacts[i].id === exactId) {
 				model = exacts[i]
+				editableExact = model
 				var selected = model.label
 				if (selected === 'Player')
 					fill_answer_selectors(false, players)
@@ -261,11 +265,12 @@ $(document).ready(function () {
 					fill_answer_selectors(false, coaches)	
 				$("#select_update_league").selectpicker('val', model.leagueId)
 				$("#select_update_topic").selectpicker('val', model.topic)
-				$("#select_update_answer").selectpicker('val', model.answer)
+				console.log(model.status)
 				$("#select_update_status").selectpicker('val', model.status)
 				$("#select_update_beginningTime").val(fullDateConvertor(model.beginningTime))
 				$("#select_update_endingTime").val(fullDateConvertor(model.endingTime))
 				$("#select_update_name").val(model.name)
+				updateOptions = model.selectors
 				fill_update_answer_table(model.selectors)
 				break
 			}
@@ -349,14 +354,21 @@ $(document).ready(function () {
 			$('#select_update_answer').find('option').remove()
 			for (var i = 0; i < answer.length; i++) {
 				var itemToPush = {
-					id: answer[i].id,
+					id: i.toString(),
 					name: answer[i].name
 				}
 				$('#select_update_answer').append($('<option>', {
-					value: itemToPush.id,
+					value: i.toString(),
 					text: itemToPush.name
 				})).selectpicker('refresh')
 			}	
+			for (var i = 0; i < answer.length; i++) {
+				if (answer[i].name === editableExact.answer) {
+					$("#select_update_answer").selectpicker('val', i.toString())
+					console.log('hiiii')
+					break
+				}
+			}
 		}
 	}
 	function fill_exact_selectors(exactsArray) {
@@ -730,6 +742,7 @@ $(document).ready(function () {
 	}
 	function empty_update_section() {
 		updateOptions = []
+		editableExact = {}
 		empty_table_update_section()
 		$("#select_update_exact").selectpicker('val', '')
 		$("#select_update_league").selectpicker('val', '')
@@ -771,7 +784,7 @@ $(document).ready(function () {
 						})
 					})
 				})
-			})				
+			})
 		})
 	})
 	$("#empty_update_section").click(function (e) {
@@ -852,6 +865,7 @@ $(document).ready(function () {
 			if (exactsArray[i].label === 'Team') labelName = 'تیم'
 			else if (exactsArray[i].label === 'League') labelName = 'لیگ'
 			else if (exactsArray[i].label === 'Player') labelName = 'بازیکن'
+			else if (exactsArray[i].label === 'Coach') labelName = 'سرمربی'
 			else if (exactsArray[i].label === 'Other') labelName = 'دیگر'
 			var statusName
 			if (exactsArray[i].status === 'Created') statusName = 'ایجاد شده'
@@ -862,10 +876,11 @@ $(document).ready(function () {
 			var str2 = topicName + '<br>' + statusName + '<br>' + labelName
 			var str3 = ''
 			for (var j = 0; j < exactsArray[i].selectors.length; j++) {
-				if (exactsArray[i].selectors[j]) {
-					str3 += '[' + exactsArray[i].selectors[j].choice + ' - ' + Persian_Number(exactsArray[i].selectors[j].point.first.toString()) + ' امتیاز ' + ' - ' + Persian_Number(exactsArray[i].selectors[j].point.second.toString()) + ' امتیاز ' + ' - ' + Persian_Number(exactsArray[i].selectors[j].point.third.toString()) + ' امتیاز ' + ']'
-				}
-				str3 += '<br>'
+				str3 += exactsArray[i].selectors[j].choice + ' '
+				if ((j + 1) == exactsArray[i].selectors.length)
+					continue
+				else
+					str3 += '- '
 			}
 			$('#tab_logic_management').append('<tr id="tlmm_addr' + (i) + '"></tr>')
 			$('#tlmm_addr' + i).html(
@@ -1281,7 +1296,7 @@ $(document).ready(function () {
 		if ($('#select_update_exact').val())
 			exactId = $('#select_update_exact').val()
 
-		if ($('#select_update_name').val() || !exactId || !$('#select_update_league').val() || !$('#select_update_topic').val() || !$('#select_update_answer').val() ||
+		if (!$('#select_update_name').val() || !exactId || !$('#select_update_league').val() || !$('#select_update_topic').val() || 
 			!$('#select_update_status').val() || !$('#select_update_beginningTime').val() || !$('#select_update_endingTime').val() ||
 			updateOptions.length <= 0
 		) {
@@ -1292,11 +1307,14 @@ $(document).ready(function () {
 			leagueId: $('#select_update_league').val(),
 			name: $('#select_update_name').val(),
 			topic: $('#select_update_topic').val(),
-			answer: $('#select_update_answer').val(),
 			status: $('#select_update_status').val(),
+			label: editableExact.label,
 			beginningTime: fullTimeConvertor($('#select_update_beginningTime').val()),
 			endingTime: fullTimeConvertor($('#select_update_endingTime').val()),
 			selectors: updateOptions
+		}
+		if ($('#select_update_answer').val()) {
+			data.answer = $('#select_update_answer').find('option:selected').text()
 		}
 		var exactURL = wrapAccessToken(coreEngine_url + 'exacts/' + exactId, coreAccessToken);
 		$.ajax({
