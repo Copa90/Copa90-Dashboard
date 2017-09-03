@@ -850,6 +850,10 @@ $(document).ready(function () {
 				$("#myInfoEmail").val(clientResult.email)
 				$("#myInfoFullName").val(clientResult.fullname)
 				$("#myInfoPhoneNumber").val(clientResult.phoneNumber)
+				if (clientResult.accountInfoModel.lastLogin)
+					$("#UserAccountInfoLastLogin").val(fullDateConvertorJalali(clientResult.accountInfoModel.lastLogin))
+				else
+					$("#UserAccountInfoLastLogin").val('ثبت نشده')
 				$("#UserAccountInfoChances").val(clientResult.accountInfoModel.chances)
 				$("#UserAccountInfoTotalWins").val(clientResult.accountInfoModel.roundWins)
 				$("#UserAccountInfoTotalPoints").val(clientResult.accountInfoModel.totalPoints)
