@@ -281,6 +281,21 @@ $(document).ready(function () {
 		readFromLocalStorage()
 	}
 
+	getAllCoaches(function(err, coachResult) {
+		if (err)
+			return change_page_scene('page_aaa')
+		getAllPlayers(function(err, playerResult) {
+			if (err)
+				return change_page_scene('page_aaa')				
+		})
+	})
+
+	getAllUsers(function(err, result) {
+		if (err)
+			return change_page_scene('page_aaa')
+		fill_table_totalStatistics(allUsers)
+	})
+
 	if (!userId || !coreAccessToken) {
 		getAllTeams(function(err, teamsResult) {
 			if (err)
@@ -301,11 +316,6 @@ $(document).ready(function () {
 				doneProgressBar()
 				fill_table_teamStatistics(userTeamRanking)
 				change_page_scene('page_main_menu')
-			})
-			getAllUsers(function(err, result) {
-				if (err)
-					return change_page_scene('page_aaa')
-				fill_table_totalStatistics(allUsers)
 			})
 		})
 	}	
@@ -410,39 +420,49 @@ $(document).ready(function () {
 			})).selectpicker('refresh')
 		}
 	}
-	function fill_exact_answer_selector(answersArray) {
+	function fill_exact_answer_selector(exactObject, answersArray) {
+		var itemToPush = {}
+		if (exactObject.label === 'Team') iteratArray = teamsArray
+		else if (exactObject.label === 'League') iteratArray = leaguesArray
+		else if (exactObject.label === 'Player') iteratArray = playersArray
+		else if (exactObject.label === 'Coach') iteratArray = coachesArray
 		$('#main_exact_first_answer_selector').find('option').remove()
 		$('#main_exact_second_answer_selector').find('option').remove()
 		$('#main_exact_third_answer_selector').find('option').remove()
 		for (var i = 0; i < answersArray.length; i++) {
-			var itemToPush = {
+			var teamName = ''
+			for (var k = 0; k < iteratArray.length; k++) {
+				if (iteratArray[k].name.toString() === answersArray[i].choice.toString()) {
+					if (iteratArray[k].team) {
+						teamName = iteratArray[k].team
+						break
+					}
+				}
+			}
+			itemToPush = {
 				id: i.toString(),
 				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.first.toString()) + ' امتیاز'
 			}
 			$('#main_exact_first_answer_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
-		}
-		for (var i = 0; i < answersArray.length; i++) {
-			var itemToPush = {
+			}).data("subtext", '&nbsp;&nbsp; ' + teamName)).selectpicker('refresh')
+			itemToPush = {
 				id: i.toString(),
 				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.second.toString()) + ' امتیاز'
 			}
 			$('#main_exact_second_answer_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
-		}
-		for (var i = 0; i < answersArray.length; i++) {
-			var itemToPush = {
+			}).data("subtext", '&nbsp;&nbsp; ' + teamName)).selectpicker('refresh')
+			itemToPush = {
 				id: i.toString(),
 				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.third.toString()) + ' امتیاز'
 			}
 			$('#main_exact_third_answer_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}).data("subtext", '&nbsp;&nbsp; ' + teamName)).selectpicker('refresh')
 		}
 	}
 	function fill_champion_selector(championsArray) {
@@ -857,11 +877,6 @@ $(document).ready(function () {
 							localStorage.setItem('userCoreAccessToken', coreAccessToken)
 							localStorage.setItem('userId', userId)
 						}
-						getAllUsers(function(err, result) {
-							if (err)
-								return failedOperation()
-							fill_table_totalStatistics(allUsers)
-						})
 					})
 					change_page_scene('page_main_menu')
 				})
@@ -2007,7 +2022,7 @@ $(document).ready(function () {
 
 		$('[data-toggle="tooltip"]').tooltip({
 			container: 'body',
-			delay: {show : 1000, hide : 0}
+			delay: {show : 500, hide : 0}
 		})
 	}
 
@@ -2273,7 +2288,7 @@ $(document).ready(function () {
 				$('#main_exact_topic').html(currentExact.name)
 				$('#main_exact_div_body').show()
 				$('#main_exact_select_section').show()
-				fill_exact_answer_selector(currentExact.selectors)
+				fill_exact_answer_selector(currentExact, currentExact.selectors)
 				$('#main_exact_first_answer_selector').prop('disabled', false)
 				$('#main_exact_second_answer_selector').prop('disabled', false)
 				$('#main_exact_third_answer_selector').prop('disabled', false)
@@ -2539,6 +2554,36 @@ $(document).ready(function () {
 			}
 		})
 	}
+	function getAllPlayers(callback) {
+		var playerURLWithAT = wrapAccessToken(coreEngine_url + 'players', coreAccessToken)
+		$.ajax({
+			url: playerURLWithAT,
+			type: "GET",
+			success: function (playerResult) {
+				playersArray = playerResult
+				callback(null, playerResult)
+			},
+			error: function (xhr, status, error) {
+				callback(error)
+				console.log(xhr.responseText)
+			}
+		})
+	}
+	function getAllCoaches(callback) {
+		var coachURLWithAT = wrapAccessToken(coreEngine_url + 'coaches', coreAccessToken)
+		$.ajax({
+			url: coachURLWithAT,
+			type: "GET",
+			success: function (coachResult) {
+				coachesArray = coachResult
+				callback(null, coachResult)
+			},
+			error: function (xhr, status, error) {
+				callback(error)
+				console.log(xhr.responseText)
+			}
+		})
+	}
 	function getAllUsersChampions(callback) {
 		var userChampionsURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/champions', coreAccessToken)
 		$.ajax({
@@ -2718,7 +2763,24 @@ $(document).ready(function () {
 
 	function getAllUsers(callback) {
 		var filter = {
-			skip: '6'
+			skip: '6',
+			fields: {
+				'email': 'false',
+				'time': 'false',
+				'phoneNumber': 'false',
+				'emailVerified': 'false',
+				'trophyModel': 'false',
+				'teamId': 'false',
+				'referralModel': 'false',
+				'checkpointModel': 'false',
+				'emps': 'false',
+				'status': 'false',
+				'profilePath': 'false',
+				'accountInfoModel': 'true',
+				'username': 'true',
+				'fullname': 'true',
+				'id': 'true'
+			}
 		}
 		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken)
 		var clientWithFilter = wrapFilter(clientURLWithAT, JSON.stringify(filter))
