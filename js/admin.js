@@ -238,7 +238,7 @@ $(function () {
     $.AdminBSB.input.activate();
     $.AdminBSB.select.activate();
 
-    $('.version_controlling').html('&nbsp;&nbsp; Ver. 1.3.2 &nbsp;&nbsp;')
+    $('.version_controlling').html('&nbsp;&nbsp; Ver. 1.3.3 &nbsp;&nbsp;')
 
     // setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });
