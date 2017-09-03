@@ -567,9 +567,9 @@
 									</div>
 									<div class="col-md-2">
 										<b style="font-size:12px;"> امتیاز اول </b>
-										<div class="input-group spinner" data-trigger="spinner">
+										<div class="input-group spinner" data-trigger="spinner" id="new_first_point">
 											<div class="form-line">
-												<input id="select_new_first_point" type="text" class="form-control text-center" value="10" data-rule="quantity">
+												<input id="select_new_first_point" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 											</div>
 											<span class="input-group-addon">
 												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -581,7 +581,7 @@
 										<b style="font-size:12px;"> امتیاز دوم </b>
 										<div class="input-group spinner" data-trigger="spinner">
 											<div class="form-line">
-												<input id="select_new_second_point" type="text" class="form-control text-center" value="10" data-rule="quantity">
+												<input id="select_new_second_point" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 											</div>
 											<span class="input-group-addon">
 												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -593,7 +593,7 @@
 										<b style="font-size:12px;"> امتیاز سوم </b>
 										<div class="input-group spinner" data-trigger="spinner">
 											<div class="form-line">
-												<input id="select_new_third_point" type="text" class="form-control text-center" value="10" data-rule="quantity">
+												<input id="select_new_third_point" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 											</div>
 											<span class="input-group-addon">
 												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -769,9 +769,9 @@
 									</div>
 									<div class="col-md-2">
 										<b style="font-size:12px;"> امتیاز اول </b>
-										<div class="input-group spinner" data-trigger="spinner">
+										<div class="input-group spinner" data-trigger="spinner" id="update_first_point">
 											<div class="form-line">
-												<input id="select_update_first_point" type="text" class="form-control text-center" value="10" data-rule="quantity">
+												<input id="select_update_first_point" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 											</div>
 											<span class="input-group-addon">
 												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -783,7 +783,7 @@
 										<b style="font-size:12px;"> امتیاز دوم </b>
 										<div class="input-group spinner" data-trigger="spinner">
 											<div class="form-line">
-												<input id="select_update_second_point" type="text" class="form-control text-center" value="10" data-rule="quantity">
+												<input id="select_update_second_point" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 											</div>
 											<span class="input-group-addon">
 												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -795,7 +795,7 @@
 										<b style="font-size:12px;"> امتیاز سوم </b>
 										<div class="input-group spinner" data-trigger="spinner">
 											<div class="form-line">
-												<input id="select_update_third_point" type="text" class="form-control text-center" value="10" data-rule="quantity">
+												<input id="select_update_third_point" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 											</div>
 											<span class="input-group-addon">
 												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -989,7 +989,20 @@
 								</div>
 								<div class="body">
 									<div class="row clearfix">
-										<div class="col-md-2">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-4">
+											<p>
+												<b style="font-size:12px;">آخرین زمان ورود</b>
+											</p>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">next_week</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="UserAccountInfoLastLogin" class="form-control key text-center" placeholder="Sample IP" required disabled>
+												</div>
+											</div>	
 										</div>
 										<div class="col-md-3">
 											<p>
@@ -997,7 +1010,7 @@
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoChances" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+													<input type="text" id="UserAccountInfoChances" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1005,14 +1018,13 @@
 												</span>
 											</div>
 										</div>
-										<div class="col-md-2"></div>
 										<div class="col-md-3">
 											<p>
 												<b style="font-size:12px;">تعداد برد‌ها</b>
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoTotalWins" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+													<input type="text" id="UserAccountInfoTotalWins" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1030,7 +1042,7 @@
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoTotalPoints" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+													<input type="text" id="UserAccountInfoTotalPoints" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1044,7 +1056,7 @@
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoEstimates" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+													<input type="text" id="UserAccountInfoEstimates" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1058,7 +1070,7 @@
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoChoices" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+													<input type="text" id="UserAccountInfoChoices" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1089,7 +1101,7 @@
 											</p>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" id="UserAccountInfoLevel" class="form-control text-center" value="100" data-rule="quantity" required disabled>
+													<input type="text" id="UserAccountInfoLevel" class="form-control text-center" value="100" data-rule="quantity" required disabled data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -1190,9 +1202,6 @@
 
 	<!-- Bootstrap Colorpicker Js -->
 	<script src="../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-
-	<!-- Dropzone Plugin Js -->
-	<script src="../../plugins/dropzone/dropzone.js"></script>
 
 	<!-- Input Mask Plugin Js -->
 	<script src="../../plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
