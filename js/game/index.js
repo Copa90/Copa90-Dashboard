@@ -2651,6 +2651,13 @@ $(document).ready(function () {
 							else 
 								predictsArray.push(nextObjectResult[k])
 						}
+						function compare(a, b){
+							return Number(a.point.first) - Number(b.point.first)
+						}
+						for (var k = 0; k < exactResult.length; k++) {
+							var m = exactResult[k]
+							m.selectors.sort(compare)
+						}
 						exactsArray = exactResult
 						callback(null, predictsArray, exactsArray)
 					},
