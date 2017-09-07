@@ -48,17 +48,6 @@ function fullDateConvertorJalali(myDate) {
 	return (res[0] + ' - ' + res[1])
 }
 
-function convertXLSXtoJSON(data) {
-	var workbook = XLSX.read(data, {type : 'binary'})
-	var array = []
-	workbook.SheetNames.forEach(function(sheetName){
-		var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
-		for (var i = 0; i < XL_row_object.length; i++)
-			array.push(XL_row_object[i])
-	})
-	return array
-}
-
 function successfulOperation() {
 	swal("موفق شدید", "عملیات درخواست شده شما با موفقیت انجام شد", "success")
 }
@@ -104,6 +93,7 @@ function countryCodeToLeagueId(code) {
 	else if (code == "IR") 		return '5992c2351098a97b42e3bf5f'
 	else if (code == "CLE") 	return '5992c23e1098a97b42e3bf60'
 	else if (code == "ELE") 	return '5992c2461098a97b42e3bf61'
+	else if (code == "NAT") 	return '59afb306012e5b0e7a1c3295'
 }
 
 var coreEngine_url 	= "http://185.105.186.68:4000/api/"
@@ -616,6 +606,13 @@ $(document).ready(function () {
 		$("#select_new_possiblity").val(10)
 		$("#select_new_points").val(10)
 	}
+	function clear_new_section() {
+		$("#select_new_explanation").val('')
+		$("#select_new_period").selectpicker('val', '')
+		$("#select_new_beginningTime").val('')
+		$("#select_new_possiblity").val(10)
+		$("#select_new_points").val(10)		
+	}
 	$("#update_new_section").click(function (e) {
 		e.preventDefault()
 		startProgressBar()
@@ -1122,7 +1119,7 @@ $(document).ready(function () {
 					if (err)
 						return failedOperation()
 					successfulOperation()
-					empty_new_section()
+					clear_new_section()
 				})
 			}
 		})
@@ -1229,5 +1226,16 @@ $(document).ready(function () {
 			}
 		})
 	})
+
+	function convertXLSXtoJSON(data) {
+		var workbook = XLSX.read(data, {type : 'binary'})
+		var array = []
+		workbook.SheetNames.forEach(function(sheetName){
+			var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName])
+			for (var i = 0; i < XL_row_object.length; i++)
+				array.push(XL_row_object[i])
+		})
+		return array
+	}
 
 })
