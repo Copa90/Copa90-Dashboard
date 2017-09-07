@@ -299,6 +299,11 @@ $(document).ready(function () {
 		if (err)
 			return change_page_scene('page_aaa')		
 	})
+	
+	getAllPackages(function(err, packageResult) {
+		if (err)
+			return callback(err)
+	})
 
 	getAllUsers(function(err, result) {
 		if (err)
@@ -2497,17 +2502,13 @@ $(document).ready(function () {
 					getUserInfo(function(err, userInfo) {
 						if (err)
 							return callback(err)
-						getAllPackages(function(err, packageResult) {
+						getAllUsersChallanges(function(err, challengeResult) {
 							if (err)
 								return callback(err)
-							getAllUsersChallanges(function(err, challengeResult) {
+							getAllUsersChampions(function(err, championResult) {
 								if (err)
 									return callback(err)
-								getAllUsersChampions(function(err, championResult) {
-									if (err)
-										return callback(err)
-									return callback(null)
-								})
+								return callback(null)
 							})
 						})
 					})
