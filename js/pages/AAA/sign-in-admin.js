@@ -48,7 +48,6 @@ $(document).ready(function () {
 
 	$("#login_btn").click(function (e) {
 		e.preventDefault();
-		NProgress.start();
 		var data = {
 			password: $('#password').val()
 		}
@@ -67,11 +66,9 @@ $(document).ready(function () {
 				localStorage.setItem('adminEmail', data.email);						
 				localStorage.setItem('adminCoreAccessToken', coreResult.id);
 				localStorage.setItem('adminId', coreResult.userId);
-				NProgress.done();
 				window.location.href = '../dashboard/predict.html'
 			},
 			error: function (xhr, status, error) {
-				NProgress.done();
 				showNotification('alert-danger', 'مشکلی در ورود شما ایجاد شده است، مجددا تکرار فرمائید', 'top', 'right', 'animated fadeIn', 'animated fadeOut');
 			}
 		});
