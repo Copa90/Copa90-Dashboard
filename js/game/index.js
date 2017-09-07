@@ -234,6 +234,11 @@ $(document).ready(function () {
 	var livePredict = []
 	var seasonPredict = []
 
+	var notifsArray = []
+
+	var timeSort = 3
+	var pointSort = 3
+
 	var exactsArray = []
 	var exactChoice = {}
 
@@ -288,6 +293,11 @@ $(document).ready(function () {
 			if (err)
 				return change_page_scene('page_aaa')				
 		})
+	})
+
+	getLatestNotifs(function(err, notifResult) {
+		if (err)
+			return change_page_scene('page_aaa')		
 	})
 
 	getAllUsers(function(err, result) {
@@ -762,7 +772,7 @@ $(document).ready(function () {
 		var patt = new RegExp(re)
 		var uname = $("#aaa_signup_username").val().toLowerCase()
 		if (!patt.test(uname)) {
-			return failedOperationByString('خطا! نام کاربری باید حتما به انگلیسی وارد شود')
+			return failedOperationByString('خطا! نام کاربری باید فقط شامل حروف و اعداد انگلیسی باشد')
 		}
 		var data = {
 			fullname: $("#aaa_signup_fullname").val(),
@@ -1055,6 +1065,9 @@ $(document).ready(function () {
 			else {
 				empty_all_tables()
 				empty_all_fields()
+				weekIndex = 0
+				liveIndex = 0
+				seasonIndex = 0
 				change_page_scene('page_play_room')
 			}
 		})
@@ -1628,8 +1641,10 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 						Play Room						//
 	// ------------------------------ //
-	function getDataAndFill() {
+	function getDataAndFill(callback) {
 		startProgressBar()
+		$('#main_predict_accept_button').prop('disabled', true)
+		$('#main_predict_reject_button').prop('disabled', true)
 		getNextObjectArray(function(err, result, exacts) {
 			doneProgressBar()
 			if (err)
@@ -1654,16 +1669,29 @@ $(document).ready(function () {
 				tabHandler({ target: { id: 'nav16' } })
 			}
 			else {
-				weeklyPredict = []
-				seasonPredict = []
-				livePredict = []
-				for (var k = 0; k < result.length; k++) {
-					if (result[k].tag === 'Week')
-						weeklyPredict.push(result[k])
-					else if (result[k].tag === 'Live')
-						livePredict.push(result[k])
-					else if (result[k].tag === 'Season')
-						seasonPredict.push(result[k])
+				if (updateEnable) {
+					livePredict = []
+					liveIndex = 0
+					for (var k = 0; k < result.length; k++) {
+						if (result[k].tag === 'Live')
+							livePredict.push(result[k])
+					}	
+				}
+				else {
+					weeklyPredict = []
+					seasonPredict = []
+					livePredict = []
+					liveIndex = 0
+					seasonIndex = 0
+					weekIndex = 0	
+					for (var k = 0; k < result.length; k++) {
+						if (result[k].tag === 'Week')
+							weeklyPredict.push(result[k])
+						else if (result[k].tag === 'Live')
+							livePredict.push(result[k])
+						else if (result[k].tag === 'Season')
+							seasonPredict.push(result[k])
+					}	
 				}
 				if (weeklyPredict.length == 0) {
 					$("#nav15").attr({"data-toggle":''})
@@ -1688,10 +1716,7 @@ $(document).ready(function () {
 				else {
 					$("#nav18").attr({"data-toggle":'tab'})
 					$('#nav18').parent().removeClass('disabled')					
-				}				
-				liveIndex = 0
-				seasonIndex = 0
-				weekIndex = 0				
+				}
 				change_page_scene('page_main_prediction')
 				if (updateEnable) {
 					if (livePredict.length != 0 && liveEnable) {
@@ -1702,38 +1727,92 @@ $(document).ready(function () {
 						tabHandler({ target: { id: 'nav16' } })
 					}
 					updateEnable = false
+					$('#main_predict_accept_button').prop('disabled', false)
+					$('#main_predict_reject_button').prop('disabled', false)
 				}
 				else {
-					if (weeklyPredict.length == 0) {
-						if (livePredict.length != 0 || liveEnable) {
-							weekEnable = false
-							liveEnable = true
-							seasonEnable = false
-							$('.nav-tabs a[id="nav16"]').tab('show')
-							tabHandler({ target: { id: 'nav16' } })
+					if (timeSort != 3 || pointSort != 3) {
+						if (timeSort != 3) {
+							function compareASC(a, b){
+								var d1 = Number(a.endingTime) - (new Date).getTime()
+								var d2 = Number(b.endingTime) - (new Date).getTime()
+								return Number(d2 - d1)
+							}
+							function compareDSC(a, b){
+								var d1 = Number(a.endingTime) - (new Date).getTime()
+								var d2 = Number(b.endingTime) - (new Date).getTime()
+								return Number(d1 - d2)
+							}
+							if (timeSort == 0) {
+								weeklyPredict.sort(compareDSC)
+								seasonPredict.sort(compareDSC)
+							}
+							else {
+								weeklyPredict.sort(compareASC)
+								seasonPredict.sort(compareASC)
+							}
+							weekIndex = 0
+							seasonIndex = 0
 						}
-						else if (seasonPredict.length != 0) {
-							weekEnable = false
-							liveEnable = false
-							seasonEnable = true
+						else if (pointSort != 3) {
+							function compareASC(a, b){
+								return Number(b.point) - Number(a.point)
+							}
+							function compareDSC(a, b){
+								return Number(a.point) - Number(b.point)
+							}
+							if (pointSort == 0) {
+								weeklyPredict.sort(compareDSC)
+								seasonPredict.sort(compareDSC)
+							}
+							else {
+								weeklyPredict.sort(compareASC)
+								seasonPredict.sort(compareASC)
+							}
+							weekIndex = 0
+							seasonIndex = 0
+						}
+						if (weekEnable) {
+							$('.nav-tabs a[id="nav15"]').tab('show')
+							tabHandler({ target: { id: 'nav15' } })
+						}
+						else if (seasonEnable) {
 							$('.nav-tabs a[id="nav17"]').tab('show')
 							tabHandler({ target: { id: 'nav17' } })
 						}
-						else if (exacts.length != 0) {
-							liveEnable = false
-							seasonEnable = false
-							weekEnable = false
-							$('.nav-tabs a[id="nav18"]').tab('show')
-							tabHandler({ target: { id: 'nav18' } })
-						}
 					}
 					else {
-						weekEnable = true
-						liveEnable = false
-						seasonEnable = false
-						$('.nav-tabs a[id="nav15"]').tab('show')
-						tabHandler({ target: { id: 'nav15' } })
-					}	
+						if (weeklyPredict.length == 0) {
+							if (livePredict.length != 0 || liveEnable) {
+								weekEnable = false
+								liveEnable = true
+								seasonEnable = false
+								$('.nav-tabs a[id="nav16"]').tab('show')
+								tabHandler({ target: { id: 'nav16' } })
+							}
+							else if (seasonPredict.length != 0) {
+								weekEnable = false
+								liveEnable = false
+								seasonEnable = true
+								$('.nav-tabs a[id="nav17"]').tab('show')
+								tabHandler({ target: { id: 'nav17' } })
+							}
+							else if (exacts.length != 0) {
+								liveEnable = false
+								seasonEnable = false
+								weekEnable = false
+								$('.nav-tabs a[id="nav18"]').tab('show')
+								tabHandler({ target: { id: 'nav18' } })
+							}
+						}
+						else {
+							weekEnable = true
+							liveEnable = false
+							seasonEnable = false
+							$('.nav-tabs a[id="nav15"]').tab('show')
+							tabHandler({ target: { id: 'nav15' } })
+						}		
+					}
 				}
 			}
 			if (timerID)
@@ -1752,7 +1831,9 @@ $(document).ready(function () {
 		currentLeague = leagueId
 		clearExact()
 		clearPredict()
-		getDataAndFill()
+		timeSort = 3
+		pointSort = 3
+		getDataAndFill(function (err, result) {})
 	})
 	$(document).on("click", "#main_predict_estimates_button", function (e) {
 		e.preventDefault()
@@ -1780,6 +1861,13 @@ $(document).ready(function () {
 				console.log(xhr.responseText)
 			}
 		})
+	})
+	$(document).on("click", "#play_room_notif_center_button", function (e) {
+		e.preventDefault()
+		empty_all_tables()
+		fill_table_notifs(notifsArray)
+		$('#notifModal .modal-content').removeAttr('class').addClass('modal-content')
+		$('#notifModal').modal('show')
 	})
 	// ------------------------------ //
 	// 			Ranking Statistics				//
@@ -1924,7 +2012,7 @@ $(document).ready(function () {
 	)
 	function updateLivePredicts() {
 		updateEnable = true
-		getDataAndFill()
+		getDataAndFill(function (err, result) {})
 	}
 
 	// ------------------------------ //
@@ -1935,12 +2023,14 @@ $(document).ready(function () {
 		if (select === 'nav15') {
 			clearExact()
 			clearPredict()
+			$('#main_predict_live_section').hide()
 			weekEnable = true
 			liveEnable = false
 			seasonEnable = false
 			if (weeklyPredict.length == 0 || weekIndex >= weeklyPredict.length) {
 				return predictOverOperation()
 			}
+			$('#main_predict_sort_section').show()
 			currentPredict = weeklyPredict[weekIndex]
 			displayPredict()
 		}
@@ -1965,18 +2055,21 @@ $(document).ready(function () {
 		else if (select === 'nav17') {
 			clearPredict()
 			clearExact()
+			$('#main_predict_live_section').hide()
 			weekEnable = false
 			liveEnable = false
 			seasonEnable = true
 			if (seasonPredict.length == 0 || seasonIndex >= seasonPredict.length) {
 				return predictOverOperation()
 			}
+			$('#main_predict_sort_section').show()
 			currentPredict = seasonPredict[seasonIndex]
 			displayPredict()
 		}
 		else if (select === 'nav18') {
 			clearPredict()
 			clearExact()
+			$('#main_predict_live_section').hide()
 			weekEnable = false
 			liveEnable = false
 			seasonEnable = false
@@ -2059,6 +2152,42 @@ $(document).ready(function () {
 		}
 	})
 
+	$('#main_predict_sort_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		var selected = $(this).find('option:selected').val()
+		if (selected === 'SortByTime') {
+			pointSort = 3 
+			if (timeSort == 0 || timeSort == 3) {
+				timeSort = 0
+				getDataAndFill(function(err, result) {
+					if (!err) 
+						timeSort = 1
+				})
+			}
+			else {
+				getDataAndFill(function(err, result) {
+					if (!err) 
+						timeSort = 0
+				})
+			}
+		}
+		else if (selected === 'SortByPoint') {
+			timeSort = 3
+			if (pointSort == 0 || pointSort == 3) {
+				pointSort = 0
+				getDataAndFill(function(err, result) {
+					if (!err) 
+						pointSort = 1
+				})
+			}
+			else {
+				getDataAndFill(function(err, result) {
+					if (!err) 
+						pointSort = 0
+				})
+			}
+		}
+	})
+
 	function startLoading() {
 		$('.page-loader-wrapper').fadeIn()
 		$('#rainbow-progress-bar1').fadeIn()
@@ -2085,6 +2214,16 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 Table Construction				//
 	// ------------------------------ //
+	function fill_table_notifs(notifsArray) {
+		$('#play_room_notif_table tbody').empty()
+		for (var i = 0; i < notifsArray.length; i++) {
+			$('#play_room_notif_table').append('<tr id="prnt_addr' + (i) + '"></tr>')
+			$('#prnt_addr' + i).html(
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + notifsArray[i].statement + '</td>'			
+			)
+		}
+		fixUITable()		
+	}
 	function fill_table_mocks(mocksArray) {
 		$('#main_prediction_live_mocks tbody').empty()
 		for (var i = 0; i < mocksArray.length; i++) {
@@ -2151,8 +2290,6 @@ $(document).ready(function () {
 		$('#ranking_total_statistics_table tbody').empty()
 		var rowNo = 0
 		for (var i = 0; i < usersArray.length; i++) {
-			if (usersArray[i].id === userId)
-				rowNo = i
 			$('#ranking_total_statistics_table').append('<tr id="rtst_addr' + (i) + '"></tr>')
 			$('#rtst_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
@@ -2160,17 +2297,14 @@ $(document).ready(function () {
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
+			if (usersArray[i].id === userId) {
+				$('#rtst_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
+				rowNo = i
+			}
 		}
-		var table = $('#ranking_total_statistics_table')
-    var w = $(window);
-    var row = table.find('tr')
-      .removeClass('active')
-      .eq(+rowNo)
-      .addClass('active')
-    
-    if (row.length){
-      w.scrollTop(row.offset().top - (w.height()/2))
-		}
+		var s = $("#ranking_total_statistics_table tbody > tr:nth-child(" + rowNo + ")").position();
+		if (s)
+			$("#ranking_total_statistics_table").parent().parent().parent().scrollTop( s.top );
 		fixUITable()
 	}
 	function fill_table_teamStatistics(usersArray) {
@@ -2183,8 +2317,6 @@ $(document).ready(function () {
 		$('#ranking_team_statistics_table tbody').empty()
 		var rowNo = 0
 		for (var i = 0; i < usersArray.length; i++) {
-			if (usersArray[i].id === userId)
-				rowNo = i
 			$('#ranking_team_statistics_table').append('<tr id="rtst2_addr' + (i) + '"></tr>')
 			$('#rtst2_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
@@ -2192,44 +2324,37 @@ $(document).ready(function () {
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
+			if (usersArray[i].id.toString() === userId.toString()) {
+				$('#rtst2_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
+				rowNo = i
+			}
 		}
-		var table = $('#ranking_team_statistics_table')
-    var w = $(window);
-    var row = table.find('tr')
-      .removeClass('active')
-      .eq(+rowNo)
-      .addClass('active')
-    
-    if (row.length){
-      w.scrollTop(row.offset().top - (w.height()/2))
-		}
+		var s = $("#ranking_team_statistics_table tbody > tr:nth-child(" + rowNo + ")").position();
+		if (s)
+			$("#ranking_team_statistics_table").parent().parent().parent().scrollTop( s.top );
 		fixUITable()
 	}
 	function fill_table_leagueStatistics(usersArray) {
 		$('#ranking_league_statistics_table tbody').empty()
 		var rowNo = 0
 		for (var i = 0; i < usersArray.length; i++) {
-			if (usersArray[i].id === userId)
-				rowNo = i
-			$('#ranking_league_statistics_table').append('<tr id="rl2st_addr' + (i) + '"></tr>')
 			var p = usersArray[i].checkpointModel.leagues[preferedLeague]
+			$('#ranking_league_statistics_table').append('<tr id="rl2st_addr' + (i) + '"></tr>')
+			
 			$('#rl2st_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(p.toString()) + ' امتیاز </td>'
 			)
+			if (usersArray[i].id === userId) {
+				$('#rl2st_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
+				rowNo = i
+			}
 		}
-		var table = $('#ranking_league_statistics_table')
-    var w = $(window);
-    var row = table.find('tr')
-      .removeClass('active')
-      .eq(+rowNo)
-      .addClass('active')
-    
-    if (row.length){
-      w.scrollTop(row.offset().top - (w.height()/2))
-		}
+		var s = $("#ranking_league_statistics_table tbody > tr:nth-child(" + rowNo + ")").position();
+		if (s)
+			$("#ranking_league_statistics_table").parent().parent().parent().scrollTop( s.top );
 		fixUITable()
 	}
 	function fixUITable() {
@@ -2250,25 +2375,30 @@ $(document).ready(function () {
 		$('#statistics_personal_challenge_table tbody').empty()
 		$('#play_room_estimates tbody').empty()
 		$('#main_prediction_live_mocks tbody').empty()
+		$('#play_room_notif_table tbody').empty()
 	}
 	function clearExact() {
+		$('#main_predict_sort_section').hide()
 		$('#main_exact_selector').selectpicker('val', '')
 		$('#main_exact_div_body').hide()
 		$('#main_exact_select_section').hide()
+		$('#main_predict_live_section').hide()
 	}
 	function showExact() {
 		$('#main_exact_select_section').show()
 	}
 	function displayExact(callback) {
 		startProgressBar()
-		var hours = Math.round((Math.floor(currentExact.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
+		var hours = (((Number(currentExact.endingTime) - (new Date).getTime())) / (1000 * 60 * 60))
 		var str = ''
 		if (hours < 1)
-			str = Persian_Number(Math.round((Math.floor(currentExact.endingTime - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
+			str = Persian_Number(Math.floor(((Number(currentExact.endingTime) - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
 		else if (hours <= 24 && hours >= 1)
 			str = Persian_Number(hours.toString()) + ' ساعت '
 		else 
-			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
+			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز'
+		if (Math.floor(hours % 24) != 0)
+			str += ' و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
 		var filter = {
 			'where': {
 				'and': [
@@ -2333,21 +2463,25 @@ $(document).ready(function () {
 	}
 	function clearPredict() {
 		$('#main_predict_div_body').hide()
-		$('#main_predict_live_section').hide()
 	}
 	function displayPredict() {
-		var hours = Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
+		var hours = (Number(currentPredict.endingTime) - (new Date).getTime()) / (1000 * 60 * 60)
 		var str = ''
 		if (hours < 1)
-			str = Persian_Number(Math.round((Math.floor(currentPredict.endingTime - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
+			str = Persian_Number(Math.floor((Number(currentPredict.endingTime) - (new Date).getTime()) / (1000 * 60)).toString()) + ' دقیقه '
 		else if (hours <= 24 && hours >= 1)
 			str = Persian_Number(hours.toString()) + ' ساعت '
 		else 
-			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
+			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز'
+		if (Math.floor(hours % 24) != 0)
+			str += ' و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
+		console.log(hours)
 		$('#main_predict_remaining').html(str)
 		$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
 		$('#main_predict_explanation').html(currentPredict.explanation)
 		$('#main_predict_div_body').show()
+		$('#main_predict_accept_button').prop('disabled', false)
+		$('#main_predict_reject_button').prop('disabled', false)
 	}
 	// ------------------------------ //
 	// 		 	 		Data Fetchers					//
@@ -2637,10 +2771,6 @@ $(document).ready(function () {
 					url: exactURL,
 					type: "GET",
 					success: function (exactResult) {
-						function compare(a, b){
-							return Number(b.beginningTime) - Number(a.beginningTime)
-						}
-						nextObjectResult.sort(compare)
 						console.log(nextObjectResult)
 						console.log(exactResult)
 						mocksArray = []
@@ -2702,6 +2832,7 @@ $(document).ready(function () {
 					var color = ''
 					var spec1 = ''
 					var spec2 = ''
+					var height = '200px'
 					if (packageInfo.offer === 'Special') {
 						spec1 =  	'<h6 class="text-center font-bold" style="text-align: center;"> بسته </h6>' +
 										 	'<h6 class="text-center" style="text-align: center;"> ویژه </h6>'
@@ -2709,6 +2840,7 @@ $(document).ready(function () {
 						spec2 =	 	'<h6 class="text-center font-bold" style="text-align: center;"> باقی‌مانده </h6>' +
 											'<h6 class="text-center" style="text-align: center;"> ' + Persian_Number(hour.toString()) + ' ساعت</h6>'
 						color = 'bg-orange'
+						height = '250px'
 					}
 					var str = '<div class="item">' +
 											'<a href="" class="package_purchase" id="' + packageInfo.id + '">' +
@@ -2716,7 +2848,7 @@ $(document).ready(function () {
 												'</div>' +
 												'<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0px;">' + 
 													'<div class="card" style="opacity: 0.93; margin-bottom: 0px;">' +
-														'<div class="body ' + color + '" style="max-height:250px;">' +
+														'<div class="body ' + color + '" style="height:' + height + ';">' +
 															'<h3 class="text-center m-t-0">' + packageInfo.name + '</h3>' +
 															'<div class="row clearfix">' +
 																'<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">' +
@@ -2808,7 +2940,28 @@ $(document).ready(function () {
 			}
 		})		
 	}
-	
+
+	function getLatestNotifs(callback) {
+		var filter = {
+			limit: '10'
+		}
+		var notifURLWithAT = wrapAccessToken(coreEngine_url + 'notifications', coreAccessToken)
+		var notifWithFilter = wrapFilter(notifURLWithAT, JSON.stringify(filter))
+		$.ajax({
+			url: notifWithFilter,
+			type: "GET",
+			success: function (notifResult) {
+				notifResult.reverse()
+				notifsArray = notifResult
+				callback(null, notifResult)
+			},
+			error: function (xhr, status, error) {
+				callback(error)
+				console.log(xhr.responseText)
+			}
+		})		
+	}
+
 	$(document).on("click", "#learning_section_button", function (e) {
 		e.preventDefault()
 		$('#learningBox .modal-content').removeAttr('class').addClass('modal-content')
