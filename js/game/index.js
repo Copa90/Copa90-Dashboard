@@ -299,7 +299,7 @@ $(document).ready(function () {
 		if (err)
 			return change_page_scene('page_aaa')		
 	})
-	
+
 	getAllPackages(function(err, packageResult) {
 		if (err)
 			return callback(err)
@@ -2302,7 +2302,7 @@ $(document).ready(function () {
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
-			if (usersArray[i].id === userId) {
+			if (usersArray[i].id.toString() === userId.toString()) {
 				$('#rtst_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
 				rowNo = i
 			}
@@ -2316,7 +2316,7 @@ $(document).ready(function () {
 		for (var i = 0; i < teamsArray.length; i++)
 		if (teamsArray[i].id === favTeam) {
 			var n = teamsArray[i].name
-			$('#ranking_team_statistics_team_name').html(' جدول رنده‌بندی تیم ' + n)
+			$('#ranking_team_statistics_team_name').html(' جدول رده‌بندی تیم ' + n)
 			break
 		}
 		$('#ranking_team_statistics_table tbody').empty()
@@ -2352,7 +2352,7 @@ $(document).ready(function () {
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(p.toString()) + ' امتیاز </td>'
 			)
-			if (usersArray[i].id === userId) {
+			if (usersArray[i].id.toString() === userId.toString()) {
 				$('#rl2st_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
 				rowNo = i
 			}
