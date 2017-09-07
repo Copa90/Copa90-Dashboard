@@ -305,12 +305,6 @@ $(document).ready(function () {
 			return callback(err)
 	})
 
-	getAllUsers(function(err, result) {
-		if (err)
-			return change_page_scene('page_aaa')
-		fill_table_totalStatistics(allUsers)
-	})
-
 	if (!userId || !coreAccessToken) {
 		getAllTeams(function(err, teamsResult) {
 			if (err)
@@ -327,6 +321,11 @@ $(document).ready(function () {
 			getTeamUsers(favTeam, function(err, result) {
 				if (err)
 					return change_page_scene('page_aaa')
+				getAllUsers(function(err, result) {
+					if (err)
+						return change_page_scene('page_aaa')
+					fill_table_totalStatistics(allUsers)
+				})			
 				doneLoading()
 				doneProgressBar()
 				fill_table_teamStatistics(userTeamRanking)
@@ -688,7 +687,7 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$(document).on("click", "#aaa_send_phone_button", function (e) {
 		e.preventDefault()
-		phoneNumber = $("#aaa_send_phone_phone_number").val().replace(' ', '').replace(' ', '')
+		phoneNumber = $("#aaa_send_phone_phone_number").val()
 		console.log(phoneNumber)
 		if (!phoneNumber || phoneNumber.includes('_')) {
 			return warningOperation()
@@ -700,8 +699,8 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#aaa_send_code_button", function (e) {
 		e.preventDefault()
-		var code = $("#aaa_send_code_code").val().replace(' ', '').replace(' ', '').replace(' ', '')
-		var phoneNum = $("#aaa_send_code_phone").val().replace(' ', '').replace(' ', '')
+		var code = $("#aaa_send_code_code").val()
+		var phoneNum = $("#aaa_send_code_phone").val()
 		if (!phoneNum || !code || phoneNum.includes('_') || code.includes('_')) {
 			return warningOperation()
 		}		
@@ -734,7 +733,7 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#aaa_send_password_button", function (e) {
 		e.preventDefault()
-		var phoneNum = $("#aaa_password_phone_number").val().replace(' ', '').replace(' ', '')
+		var phoneNum = $("#aaa_password_phone_number").val()
 		if (!phoneNum || phoneNum.includes('_')) {
 			return warningOperation()
 		}		
@@ -859,7 +858,7 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#aaa_signin_button", function (e) {
 		e.preventDefault()
-		var phoneNum = $("#aaa_signin_phone_number").val().replace(' ', '').replace(' ', '')
+		var phoneNum = $("#aaa_signin_phone_number").val()
 		var pass = $("#aaa_signin_password").val()
 		if (!phoneNum || !pass || phoneNum.includes('_')) {
 			return warningOperation()
@@ -887,6 +886,11 @@ $(document).ready(function () {
 						doneProgressBar()
 						if (err)
 							return failedOperation()
+						getAllUsers(function(err, result) {
+							if (err)
+								return change_page_scene('page_aaa')
+							fill_table_totalStatistics(allUsers)
+						})		
 						fill_table_teamStatistics(userTeamRanking)
 						if (source !== 'telegram') {
 							localStorage.setItem('userCoreAccessToken', coreAccessToken)
@@ -2115,8 +2119,8 @@ $(document).ready(function () {
 		$('.btn').css({"padding-left":'0px', "padding-right": '0px'})
 		var $demoMaskedInput = $('.demo-masked-input');
 
-    $demoMaskedInput.find('.mobile-phone-number').inputmask('0999 999 9999', { placeholder: '0___ ___ ____' });
-		$demoMaskedInput.find('.receivedCode').inputmask('9 9 9 9', { placeholder: '_ _ _ _' });
+    $demoMaskedInput.find('.mobile-phone-number').inputmask('09999999999', { placeholder: '0__________' });
+		$demoMaskedInput.find('.receivedCode').inputmask('9999', { placeholder: '____' });
 
 		$('[data-toggle="tooltip"]').tooltip({
 			container: 'body',
@@ -2902,9 +2906,31 @@ $(document).ready(function () {
 	}
 
 	function getAllUsers(callback) {
-		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients/statistics', coreAccessToken)
+		var filter = {
+			skip: '6',
+			limit: 1000,
+			fields: {
+				'email': false,
+				'time': false,
+				'phoneNumber': false,
+				'emailVerified': false,
+				'trophyModel': false,
+				'teamId': false,
+				'referralModel': false,
+				'checkpointModel': false,
+				'emps': false,
+				'status': false,
+				'profilePath': false,
+				'accountInfoModel': true,
+				'username': true,
+				'fullname': true,
+				'id': true
+			}
+		}
+		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken)
+		var clientURL = wrapFilter(clientURLWithAT, JSON.stringify(filter))
 		$.ajax({
-			url: clientURLWithAT,
+			url: clientURL,
 			type: "GET",
 			success: function (clientResult) {
 				allUsers = clientResult
