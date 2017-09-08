@@ -200,6 +200,13 @@ $(document).ready(function () {
 			change_page_scene('page_aaa')
 			authenticationRequiredOperation()
 		}
+		if (x.status == 0) {
+			localStorage.clear()
+			empty_all_fields()
+			empty_all_tables()
+			console.log('Error in Loading Resources')
+			change_page_scene('page_aaa')
+		}
 		doneLoading()
 		doneProgressBar()
 	})
@@ -2126,6 +2133,10 @@ $(document).ready(function () {
 			container: 'body',
 			delay: {show : 500, hide : 0}
 		})
+
+		$('.carousel').carousel({
+			interval: false
+		}); 
 	}
 
 	$('#join_personal_league_champion_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
@@ -2228,7 +2239,7 @@ $(document).ready(function () {
 		for (var i = 0; i < notifsArray.length; i++) {
 			$('#play_room_notif_table').append('<tr id="prnt_addr' + (i) + '"></tr>')
 			$('#prnt_addr' + i).html(
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + notifsArray[i].statement + '</td>'			
+				'<td align="center" class="col-black" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + notifsArray[i].statement + '</td>'			
 			)
 		}
 		fixUITable()		
@@ -2238,7 +2249,7 @@ $(document).ready(function () {
 		for (var i = 0; i < mocksArray.length; i++) {
 			$('#main_prediction_live_mocks').append('<tr id="mplm_addr' + (i) + '"></tr>')
 			$('#mplm_addr' + i).html(
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + mocksArray[i].explanation + '</td>'			
+				'<td align="center" class="col-black" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + mocksArray[i].explanation + '</td>'			
 			)
 		}
 		fixUITable()		
@@ -2403,7 +2414,7 @@ $(document).ready(function () {
 		if (hours < 1)
 			str = Persian_Number(Math.floor(((Number(currentExact.endingTime) - (new Date).getTime()) / (1000 * 60))).toString()) + ' دقیقه '
 		else if (hours <= 24 && hours >= 1)
-			str = Persian_Number(hours.toString()) + ' ساعت '
+			str = Persian_Number(Math.floor(hours).toString()) + ' ساعت '
 		else 
 			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز'
 		if (Math.floor(hours % 24) != 0)
@@ -2479,11 +2490,12 @@ $(document).ready(function () {
 		if (hours < 1)
 			str = Persian_Number(Math.floor((Number(currentPredict.endingTime) - (new Date).getTime()) / (1000 * 60)).toString()) + ' دقیقه '
 		else if (hours <= 24 && hours >= 1)
-			str = Persian_Number(hours.toString()) + ' ساعت '
-		else 
+			str = Persian_Number(Math.floor(hours).toString()) + ' ساعت '
+		else {
 			str = Persian_Number(Math.floor(hours / 24).toString()) + ' روز'
-		if (Math.floor(hours % 24) != 0)
-			str += ' و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '
+			if (Math.floor(hours % 24) != 0)
+				str += ' و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '	
+		}
 		console.log(hours)
 		$('#main_predict_remaining').html(str)
 		$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
@@ -2839,13 +2851,13 @@ $(document).ready(function () {
 					var spec2 = ''
 					var height = '200px'
 					if (packageInfo.offer === 'Special') {
-						spec1 =  	'<h6 class="text-center font-bold" style="text-align: center;"> بسته </h6>' +
-										 	'<h6 class="text-center" style="text-align: center;"> ویژه </h6>'
-						var hour = Math.round((Math.floor(packageInfo.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
-						spec2 =	 	'<h6 class="text-center font-bold" style="text-align: center;"> باقی‌مانده </h6>' +
-											'<h6 class="text-center" style="text-align: center;"> ' + Persian_Number(hour.toString()) + ' ساعت</h6>'
+						// spec1 =  	'<h6 class="text-center font-bold" style="text-align: center;"> بسته </h6>' +
+						// 				 	'<h6 class="text-center" style="text-align: center;"> ویژه </h6>'
+						// var hour = Math.round((Math.floor(packageInfo.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
+						// spec2 =	 	'<h6 class="text-center font-bold" style="text-align: center;"> باقی‌مانده </h6>' +
+						// 					'<h6 class="text-center" style="text-align: center;"> ' + Persian_Number(hour.toString()) + ' ساعت</h6>'
 						color = 'bg-orange'
-						height = '250px'
+						// height = '250px'
 					}
 					var str = '<div class="item">' +
 											'<a href="" class="package_purchase" id="' + packageInfo.id + '">' +
@@ -2867,7 +2879,7 @@ $(document).ready(function () {
 																'</div>' +
 															'</div>' +
 															'<div class="row clearfix">' +
-																'<h4 class="text-center">' + Persian_Number(packageInfo.chances.toString()) + ' پیش‌بینی</h4>' +
+																'<h4 class="text-center"> خرید &nbsp;' + Persian_Number(packageInfo.chances.toString()) + ' فرصت پیش‌بینی&nbsp;&nbsp;</h4>' +
 																'<h4 class="text-center">' + Persian_Number((packageInfo.price / 1000).toString()) + ' هزار تومان</h4>' +
 															'</div>' +
 														'</div>' +
