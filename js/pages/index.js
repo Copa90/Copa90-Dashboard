@@ -3,6 +3,7 @@
  */
 
 $(function () {
+    setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
     //Widgets count rtl and persian number
     $('.count-to').countTo({
         formatter: function (value, options) {
@@ -120,4 +121,21 @@ function getRandomData() {
     }
 
     return res;
+}
+
+function Persian_Number(text){
+    var en_numbers = ["0","1","2","3","4","5","6","7","8","9"];
+    var fa_numbrs =["۰","۱","۲","۳","۴","۵","۶","۷","۸","۹"];
+    var last_text="";
+    var find=-1;
+    for(var i =0 ;i<text.length;i++)
+    {
+        find=en_numbers.indexOf(text.charAt(i));
+        if(find==-1)
+            last_text+=text.charAt(i);
+        else
+            last_text+=fa_numbrs[find];
+        find=-1;
+    }
+    return last_text;
 }

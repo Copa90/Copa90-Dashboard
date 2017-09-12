@@ -1,4 +1,6 @@
-var coreEngine_url = "http://127.0.0.1:4000/api/clients/login";
+var coreEngine_url = "http://185.105.186.68:4000/api/clients/login"
+
+// var coreEngine_url = "http://127.0.0.1:4000/api/clients/login";
 
 $(document).ready(function () {
 	function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
@@ -46,7 +48,6 @@ $(document).ready(function () {
 
 	$("#login_btn").click(function (e) {
 		e.preventDefault();
-		NProgress.start();
 		var data = {
 			password: $('#password').val()
 		}
@@ -65,13 +66,10 @@ $(document).ready(function () {
 				localStorage.setItem('adminEmail', data.email);						
 				localStorage.setItem('adminCoreAccessToken', coreResult.id);
 				localStorage.setItem('adminId', coreResult.userId);
-				NProgress.done();
 				window.location.href = '../dashboard/predict.html'
 			},
 			error: function (xhr, status, error) {
-				NProgress.done();
-				showNotification('alert-danger', 'Oops! Something went wrong, Please try again somehow later.', 'top', 'right', 'animated fadeIn', 'animated fadeOut');
-				alert(xhr.responseText);
+				showNotification('alert-danger', 'مشکلی در ورود شما ایجاد شده است، مجددا تکرار فرمائید', 'top', 'right', 'animated fadeIn', 'animated fadeOut');
 			}
 		});
 	});

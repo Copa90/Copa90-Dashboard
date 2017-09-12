@@ -657,7 +657,7 @@ Licensed under the BSD-2-Clause License.
         options = {};
       }
       this.options = $.extend({}, Morris.Hover.defaults, options);
-      this.el = $("<div class='" + this.options["class"] + "'></div>");
+      this.el = $("<div style='background-color: #FAFAFA;' class='" + this.options["class"] + "'></div>");
       this.el.hide();
       this.options.parent.append(this.el);
     }
