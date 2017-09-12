@@ -2246,6 +2246,12 @@ $(document).ready(function () {
 	}
 	function fill_table_mocks(mocksArray) {
 		$('#main_prediction_live_mocks tbody').empty()
+		if (mocksArray.length == 0) {
+			var model = {
+				explanation: 'خبر جدیدی برای پوشش زنده نیست.'
+			}
+			mocksArray.push(model)
+		}
 		for (var i = 0; i < mocksArray.length; i++) {
 			$('#main_prediction_live_mocks').append('<tr id="mplm_addr' + (i) + '"></tr>')
 			$('#mplm_addr' + i).html(
@@ -2257,17 +2263,26 @@ $(document).ready(function () {
 	function fill_table_estimates(estimatesArray) {
 		$('#play_room_estimates tbody').empty()
 		var width = $('#play_room_estimates tbody').width() - 200
+		if (mocksArray.length == 0) {
+			var model = {
+				explanation: 'هنوز پیش‌بینی‌ای تایید نکرده‌اید.',
+				leagueName: ''
+			}
+			mocksArray.push(model)
+		}
 		for (var i = 0; i < estimatesArray.length; i++) {
 			var statusColor
 			if (estimatesArray[i].status === 'Win') statusColor = 'col-teal'
 			else if (estimatesArray[i].status === 'Open') statusColor = 'col-indigo'
 			else if (estimatesArray[i].status === 'Lose') statusColor = 'col-red'	
 			$('#play_room_estimates').append('<tr id="pre_addr' + (i) + '"></tr>')
-			
+			var dis = ''
+			if (!estimatesArray[i].leagueName === '')
+				dis = 'hidden'
 			$('#pre_addr' + i).html(
-				'<td class="font-bold mobileCell ' + statusColor + '" align="center" style="vertical-align: middle; width: 75px;">' + (estimatesArray[i].leagueName || 'ناموجود') + '</td>' +				
+				'<td ' + dis + ' class="font-bold mobileCell ' + statusColor + '" align="center" style="vertical-align: middle; width: 75px;">' + (estimatesArray[i].leagueName || 'ناموجود') + '</td>' +				
 				'<td class="' + statusColor + '" align="center" style="vertical-align: middle; width: ' + width + 'px; word-wrap:break-word;">' + (estimatesArray[i].explanation || 'ناموجود') + '</td>' +
-				'<td class="font-bold ' + statusColor + '" align="center" style="vertical-align: middle; width: 50px;">' + Persian_Number((estimatesArray[i].point || 0).toString()) + '</td>'
+				'<td ' + dis + ' class="font-bold ' + statusColor + '" align="center" style="vertical-align: middle; width: 50px;">' + Persian_Number((estimatesArray[i].point || 0).toString()) + '</td>'
 			)
 		}
 		fixUITable()
@@ -2384,7 +2399,7 @@ $(document).ready(function () {
 		}
 	}
 	function fill_table_trophies(userLevel) {
-		for (var i = Number(userLevel) + 1; i < 11; i++) {
+		for (var i = Number(userLevel); i < 11; i++) {
 			var str = '#trophy_' + i
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
@@ -2929,7 +2944,7 @@ $(document).ready(function () {
 				'trophyModel': false,
 				'teamId': false,
 				'referralModel': false,
-				'checkpointModel': false,
+				'checkpointModel': true,
 				'emps': false,
 				'status': false,
 				'profilePath': false,
@@ -2981,18 +2996,20 @@ $(document).ready(function () {
 	}
 
 	function getLatestNotifs(callback) {
-		var filter = {
-			limit: '10'
-		}
 		var notifURLWithAT = wrapAccessToken(coreEngine_url + 'notifications', coreAccessToken)
-		var notifWithFilter = wrapFilter(notifURLWithAT, JSON.stringify(filter))
 		$.ajax({
-			url: notifWithFilter,
+			url: notifURLWithAT,
 			type: "GET",
 			success: function (notifResult) {
 				notifResult.reverse()
-				notifsArray = notifResult
-				callback(null, notifResult)
+				var result = []
+				var count = 10
+				if (notifResult.length < 10)
+					count = notifResult.length
+				for (var i = 0; i < count; i++)
+					result.push(notifResult[i])
+				notifsArray = result
+				callback(null, result)
 			},
 			error: function (xhr, status, error) {
 				callback(error)
