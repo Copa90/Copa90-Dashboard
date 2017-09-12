@@ -733,7 +733,6 @@ $(document).ready(function () {
 		var firstKey = this
 		var secondKey = $(this).siblings().eq(0)
 		var predictSection = $(this).parent().siblings().eq(0).html()
-		var parent = $(this).parent()
 		var parts = predictSection.split("<br>")
 		var predictId = parts[0]
 		finalizePredict(predictId, 1, function(result) {
@@ -981,7 +980,7 @@ $(document).ready(function () {
 			filter.where.and = []
 			if (leagues.length > 0)
 				filter.where.and.push({
-					'league': {
+					'leagueId': {
 						'inq': leagues
 					}
 				})
