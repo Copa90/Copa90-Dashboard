@@ -2865,15 +2865,8 @@ $(document).ready(function () {
 					var spec1 = ''
 					var spec2 = ''
 					var height = '200px'
-					if (packageInfo.offer === 'Special') {
-						// spec1 =  	'<h6 class="text-center font-bold" style="text-align: center;"> بسته </h6>' +
-						// 				 	'<h6 class="text-center" style="text-align: center;"> ویژه </h6>'
-						// var hour = Math.round((Math.floor(packageInfo.endingTime - (new Date).getTime())) / (1000 * 60 * 60))
-						// spec2 =	 	'<h6 class="text-center font-bold" style="text-align: center;"> باقی‌مانده </h6>' +
-						// 					'<h6 class="text-center" style="text-align: center;"> ' + Persian_Number(hour.toString()) + ' ساعت</h6>'
+					if (packageInfo.offer === 'Special')
 						color = 'bg-orange'
-						// height = '250px'
-					}
 					var str = '<div class="item">' +
 											'<a href="" class="package_purchase" id="' + packageInfo.id + '">' +
 												'<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0px;">' +
