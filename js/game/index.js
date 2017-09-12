@@ -2331,7 +2331,7 @@ $(document).ready(function () {
 			$('#ranking_total_statistics_table').append('<tr id="rtst_addr' + (i) + '"></tr>')
 			$('#rtst_addr' + i).html(
 				'<th align="center" style="padding-left:0px; vertical-align: middle; white-space: nowrap; word-wrap: break-word; width: 2%;">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
+				'<td width="80px" align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; word-wrap: break-word; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
@@ -2358,7 +2358,7 @@ $(document).ready(function () {
 			$('#ranking_team_statistics_table').append('<tr id="rtst2_addr' + (i) + '"></tr>')
 			$('#rtst2_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
+				'<td width="80px" align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
@@ -2381,7 +2381,7 @@ $(document).ready(function () {
 			
 			$('#rl2st_addr' + i).html(
 				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
+				'<td width="80px" align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
 				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(p.toString()) + ' امتیاز </td>'
 			)
@@ -2397,8 +2397,11 @@ $(document).ready(function () {
 	}
 	function fixUITable() {
 		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
+		$('table td').css({'overflow':'hidden;'})
+		$('table tr').css({'overflow':'hidden;'})
 		if (platform.name.includes('Mobile') || source === 'telegram' || $(window).width() <= 400 || detectmob()) {
-			$('tr').css({"font-size":'80%'})
+			$('td').css({"font-size":'80%'})
+			$('td').css({'word-wrap':'break-all'})
 			$('.mobileCell').hide()
 		}
 	}
