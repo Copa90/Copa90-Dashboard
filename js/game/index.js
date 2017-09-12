@@ -2262,7 +2262,7 @@ $(document).ready(function () {
 	}
 	function fill_table_estimates(estimatesArray) {
 		$('#play_room_estimates tbody').empty()
-		var width = $('#play_room_estimates tbody').width() - 200
+		var width = $('#play_room_estimates tbody').width() - 250
 		if (mocksArray.length == 0) {
 			var model = {
 				explanation: 'هنوز پیش‌بینی‌ای تایید نکرده‌اید.',
@@ -2327,10 +2327,10 @@ $(document).ready(function () {
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#ranking_total_statistics_table').append('<tr id="rtst_addr' + (i) + '"></tr>')
 			$('#rtst_addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+				'<th align="center" style="padding-left:0px; vertical-align: middle; white-space: nowrap; word-wrap: break-word; width: 2%;">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="overflow:hidden; vertical-align: middle; white-space: nowrap; word-wrap: break-word; width: 5%;">' + usersArray[i].username + '</td>' +
 				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; word-wrap: break-word; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 			if (usersArray[i].id.toString() === userId.toString()) {
 				$('#rtst_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
@@ -2393,7 +2393,7 @@ $(document).ready(function () {
 		fixUITable()
 	}
 	function fixUITable() {
-		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
+		$('table').css({'table-layout': 'fixed;', 'width': '100%;','word-break': 'break-word;'})
 		if (platform.name.includes('Mobile') || source === 'telegram' || $(window).width() <= 400 || detectmob()) {
 			$('.mobileCell').hide()
 		}
@@ -2403,7 +2403,7 @@ $(document).ready(function () {
 			var str = '#trophy_' + i
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
-		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
+		$('table').css({'table-layout': 'fixed;', 'width': '100%;', 'word-break': 'break-word'})
 	}
 	function empty_all_tables() {
 		$('#statistics_personal_league_table tbody').empty()
