@@ -3208,15 +3208,15 @@ section.content {
   background-color: #fff;
   position: relative;
   overflow: hidden;
-  margin-bottom: 30px; }
+  margin-bottom: 10px; }
   .info-box-3 .icon {
-    position: absolute;
-    right: 10px;
+    /* position: absolute; */
+    /* right: 10px; */
     bottom: 2px;
-    text-align: center; }
+     }
     .info-box-3 .icon i {
       color: rgba(0, 0, 0, 0.15);
-      font-size: 60px; }
+      font-size: 10px; }
   .info-box-3 .chart {
     margin-right: 5px; }
   .info-box-3 .chart.chart-bar {
@@ -3240,16 +3240,16 @@ section.content {
     width: 100%;
     padding: 7px 16px; }
     .info-box-3 .content .text {
-      font-size: 13px;
-      margin-top: 11px;
+      font-size: 12px;
+      margin-top: 5px;
       text-align: right;
       color: #555; }
     .info-box-3 .content .number {
       font-weight: normal;
-      margin: auto;
-      width: 50%;
+       margin: auto; 
+        width: 1%;  
       font-size: 26px;
-      text-align: center;
+      margin-right: 70; 
       margin-top: -4px; 
       color: #555; }
 
@@ -6264,7 +6264,7 @@ fieldset[disabled] .form-control {
     color: #444; }
   .page-loader-wrapper .loader {
     position: relative;
-    top: calc(50% - 30px); }
+    top: calc(30% - 30px); }
 
 /* Preloaders ================================== */
 .md-preloader .pl-red {

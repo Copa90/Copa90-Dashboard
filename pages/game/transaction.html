@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>مسابقه کوپا ۹۰</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+	
+	<!-- Bootstrap Core Css -->
+	<link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+	<!-- Waves Effect Css -->
+	<link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+	<!-- Animation Css -->
+	<link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+	<!-- Colorpicker Css -->
+	<link href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet" />
+
+	<!-- Bootstrap Spinner Css -->
+	<link href="../../plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
+
+	<!-- noUISlider Css -->
+	<link href="../../plugins/nouislider/nouislider.min.css" rel="stylesheet" />
+
+	<!-- Custom Css -->
+	<link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/rtl.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+	<link href="../../css/themes/theme-green.css" rel="stylesheet" />
+</head>
+
+<body class="theme-green" style="background: url('../../images/background.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+	<!-- Page Loader -->
+	<div class="page-loader-wrapper">
+		<div id="rainbow-progress-bar1" class="rainbow-progress-bar"></div>
+		<div class="loader">
+			<div class="preloader">
+				<div class="spinner-layer pl-teal">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<br>
+			<h5>لطفا کمی صبر کنید</h5>
+			<br>
+			<h4>تراکنش شما در حال بررسی است</h4>
+		</div>
+	</div>
+	<!-- #END# Page Loader -->
+
+    <section class="">
+        <div class="content container-fluid">
+
+			<!-- Start of Transaction  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%;" id="page_transaction">
+				<div class="row clearfix">
+					<h2 class="text-center m-t-20 m-b-50 sharedMobile sharedTitle" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
+
+							<!-- Start of Transaction Result -->
+							<div class="row clearfix">
+								<div class="row clearfix m-t-10">
+									<h4 class="text-center">تراکنش مالی خرید محصول</h4>
+									<br>
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body table-responsive">
+											<table class="table table-striped">
+												<tbody>
+												<tr>
+													<th scope="row">مبلغ تراکنش</th>
+													<td id="transaction_price"> خطا در پرداخت: معتبر نیست </td>
+												</tr>
+												<tr>
+													<th scope="row">شناسه</th>
+													<td id="transaction_description"> خطا در پرداخت: معتبر نیست </td>
+												</tr>
+												<tr>
+													<th scope="row">وضعیت تراکنش</th>
+													<td id="transaction_status"> خطا در پرداخت: معتبر نیست </td>
+												</tr>
+												<tr>
+													<th scope="row">شماره تراکنش</th>
+													<td id="transaction_refId"> خطا در پرداخت: معتبر نیست </td>
+												</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End of Transaction Result -->
+
+							<div class="row clearfix" style="bottom:0;">
+								<div class="col-lg-3 col-md-2 col-sm-2">
+								</div>
+								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+									<button type="button" id="transaction_result_button" class="btn bg-light-green btn-block btn-lg waves-effect" disabled> خروجی </button>
+								</div>
+								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+									<button type="button" id="transaction_return_button" class="btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Transaction  -->			
+
+		</div>
+    </section>
+
+    <!-- Jquery Core Js -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+    <!-- Select Plugin Js -->
+    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+    <!-- Slimscroll Plugin Js -->
+    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+    <!-- Bootstrap Notify Plugin Js -->
+    <script src="../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="../../plugins/node-waves/waves.js"></script>
+
+	<!-- noUISlider Plugin Js -->
+	<script src="../../plugins/nouislider/nouislider.js"></script>
+
+    <!-- Custom Js -->
+	<script src="../../js/admin.js"></script>
+    <script src="../../js/game/transaction.js"></script>  
+
+    <!-- Demo Js -->
+	<script src="../../js/demo.js"></script>
+	<script src="../../plugins/platform/platform.js"></script>	
+</body>
+
+</html>

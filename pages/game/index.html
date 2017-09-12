@@ -1,0 +1,2381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	<meta name="description" content="⚽️ متفاوت‌ترین سایت پیش‌بینی فوتبال، برای شما که حرفه‌ای فوتبال می‌بینید ⚽️" />
+	<meta name="keywords" content="⚽️ در کوپا۹۰ فوتبال رو دقیق پیش‌بینی کنید. متفاوت‌ترین سایت پیش‌بینی فوتبال، برای شما که حرفه‌ای فوتبال می‌بینید ⚽️" />
+	<meta name='reply-to' content="Info@copa90.ir">
+	<meta name="author" content="Alirëza WJ Arabi" />
+
+	<meta property="og:title" content="کوپا ۹۰" />
+	<meta property="og:image" content="../../images/logo.png" />
+	<meta property="og:url" content="http://copa90.ir/index.html" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Copa90" />
+	<meta property="og:description" content="⚽️ در کوپا۹۰ فوتبال رو دقیق پیش‌بینی کنید. متفاوت‌ترین سایت پیش‌بینی فوتبال، برای شما که حرفه‌ای فوتبال می‌بینید ⚽️" />
+
+	<meta name="twitter:card" content="app">
+	<meta name="twitter:site" content="http://copa90.ir/index.html">
+	<meta name="twitter:title" content="کوپا ۹۰">
+	<meta name="twitter:description" content="⚽️ در کوپا۹۰ فوتبال رو دقیق پیش‌بینی کنید ⚽️">
+	<meta name="twitter:creator" content="@MrWooJ">
+	<meta name="twitter:image:src" content="../../images/logo.png">
+
+	<link rel="shortcut" href="../../favicon.ico">
+
+    <title>مسابقه کوپا ۹۰</title>
+    <!-- Favicon-->
+    <link rel="icon" href="../../favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+	
+	<!-- Bootstrap Core Css -->
+	<link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+	<!-- Waves Effect Css -->
+	<link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+
+	<!-- Animation Css -->
+	<link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+	<!-- Wait Me Css -->
+	<link href="../../plugins/waitme/waitMe.css" rel="stylesheet" />
+
+	<!-- Multi Select Css -->
+	<link href="../../plugins/multi-select/css/multi-select.css" rel="stylesheet">
+
+	<!-- Bootstrap Spinner Css -->
+	<link href="../../plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
+
+	<!-- Bootstrap Tagsinput Css -->
+	<link href="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+
+	<!-- Bootstrap Select Css -->
+	<link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+	<!-- noUISlider Css -->
+	<link href="../../plugins/nouislider/nouislider.min.css" rel="stylesheet" />
+
+	<!-- Sweetalert Css -->
+	<link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
+    <!-- Morris Css -->
+    <link href="../../plugins/morrisjs/morris.css" rel="stylesheet" />
+
+	<!-- Custom Css -->
+	<link href="../../css/style.css" rel="stylesheet">
+    <link href="../../css/rtl.css" rel="stylesheet">
+
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+	<link href="../../css/themes/theme-green.css" rel="stylesheet" />
+</head>
+
+<!-- <body class="theme-green" background="" style="background-position: 50% 0; max-width: 100%; overflow-x: hidden;"> -->
+<body class="theme-green" style="background: url('../../images/background.jpg') no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+	<!-- Page Loader -->
+	<div class="page-loader-wrapper">
+		<div id="rainbow-progress-bar1" class="rainbow-progress-bar"></div>
+		<div class="loader">
+			<div class="preloader">
+				<div class="spinner-layer pl-teal">
+					<div class="circle-clipper left">
+						<div class="circle"></div>
+					</div>
+					<div class="circle-clipper right">
+						<div class="circle"></div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<br>
+			<h5>لطفا کمی صبر کنید</h5>
+			<br>
+			<h4>شما در حال اتصال به سرورهای کوپا ۹۰ می‌باشید</h4>
+			<br>
+			<br>
+			<div class="row clearfix">
+				<div class="col-lg-4 col-md-4 col-sm-2 col-xs-1">
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-8 col-xs-10">
+
+					<div class="card" style="opacity: 0.93;">
+						<div class="body">
+							<h5 class="col-teal font-16 font-bold m-b-30">راهنمایی‌های بازی</h5>
+							<h5 class="col-blue-grey font-italic" id="hint_box_description" style="line-height: 250%;"></h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- #END# Page Loader -->
+
+    <section class="">
+        <div class="content container-fluid" style="overflow-x:hidden;">
+			
+			<!-- Start of Demo  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_demo">
+				<div class="row clearfix" id="demo_title">
+					<h1 class="text-center" style="color:white;">به کوپا ۹۰</h1>
+					<br>
+					<h1 class="text-center" style="color:white;">خوش آمدید</h1>
+				</div>
+				<div class="row clearfix text-center" id="demo_window_image" style="overflow-x:hidden;">
+					<img class="windowDemoImage" src="../../images/demo_ipad.png" style="width: 32%;" alt="demo">
+					<img class="mobileDemoImage" id="demo_mobile_frame" src="../../images/mobile.png" style="width: 85%; overflow-x:hidden; z-index:1;" alt="demo">
+					<div id="demo_guide_image" style="position:absolute; top:1px; left:1px; z-index:10; overflow-y:scroll;">
+						<img style="overflow-y:scroll; width:100%; overflow-y:scroll;" src="../../images/guide.png"></img>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="col-lg-5 col-md-5 col-sm-4 col-xs-2">
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 m-t-30 m-b-50">
+						<button type="button" id="demo_start_game_button" class="btn bg-green btn-block btn-lg waves-effect"> شروع بازی </button>
+					</div>
+				</div>
+			</div>
+			<!-- End of Demo  -->
+
+			<!-- Start of AAA  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_aaa">
+				<div class="row clearfix sharedTitle sharedMobile">
+					<h2 class="text-center m-t-20 m-b-50" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-2">
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
+							<div id="phone" >
+								<div class="row clearfix m-b-20">
+									<h5 class="text-center">برای شروع ثبت نام، لطفا شماره خوب را ثبت کنید</h5>
+									<br>
+								</div>
+								<div id="sendPhone">
+									<div class="row clearfix demo-masked-input">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>شماره موبایل</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">phone_iphone</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="aaa_send_phone_phone_number" class="form-control mobile-phone-number text-center" dir="ltr"  placeholder="Ex: 0912 123 4567">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1">
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6 col-xs-10 m-t-10">
+											<button type="button" id="aaa_send_phone_button" class="btn bg-green btn-block btn-lg waves-effect"> ثبت شماره همراه </button>
+										</div>
+									</div>
+								</div>
+								<div id="sendCode">
+									<div class="row clearfix demo-masked-input">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>شماره موبایل</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">phone_iphone</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="aaa_send_code_phone" class="form-control mobile-phone-number text-center" dir="ltr"  placeholder="Ex: 0912 123 4567">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix demo-masked-input">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>کد احراز هویت</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">vpn_key</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="aaa_send_code_code" class="form-control receivedCode text-center" dir="ltr"  placeholder="Ex: 1 2 3 4">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1">
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6 col-xs-10 m-t-10">
+											<button type="button" id="aaa_send_code_button" class="btn bg-green btn-block btn-lg waves-effect"> ارسال کد </button>
+										</div>
+									</div>
+								</div>
+								<div class="row m-t-15 m-b--20">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-right">
+											<a href="#" class="signinHref text-center" style="text-align: center;"> وارد حسابتان شوید </a>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-left">
+											<a href="#" class="passwordHref text-center" style="text-align: center;"> فراموشی رمز عبور </a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="password">
+								<div class="row clearfix m-b-20">
+									<h5 class="text-center">برای بازیابی رمز، شماره تلفن خود را وارد کنید</h5>
+									<br>
+								</div>
+								<div id="sendPasswordPhone">
+									<div class="row clearfix demo-masked-input">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>شماره موبایل</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">phone_iphone</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="aaa_password_phone_number" class="form-control mobile-phone-number text-center" dir="ltr"  placeholder="Ex: 0912 123 4567">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1">
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-6 col-xs-10 m-t-10">
+											<button type="button" id="aaa_send_password_button" class="btn bg-green btn-block btn-lg waves-effect"> ارسال رمز </button>
+										</div>
+									</div>
+								</div>
+								<div class="row m-t-15 m-b--20">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-right">
+											<a href="#" class="signinHref text-center" style="text-align: center;"> وارد حسابتان شوید </a>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-left">
+											<a href="#" class="signupHref text-center" style="text-align: center;"> ثبت نام کنید </a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="sign-up">
+								<div class="row clearfix m-b-20">
+									<h5 class="text-center">برای تکمیل ثبت نام خود اطلاعات زیر را ثبت کنید</h5>
+									<br>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<div class="form-group form-float">
+											<div class="form-line">
+												<input id="aaa_signup_fullname" type="text" class="form-control">
+												<label class="form-label">نام و نام خانوادگی (به فارسی)</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<div class="form-group form-float">
+											<div class="form-line">
+												<input id="aaa_signup_username" dir="ltr" type="text" class="form-control">
+												<label class="form-label">نام کاربری</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<div class="form-group form-float">
+											<div class="form-line">
+												<input id="aaa_signup_email" type="email" dir="ltr" class="form-control">
+												<label class="form-label">ایمیل</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<div class="form-group form-float">
+											<div class="form-line">
+												<input id="aaa_signup_password" dir="ltr" type="password" class="form-control">
+												<label class="form-label">رمز عبور</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<div class="form-group form-float">
+											<div class="form-line">
+												<input id="aaa_signup_referrer" dir="ltr" type="text" class="form-control">
+												<label data-toggle="tooltip" data-placement="top" title="اگر با کد معرفی‌ای که از دوستانت گرفتی ثبت‌نام کنی ۵ شانس پیش‌بینی بیشتر هدیه می‌گیری" class="form-label">کد معرف (اختیاری)</label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<b style="font-size:12px;"> تیم مورد علاقه‌تان </b>
+										<select id="aaa_signup_select_team" class="team_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-6 col-xs-10 m-t-10">
+										<button type="button" id="aaa_signup_button" class="btn bg-green btn-block btn-lg waves-effect"> ثبت نام </button>
+									</div>
+								</div>
+								<div class="row m-t-15 m-b--20">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-right">
+											<a href="#" class="signinHref text-center" style="text-align: center;"> وارد حسابتان شوید </a>
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-left">
+											<a href="#" class="passwordHref text-center" style="text-align: center;"> فراموشی رمز عبور </a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div id="sign-in">
+								<div class="row clearfix m-b-20">
+									<h5 class="text-center">برای ورود به سیستم اطلاعات خود را وارد کنید</h5>
+									<br>
+								</div>
+								<div class="row clearfix demo-masked-input">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<b>شماره موبایل</b>
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="material-icons">phone_iphone</i>
+											</span>
+											<div class="form-line">
+												<input type="text" id="aaa_signin_phone_number" class="form-control mobile-phone-number text-center" dir="ltr"  placeholder="Ex: 0912 123 4567">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix demo-masked-input">
+									<div class="col-lg-2 col-md-1 col-sm-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+										<b>رمز عبور</b>
+										<div class="input-group">
+											<span class="input-group-addon">
+												<i class="material-icons">vpn_key</i>
+											</span>
+											<div class="form-line">
+												<input type="password" id="aaa_signin_password" class="form-control text-center" dir="ltr"  placeholder="Ex: 123456">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-6 col-xs-10 m-t-10">
+										<button type="button" id="aaa_signin_button" class="btn bg-green btn-block btn-lg waves-effect"> ورود </button>
+									</div>
+								</div>
+								<div class="row m-t-15 m-b--20">
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-right">
+											<a href="#" class="signupHref text-center" style="text-align: center;"> ثبت نام کنید </a>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-center">
+											<a href="#" class="sendCodeHref text-center" style="text-align: center;"> ارسال کد </a>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-left">
+											<a href="#" class="passwordHref text-center" style="text-align: center;"> فراموشی رمز عبور </a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of AAA  -->
+			
+			<!-- Start of Main Menue  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_main_menu">
+				<div class="row clearfix sharedTitle sharedMobile">
+					<h2 class="text-center m-t-20 m-b-50" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:800px; overflow-y:auto">
+							<!-- Widgets -->
+							<div class="row clearfix">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 col-md-offset-4 col-lg-offset-4 col-sm-offset-4">
+									<div class="info-box-3 bg-cyan hover-expand-effect hover-zoom-effect">
+										<div class="content">
+											<div class="text">امتیاز شما</div>
+											<div class="card_total_points number count-to" data-from="0" data-to="999000" data-speed="2000" data-fresh-interval="20"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+									<div class="info-box-3 bg-light-green hover-expand-effect hover-zoom-effect">
+										<div class="content">
+											<div class="text">شانس‌های شما</div>
+											<div class="card_rem_predicts number count-to" data-from="0" data-to="888" data-speed="2000" data-fresh-interval="20"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- #END# Widgets -->
+							<div class="row clearfix sharedMobile">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-1">
+								</div>
+								<div id="main_menu_profile_image" class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+									 <div class="logo text-center"> 
+										<div class="image">
+											<img src="../../images/golden.png" width="215" height="215" alt="User"/>
+										</div>
+									 </div> 
+								</div>
+							</div>
+							<div class="row clearfix">
+								<h2 class="text-center m-t-10 m-b-20 sharedName">علیرضا عربی</h2>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-4 col-md-4 col-sm-3 col-xs-2">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 m-t-10">
+									<button style="font-size: 130%;" type="button" id="main_menu_prediction_button" class="btn bg-green btn-block btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن"> ثبت پیش‌بینی‌ </button>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-4 col-md-4 col-sm-3 col-xs-2">
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-5" hidden>
+									<button type="button" id="main_menu_challenge_button" class="btn bg-light-green btn-block m-t-10 m-b-10 btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="دوئل کن، دوستات رو به چالش بکش و پیش‌بینی دو برابر برنده شو"> چالش دو نفره </button>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-8">
+									<button type="button" id="main_menu_champion_button" class="btn bg-light-green btn-block m-t-10 m-b-10 btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="لیگ بساز، دوستانت رو دعوت کن و امتیازت را با اونا مقایسه کن"> لیگ شخصی </button>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-1">
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 m-b-10">
+									<button type="button" id="main_menu_profile_button" class="btn bg-light-green btn-block btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="آمار و ارقام پیش‌بینی‌هایی که ثبت کردی، دستاوردها و اطلاعات تو اینجاست"> اطلاعات کاربری </button>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 m-b-10">
+									<button type="button" id="main_menu_statistics_button" class="btn bg-light-green btn-block btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="رتبه‌‌ات در جدول امتیازاتِ مجموع و جداول مربوط به لیگ‌ها و تیم‌های مختلف رو اینجا ببین"> رده‌بندی </button>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-1">
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 m-b-10">
+									<button type="button" id="main_menu_awards_button" class="btn bg-light-green btn-block btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="کوپا۹۰ جوایز هفتگی و ماهانه و فصلی زیادی داره که جزئیاتش توی این بخش اومده"> جوایز </button>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 m-b-10">
+									<button type="button" class="packagePurchase btn bg-light-green btn-block btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="بسته بخر، شانس‌های پیش‌بینی‌‌ات رو افزایش بده تا امتیاز بیشتری بگیری"> خرید بسته </button>
+								</div>
+							</div>
+							<div class="row clearfix m-t-20 text-center">
+								<div class="col-lg-2 col-md-2 col-sm-2 m-b-0" style="margin-bottom: 0;">
+								</div>			
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-left" style="margin-bottom: 0;">
+									<h5 class="m-t-5">کوپا ۹۰ را دنبال کنید</h5>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-right m-b-0" style="margin-bottom: 0;">
+									<a href="https://t.me/copa90ir">
+										<i style="color: #0088cc; font-size: 30px;" class="fa fa-telegram m-l-10 m-r-10"></i>
+									</a>
+									<a href="https://www.instagram.com/copa90.ir/">
+										<i style="color: #c13584; font-size: 30px;" class="fa fa-instagram m-l-10 m-r-10"></i>
+									</a>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Main Menue  -->
+			
+			<!-- Start of Main Prediction  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_main_prediction">
+				<div class="row clearfix sharedTitle sharedMobile">
+					<h2 class="text-center m-t-20 m-b-50" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto; overflow-x:hidden;">
+							<div class="row clearfix m-t-15 m-b-25">
+								<h4 id="main_predict_league_name" class="text-center">پیش‌بینی‌های لیگ انگلیس</h4>
+							</div>
+							<!-- Start of Navbar -->
+							<div class="row clearfix">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+									<div class="row clearfix">
+										<ul class="nav nav-tabs tab-col-teal" role="tablist">
+											<li role="presentation" class="active col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav15" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">هفتگی</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav16" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">زنده</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav17" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">فصلی</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav18" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">قطعی</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- End of Navbar -->
+							<div class="row clearfix m-b-15" id="main_predict_live_section">
+								<div class="row clearfix m-t-10">
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-3 m-b-0">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-center m-b-0">
+										<button style="border: 2px solid green; border-radius: 25px; background-color: Transparent;" type="button" id="main_predict_mocks_anchor" class="btn btn-block btn-md m-b--20 waves-effect"> امروز در کوپا ۹۰ </button>
+									</div>
+								</div>
+								<br>
+								<div class="row clearfix">
+									<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1 m-b-0" style="margin-bottom: 0;">
+									</div>
+									<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 text-center m-b-0" style="margin-bottom: 0;">
+										<div class="col-lg-3 col-md-3 col-sm-3 m-b-0" style="margin-bottom: 0;">
+										</div>			
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-9 text-center m-b-0" style="margin-bottom: 0;">
+											<div class="row clearfix">
+												<h6 class="m-b-0" style="text-align: right; text-justify: inter-word;line-height: 170%; ">به‌روز رسانی خودکار</h6>												
+											</div>		
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 text-center m-b-0" style="margin-bottom: 0;">
+											<div class="switch m-t-10 m-b-10">
+												<label><input id="main_predict_checkbox" type="checkbox" checked><span class="lever switch-col-green"></span></label>
+											</div>			
+										</div>	
+									</div>
+								</div>	
+							</div>
+							<div class="row clearfix m-b-15" id="main_predict_sort_section">
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1 m-b-0" style="margin-bottom: 0;">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 m-b-0" style="margin-bottom: 0;">
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+									</div>			
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> انتخاب ترتیب نمایش </b>
+										<select id="main_predict_sort_selector" class="form-control show-tick text-right" data-size="3" title="یک ترتیب را انتخاب کنید" >
+											<option value="SortByTime">بر اساس زمان ‌باقی‌مانده</option>
+											<option value="SortByPoint">بر اساس امتیاز</option>
+										</select>	
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix m-b-15" id="main_exact_select_section">
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1 m-b-0" style="margin-bottom: 0;">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10 m-b-0" style="margin-bottom: 0;">
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+									</div>			
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> انتخاب نوع پیش‌بینی </b>
+										<select id="main_exact_selector" class="form-control show-tick text-right" data-size="3" title="یک نوع را انتخاب کنید" >
+										</select>	
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix" style="margin-bottom: 0;">
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1" style="margin-bottom: 0;">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" style="margin-bottom: 0;">
+									<div class="card">
+										<div class="body" style="min-height:200px;" id="main_predict_div_body">
+											<div class="row clearfix">
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+													<div class="row clearfix text-center">
+														<small class="text-center col-blue-grey" style="line-height: 200%;">زمان باقی‌مانده</small>
+														<br>
+														<small id="main_predict_remaining" class="text-center col-blue-grey font-14 font-bold" style="line-height: 200%;">۷۰ ساعت</small>
+													</div>
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-2">
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+													<div class="row clearfix text-center">
+														<small class="text-center col-blue-grey" style="line-height: 200%;">امتیاز پیش‌بینی‌</small>
+														<br>
+														<small id="main_predict_point" class="text-center font-14 col-blue-grey font-bold" style="line-height: 200%;">۱۵ امتیاز</small>
+													</div>
+												</div>
+											</div>
+											<div class="row clearfix">
+												<div class="col-lg-2 col-md-1 col-sm-1">
+												</div>
+												<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+													<p id="main_predict_explanation" class="text-center font-15 font-italic" style="line-height: 200%;">روملو لوکاکو در اولین بازی خود در لیگ برتر با لباس منچستریونایتد حداقل دو گل میزند.</p>
+												</div>
+											</div>
+											<div class="row clearfix" style="bottom:0;">
+												<div class="col-lg-3 col-md-2 col-sm-2">
+												</div>
+												<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+													<button type="button" id="main_predict_accept_button" class="btn bg-light-blue btn-block btn-lg m-b--20 waves-effect"> تائید </button>
+												</div>
+												<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+													<button type="button" id="main_predict_reject_button" class="btn bg-amber btn-block btn-lg m-b--20 waves-effect"> رد </button>
+												</div>
+											</div>
+										</div>
+										<div class="body" style="min-height:200px;" id="main_exact_div_body">
+											<div class="row clearfix">
+												<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+													<div class="row clearfix text-center">
+														<small class="text-center col-blue-grey" style="line-height: 200%;">زمان باقی‌مانده</small>
+														<br>
+														<small id="main_exact_remaining" class="text-center col-blue-grey font-14 font-bold" style="line-height: 200%;">۷۰ ساعت</small>
+													</div>
+												</div>
+												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+												</div>
+												<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+													<div class="row clearfix text-center">
+														<small class="text-center col-blue-grey" style="line-height: 200%;">نوع پیش‌بینی‌</small>
+														<br>
+														<small id="main_exact_topic" class="text-center font-14 col-blue-grey font-bold" style="line-height: 200%;">۱۵ امتیاز</small>
+													</div>
+												</div>
+											</div>
+											<div class="row clearfix">
+												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+												</div>
+												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+													<b style="font-size:12px;"> انتخاب اول </b>
+													<select id="main_exact_first_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک نوع را انتخاب کنید" data-max-options="1" multiple>
+													</select>	
+												</div>
+											</div>
+											<div class="row clearfix">
+												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+												</div>
+												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+													<b style="font-size:12px;"> انتخاب دوم </b>
+													<select id="main_exact_second_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک نوع را انتخاب کنید" data-max-options="1" multiple>
+													</select>	
+												</div>
+											</div>
+											<div class="row clearfix">
+												<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+												</div>
+												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+													<b style="font-size:12px;"> انتخاب سوم </b>
+													<select id="main_exact_third_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک نوع را انتخاب کنید" data-max-options="1" multiple>
+													</select>	
+												</div>
+											</div>
+											<br>
+											<div class="row clearfix" style="bottom:0;">
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-3">
+												</div>
+												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+													<button type="button" id="main_exact_accept_button" class="btn bg-light-blue btn-block btn-lg m-b--20 waves-effect" data-toggle="tooltip" data-placement="top" title="هشدار! بعد از تایید دیگه نمی‌تونی انتخابت رو عوض کنی"> تائید </button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
+									<h6 class="text-center">تعداد شانس‌های باقی‌مانده برای ‌پیش‌بینی</h6>
+									<div class="progress" style="height:5px;">
+										<div id="main_predict_progress_white" class="progress-bar" style="width: 25%; color:white; background-color:white;">
+										</div>
+										<div id="main_predict_progress_fill" class="progress-bar bg-green progress-bar-striped active" style="width: 100%">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-1">
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 m-b-10">
+									<button type="button" class="packagePurchase btn bg-green btn-block btn-lg waves-effect"> خرید بسته </button>
+								</div>
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-5 m-b-10">
+									<button type="button" id="main_predict_return_menu" class="btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Main Prediction  -->
+
+			<!-- Start of Private League  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_private_league">
+				<div class="row clearfix sharedTitle sharedMobile">
+					<h2 class="text-center m-t-20 m-b-50" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
+
+							<!-- Start of Navbar -->
+							<div class="row clearfix">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+									<div class="row clearfix">
+										<ul class="nav nav-tabs tab-col-teal" role="tablist">
+											<li role="presentation" class="active col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav1" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">رده‌بندی</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav2" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">جدید</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav3" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">تغییرات</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav4" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">عضویت</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- End of Navbar -->
+
+							<!-- Start of Edit Personal League -->
+							<div class="row clearfix" id="nav3_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> لیگ‌های شخصی </b>
+										<select id="edit_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ شخصی را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> نام لیگ شخصی </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input type="text" id="edit_personal_league_name" class="form-control" placeholder="یک نام پیشنهادی">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-3">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+										<b style="font-size:12px;"> ظرفیت </b>
+										<div class="input-group spinner" data-trigger="spinner">
+											<div class="form-line">
+												<input type="text" id="edit_personal_league_capacity" class="form-control text-center" value="10" data-rule="quantity">
+											</div>
+											<span class="input-group-addon">
+												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+												<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-3 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" id="edit_personal_league_delete_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> حذف </button>
+									</div>
+									<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 m-b-10">
+										<button type="button" id="edit_personal_league_save_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> ثبت </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Edit Personal League -->
+
+							<!-- Start of Create Personal League -->
+							<div class="row clearfix" id="nav2_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> نام لیگ شخصی </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="create_personal_league_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-3">
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+										<b style="font-size:12px;"> ظرفیت </b>
+										<div class="input-group spinner" data-trigger="spinner">
+											<div class="form-line">
+												<input id="create_personal_league_capacity" type="text" class="form-control text-center" value="10" data-rule="quantity">
+											</div>
+											<span class="input-group-addon">
+												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+												<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7">
+										<b style="font-size:12px;"> کد عضویت </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="personal_league_create_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این لیگ شخصی" readonly> 
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 m-b-10">
+										<button data-clipboard-target="#personal_league_create_clipboard" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" id="create_personal_league_create_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> ایجاد </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Create Personal League -->
+
+							<!-- Start of Join of Personal League -->
+							<div class="row clearfix" id="nav4_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> لیگ‌های شخصی </b>
+										<select id="join_personal_league_champion_selector" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ شخصی را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7">
+										<b style="font-size:12px;"> کد عضویت </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="personal_league_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این لیگ شخصی" readonly> 
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 m-b-10">
+										<button data-clipboard-target="#personal_league_clipboard" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-5 col-md-4 col-sm-4 col-xs-4">
+									</div>
+									<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 m-b-10">
+										<button type="button" id="join_personal_league_exit_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> خروج </button>
+									</div>
+								</div> 
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> کد لیگ شخصی </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="join_personal_league_code" type="text" class="form-control" placeholder="کد عضویت لیگ شخصی را وارد کنید">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" id="join_personal_league_join_button" class="btn bg-light-green btn-block m-b-15 btn-lg waves-effect"> عضویت </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Join of Personal League -->
+
+							<!-- Start of Statistics of Personal League -->
+							<div class="row clearfix" id="nav1_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> لیگ‌های شخصی </b>
+										<select id="statistics_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ شخصی را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body table-responsive">
+											<table class="table table-striped" id="statistics_personal_league_table">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-3 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" id="statistics_personal_league_search_button" class="btn bg-light-green btn-block m-b-15 btn-lg waves-effect"> نمایش </button>
+									</div>
+									<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 m-b-10">
+										<button type="button" id="statistics_personal_league_result_button" class="btn bg-light-green btn-block m-b-15 btn-lg waves-effect" disabled> اشتراک‌گذاری </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Statistics of Personal League -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Private League  -->
+
+			<!-- Start of Challenge  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_challenge">
+				<div class="row clearfix">
+					<h2 class="text-center m-t-20 m-b-50 sharedTitle sharedMobile" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
+
+							<!-- Start of Navbar -->
+							<div class="row clearfix">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+									<div class="row clearfix">
+										<ul class="nav nav-tabs tab-col-teal" role="tablist">
+											<li role="presentation" class="active col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav5" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">رده‌بندی</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav6" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">جدید</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav7" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">تغییرات</a>
+											</li>
+											<li role="presentation" class="col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav8" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">عضویت</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- End of Navbar -->
+
+							<!-- Start of Edit Challenge -->
+							<div class="row clearfix" id="nav7_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
+										<select id="edit_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> نام چالش </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="edit_personal_challenge_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-3 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" id="edit_personal_challenge_delete_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> حذف </button>
+									</div>
+									<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 m-b-10">
+										<button type="button" id="edit_personal_challenge_save_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> ثبت </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Edit Challenge -->
+
+							<!-- Start of Create Challenge -->
+							<div class="row clearfix" id="nav6_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> نام چالش </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="create_personal_challenge_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-5 col-sm-5 col-xs-6">
+										<b style="font-size:12px;"> مدت زمان چالش (روز) </b>
+										<select id="create_personal_challenge_period" class="form-control show-tick text-right" data-size=3 title="انتخاب یک زمان" >
+											<option>3</option>
+											<option>7</option>
+											<option>10</option>
+											<option>14</option>
+										</select>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4">
+										<b style="font-size:12px;"> تعداد شانس‌ها </b>
+										<div class="input-group spinner" data-trigger="spinner">
+											<div class="form-line">
+												<input id="create_personal_challenge_chances" type="text" class="form-control text-center" value="10" data-rule="quantity">
+											</div>
+											<span class="input-group-addon">
+												<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+												<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7">
+										<b style="font-size:12px;"> کد عضویت </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="challenge_create_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این چالش" readonly> 
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 m-b-10">
+										<button data-clipboard-target="#challenge_create_clipboard" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" id="create_personal_challenge_create_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> ایجاد </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Create Challenge -->
+
+							<!-- Start of Join of Challenge -->
+							<div class="row clearfix" id="nav8_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
+										<select id="join_personal_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7">
+										<b style="font-size:12px;"> کد عضویت </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="challenge_clipboard" type="text" value="" class="form-control" placeholder="کد عضویت به این چالش" readonly> 
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 m-b-10">
+										<button data-clipboard-target="#challenge_clipboard" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-5 col-md-4 col-sm-4 col-xs-4">
+									</div>
+									<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 m-b-10">
+										<button type="button" id="join_personal_challenge_exit_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> خروج </button>
+									</div>
+								</div> 
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> کد چالش </b>
+										<div class="input-group">
+											<div class="form-line">
+												<input id="join_personal_challenge_code" type="text" class="form-control" placeholder="کد عضویت چالش را وارد کنید">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" id="join_personal_challenge_join_button" class="btn bg-light-green btn-block m-b-15 btn-lg waves-effect"> عضویت </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Join of Challenge -->
+
+							<!-- Start of Statistics of Challenge -->
+							<div class="row clearfix" id="nav5_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> چالش‌ها </b>
+										<select id="statistics_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-20">
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body table-responsive">
+											<table class="table table-striped" id="statistics_personal_challenge_table">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<div class="row clearfix">
+									<div class="col-lg-3 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" id="statistics_personal_challenge_search_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> نمایش </button>
+									</div>
+									<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4 m-b-10">
+										<button type="button" id="statistics_personal_challenge_result_button" class="btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect" disabled> اشتراک‌گذاری </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block m-t-20 m-b-15 btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Statistics of Challenge -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Challenge  -->
+
+			<!-- Start of Play Room -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;"  id="page_play_room">
+				<div class="row clearfix">
+					<h2 class="text-center m-t-20 m-b-50 sharedTitle sharedMobile" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto; overflow-x:hidden;">
+							<!-- Widgets -->
+							<div class="row clearfix">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 col-md-offset-4 col-lg-offset-4 col-sm-offset-4">
+									<div class="info-box-3 bg-cyan hover-expand-effect hover-zoom-effect">
+										<div class="content">
+											<div class="text">امتیاز شما</div>
+											<div class="card_total_points number count-to" data-from="0" data-to="999000" data-speed="2000" data-fresh-interval="20"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+									<div class="info-box-3 bg-light-green hover-expand-effect hover-zoom-effect">
+										<div class="content">
+											<div class="text">شانس‌های شما</div>
+											<div class="card_rem_predicts number count-to" data-from="0" data-to="888" data-speed="2000" data-fresh-interval="20"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- #END# Widgets -->
+							<div class="row clearfix sharedMobile">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-1">
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+									 <div class="logo text-center"> 
+										<div class="image">
+											<img src="../../images/golden.png" width="215" height="215" alt="User" />
+										</div>
+									 </div> 
+								</div>
+							</div>
+							<div class="row clearfix">
+								<h2 class="text-center m-t-10 m-b-20 sharedName">علیرضا عربی</h2>
+							</div>
+							<div class="row clearfix m-t-10">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-3 m-b-0">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 text-center m-b-0">
+									<button style="border: 2px solid green; border-radius: 25px; background-color: Transparent;" type="button" id="play_room_notif_center_button" class="btn btn-block btn-md m-b--20 waves-effect"> آخرین اخبار کوپا ۹۰ </button>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+								</div>
+								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+									<b style="font-size:12px;"> لیگ‌های عمومی </b>
+									<select id="play_room_league_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=4 title="انتخاب یک لیگ عمومی">
+									</select>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+								</div>
+								<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+									<button type="button" id="play_room_league_start_button" class="btn bg-green btn-block m-t-10 btn-lg waves-effect"> شروع </button>
+								</div>
+								<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+									<button type="button" class="returnMain btn bg-light-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> بازگشت </button>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-2">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-8 m-b-10">
+									<button type="button" id="main_predict_estimates_button" class="btn bg-light-green btn-block btn-lg waves-effect">پیش‌بینی‌های شما</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Play Room -->
+
+			<!-- Start of Ranking Statistics  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_ranking">
+				<div class="row clearfix sharedMobile sharedTitle">
+					<h2 class="text-center m-t-20 m-b-50" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
+
+							<!-- Start of Navbar -->
+							<div class="row clearfix">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+									<div class="row clearfix">
+										<ul class="nav nav-tabs tab-col-teal" role="tablist">
+											<li role="presentation" class="active col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav9" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">رده‌بندی کلی</a>
+											</li>
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav10" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">رده‌بندی لیگ</a>
+											</li>
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav11" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">رده‌بندی تیمی</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- End of Navbar -->
+
+							<!-- Start of Total Statistics -->
+							<div class="row clearfix" id="nav9_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-10" style="height: 350px; overflow-y:scroll;">
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body table-responsive">
+											<table class="table table-striped" id="ranking_total_statistics_table">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<br><br>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" id="ranking_total_statistics_result_button" class="btn bg-light-green btn-block btn-lg waves-effect" disabled> اشتراک‌گذاری </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Total Statistics -->
+
+							<!-- Start of Team Statistics -->
+							<div class="row clearfix" id="nav11_tab" style="overflow-x: hidden;">
+								<h4 class="text-center" id="ranking_team_statistics_team_name"></h4>
+								<div class="row clearfix m-t-10" style="height: 350px; overflow-y:auto;">
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body table-responsive">
+											<table class="table table-striped" id="ranking_team_statistics_table" style="table-layout:fixed;">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<br><br>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" id="ranking_team_statistics_result_button" class="btn bg-light-green btn-block btn-lg waves-effect" disabled> اشتراک‌گذاری </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Team Statistics -->
+
+							<!-- Start of League Statistics -->
+							<div class="row clearfix" id="nav10_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-10">
+									<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+									</div>
+									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+										<b style="font-size:12px;"> لیگ‌های عمومی </b>
+										<select id="ranking_league_statistics_leagueId" class="league_selector form-control show-tick text-right" data-size="5" title="یک لیگ را انتخاب کنید" >
+										</select>
+									</div>
+								</div>
+								<div class="row clearfix m-t-10" style="height: 350px; overflow-y:auto;">>
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body table-responsive">
+											<table class="table table-striped" id="ranking_league_statistics_table">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<br><br>
+								<div class="row clearfix">
+									<div class="col-lg-3 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+										<button type="button" id="ranking_league_statistics_search_button" class="btn bg-light-green btn-block btn-lg waves-effect"> نمایش </button>
+									</div>
+									<div class="col-lg-2 col-md-4 col-sm-4 col-xs-4">
+										<button type="button" id="ranking_league_statistics_result_button" class="btn bg-light-green btn-block btn-lg waves-effect" disabled> اشتراک‌گذاری </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+										<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of League Statistics -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Ranking Statistics  -->
+
+			<!-- Start of Profile  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_profile">
+				<div class="row clearfix">
+					<h2 class="text-center m-t-20 m-b-50 sharedTitle sharedMobile" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
+
+							<!-- Start of Navbar -->
+							<div class="row clearfix">
+								<div class="col-lg-3 col-md-3 col-sm-3 col-xs-2">
+								</div>
+								<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+									<div class="row clearfix">
+										<ul class="nav nav-tabs tab-col-teal" role="tablist">
+											<li role="presentation" class="active col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav12" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">داده‌ها</a>
+											</li>
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav14" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">اطلاعات</a>
+											</li>
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav13" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">دستاوردها</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- End of Navbar -->
+
+							<!-- Start of Total Statistics -->
+							<div class="row clearfix" id="nav12_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-10">
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="row clearfix">
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class=" text-center font-15 col-blue-grey" style="line-height: 200%;">امتیاز کل در مجموع</small>
+													<br>
+													<small id="total_points" class="text-center font-16 col-blue-grey font-bold" style="line-height: 200%;">۱۸۷۰</small>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-blue-grey" style="line-height: 200%;">کل پیش‌بینی‌ها</small>
+													<br>
+													<small id="total_predicts" class="text-center font-16 col-blue-grey font-bold" style="line-height: 200%;">۱۹۷</small>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-blue-grey" style="line-height: 200%;">پیش‌بینی‌های درست</small>
+													<br>
+													<small id="total_correct_predicts" class="text-center font-16 col-blue-grey font-bold" style="line-height: 200%;">۸۹</small>
+												</div>
+											</div>
+										</div>
+
+										<div class="row clearfix" id="progressBar_total">
+											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+											</div>											
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+												<h6 class="text-center">مقایسه کل پیش‌بینی‌های درست از کل پیش‌بینی‌ها</h6>
+												<div class="progress" style="height:10px;">
+													<div id="total_rem" class="progress-bar bg-amber" style="width: 25%;">
+													</div>
+													<div id="total_correct" class="progress-bar bg-green" style="width: 75%">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row clearfix">
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-teal" style="line-height: 200%;">امتیاز کل در هفته</small>
+													<br>
+													<small id="week_points" class="text-center font-16 col-teal font-bold" style="line-height: 200%;">۴۵۰</small>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-teal" style="line-height: 200%;">پیش‌بینی‌های هفته</small>
+													<br>
+													<small id="week_predicts" class="text-center font-16 col-teal font-bold" style="line-height: 200%;">۲۳</small>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-teal" style="line-height: 200%;">پیش‌بینی‌های درست</small>
+													<br>
+													<small id="week_correct_predicts" class="text-center font-16 col-teal font-bold" style="line-height: 200%;">۱۰</small>
+												</div>
+											</div>
+										</div>
+
+										<div class="row clearfix" id="progressBar_week">
+											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+											</div>											
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+												<h6 class="text-center">مقایسه پیش‌بینی‌های درست هفته از کل پیش‌بینی‌های هفته</h6>
+												<div class="progress" style="height:10px;">
+													<div id="week_rem" class="progress-bar bg-amber" style="width: 70%;">
+													</div>
+													<div id="week_correct" class="progress-bar bg-green" style="width: 30%">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row clearfix">
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-indigo" style="line-height: 200%;">امتیاز کل در ماه</small>
+													<br>
+													<small id="month_points" class="text-center font-16 col-indigo font-bold" style="line-height: 200%;">۷۸۵</small>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-indigo" style="line-height: 200%;">پیش‌بینی‌های ماه</small>
+													<br>
+													<small id="month_predicts" class="text-center font-16 col-indigo font-bold" style="line-height: 200%;">۸۹</small>
+												</div>
+											</div>
+											<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+												<div class="row clearfix text-center">
+													<small class="text-center font-15 col-indigo" style="line-height: 200%;">پیش‌بینی‌های درست</small>
+													<br>
+													<small id="month_correct_predicts" class="text-center font-16 col-indigo font-bold" style="line-height: 200%;">۲۵</small>
+												</div>
+											</div>
+										</div>
+
+										<div class="row clearfix" id="progressbar_month">
+											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+											</div>											
+											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+												<h6 class="text-center">مقایسه پیش‌بینی‌های درست ماه از کل پیش‌بینی‌های ماه</h6>
+												<div class="progress" style="height:10px;">
+													<div id="month_rem" class="progress-bar bg-amber" style="width: 40%;">
+													</div>
+													<div id="month_correct" class="progress-bar bg-green" style="width: 60%">
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<!-- End of Total Statistics -->
+
+							<!-- Start of User Data -->
+							<div class="row clearfix" id="nav14_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-10">
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-3 col-sm-3 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-10">
+											<div class="logo text-center"> 
+												<div class="image">
+													<img id="user_data_profile_image" class="img-circle" src="../../images/golden.png" width="215" height="215" alt="User" />
+												</div>
+											</div> 
+										</div>
+									</div>
+									<div class="row clearfix">
+										<h2 class="text-center m-t-10 m-b-20 sharedName">علیرضا عربی</h2>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> نام کاربری </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_name" dir="ltr" type="text" class="form-control text-center" placeholder="یک نام پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-4 col-md-6 col-sm-6 col-xs-7 m-b-0">
+											<b style="font-size:12px;"> کد معرفی به دوستان </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_code" type="text" dir="ltr" value="" class="form-control text-center" placeholder="یک کد معرفی به دوستان" readonly> 
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+											<button data-clipboard-target="#user_data_code" type="button" class="btn bg-amber btn-block m-t-20 m-b-15 btn-lg waves-effect"> کپی </button> 
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10 text-center">
+											<small class="text-center" style="text-align: center" align="center">با اشتراک کد معرفی به دوستان خود، ۵ پیش‌بینی‌ جایزه به آن ها جایزه دهید و خودتان هم ۵ پیش‌بینی‌ هدیه بگیرید.</small>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> ایمیل </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_email" type="text" dir="ltr" class="form-control text-center" placeholder="یک ایمیل پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> شماره تماس </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_phone_number" dir="ltr" type="text" class="form-control text-center font-15" placeholder="یک شماره پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
+										</div>
+										<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
+											<b style="font-size:12px;"> تاریخ ثبت‌نام </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="user_data_date" type="text" dir="ltr" class="form-control text-center" placeholder="یک تاریخ پیشنهادی" disabled>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End of User Data -->
+
+							<!-- Start of Trophies -->
+							<div class="row clearfix" id="nav13_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-10">
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body table-responsive">
+											<table class="table table-striped" id="profile_trophy_table">
+												<tbody>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان شروع بازی</th>
+													<td><img src="../../images/trophies/trophy_0.png" id="trophy_0" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۵۰۰ امتیاز</th>
+													<td><img src="../../images/trophies/trophy_1.png" id="trophy_1" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۳ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_2.png" id="trophy_2" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۸ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_3.png" id="trophy_3" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۱۵ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_4.png" id="trophy_4" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۳۰ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_5.png" id="trophy_5" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۵۰ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_6.png" id="trophy_6" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۱۰۰ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_7.png" id="trophy_7" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۲۰۰ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_8.png" id="trophy_8" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۵۰۰ هزار امتیاز</th>
+													<td><img src="../../images/trophies/trophy_9.png" id="trophy_9" width="50" height="50"></td>
+												</tr>
+												<tr class="text-center">
+													<th align="center" class="text-center" style="vertical-align: middle; white-space: nowrap; width: 50%;" scope="row">نشان کسب ۱ میلیون امتیاز</th>
+													<td><img src="../../images/trophies/trophy_10.png" id="trophy_10" width="50" height="50"></td>
+												</tr>
+											</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End of Trophies -->
+
+							<div class="row clearfix" style="bottom:0;" style="overflow-x: hidden;">
+								<div class="col-lg-3 col-md-2 col-sm-2">
+								</div>
+								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+									<button type="button" id="profile_signOut_button" class="btn bg-light-green btn-block btn-lg waves-effect"> خارج </button>
+								</div>
+								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+									<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Profile  -->
+
+			<!-- Start of Packages  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_package">
+				<div class="row clearfix">
+					<h2 class="text-center m-t-20 m-b-50 sharedTitle sharedMobile" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:hiddenauto; overflow-x:hidden;">
+							<br>
+							<div class="row clearfix" id="special_pacakge">
+								<div id="carousel-example-generic" class="" data-ride="carousel" data-interval="false">
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner" role="listbox" id="special_listbox">
+									</div>
+									<!-- Controls -->
+									<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="background-image: none">
+										<span class="glyphicon glyphicon-chevron-left" style="color:grey;" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="background-image: none">
+										<span class="glyphicon glyphicon-chevron-right" style="color:grey;" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								</div>
+							</div>
+							<br>
+							<br>
+							<br>
+							<div class="row clearfix" id="general_package">
+								<div id="carousel-example-generic1" class="" data-ride="carousel" data-interval="false">
+									<!-- Wrapper for slides -->
+									<div class="carousel-inner" role="listbox" id="general_listbox">
+									</div>
+									<!-- Controls -->
+									<a class="left carousel-control" href="#carousel-example-generic1" role="button" data-slide="prev" style="background-image: none">
+										<span class="glyphicon glyphicon-chevron-left" style="color:grey;" aria-hidden="true"></span>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="right carousel-control" href="#carousel-example-generic1" role="button" data-slide="next" style="background-image: none">
+										<span class="glyphicon glyphicon-chevron-right" style="color:grey;" aria-hidden="true"></span>
+										<span class="sr-only">Next</span>
+									</a>
+								</div>
+							</div>
+							<div class="row clearfix m-t-50" style="bottom:0;">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-3">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+									<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Packages -->	
+
+			<!-- Start of Awards  -->
+			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_award">
+				<div class="row clearfix sharedMobile sharedTitle">
+					<h2 class="text-center m-t-20 m-b-50" style="color:white;">به کوپا ۹۰ خوش آمدید</h2>
+				</div>
+				<div class="col-lg-3 col-md-3 col-sm-2">
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-8 col-xs-12">
+                    <div class="card" style="opacity: 0.93;">
+						<div class="cardRainbow rainbow-progress-bar"></div>
+						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
+
+							<!-- Start of Navbar -->
+							<div class="row clearfix">
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+									<div class="row clearfix">
+										<ul class="nav nav-tabs tab-col-teal" role="tablist">
+											<li role="presentation" class="active col-sm-5 col-md-5 col-lg-5 col-xs-5 p-r-0 p-l-0">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav19" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">جوایز</a>
+											</li>
+											<li role="presentation" class="col-sm-5 col-md-5 col-lg-5 col-xs-5 p-r-0 p-l-0 disabled">
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav20" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">برندگان</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!-- End of Navbar -->
+
+							<!-- Start of Trophies -->
+							<div class="row clearfix" id="nav19_tab" style="overflow-x: hidden;">
+								<br>
+								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+								</div>
+								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+									<div class="row clearfix">
+										<div class="image">
+											<img src="../../images/awards.jpg" style="width:100%; height:100%;" alt="User"/>
+										</div>
+									</div>
+									<br>
+									<br>
+									<div class="row clearfix text-center">
+										<p style="line-height: 200%;" dir="rtl">پلی استیشن۴، موبایل و تبلت، تیشرت‌های باشگاهی و بسته‌های پیش‌بینی برای نفرات برتر جدول رده‌بندی مجموع امتیازات و برترین‌های امتیازی هر لیگ!</p>
+										<p style="line-height: 200%;" dir="rtl">جوایز ویژه هفتگی به قید قرعه. شانس برنده‌شدن بیشتر برای شما که امتیاز بیشتری دارید!</p>
+									</div>
+								</div>
+							</div>
+							<!-- End of Trophies -->
+
+							<!-- Start of Winners -->
+							<div class="row clearfix" id="nav20_tab" style="overflow-x: hidden;">
+
+							</div>
+							<!-- End of Winners -->
+
+							<div class="row clearfix">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+								</div>
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 m-b-10">
+									<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Awards  -->
+			
+            <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">پیش‌بینی‌های تایید شده</h4>
+                        </div>
+                        <div class="modal-body">
+							<div class="row clearfix m-t-20">
+								<div class="col-lg-1 col-md-1 col-sm-1">
+								</div>
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+									<div class="body table-responsive">
+										<table class="table table-striped" id="play_room_estimates">
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">بستن</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="mockLiveModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">پوشش ویژه</h4>
+                        </div>
+                        <div class="modal-body">
+							<div class="row clearfix m-t-20">
+								<div class="col-lg-1 col-md-1 col-sm-1">
+								</div>
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+									<div class="body table-responsive">
+										<table class="table table-striped" id="main_prediction_live_mocks">
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">بستن</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="notifModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="defaultModalLabel">اطلاع‌رسانی پیش‌بینی‌های جدید</h4>
+                        </div>
+                        <div class="modal-body">
+							<div class="row clearfix m-t-20">
+								<div class="col-lg-1 col-md-1 col-sm-1">
+								</div>
+								<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+									<div class="body table-responsive">
+										<table class="table table-striped" id="play_room_notif_table">
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">بستن</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="row clearfix m-r-20" style="position:absolute;bottom:0;background-color: black">
+				<h6 class="version_controlling m-t-0 m-b-0" style="color:white; padding-top:5px; padding-bottom:5px;">&nbsp;&nbsp;Ver. 1.0.2&nbsp;&nbsp;</h6>
+			</div>
+		</div>
+
+		<div id="learning_section_parent" class="row clearfix m-l-45 m-b-30" style="position:absolute; bottom:0; left:0;">
+			<button id="learning_section_button" style="padding-right: 0px;padding-left: 0px;padding-top: 0px;padding-bottom: 0px;" type="button" class="font-16 bg-deep-orange btn-circle-lg btn-circle waves-effect waves-circle waves-float">راهنما</button>
+		</div>
+
+		<div class="modal fade" id="learningBox" tabindex="-1" role="dialog">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title" dir="rtl">راهنما و آموزش بازی</h3>
+					</div>
+					<div class="modal-body">
+						<h4 style="line-height: 250%;" class="text-center">بعد از اینکه ثبت‌نام کردی و با شماره‌ی موبایل خودت وارد شدی، تو صفحه اصلی چند تا دکمه می‌بینی</h4>
+						<br>
+						<div class="row clearfix m-t-20">
+							<div class="col-lg-1 col-md-1 col-sm-1">
+							</div>
+							<div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                <div class="col-xs-12 ol-sm-12 col-md-12 col-lg-12">
+                                    <div class="panel-group" id="accordion_10" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-col-blue">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps1" aria-expanded="false" aria-controls="collaps1">شروع پیش‌بینی‌ها</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن.</h5>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															از لیستِ لیگ‌های عمومی‌، لیگ مورد علاقه‌ات رو انتخاب کن، یا گزینه همه لیگ‌ها رو بزن که کل پیش‌بینی‌ها برات باز بشن. شروع رو که بزنی، وارد صفحه‌ی ثبت پیش‌بینی‌ میشی. اونجا سه تا تب می‌بینی: هفتگی، زنده و فصلی.
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/main-0.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>	
+													</div>
+													<br>
+													<h5 dir="rtl" class="font-bold">هفتگی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															پیش‌بینی‌های هفتگی برای بازیایی هستن که چند روز دیگه تو لیگ‌های مختلف برگزار میشن. مثلا شنبه، هفته‌ی جدید لیگ‌ها برگزار میشه. چند روز قبلش وارد بخش پیش‌بینی‌های هفتگی میشی و اتفاقاتی که حدس می‌زنی رخ بده رو تایید می‌کنی. زمان باقیمونده برای اینکه پیش‌بینی رو تایید یا رد کنی بالای اون نوشته شده. امتیاز پیش‌بینی هم هست. هرچی احتمال وقوع یه اتفاق کمتر باشه، امتیاز بیشتری براش وجود داره. مثلا اگه پیش‌بینی مربوط به گلزنی یه مدافع رو تایید کنی و اون مدافع گل بزنه، امتیاز بالایی می‌گیری. هر پیش‌بینی‌ای که تایید می‌کنی، یکی از شانس‌های ثبت پیش‌بینی‌ات کم میشه. اما اگه پیش‌بینی رو رد کنی شانسی کم نمیشه.  دونه‌دونه پیش‌بینی‌ها رو تایید یا رد کن تا پیغامِ “پیش‌بینی‌ جدیدی برای این لیگ موجود نمی‌باشد” رو ببینی، که یعنی همه پیش‌بینی‌های مربوط به اون لیگ رو خوندی. این وسط اگه شانس‌های پیش‌بینی‌ات تموم شد، می‌تونی خرید بسته رو بزنی و بسته بگیری.
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/main-1.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>	
+													</div>
+													<br>
+													<h5 dir="rtl" class="font-bold">زنده</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															ساعت اوج برگزاری بازیای فوتبال، ساعت اوج استفاده از این بخشه! مثل بعدازظهرای شنبه یکشنبه، یا سه‌شنبه‌‌ چهارشنبه‌ شبایی که لیگ قهرمانان برگزار میشه. الان که وارد تب زنده بشی، احتمالا پیش‌بینی‌ای وجود نداره. این بخش برای زمانیه که بازیای فوتبال دارن برگزار میشن و تو باید لحظه‌به‌لحظه پیش‌بینی‌های زنده رو دنبال کنی. با توجه به اتفاقاتی که میفته، پیش‌بینی جدید اضافه میشه. ویژگی پیش‌بینی‌های زنده اینه که فرصت شما برای تاییدشون خیلی کمه. شاید نیم ساعت، شاید ۲۰ دقیقه یا حتی فقط ۵ دقیقه! مثلا اتلتیکومادرید نیمه اول دو گل عقب میفته، بین دو نیمه یه پیش‌بینی اضافه میشه که “اتلتیکومادرید از این بازی امتیاز می‌گیره” و تو با توجه به احتمال وقوع این اتفاق و امتیازی که براش در نظر گرفته شده، ۱۵ دقیقه وقت داری اونو تایید یا رد کنی. دکمه "امروز در کوپا۹۰" رو که بزنی، بازی‌هایی که قراره پوشش زنده داشته باشن از قبل اعلام شدن. یه دکمه هم برای فعال کردن رفرش خودکار صفحه وجود داره که اگه روی حالت فعال باشه، هر پیش‌بینی جدیدی که اضافه بشه خودبه‌خود روی صفحه به نمایش درمیاد. خلاصه اینکه بازیای فوتبال که شروع شد، پیش‌بینی‌های زنده کوپا۹۰ رو فراموش نکن!
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/main-2.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>	
+													</div>
+													<br>
+													<h5 dir="rtl" class="font-bold">فصلی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+														پیش‌بینی‌هایی که اینجا ثبت می‌کنی به این زودی‌ها نتیجه‌اش معلوم نمیشه، اما امتیاز زیادی داره. چیزایی مثه اینکه آرسنال سهمیه لیگ قهرمانان می‌گیره؟ یا ایگواین می‌تونه ۲۰ تا گل بزنه تو سری آ بزنه؟ فرصت برای تایید یا رد این پیش‌بینی‌ها زیاد نیست و فقط دو سه هفته ابتدایی لیگ‌ها رو زمان داری. اما آخر فصل، اگه درست پیش‌بینی کرده باشی، امتیاز خیلی خیلی خیلی زیادی می‌گیری!
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/main-3.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>	
+													</div>
+													<br>
+													<h5 dir="rtl" class="font-bold">قطعی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+														این بخش هم مشابه پیش‌بینی‌های فصلیه با این تفاوت که باید یه سری اتفاق رو پیش‌بینی دقیق کنی! مثه قهرمان یا آقای گل لیگ‌های مختلف. اول از لیست "نوع پیش‌بینی" صورت پیش‌بینی رو انتخاب می‌کنی، مثلا آقای گل لالیگا اسپانیا. برای هر سوال، سه تا انتخاب داری با سه تا اولویت. می‌تونی فقط اولویت اول رو پر کنی، یا دو تاش رو یا هر سه تا. به ازای پر کردن هر کدوم از اولویت‌ها یک شانس‌ پیش‌بینی ازت کم میشه. مثلا برای آقای گل لالیگا، اولویت اول رو به مسی اختصاص میدی، اولویت دوم رو به رونالدو و اولویت سوم رو به سوارز. اگه مسی آقای گل بشه، آخر فصل کل امتیاز مربوط به اون رو می‌گیری. اگه رونالدو بشه، چون اولویت دومت بوده نصف امتیازش رو می‌گیری، و اگه سوارز آقای گل بشه، یک سوم امتیازی که برای انتخاب سوارز وجود داشته رو کسب می‌کنی. مثه بخشای قبلی، هرچی احتمال آقای گلی بازیکن یا قهرمانی تیم کمتر باشه، امتیاز اون گزینه بیشتره. دقت کن که این پیش‌بینی‌ها فقط چند هفته‌ی ابتدایی فصل فعالن و خیلی زود بسته میشن. و حواست باشه که بعد از تایید، نمی‌تونی پیش‌بینی قطعی رو تغییر بدی.
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
+															<div class="image">
+																<img src="../../images/guides/main-4.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>	
+													</div>
+													<br>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-light-blue">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps2" aria-expanded="false" aria-controls="collaps2">لیگ شخصی</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">لیگ بساز، دوستانت رو دعوت کن و امتیازت را با اونا مقایسه کن.</h5>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															این بخش برای اینه که بتونی هر هفته امتیازت رو با دوستانت تو یه جدول مقایسه کنی. اگه فوتبال‌فانتزی‌باز هستی قطعا می‌دونی لیگ شخصی چه جوریاس.۴ تا تب داریم:
+													</p>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															از دومی شروع کنیم! تب جدید. اینجا می‌تونی یه لیگ شخصی جدید بسازی. اول یه اسم برای لیگت انتخاب می‌کنی، ظرفیت نفراتی که می‌تونن عضوش بشن رو مشخص می‌کنی و دکمه‌ی ایجاد رو می‌زنی. داخل باکسِ کد عضویت، یه کد به نمایش درمیاد. دکمه کپی رو می‌زنی و کد رو برای هرکسی که می‌خوای تو لیگت باشه ارسال می‌کنی.
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/champion-2.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>
+													</div>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															حالا میریم تب چهارم، عضویت! فرض کن دوستت یه لیگ ساخته و کد عضویت رو برات فرستاده. تب عضویت رو که باز کنی، پایینش نوشته کد لیگ شخصی، کدی که دوستت فرستاده رو اونجا وارد می‌کنی و عضویت رو می‌زنی. از این لحظه عضو یک لیگ شخصی شدی. اگه خواستی از لیگی که عضوش شدی خارج بشی، لیست بالاتر تو این تب، لیگ‌های شخصی رو باز می‌کنی، لیگ رو انتخاب می‌کنی و خروج رو می‌زنی.
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/champion-4.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>
+													</div>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															تب اول، رده‌‌بندی هست که وقتی لیگ‌ شخصی مدنظرت رو از لیست انتخاب کنی، جدول رده‌بندی و امتیازات اون لیگ باز میشه. چه اونایی که خودت ساختی، و چه اونایی که دوستانت ساختن و تو از طریق کد عضوش شدی.
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/champion-1.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>
+													</div>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															می‌مونه تب سوم که تغییرات باشه. از لیست لیگ‌های شخصی، لیگی که خودت ساختی رو انتخاب می‌کنی و اگه خواستی اسم لیگ یا ظرفیتش رو تغییر میدی. تغییرات با دکمه ثبت، ذخیره میشن. اینجا می‌تونی لیگ شخصی‌ای که ساختی رو حذف کنی.
+													</p>
+													<br>
+													<div class="row clearfix">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+														</div>
+														<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+															<div class="image">
+																<img src="../../images/guides/champion-3.jpg" style="width:100%; height:100%;" alt="User"/>
+															</div>
+															<br>
+														</div>
+													</div>
+													<br>					
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-light-green">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps3" aria-expanded="false" aria-controls="collaps3">اطلاعات کاربری</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">آمار و ارقام پیش‌بینی‌هایی که ثبت کردی، دستاوردها و اطلاعات ثبت‌نامت اینجاست.</h5>
+													<br>
+													<h5 dir="rtl" class="font-bold">داده‌ها</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															جزئیات پیش‌بینی‌هایی که ثبت کردی تو این بخشه. امتیاز، تعداد پیش‌بینی‌هایی که ثبت کردی و تعداد پیش‌بینی‌های درستت. این آمار رو برای هفته و ماه هم می‌تونی ببینی.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">اطلاعات</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															مشخصات ثبت‌نام تو، مثل نام کاربری، ایمیل و شماره تماس اینجا مشخصه. یه کد معرفی مختص تو هم هست که اگه دوستانت با اون کد ثبت‌نام کنن، ۵ شانس پیش‌بینی هدیه می‌گیری!
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">دستاوردها</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															پیشرفت تو در کوپا۹۰ اینجا مشخص میشه. با کسب امتیازات بیشتر، دستاوردهای جدیدی برات باز میشن.
+													</p>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-lime">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps4" aria-expanded="false" aria-controls="collaps4">رده‌بندی</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">رتبه‌‌ات تو جدول امتیازات مجموع و جداول مربوط به لیگ‌ها و تیم‌های مختلف رو اینجا ببین.</h5>
+													<br>
+													<h5 dir="rtl" class="font-bold">رده‌بندی کلی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															توی این جدول کاربرها بر اساس مجموع امتیازاتشون توی لیگ‌های مختلف و هفته‌های مختلف، رده‌بندی میشن.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">رده‌بندی لیگ</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															رتبه‌ی تو بر اساس امتیازاتی که از پیش‌بینی‌های هر لیگ بدست آوردی، به صورت مجزا نشون داده میشه.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">رده‌بندی تیمی</h5>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															اینجا هم رده‌بندی بر اساس تیم‌ مورد علاقه‌ی شماست!
+													</p>
+												</div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-col-yellow">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps5" aria-expanded="false" aria-controls="collaps5">جوایز</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">رتبه‌‌ات در جدول امتیازاتِ مجموع و جداول مربوط به لیگ‌ها و تیم‌های مختلف رو اینجا ببین.</h5>
+													<br>
+													<h5 dir="rtl" class="font-bold">جوایز</h5>
+													<p dir="rtl">
+															کوپا۹۰ جوایز هفتگی و ماهانه و فصلی زیادی داره که جزئیاتش توی این بخش اومده.
+													</p>
+													<br>
+													<h5 dir="rtl" class="font-bold">برندگان</h5>
+													<p dir="rtl">
+															کاربرایی که جوایز کوپا۹۰ رو می‌برن، توی این تب اعلام میشن.
+													</p>
+												</div>
+                                            </div>
+										</div>
+                                        <div class="panel panel-col-amber">
+                                            <div class="panel-heading" role="tab">
+                                                <h4 class="panel-title">
+                                                    <a dir="rtl" class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion_10" href="#collaps6" aria-expanded="false" aria-controls="collaps6">خرید بسته</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collaps6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="">
+                                                <div class="panel-body">
+													<h5 style="line-height: 250%;" dir="rtl" class="text-center">بسته بخر، شانس‌های پیش‌بینی‌ات رو افزایش بده تا امتیاز بیشتری بگیری.</h5>
+													<br>
+													<p style="text-align: justify;text-justify: inter-word;" dir="rtl">
+															برای افزایش شانس‌های ثبت‌ پیش‌بینی، بسته پیش‌بینی مورد نظرت رو انتخاب کن. سه بسته‌ی طلایی، نقره‌ای و برنزی به صورت ثابت وجود داره، و بسته‌های پیشنهادی ما برای مدت زمان کوتاه.
+													</p>
+												</div>
+                                            </div>
+                                        </div>
+									</div>
+                                </div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link waves-effect" data-dismiss="modal">بستن</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+    </section>
+
+	<!-- Jquery Core Js -->
+	<script src="../../plugins/jquery/jquery.min.js"></script>
+
+	<!-- Bootstrap Core Js -->
+	<script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+
+	<!-- Select Plugin Js -->
+	<script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+
+	<!-- Slimscroll Plugin Js -->
+	<script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+	<!-- Input Mask Plugin Js -->
+	<script src="../../plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+	<!-- Multi Select Plugin Js -->
+	<script src="../../plugins/multi-select/js/jquery.multi-select.js"></script>
+
+	<!-- Jquery Spinner Plugin Js -->
+	<script src="../../plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+	<!-- Bootstrap Tags Input Plugin Js -->
+	<script src="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+	<!-- Moment Plugin Js -->
+	<script src="../../plugins/momentjs/moment.js"></script>
+
+	<!-- Jalali Date Plugin Js -->
+	<script src="../../plugins/moment/moment.js"></script>
+	<script src="../../plugins/moment-jalaali/build/moment-jalaali.js"></script>
+	
+	<!-- noUISlider Plugin Js -->
+	<script src="../../plugins/nouislider/nouislider.js"></script>
+
+	<!-- Jquery Validation Plugin Css -->
+	<script src="../../plugins/jquery-validation/jquery.validate.js"></script>
+
+	<!-- JQuery Steps Plugin Js -->
+	<script src="../../plugins/jquery-steps/jquery.steps.js"></script>
+
+	<!-- Sweet Alert Plugin Js -->
+	<script src="../../plugins/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Bootstrap Notify Plugin Js -->
+	<script src="../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
+	<!-- Waves Effect Plugin Js -->
+	<script src="../../plugins/node-waves/waves.js"></script>
+
+	<!-- Clipbaord JS -->
+	<script src="../../plugins/clipboard/dist/clipboard.min.js"></script> 
+
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="../../plugins/jquery-countto/jquery.countTo.js"></script>
+
+    <!-- Custom Js -->
+	<script src="../../js/admin.js"></script>
+    <script src="../../js/game/index.js"></script>  
+
+    <!-- Demo Js -->
+	<script src="../../js/demo.js"></script>
+	<script src="../../plugins/platform/platform.js"></script>	
+</body>
+
+</html>

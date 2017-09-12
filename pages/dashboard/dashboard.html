@@ -8,28 +8,58 @@
     <!-- Favicon-->
     <link rel="icon" href="../../favicon.ico" type="image/x-icon">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-	
-    <!-- Bootstrap Core Css -->
-    <link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-    <!-- Waves Effect Css -->
-    <link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
+	<!-- Bootstrap Core Css -->
+	<link href="../../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Animation Css -->
-    <link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+	<!-- Waves Effect Css -->
+	<link href="../../plugins/node-waves/waves.css" rel="stylesheet" />
 
-    <!-- Custom Css -->
-    <link href="../../css/style.css" rel="stylesheet">
+	<!-- Animation Css -->
+	<link href="../../plugins/animate-css/animate.css" rel="stylesheet" />
+
+	<!-- Colorpicker Css -->
+	<link href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.css" rel="stylesheet" />
+
+	<!-- Dropzone Css -->
+	<link href="../../plugins/dropzone/dropzone.css" rel="stylesheet">
+
+	<!-- Bootstrap Material Datetime Picker Css -->
+	<link href="../../plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
+
+	<!-- Wait Me Css -->
+	<link href="../../plugins/waitme/waitMe.css" rel="stylesheet" />
+
+	<!-- Multi Select Css -->
+	<link href="../../plugins/multi-select/css/multi-select.css" rel="stylesheet">
+
+	<!-- Bootstrap Spinner Css -->
+	<link href="../../plugins/jquery-spinner/css/bootstrap-spinner.css" rel="stylesheet">
+
+	<!-- Bootstrap Tagsinput Css -->
+	<link href="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.css" rel="stylesheet">
+
+	<!-- Bootstrap Select Css -->
+	<link href="../../plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+
+	<!-- noUISlider Css -->
+	<link href="../../plugins/nouislider/nouislider.min.css" rel="stylesheet" />
+
+	<!-- JQuery DataTable Css -->
+	<link href="../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+	<!-- Sweetalert Css -->
+	<link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
+    <!-- Morris Css -->
+    <link href="../../plugins/morrisjs/morris.css" rel="stylesheet" />
+
+	<!-- Custom Css -->
+	<link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/rtl.css" rel="stylesheet">
-
-	<!-- Nprogress bar for top in Ajax call-->
-	<link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" />
-
-	<!-- Nprogress bar for top in Ajax call-->
-	<link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" /> </head>
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="../../css/themes/theme-green.css" rel="stylesheet" />
@@ -38,19 +68,24 @@
 <body class="theme-green">
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="preloader">
-            <div class="spinner-layer pl-teal">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
-        <p>لطفا صبر کنید</p>
-    </div>
+	<div id="rainbow-progress-bar1" class="rainbow-progress-bar"></div>
+	<div class="loader">
+		<div class="preloader">
+			<div class="spinner-layer pl-teal">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<h5>لطفا کمی صبر کنید</h5>
+		<br>
+		<h4>شما در حال اتصال به سرورهای کوپا ۹۰ می‌باشید</h4>
+	</div>
 </div>
 <!-- #END# Page Loader -->
 <!-- Overlay For Sidebars -->
@@ -76,8 +111,8 @@
                 <img src="../../images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حسام شمسی</div>
-                <div class="email">hesam@example.com</div>
+                <div id="adminUsername" class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حسام شمسی</div>
+                <div id="adminEmail" class="email">hesam@example.com</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-left">
@@ -85,7 +120,7 @@
                         <li role="seperator" class="divider"></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">favorite</i> زبان ها </a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i> خروج </a></li>
+                        <li><a href="javascript:void(0);" id="signOutButton"><i class="material-icons">input</i> خروج </a></li>
                     </ul>
                 </div>
             </div>
@@ -101,8 +136,8 @@
                         <span>پنل مدیریت داده های آماری</span>
                     </a>
                 </li>
-                <li>
-                    <a href="./control.html">
+                <li disabled>
+                    <a href="./control.html" style="pointer-events: none;">
                         <i class="material-icons">home</i>
                         <span>پنل کنترلی سیستم</span>
                     </a>
@@ -114,13 +149,19 @@
                     </a>
                 </li>
                 <li>
+                    <a href="./exact.html">
+                        <i class="material-icons">home</i>
+                        <span>پنل کنترل پیش‌بینی‌های دقیق</span>
+                    </a>
+                </li>
+				<li>
                     <a href="./transaction.html">
                         <i class="material-icons">home</i>
                         <span>پنل مدیریت تراکنش‌های مالی ثبت شده</span>
                     </a>
-                </li>
-                <li>
-                    <a href="./trophy.html">
+				</li>
+                <li disabled>
+                    <a href="./trophy.html" style="pointer-events: none;">
                         <i class="material-icons">home</i>
                         <span>پنل مدیریت برندگان و جوایز</span>
                     </a>
@@ -133,7 +174,7 @@
             <div class="copyright">
                 <a href="javascript:void(0);">سیستم پیش‌بینی مسابقات ورزشی کوپا ۹۰</a>
             </div>
-            <div class="version">
+            <div class="version version_controlling">
                 <b>ورژن: </b> اول
             </div>
         </div>
@@ -148,142 +189,118 @@
             <!-- Widgets -->
             <div class="row clearfix">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box-3 bg-pink hover-expand-effect hover-zoom-effect">
+                    <div class="info-box-4 bg-pink hover-zoom-effect">
                         <div class="icon">
-                            <i class="material-icons">playlist_add_check</i>
+                            <i class="material-icons">people_outline</i>
                         </div>
                         <div class="content">
-                            <div class="text">وظایف جدید</div>
-                            <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                            <div class="text">تعداد کل کاربران</div>
+                            <div class="number">۰</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box-3 bg-cyan hover-expand-effect hover-zoom-effect">
+                    <div class="info-box-4 bg-cyan hover-zoom-effect">
                         <div class="icon">
-                            <i class="material-icons">help</i>
+                            <i class="material-icons">sentiment_satisfied</i>
                         </div>
                         <div class="content">
-                            <div class="text">تیکت جدید</div>
-                            <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">مجموع امتیازات کاربران</div>
+                            <div class="number">۰</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box-3 bg-light-green hover-expand-effect hover-zoom-effect">
+                    <div class="info-box-4 bg-light-green hover-zoom-effect">
                         <div class="icon">
-                            <i class="material-icons">forum</i>
+                            <i class="material-icons">monetization_on</i>
                         </div>
                         <div class="content">
-                            <div class="text">نظر جدید</div>
-                            <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">تعداد خرید‌های کاربران</div>
+                            <div class="number">۰</div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="info-box-3 bg-orange hover-expand-effect hover-zoom-effect">
+                    <div class="info-box-4 bg-amber hover-zoom-effect">
                         <div class="icon">
-                            <i class="material-icons">person_add</i>
+                            <i class="material-icons">attach_money</i>
                         </div>
                         <div class="content">
-                            <div class="text">بازدید جدید</div>
-                            <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                            <div class="text">مجموع درآمد پکیج‌ها</div>
+                            <div class="number">۰</div>
                         </div>
                     </div>
                 </div>
             </div>
-			<!-- #END# Widgets -->
+            <div class="row clearfix">
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box-4 bg-purple hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">lightbulb_outline</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">تعداد کل پیش‌بینی‌ها</div>
+                            <div class="number">۰</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box-4 bg-blue hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">lightbulb_outline</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">تعداد کل قطعی‌ها</div>
+                            <div class="number">۰</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box-4 bg-green hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">thumb_up</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">تعداد کل بردهای پیش‌بینی‌ها</div>
+                            <div class="number">۰</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box-4 bg-yellow hover-zoom-effect">
+                        <div class="icon">
+                            <i class="material-icons">thumb_up</i>
+                        </div>
+                        <div class="content">
+                            <div class="text">تعداد کل لیگ‌های خصوصی</div>
+                            <div class="number">۰</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- #END# Widgets -->
 			
             <div class="row clearfix">
                 <!-- Task Info -->
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <div class="card">
                         <div class="header">
-                            <h2>اطلاعات وظایف</h2>
-                            <ul class="header-dropdown m-r--5">
-                                <li class="dropdown">
-                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                        <i class="material-icons">more_vert</i>
-                                    </a>
-                                    <ul class="dropdown-menu pull-left">
-                                        <li><a href="javascript:void(0);">به روز رسانی</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <h2>اطلاعات آماری پیش‌بینی‌های جمله‌ای</h2>
                         </div>
                         <div class="body">
-                            <div class="table-responsive">
-                                <table class="table table-hover dashboard-task-infos">
-                                    <thead>
-                                        <tr class="text-right">
-                                            <th>ردیف</th>
-                                            <th>وظیفه</th>
-                                            <th>وضعیت</th>
-                                            <th>مدیریت</th>
-                                            <th>پیشرفت</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>۱</td>
-                                            <td>وظیفه الف</td>
-                                            <td><span class="label bg-green">در حال انجام</span></td>
-                                            <td>محمد علیزاده</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-green" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>۲</td>
-                                            <td>وظیفه ب</td>
-                                            <td><span class="label bg-blue">در لیست انجام</span></td>
-                                            <td>رضا محمدی</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-blue" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>۳</td>
-                                            <td>وظیفه پ</td>
-                                            <td><span class="label bg-light-blue">در حال آماده سازی</span></td>
-                                            <td>فرزاد رضایی</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-light-blue" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>۴</td>
-                                            <td>وظیفه ت</td>
-                                            <td><span class="label bg-orange">منتظر انجام و آماده سازی</span></td>
-                                            <td>رضا شمسی</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-orange" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>۵</td>
-                                            <td>وظیفه ث</td>
-                                            <td>
-                                                <span class="label bg-red">متوقف شده</span>
-                                            </td>
-                                            <td>حمید رضا پور</td>
-                                            <td>
-                                                <div class="progress">
-                                                    <div class="progress-bar bg-red" role="progressbar" aria-valuenow="87" aria-valuemin="0" aria-valuemax="100" style="width: 87%"></div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <div id="bar_chart_estimate" class="graph"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="header">
+                            <h2>اطلاعات آماری پیش‌بینی‌های قطعی</h2>
+                        </div>
+                        <div class="body">
+                             <div id="bar_chart_choice" class="graph"></div>
                         </div>
                     </div>
                 </div>
@@ -291,28 +308,60 @@
             </div>
 
             <div class="row clearfix">
+                <!-- Task Info -->
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="header">
+                            <h2>اطلاعات آماری تعداد تراکنش‌های هر پکیج</h2>
+                        </div>
+                        <div class="body">
+                            <div id="line_chart3" class="graph"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <div class="card">
+                        <div class="header">
+                            <h2>اطلاعات آماری درآمد فروش هر پکیج</h2>
+                        </div>
+                        <div class="body">
+                            <div id="line_chart4" class="graph"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Task Info -->
+            </div>    
+
+            <div class="row clearfix">
                 <!-- Visitors -->
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-pink">
-                            <div class="sparkline" data-type="line" data-spot-Radius="4" data-highlight-Spot-Color="rgb(233, 30, 99)" data-highlight-Line-Color="#fff"
-                                 data-min-Spot-Color="rgb(255,255,255)" data-max-Spot-Color="rgb(255,255,255)" data-spot-Color="rgb(255,255,255)"
-                                 data-offset="90" data-width="100%" data-height="92px" data-line-Width="2" data-line-Color="rgba(255,255,255,0.7)"
-                                 data-fill-Color="rgba(0, 188, 212, 0)">
-                                12,10,9,6,5,6,10,5,7,5,12,13,7,12,11
-                            </div>
+                            <div class="font-bold m-b--35" style="font-size:17px;">اطلاعات کاربران</div>
                             <ul class="dashboard-stat-list">
                                 <li>
-                                    امروز
-                                    <span class="pull-left"><b>۱ ۲۰۰</b> <small>کاربران</small></span>
+                                    ثبت‌نام‌های این هفته
+                                    <span class="pull-left"><b>۰</b> <small>نفر</small></span>
                                 </li>
                                 <li>
-                                    دیروز
-                                    <span class="pull-left"><b>۳ ۸۷۲</b> <small>کاربران</small></span>
+                                    ورودهای این هفته
+                                    <span class="pull-left"><b>۰</b> <small>نفر</small></span>
                                 </li>
                                 <li>
-                                   هفته قبل
-                                    <span class="pull-left"><b>۲۶ ۵۸۲</b> <small>کاربران</small></span>
+                                    ثبت‌نام‌های این ماه
+                                    <span class="pull-left"><b>۰</b> <small>نفر</small></span>
+                                </li>
+                                <li>
+                                   ورودهای این ماه
+                                    <span class="pull-left"><b>۰</b> <small>نفر</small></span>
+                                </li>
+                                <li>
+                                   ثبت‌نام‌های کل
+                                    <span class="pull-left"><b>۰</b> <small>نفر</small></span>
+                                </li>
+                                <li>
+                                    ورودهای کل
+                                    <span class="pull-left"><b>۰</b> <small>نفر</small></span>
                                 </li>
                             </ul>
                         </div>
@@ -323,28 +372,31 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-cyan">
-                            <div class="m-b--35 font-bold" style="font-size:17px;">آخرین رفتار های اجتماعی</div>
+                            <div class="font-bold m-b--35" style="font-size:17px;">اطلاعات پیش‌بینی‌ها</div>
                             <ul class="dashboard-stat-list">
                                 <li>
-                                    #رفتار اجتماعی
-                                    <span class="pull-left">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
+                                    پیش‌بینی‌های جمله‌ای این هفته
+                                    <span class="pull-left"><b>۰</b> <small>پیش‌بینی</small></span>
                                 </li>
                                 <li>
-                                    #متریال دیزاین
-                                    <span class="pull-left">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
+                                    پیش‌بینی‌های قطعی این هفته
+                                    <span class="pull-left"><b>۰</b> <small>پیش‌بینی</small></span>
                                 </li>
-                                <li>#پنل مدیریت</li>
-                                <li>#پنل مدیریت رایگان</li>
-                                <li>#قالب بوت استرپ</li>
                                 <li>
-                                    #قالب رایگان
-                                    <span class="pull-left">
-                                        <i class="material-icons">trending_up</i>
-                                    </span>
+                                    پیش‌بینی‌های جمله‌ای این ماه
+                                    <span class="pull-left"><b>۰</b> <small>پیش‌بینی</small></span>
+                                </li>
+                                <li>
+                                    پیش‌بینی‌های قطعی این ماه
+                                    <span class="pull-left"><b>۰</b> <small>پیش‌بینی</small></span>
+                                </li>
+                                <li>
+                                   پیش‌بینی‌های جمله‌ای کل
+                                    <span class="pull-left"><b>۰</b> <small>پیش‌بینی</small></span>
+                                </li>
+                                <li>
+                                    پیش‌بینی‌های قطعی کل
+                                    <span class="pull-left"><b>۰</b> <small>پیش‌بینی</small></span>
                                 </li>
                             </ul>
                         </div>
@@ -355,31 +407,31 @@
                 <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <div class="card">
                         <div class="body bg-teal">
-                            <div class="font-bold m-b--35" style="font-size:17px;">تیکت های جواب</div>
+                            <div class="font-bold m-b--35" style="font-size:17px;">اطلاعات پکیج‌ها و فروش</div>
                             <ul class="dashboard-stat-list">
                                 <li>
-                                    امروز
-                                    <span class="pull-left"><b>۱۲</b> <small>بلیت</small></span>
+                                    خرید‌های این هفته
+                                    <span class="pull-left"><b>۰</b> <small>بسته</small></span>
                                 </li>
                                 <li>
-                                    دیروز
-                                    <span class="pull-left"><b>۱۵</b> <small>بلیت</small></span>
+                                    درآمد این هفته
+                                    <span class="pull-left"><b>۰</b> <small>تومان</small></span>
                                 </li>
                                 <li>
-                                 هفته قبل
-                                    <span class="pull-left"><b>۹۰</b> <small>بلیت</small></span>
+                                    خرید‌های این ماه
+                                    <span class="pull-left"><b>۰</b> <small>بسته</small></span>
                                 </li>
                                 <li>
-                                   ماه قبل
-                                    <span class="pull-left"><b>۳۴۲</b> <small>بلیت</small></span>
+                                   درآمد این ماه
+                                    <span class="pull-left"><b>۰</b> <small>تومان</small></span>
                                 </li>
                                 <li>
-                                   سال قبل
-                                    <span class="pull-left"><b>۴ ۲۲۵</b> <small>بلیت</small></span>
+                                   خرید‌های کل
+                                    <span class="pull-left"><b>۰</b> <small>بسته</small></span>
                                 </li>
                                 <li>
-                                    همه
-                                    <span class="pull-left"><b>۸ ۷۵۲</b> <small>بلیت</small></span>
+                                    درآمد کل
+                                    <span class="pull-left"><b>۰</b> <small>تومان</small></span>
                                 </li>
                             </ul>
                         </div>
@@ -388,20 +440,53 @@
                 <!-- #END# Answered Tickets -->
             </div>
 
+            <div class="row clearfix">
+                <!-- Task Info -->
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>اطلاعات آماری تعداد کاربران تیم‌ها</h2>
+                        </div>
+                        <div class="body">
+                            <div id="line_chart" class="graph"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- #END# Task Info -->
+            </div>    
+
 		</div>
     </section>
 
-    <!-- Jquery Core Js -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+	<!-- Jquery Core Js -->
+	<script src="../../plugins/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap Core Js -->
-    <script src="../../plugins/bootstrap/js/bootstrap.js"></script>
+	<!-- Bootstrap Core Js -->
+	<script src="../../plugins/bootstrap/js/bootstrap.js"></script>
 
-    <!-- Select Plugin Js -->
-    <script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
+	<!-- Select Plugin Js -->
+	<script src="../../plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
-    <!-- Slimscroll Plugin Js -->
-    <script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+	<!-- Slimscroll Plugin Js -->
+	<script src="../../plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+	<!-- Bootstrap Colorpicker Js -->
+	<script src="../../plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+
+	<!-- Input Mask Plugin Js -->
+	<script src="../../plugins/jquery-inputmask/jquery.inputmask.bundle.js"></script>
+
+	<!-- Multi Select Plugin Js -->
+	<script src="../../plugins/multi-select/js/jquery.multi-select.js"></script>
+
+	<!-- Jquery Spinner Plugin Js -->
+	<script src="../../plugins/jquery-spinner/js/jquery.spinner.js"></script>
+
+	<!-- Bootstrap Tags Input Plugin Js -->
+	<script src="../../plugins/bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+
+	<!-- Autosize Plugin Js -->
+	<script src="../../plugins/autosize/autosize.js"></script>
 
     <!-- Waves Effect Plugin Js -->
     <script src="../../plugins/node-waves/waves.js"></script>
@@ -416,28 +501,44 @@
     <!-- ChartJs -->
     <script src="../../plugins/chartjs/Chart.bundle.js"></script>
 
-    <!-- Flot Charts Plugin Js -->
-    <script src="../../plugins/flot-charts/jquery.flot.js"></script>
-    <script src="../../plugins/flot-charts/jquery.flot.resize.js"></script>
-    <script src="../../plugins/flot-charts/jquery.flot.pie.js"></script>
-    <script src="../../plugins/flot-charts/jquery.flot.categories.js"></script>
-    <script src="../../plugins/flot-charts/jquery.flot.time.js"></script>
-
     <!-- Sparkline Chart Plugin Js -->
     <script src="../../plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
-    <!-- Custom Js -->
-    <script src="../../js/admin.js"></script>
-    <script src="../../js/pages/index.js"></script>
+	<!-- Moment Plugin Js -->
+	<script src="../../plugins/momentjs/moment.js"></script>
 
-    <!-- Demo Js -->
+	<!-- Bootstrap Material Datetime Picker Plugin Js -->
+	<script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
+
+	<!-- Jalali Date Plugin Js -->
+	<script src="../../plugins/moment/moment.js"></script>
+	<script src="../../plugins/moment-jalaali/build/moment-jalaali.js"></script>
+
+	<!-- noUISlider Plugin Js -->
+	<script src="../../plugins/nouislider/nouislider.js"></script>
+
+	<!-- Jquery Validation Plugin Css -->
+	<script src="../../plugins/jquery-validation/jquery.validate.js"></script>
+
+	<!-- JQuery Steps Plugin Js -->
+	<script src="../../plugins/jquery-steps/jquery.steps.js"></script>
+
+	<!-- Sweet Alert Plugin Js -->
+	<script src="../../plugins/sweetalert/sweetalert.min.js"></script>
+
+	<!-- Bootstrap Notify Plugin Js -->
+	<script src="../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
+	<!-- Waves Effect Plugin Js -->
+	<script src="../../plugins/node-waves/waves.js"></script>
+
+	<!-- Custom Js -->
+	<script src="../../js/admin.js"></script>
+	<script src="../../js/dashboard/dashboard.js"></script>  
+
+	<!-- Demo Js -->
 	<script src="../../js/demo.js"></script>
-	
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
 
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
 </body>
 
 </html>
