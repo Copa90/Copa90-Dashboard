@@ -213,6 +213,8 @@ $(document).ready(function () {
 
 	startLoading()
 
+	var firstTour
+	var secondTour
 	var timerID
 	var updateEnable
 	var liveEnable
@@ -258,6 +260,7 @@ $(document).ready(function () {
 
 	var userId, coreAccessToken
 
+	initTour()
 	initUtility()
 
 	function readFromLocalStorage() {
@@ -423,6 +426,9 @@ $(document).ready(function () {
 		else if (pageName === 'page_award') {
 			tabHandler({ target: { id: 'nav19' } })
 			$('.nav-tabs a[id="nav19"]').tab('show')
+		}
+		else if (pageName === 'page_main_menu') {
+			startFirstTour()
 		}
 	}
 	// ------------------------------ //
@@ -698,11 +704,30 @@ $(document).ready(function () {
 		console.log(phoneNumber)
 		if (!phoneNumber || phoneNumber.includes('_')) {
 			return warningOperation()
-		}		
-		$('#sign-in').hide()
-		$('#password').hide()
-		$('#sign-up').fadeIn()
-		$('#phone').hide()
+		}
+		var str = 'از شماره ' + Persian_Number(phoneNumber.toString()) + ' برای ورود و ارسال کد اعتبار سنجی به شما استفاده می‌شود'
+		swal({
+			title: "آیا از شماره وارد شده مطمئن هستید؟",
+			text: str,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "ادامه",
+			cancelButtonText: "تغییر",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		}, function (isConfirm) {
+			if (isConfirm) {
+				$('#sign-in').hide()
+				$('#password').hide()
+				$('#sign-up').fadeIn()
+				$('#phone').hide()		
+			}
+			else {
+				phoneNum = ''
+				$("#aaa_send_phone_phone_number").val('')
+			}
+		})
 	})
 	$(document).on("click", "#aaa_send_code_button", function (e) {
 		e.preventDefault()
@@ -918,6 +943,24 @@ $(document).ready(function () {
 			}
 		})
 	})
+	$(document).on("click", "#aaa_change_number_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", "#aaa_resend_code_button", function (e) {
+		e.preventDefault()
+
+	})
+	$(document).on("click", ".changeNumberHref", function (e) {
+		e.preventDefault()
+		$('#sign-in').hide()
+		$('#password').hide()
+		$('#sign-up').hide()
+		$('#phone').fadeIn()
+		$('#sendPhone').hide()
+		$('#changePhone').fadeIn()
+		$('#sendCode').hide()
+	})
 	$(document).on("click", ".signinHref", function (e) {
 		e.preventDefault()
 		$('#sign-in').fadeIn()
@@ -931,6 +974,7 @@ $(document).ready(function () {
 		$('#password').hide()
 		$('#sign-up').hide()
 		$('#phone').fadeIn()
+		$('#changePhone').hide()
 		$('#sendPhone').fadeIn()
 		$('#sendCode').hide()
 	})
@@ -948,6 +992,7 @@ $(document).ready(function () {
 		$('#sign-up').hide()
 		$('#phone').fadeIn()
 		$('#sendPhone').hide()
+		$('#changePhone').hide()
 		$('#sendCode').fadeIn()
 	})
 	// ------------------------------ //
@@ -2135,6 +2180,7 @@ $(document).ready(function () {
 			$('#main_predict_sort_section').show()
 			currentPredict = weeklyPredict[weekIndex]
 			displayPredict()
+			startSecondTour()
 		}
 		else if (select === 'nav16') {
 			clearPredict()
@@ -2200,6 +2246,180 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 				 Plugin Utility					//
 	// ------------------------------ //
+	function initTour() {	
+		function getTourElement(tour){
+			return tour._options.steps[tour._current].element
+		}
+		var template = "<div class='popover tour'>" +
+    "<div class='arrow'></div>" + 
+    "<h3 dir='rtl' class='popover-title'></h3>" + 
+		"<div dir='rtl' style='line-height:200%;' class='popover-content'></div>" + 
+    "<div class='popover-navigation'>" + 
+        "<button class='btn btn-default' data-role='next'>بعدی</button>" + 
+        "<button class='btn btn-default' data-role='prev'>قبلی</button>" + 
+    "</div>" +
+		"</div>"
+		var endTemplate = "<div class='popover tour'>" +
+    "<div class='arrow'></div>" + 
+    "<h3 dir='rtl' class='popover-title'></h3>" + 
+		"<div dir='rtl' style='line-height:200%;' class='popover-content'></div>" + 
+    "<div class='popover-navigation'>" + 
+        "<button class='btn btn-default' data-role='next'>بعدی</button>" + 
+				"<button class='btn btn-default' data-role='prev'>قبلی</button>" + 
+				"<button class='btn btn-default' data-role='end'>ادامه</button>" +
+		"</div>" +
+		"</div>"
+		firstTour = new Tour({
+			name: "ftour",
+			container: "body",
+			smartPlacement: true,
+			keyboard: true,
+			storage: false,
+			debug: false,
+			backdrop: true,
+			backdropContainer: 'body',
+			backdropPadding: '3px',
+			orphan: true,
+			duration: false,
+			delay: false,
+			basePath: "",
+			template: template,
+			onEnd: function (tour) {
+				localStorage.setItem('ftour_end', true)
+				$("#play_room_league_start_button").click()
+				$(".not-active").removeClass("not-active")
+			},
+			onShown: function(tour) {
+				var stepElement = getTourElement(tour);
+				console.log(stepElement)
+				$('.tour-backdrop').css({'width': $(window).width() + 'px', 'height': $(window).height() + 'px'})
+        $(stepElement).after($('.tour-step-background'))
+				$(stepElement).after($('.tour-backdrop'))
+				$(stepElement).addClass('not-active')
+    	},
+			steps: [
+			{
+				element: "#main_menu_prediction_button",
+				title: "ثبت پیش‌بینی",
+				placement: "top",
+				content: "اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن",
+				onNext: function (tour) {
+					change_page_scene('page_play_room')
+				}
+			},
+			{
+				element: "#play_room_selector",
+				title: "انتخاب لیگ",
+				placement: "top",
+				content: 'انتخاب کنید که پیش‌بینی‌های مربوط به کدوم لیگ رو می‌خواید ببینید. "همه‌ی لیگ‌ها" تمام پیش‌بینی‌های موجود رو براتون باز می‌کنه',
+				onPrev: function (tour) {
+					change_page_scene('page_main_menu')
+				}
+			},
+			{
+				element: "#main_predict_estimates_button",
+				title: "پیش‌بینی‌های تائید شده‌ شما",
+				placement: "top",
+				content: "پیش‌بینی‌هایی که تایید کردید اینجا مشخص میشن. با رنگ سبز و قرمز، درست یا غلط بودن پیش‌بینی‌تون نشون داده میشه"
+			},
+			{
+				element: "#play_room_point_box",
+				title: "فرصت‌های پیش‌بینی",
+				placement: "bottom",
+				content: "اینجا تعداد فرصت‌های شما برای تایید پیش‌بینی مشخص شده. بعد از ثبت‌نام، ۲۵ پیش بینی رایگان گرفتید"
+			},
+			{
+				element: "#play_room_notif_center_button",
+				title: "پوشش اخبار کوپا ۹۰",
+				placement: "top",
+				content: "جدیدترین پیش‌بینی‌هایی که به کوپا۹۰ اضافه شده، اینجا اعلام میشن"
+			},
+			{
+				element: "#play_room_league_start_button",
+				title: "شروع بازی",
+				placement: "top",
+				template: endTemplate,
+				content: "برای آشنا شدن و دیدن پیش‌بینی‌ها، ادامه رو بزن"
+			}
+		]})
+		secondTour = new Tour({
+			name: "stour",
+			container: "body",
+			smartPlacement: true,
+			keyboard: true,
+			storage: false,
+			debug: false,
+			backdrop: false,
+			backdropContainer: 'body',
+			backdropPadding: '3px',
+			orphan: true,
+			duration: false,
+			delay: false,
+			basePath: "",
+			template: template,
+			onEnd: function (tour) {
+				localStorage.setItem('stour_end', true)
+				$(".not-active").removeClass("not-active")
+			},
+			onShown: function(tour) {
+				var stepElement = getTourElement(tour);
+				console.log(stepElement)
+        $(stepElement).after($('.tour-step-background'))
+				$(stepElement).after($('.tour-backdrop'))
+				$(stepElement).addClass('not-active')
+    	},
+			steps: [
+			{
+				element: "#main_predict_nav_bar",
+				title: "انواع پیش‌بینی",
+				placement: "top",
+				content: "توی این چهار تا تب، چهار نوع پیش‌بینی مختلف داریم"
+			},
+			{
+				element: "#main_predict_div_body",
+				title: "پیش‌بینی",
+				placement: "top",
+				content: "برای مثال، نوع اول پیش‌بینی هفتگیه که برای بازی‌هایی از لیگ‌های ایران و اروپاست که توی یک هفته‌ی آتی برگزار میشه"
+			},
+			{
+				element: "#main_predict_control",
+				title: "دکمه‌های پیش‌بینی",
+				placement: "top",
+				content: "هر پیش‌بینی رو می‌تونی تایید کنی، یا ازش رد بشی و شانست رو نگه داری"
+			},
+			{
+				element: "#main_predict_time_box",
+				title: "زمان باقی‌مانده پیش‌بینی",
+				placement: "top",
+				content: "این زمانیه که فرصت داری تا این پیش‌بینی رو تایید کنی. بعد از اون بازی شروع میشه و پیش‌بینی بسته میشه"
+			},
+			{
+				element: "#main_predict_point_box",
+				title: "امتیاز پیش‌بینی",
+				placement: "top",
+				content: "اگه یه پیش‌بینی رو تایید کردی و اون اتفاق رخ داد، امتیازی که اینجا نوشته رو می‌گیری"
+			},
+			{
+				element: "#main_predict_progress",
+				title: "شانس‌های باقی‌مانده شما",
+				placement: "top",
+				template: endTemplate,
+				content: "به ازای هر ۱ پیش‌بینی که تایید کنی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد، از طریق دکمه خرید بسته اونو افزایش بده"
+			}
+		]})
+
+		firstTour.init()
+		secondTour.init()
+	}
+	function startFirstTour() {
+		if (!localStorage.getItem('ftour_end') && firstTour) 
+			firstTour.start(true)
+	}
+	function startSecondTour() {
+		if (!localStorage.getItem('stour_end') && secondTour)
+			secondTour.start(true)
+	}
+
 	function initUtility() {
     var clipboard = new Clipboard('.btn');
     clipboard.on('success', function(e) {
@@ -2416,21 +2636,22 @@ $(document).ready(function () {
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#ranking_total_statistics_table').append('<tr id="rtst_addr' + (i) + '"></tr>')
 			$('#rtst_addr' + i).html(
-				'<th align="center" style="padding-left:0px; vertical-align: middle; white-space: nowrap; word-wrap: break-word; width: 2%;">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td width="80px" align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
-				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; word-wrap: break-word; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
+				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td wrap align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
+				'<td wrap class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
+				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
 			)
 			if (usersArray[i].id.toString() === userId.toString()) {
 				$('#rtst_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
 				rowNo = i
 			}
 		}
-		var s = $("#ranking_total_statistics_table tbody > tr:nth-child(" + rowNo + ")").position();
+		var s = $("#ranking_total_statistics_table tbody > tr:nth-child(" + rowNo + ")").parent().position();
 		if (s)
 			$("#ranking_total_statistics_table").parent().parent().parent().scrollTop( s.top );
 		fixUITable()
 	}
+
 	function fill_table_teamStatistics(usersArray) {
 		for (var i = 0; i < teamsArray.length; i++)
 		if (teamsArray[i].id === favTeam) {
@@ -2482,12 +2703,10 @@ $(document).ready(function () {
 		fixUITable()
 	}
 	function fixUITable() {
-		$('table').css({'table-layout': 'fixed;', 'width': '100%;'})
-		$('table td').css({'overflow':'hidden;'})
-		$('table tr').css({'overflow':'hidden;'})
+		$('table').css({'table-layout': 'fixed', 'width': '100%'})
+		$('td').css({"font-size":'90%'})
+		$('td').css({'word-wrap':'break-all'})
 		if (platform.name.includes('Mobile') || source === 'telegram' || $(window).width() <= 400 || detectmob()) {
-			$('td').css({"font-size":'80%'})
-			$('td').css({'word-wrap':'break-all'})
 			$('.mobileCell').hide()
 		}
 	}
