@@ -379,3 +379,20 @@ button.list-group-item{
     background-size: 900% 900%;
     animation: rainbow 9s ease infinite;
 }
+
+.not-active {
+    pointer-events: none;
+    cursor: default;
+}
+
+/* .blured-view {
+    background-size: cover;
+    overflow: hidden;
+    filter: blur(5px);
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+} */
