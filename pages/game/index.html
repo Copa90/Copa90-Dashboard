@@ -68,6 +68,9 @@
     <!-- Morris Css -->
     <link href="../../plugins/morrisjs/morris.css" rel="stylesheet" />
 
+    <!-- Intro Css -->
+	<link href="../../plugins/bootstrap-tour/build/css/bootstrap-tour.css" rel="stylesheet" />
+
 	<!-- Custom Css -->
 	<link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/rtl.css" rel="stylesheet">
@@ -155,11 +158,11 @@
 						<div class="cardRainbow rainbow-progress-bar"></div>
 						<div class="sizeControl body" style="max-height:700px; overflow-y:auto">
 							<div id="phone" >
-								<div class="row clearfix m-b-20">
-									<h5 class="text-center">برای شروع ثبت نام، لطفا شماره خوب را ثبت کنید</h5>
-									<br>
-								</div>
 								<div id="sendPhone">
+									<div class="row clearfix m-b-20">
+										<h5 class="text-center">برای شروع ثبت نام، لطفا شماره خوب را ثبت کنید</h5>
+										<br>
+									</div>
 									<div class="row clearfix demo-masked-input">
 										<div class="col-lg-2 col-md-1 col-sm-1">
 										</div>
@@ -184,6 +187,10 @@
 									</div>
 								</div>
 								<div id="sendCode">
+									<div class="row clearfix m-b-20">
+										<h5 class="text-center">برای تکمیل ثبت نام، کد ارسال شده به شماره همراهتان را وارد کنید</h5>
+										<br>
+									</div>
 									<div class="row clearfix demo-masked-input">
 										<div class="col-lg-2 col-md-1 col-sm-1">
 										</div>
@@ -215,19 +222,83 @@
 										</div>
 									</div>
 									<div class="row clearfix">
-										<div class="col-lg-4 col-md-4 col-sm-3 col-xs-1">
+										<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1">
 										</div>
-										<div class="col-lg-4 col-md-4 col-sm-6 col-xs-10 m-t-10">
-											<button type="button" id="aaa_send_code_button" class="btn bg-green btn-block btn-lg waves-effect"> ارسال کد </button>
+										<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5 m-t-10">
+											<button type="button" id="aaa_send_code_button" class="btn bg-green btn-block btn-lg waves-effect"> احراز هویت </button>
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5 m-t-10">
+											<button type="button" id="aaa_resend_code_button" class="btn bg-green btn-block btn-lg waves-effect"> ارسال مجدد </button>
+										</div>
+									</div>
+								</div>
+								<div id="changePhone">
+									<div class="row clearfix m-b-20">
+										<h5 class="text-center">برای تغییر شماره موبایل خود اطلاعات زیر را وارد کنید</h5>
+										<br>
+									</div>
+									<div class="row clearfix demo-masked-input">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>ایمیل</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">email</i>
+												</span>
+												<div class="form-line">
+													<input type="email" id="aaa_change_number_email" class="form-control text-center" dir="ltr"  placeholder="Ex: sample@domain.com">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix demo-masked-input">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>شماره موبایل</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">phone_iphone</i>
+												</span>
+												<div class="form-line">
+													<input type="text" id="aaa_change_number_phone" class="form-control mobile-phone-number text-center" dir="ltr"  placeholder="Ex: 0912 123 4567">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-2 col-md-1 col-sm-1">
+										</div>
+										<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
+											<b>رمز عبور</b>
+											<div class="input-group">
+												<span class="input-group-addon">
+													<i class="material-icons">vpn_key</i>
+												</span>
+												<div class="form-line">
+													<input type="password" id="aaa_change_number_password" class="form-control text-center" dir="ltr"  placeholder="Ex: 123456">
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row clearfix">
+										<div class="col-lg-4 col-md-4 col-sm-1 col-xs-1">
+										</div>
+										<div class="col-lg-4 col-md-4 col-sm-10 col-xs-10 m-t-10">
+											<button type="button" id="aaa_change_number_button" class="btn bg-green btn-block btn-lg waves-effect"> ثبت شماره جدید </button>
 										</div>
 									</div>
 								</div>
 								<div class="row m-t-15 m-b--20">
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-right">
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-right">
 											<a href="#" class="signinHref text-center" style="text-align: center;"> وارد حسابتان شوید </a>
 										</div>
-										<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 align-left">
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-center">
+											<a href="#" class="changeNumberHref text-center" style="text-align: center;"> تغییر شماره </a>
+										</div>										
+										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-left">
 											<a href="#" class="passwordHref text-center" style="text-align: center;"> فراموشی رمز عبور </a>
 										</div>
 									</div>
@@ -413,7 +484,7 @@
 											<a href="#" class="signupHref text-center" style="text-align: center;"> ثبت نام کنید </a>
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-center">
-											<a href="#" class="sendCodeHref text-center" style="text-align: center;"> ارسال کد </a>
+											<a href="#" class="sendCodeHref text-center" style="text-align: center;"> ارسال کد و تغییر شماره </a>
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 align-left">
 											<a href="#" class="passwordHref text-center" style="text-align: center;"> فراموشی رمز عبور </a>
@@ -476,7 +547,7 @@
 								<div class="col-lg-4 col-md-4 col-sm-3 col-xs-2">
 								</div>
 								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-8 m-t-10">
-									<button style="font-size: 130%;" type="button" id="main_menu_prediction_button" class="btn bg-green btn-block btn-lg waves-effect tooltipColor" data-toggle="tooltip" data-placement="top" title="اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن"> ثبت پیش‌بینی‌ </button>
+									<button style="font-size: 130%;" type="button" id="main_menu_prediction_button" class="btn bg-green btn-block btn-lg waves-effect tooltipColor"> ثبت پیش‌بینی‌ </button>
 								</div>
 							</div>
 							<div class="row clearfix">
@@ -549,7 +620,7 @@
 								<div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
 								</div>
 								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
-									<div class="row clearfix">
+									<div id="main_predict_nav_bar" class="row clearfix">
 										<ul class="nav nav-tabs tab-col-teal" role="tablist">
 											<li role="presentation" class="active col-sm-3 col-md-3 col-lg-3 col-xs-3 p-r-0 p-l-0">
 												<a href="#" class="text-center p-r-0 p-l-0" id="nav15" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">هفتگی</a>
@@ -631,7 +702,7 @@
 									<div class="card">
 										<div class="body" style="min-height:250px;" id="main_predict_div_body">
 											<div class="row clearfix">
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+												<div id="main_predict_time_box" class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
 													<div class="row clearfix text-center">
 														<small class="text-center col-blue-grey" style="line-height: 200%;">زمان باقی‌مانده</small>
 														<br>
@@ -640,7 +711,7 @@
 												</div>
 												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-2">
 												</div>
-												<div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+												<div id="main_predict_point_box" class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
 													<div class="row clearfix text-center">
 														<small class="text-center col-blue-grey" style="line-height: 200%;">امتیاز پیش‌بینی‌</small>
 														<br>
@@ -655,7 +726,7 @@
 													<p id="main_predict_explanation" class="text-center font-15 font-italic" style="line-height: 200%;">روملو لوکاکو در اولین بازی خود در لیگ برتر با لباس منچستریونایتد حداقل دو گل میزند.</p>
 												</div>
 											</div>
-											<div class="row clearfix" style="bottom:20px;">
+											<div class="row clearfix" id="main_predict_control" style="bottom:20px;">
 												<div class="col-lg-1 col-md-1 col-sm-1">
 												</div>
 												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
@@ -730,7 +801,7 @@
 							<div class="row clearfix">
 								<div class="col-lg-2 col-md-2 col-sm-1 col-xs-1">
 								</div>
-								<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
+								<div class="col-lg-8 col-md-8 col-sm-10 col-xs-10" id="main_predict_progress">
 									<h6 class="text-center">تعداد شانس‌های باقی‌مانده برای ‌پیش‌بینی</h6>
 									<div class="progress" style="height:5px;">
 										<div id="main_predict_progress_white" class="progress-bar" style="width: 25%; color:white; background-color:white;">
@@ -1276,7 +1347,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+								<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6" id="play_room_point_box">
 									<div class="info-box-3 bg-light-green hover-expand-effect hover-zoom-effect">
 										<div class="content">
 											<div class="text">شانس‌های شما</div>
@@ -1307,7 +1378,7 @@
 									<button style="border: 2px solid green; border-radius: 25px; background-color: Transparent;" type="button" id="play_room_notif_center_button" class="btn btn-block btn-md m-b--20 waves-effect"> آخرین اخبار کوپا ۹۰ </button>
 								</div>
 							</div>
-							<div class="row clearfix">
+							<div class="row clearfix" id="play_room_selector">
 								<div class="col-lg-3 col-md-2 col-sm-2 col-xs-1">
 								</div>
 								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
@@ -1373,34 +1444,6 @@
 							</div>
 							<!-- End of Navbar -->
 
-							<!-- Start of Total Statistics -->
-							<div class="row clearfix" id="nav9_tab" style="overflow-x: hidden;">
-								<div class="row clearfix m-t-10" style="height: 350px; overflow-y:scroll;">
-									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
-									</div>
-									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
-										<div class="body" style="overflow-x:hidden;">
-											<table class="table table-striped" id="ranking_total_statistics_table">
-												<tbody>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<br><br>
-								<div class="row clearfix">
-									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
-										<button type="button" id="ranking_total_statistics_result_button" class="btn bg-light-green btn-block btn-lg waves-effect" disabled> اشتراک‌گذاری </button>
-									</div>
-									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
-										<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
-									</div>
-								</div>
-							</div>
-							<!-- End of Total Statistics -->
-
 							<!-- Start of Team Statistics -->
 							<div class="row clearfix" id="nav11_tab" style="overflow-x: hidden;">
 								<h4 class="text-center" id="ranking_team_statistics_team_name"></h4>
@@ -1429,6 +1472,34 @@
 								</div>
 							</div>
 							<!-- End of Team Statistics -->
+
+							<!-- Start of Total Statistics -->
+							<div class="row clearfix" id="nav9_tab" style="overflow-x: hidden;">
+								<div class="row clearfix m-t-10" style="height: 350px; overflow-y:auto;">
+									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
+									</div>
+									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
+										<div class="body" style="overflow-x:hidden;">
+											<table class="table table-striped" id="ranking_total_statistics_table">
+												<tbody>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<br><br>
+								<div class="row clearfix">
+									<div class="col-lg-4 col-md-3 col-sm-3 col-xs-2">
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" id="ranking_total_statistics_result_button" class="btn bg-light-green btn-block btn-lg waves-effect" disabled> اشتراک‌گذاری </button>
+									</div>
+									<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4 m-b-10">
+										<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Total Statistics -->
 
 							<!-- Start of League Statistics -->
 							<div class="row clearfix" id="nav10_tab" style="overflow-x: hidden;">
@@ -1791,7 +1862,7 @@
 								<div class="col-lg-3 col-md-2 col-sm-2">
 								</div>
 								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
-									<button type="button" id="profile_signOut_button" class="btn bg-light-green btn-block btn-lg waves-effect"> خارج </button>
+									<button type="button" id="profile_signOut_button" class="btn bg-light-green btn-block btn-lg waves-effect"> خارج شدن </button>
 								</div>
 								<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
 									<button type="button" class="returnMain btn bg-light-green btn-block btn-lg waves-effect"> بازگشت </button>
@@ -2362,6 +2433,9 @@
 
 	<!-- Bootstrap Notify Plugin Js -->
 	<script src="../../plugins/bootstrap-notify/bootstrap-notify.js"></script>
+
+	<!-- Bootstrap Js -->
+	<script src="../../plugins/bootstrap-tour/build/js/bootstrap-tour.js"></script>	
 
 	<!-- Waves Effect Plugin Js -->
 	<script src="../../plugins/node-waves/waves.js"></script>
