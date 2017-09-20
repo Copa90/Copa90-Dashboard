@@ -97,16 +97,13 @@
 			</div>
 			<br>
 			<br>
-			<h5>لطفا کمی صبر کنید</h5>
-			<br>
-			<h4>شما در حال اتصال به سرورهای کوپا ۹۰ می‌باشید</h4>
+			<h4>لطفا کمی صبر کنید</h4>
 			<br>
 			<br>
 			<div class="row clearfix">
 				<div class="col-lg-4 col-md-4 col-sm-2 col-xs-1">
 				</div>
 				<div class="col-lg-4 col-md-4 col-sm-8 col-xs-10">
-
 					<div class="card" style="opacity: 0.93;">
 						<div class="body">
 							<h5 class="col-teal font-16 font-bold m-b-30">راهنمایی‌های بازی</h5>
@@ -122,30 +119,6 @@
     <section class="">
         <div class="content container-fluid" style="overflow-x:hidden;">
 			
-			<!-- Start of Demo  -->
-			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_demo">
-				<div class="row clearfix" id="demo_title">
-					<h1 class="text-center" style="color:white;">به کوپا ۹۰</h1>
-					<br>
-					<h1 class="text-center" style="color:white;">خوش آمدید</h1>
-				</div>
-				<div class="row clearfix text-center" id="demo_window_image" style="overflow-x:hidden;">
-					<img class="windowDemoImage" src="../../images/demo_ipad.png" style="width: 32%;" alt="demo">
-					<img class="mobileDemoImage" id="demo_mobile_frame" src="../../images/mobile.png" style="width: 85%; overflow-x:hidden; z-index:1;" alt="demo">
-					<div id="demo_guide_image" style="position:absolute; top:1px; left:1px; z-index:10; overflow-y:scroll;">
-						<img style="overflow-y:scroll; width:100%; overflow-y:scroll;" src="../../images/guide.png"></img>
-					</div>
-				</div>
-				<div class="row clearfix">
-					<div class="col-lg-5 col-md-5 col-sm-4 col-xs-2">
-					</div>
-					<div class="col-lg-2 col-md-2 col-sm-4 col-xs-8 m-t-30 m-b-50">
-						<button type="button" id="demo_start_game_button" class="btn bg-green btn-block btn-lg waves-effect"> شروع بازی </button>
-					</div>
-				</div>
-			</div>
-			<!-- End of Demo  -->
-
 			<!-- Start of AAA  -->
 			<div class="positionControl row clearfix" style="position: absolute; top: 50%; transform: translateY(-50%); width:100%; overflow-x: hidden;" id="page_aaa">
 				<div class="row clearfix sharedTitle sharedMobile">
@@ -228,7 +201,7 @@
 											<button type="button" id="aaa_send_code_button" class="btn bg-green btn-block btn-lg waves-effect"> احراز هویت </button>
 										</div>
 										<div class="col-lg-4 col-md-4 col-sm-5 col-xs-5 m-t-10">
-											<button type="button" id="aaa_resend_code_button" class="btn bg-green btn-block btn-lg waves-effect"> ارسال مجدد </button>
+											<button type="button" id="aaa_resend_code_button" class="btn bg-green btn-block btn-lg waves-effect"> ارسال مجدد کد </button>
 										</div>
 									</div>
 								</div>
@@ -414,7 +387,7 @@
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<b style="font-size:12px;"> تیم مورد علاقه‌تان </b>
-										<select id="aaa_signup_select_team" class="team_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید" >
+										<select id="aaa_signup_select_team" class="team_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="یک تیم را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -764,7 +737,7 @@
 												</div>
 												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
 													<b style="font-size:12px;"> انتخاب اول </b>
-													<select id="main_exact_first_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک نوع را انتخاب کنید" data-max-options="1" multiple>
+													<select id="main_exact_first_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
 													</select>	
 												</div>
 											</div>
@@ -773,7 +746,7 @@
 												</div>
 												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
 													<b style="font-size:12px;"> انتخاب دوم </b>
-													<select id="main_exact_second_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک نوع را انتخاب کنید" data-max-options="1" multiple>
+													<select id="main_exact_second_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
 													</select>	
 												</div>
 											</div>
@@ -782,7 +755,7 @@
 												</div>
 												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-10">
 													<b style="font-size:12px;"> انتخاب سوم </b>
-													<select id="main_exact_third_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک نوع را انتخاب کنید" data-max-options="1" multiple>
+													<select id="main_exact_third_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
 													</select>	
 												</div>
 											</div>
@@ -871,7 +844,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های شخصی </b>
-										<select id="edit_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ شخصی را انتخاب کنید" >
+										<select id="edit_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ شخصی را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -984,7 +957,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های شخصی </b>
-										<select id="join_personal_league_champion_selector" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ شخصی را انتخاب کنید" >
+										<select id="join_personal_league_champion_selector" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ شخصی را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1042,7 +1015,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های شخصی </b>
-										<select id="statistics_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ شخصی را انتخاب کنید" >
+										<select id="statistics_personal_league_leagueId" class="champion_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ شخصی را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1051,7 +1024,15 @@
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<div class="body" style="overflow-x:hidden;">
-											<table class="table table-striped" id="statistics_personal_league_table">
+											<table class="table table-striped users" id="statistics_personal_league_table">
+												<thead>
+													<tr>
+														<th class="row-1 row-no">رتبه</th>
+														<th class="row-2 row-username">نام‌‌کاربری</th>
+														<th class="mobileCell row-3 row-name">نام</th>
+														<th class="row-4 row-point">امتیاز</th>
+													</tr>
+												</thead>
 												<tbody>
 												</tbody>
 											</table>
@@ -1124,7 +1105,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
-										<select id="edit_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
+										<select id="edit_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="یک چالش را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1175,7 +1156,7 @@
 									</div>
 									<div class="col-lg-4 col-md-5 col-sm-5 col-xs-6">
 										<b style="font-size:12px;"> مدت زمان چالش (روز) </b>
-										<select id="create_personal_challenge_period" class="form-control show-tick text-right" data-size=3 title="انتخاب یک زمان" >
+										<select id="create_personal_challenge_period" class="form-control show-tick text-right" data-size="3" title="انتخاب یک زمان" >
 											<option>3</option>
 											<option>7</option>
 											<option>10</option>
@@ -1230,7 +1211,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌های اختصاصی </b>
-										<select id="join_personal_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
+										<select id="join_personal_challenge_selector" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="یک چالش را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1288,7 +1269,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> چالش‌ها </b>
-										<select id="statistics_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید" >
+										<select id="statistics_personal_challenge_challengeId" class="challenge_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="یک چالش را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1297,7 +1278,15 @@
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-12">
 										<div class="body" style="overflow-x:hidden;">
-											<table class="table table-striped" id="statistics_personal_challenge_table">
+											<table class="table table-striped users" id="statistics_personal_challenge_table">
+												<thead>
+													<tr>
+														<th class="row-1 row-no">رتبه</th>
+														<th class="row-2 row-username">نام‌‌کاربری</th>
+														<th class="mobileCell row-3 row-name">نام</th>
+														<th class="row-4 row-point">امتیاز</th>
+													</tr>
+												</thead>
 												<tbody>
 												</tbody>
 											</table>
@@ -1383,7 +1372,7 @@
 								</div>
 								<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 									<b style="font-size:12px;"> لیگ‌های عمومی </b>
-									<select id="play_room_league_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size=4 title="انتخاب یک لیگ عمومی">
+									<select id="play_room_league_leagueId" class="league_selector form-control show-tick text-right" data-live-search="true" data-size="3" title="انتخاب یک لیگ عمومی">
 									</select>
 								</div>
 							</div>
@@ -1452,7 +1441,15 @@
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
 										<div class="body" style="overflow-x:hidden;">
-											<table class="table table-striped" id="ranking_team_statistics_table">
+											<table class="table table-striped users" id="ranking_team_statistics_table">
+												<thead>
+													<tr>
+														<th class="row-1 row-no">رتبه</th>
+														<th class="row-2 row-username">نام‌‌کاربری</th>
+														<th class="mobileCell row-3 row-name">نام</th>
+														<th class="row-4 row-point">امتیاز</th>
+													</tr>
+												</thead>
 												<tbody>
 												</tbody>
 											</table>
@@ -1479,8 +1476,16 @@
 									<div class="col-lg-2 col-md-1 col-sm-1 col-xs-1">
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
-										<div class="body" style="overflow-x:hidden;">
-											<table class="table table-striped" id="ranking_total_statistics_table">
+										<div class="body" style="overflow-x:hidden; overflow-y:auto;">
+											<table class="table table-striped users" id="ranking_total_statistics_table">
+												<thead>
+													<tr>
+														<th class="row-1 row-no">رتبه</th>
+														<th class="row-2 row-username">نام‌‌کاربری</th>
+														<th class="mobileCell row-3 row-name">نام</th>
+														<th class="row-4 row-point">امتیاز</th>
+													</tr>
+												</thead>
 												<tbody>
 												</tbody>
 											</table>
@@ -1508,7 +1513,7 @@
 									</div>
 									<div class="col-lg-6 col-md-8 col-sm-8 col-xs-10">
 										<b style="font-size:12px;"> لیگ‌های عمومی </b>
-										<select id="ranking_league_statistics_leagueId" class="league_selector form-control show-tick text-right" data-size="5" title="یک لیگ را انتخاب کنید" >
+										<select id="ranking_league_statistics_leagueId" class="league_selector form-control show-tick text-right" data-size="3" title="یک لیگ را انتخاب کنید" >
 										</select>
 									</div>
 								</div>
@@ -1517,7 +1522,15 @@
 									</div>
 									<div class="col-lg-8 col-md-10 col-sm-10 col-xs-10">
 										<div class="body" style="overflow-x:hidden;">
-											<table class="table table-striped" id="ranking_league_statistics_table">
+											<table class="table table-striped users" id="ranking_league_statistics_table">
+												<thead>
+													<tr>
+														<th class="row-1 row-no">رتبه</th>
+														<th class="row-2 row-username">نام‌‌کاربری</th>
+														<th class="mobileCell row-3 row-name">نام</th>
+														<th class="row-4 row-point">امتیاز</th>
+													</tr>
+												</thead>
 												<tbody>
 												</tbody>
 											</table>
@@ -1570,7 +1583,7 @@
 												<a href="#" class="text-center p-r-0 p-l-0" id="nav12" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">داده‌ها</a>
 											</li>
 											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
-												<a href="#" class="text-center p-r-0 p-l-0" id="nav14" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">اطلاعات</a>
+												<a href="#" class="text-center p-r-0 p-l-0" id="nav14" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">مشخصات</a>
 											</li>
 											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0">
 												<a href="#" class="text-center p-r-0 p-l-0" id="nav13" data-toggle="tab" style="font-size: 15px; padding-left: 0px; padding-right: 0px;">دستاوردها</a>
@@ -1615,7 +1628,6 @@
 											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 											</div>											
 											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-												<h6 class="text-center">مقایسه کل پیش‌بینی‌های درست از کل پیش‌بینی‌ها</h6>
 												<div class="progress" style="height:10px;">
 													<div id="total_rem" class="progress-bar bg-amber" style="width: 25%;">
 													</div>
@@ -1653,7 +1665,6 @@
 											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 											</div>											
 											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-												<h6 class="text-center">مقایسه پیش‌بینی‌های درست هفته از کل پیش‌بینی‌های هفته</h6>
 												<div class="progress" style="height:10px;">
 													<div id="week_rem" class="progress-bar bg-amber" style="width: 70%;">
 													</div>
@@ -1691,7 +1702,6 @@
 											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
 											</div>											
 											<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-												<h6 class="text-center">مقایسه پیش‌بینی‌های درست ماه از کل پیش‌بینی‌های ماه</h6>
 												<div class="progress" style="height:10px;">
 													<div id="month_rem" class="progress-bar bg-amber" style="width: 40%;">
 													</div>

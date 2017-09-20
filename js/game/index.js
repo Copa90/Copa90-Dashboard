@@ -319,7 +319,7 @@ $(document).ready(function () {
 		getAllTeams(function(err, teamsResult) {
 			if (err)
 				return console.error(err)
-			change_page_scene('page_demo')
+			change_page_scene('page_aaa')
 			doneProgressBar()
 			doneLoading()
 		})
@@ -331,11 +331,6 @@ $(document).ready(function () {
 			getTeamUsers(favTeam, function(err, result) {
 				if (err)
 					return change_page_scene('page_aaa')
-				getAllUsers(function(err, result) {
-					if (err)
-						return change_page_scene('page_aaa')
-					fill_table_totalStatistics(allUsers)
-				})			
 				doneLoading()
 				doneProgressBar()
 				fill_table_teamStatistics(userTeamRanking)
@@ -343,12 +338,19 @@ $(document).ready(function () {
 			})
 		})
 	}	
+	if (userId) {
+		getAllUsers(function(err, result) {
+			if (err)
+				return change_page_scene('page_aaa')
+			fill_table_totalStatistics(result)
+		})
+	}
 
 	// ------------------------------ //
 	// 		  	Page Controller					//
 	// ------------------------------ //
 	function change_page_scene(pageName) {
-		var pages = ['page_demo', 'page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_award']
+		var pages = ['page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_award']
 		for (var i = 0; i < pages.length; i++) {
 			var str = '#' + pages[i]
 			if (pages[i] === pageName)
@@ -369,40 +371,6 @@ $(document).ready(function () {
 			$('#password').hide()
 			$('#sign-up').hide()
 			$('#phone').hide()
-		}
-		else if (pageName === 'page_demo') {
-			$('#demo_window_image').hide()
-			$('#demo_start_game_button').hide()
-			$('#demo_title').fadeIn()
-			setTimeout(function () {
-				$('#demo_title').fadeOut(); 
-				setTimeout(function () {
-					if (source === 'telegram' || platform.name.includes('Mobile') || detectmob()) {
-						$('.version_controlling').hide()
-						$('.windowDemoImage').hide()
-						$('#demo_window_image').fadeIn()
-						setTimeout(function () { 
-							$('.mobileDemoImage').show()
-							$('#demo_mobile_frame').css({'height': (Number($('#demo_mobile_frame').width()) * (2.07)).toString() + 'px'})
-							var w = (Number($('#demo_mobile_frame').width()) * (0.83))
-							var h = (Number($('#demo_mobile_frame').height()) * (0.64))
-							$('#demo_guide_image').css({'width': (w.toString() + 'px'), 'height': (h.toString() + 'px')})
-							var position = $('#demo_mobile_frame').position()
-							var l = (($(window).width() - w) / 2) + 2
-							console.log(position.top)
-							var t = ($('#demo_mobile_frame').height() * 0.12) + position.top + ($('#demo_mobile_frame').height() * 0.066) + 3
-							$('#demo_guide_image').css({'top': (t.toString() + 'px'),'left': (l.toString() + 'px')})
-						}, 350);
-					}
-					else {
-						$('.windowDemoImage').show()
-						$('.mobileDemoImage').hide()
-						$('#demo_guide_image').hide()
-					}
-					$('#demo_window_image').fadeIn();
-					$('#demo_start_game_button').fadeIn(); 
-				}, 400);
-			}, 1200);		
 		}
 		else if (pageName === 'page_play_room') {
 			$("#play_room_league_leagueId").selectpicker('val', 'every')
@@ -444,8 +412,9 @@ $(document).ready(function () {
 			$('#main_exact_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#main_exact_selector').selectpicker('refresh')
 	}
 	function fill_exact_answer_selector(exactObject, answersArray) {
 		var itemToPush = {}
@@ -473,7 +442,7 @@ $(document).ready(function () {
 			$('#main_exact_first_answer_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			}).data("subtext", '&nbsp;&nbsp; ' + teamName)).selectpicker('refresh')
+			}).data("subtext", '&nbsp;&nbsp; ' + teamName))
 			itemToPush = {
 				id: i.toString(),
 				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.second.toString()) + ' امتیاز'
@@ -481,7 +450,7 @@ $(document).ready(function () {
 			$('#main_exact_second_answer_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			}).data("subtext", '&nbsp;&nbsp; ' + teamName)).selectpicker('refresh')
+			}).data("subtext", '&nbsp;&nbsp; ' + teamName))
 			itemToPush = {
 				id: i.toString(),
 				name: answersArray[i].choice + ' - ' + Persian_Number(answersArray[i].point.third.toString()) + ' امتیاز'
@@ -489,8 +458,11 @@ $(document).ready(function () {
 			$('#main_exact_third_answer_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			}).data("subtext", '&nbsp;&nbsp; ' + teamName)).selectpicker('refresh')
+			}).data("subtext", '&nbsp;&nbsp; ' + teamName))
 		}
+		$('#main_exact_first_answer_selector').selectpicker('refresh')
+		$('#main_exact_second_answer_selector').selectpicker('refresh')
+		$('#main_exact_third_answer_selector').selectpicker('refresh')
 	}
 	function fill_champion_selector(championsArray) {
 		$('#edit_personal_league_leagueId').find('option').remove()
@@ -505,7 +477,7 @@ $(document).ready(function () {
 				$('#edit_personal_league_leagueId').append($('<option>', {
 					value: itemToPush.id,
 					text: itemToPush.name
-				})).selectpicker('refresh')
+				}))
 			}
 		}
 		for (var i = 0; i < championsArray.length; i++) {
@@ -516,7 +488,7 @@ $(document).ready(function () {
 			$('#join_personal_league_champion_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
 		for (var i = 0; i < championsArray.length; i++) {
 			var itemToPush = {
@@ -526,13 +498,13 @@ $(document).ready(function () {
 			$('#statistics_personal_league_leagueId').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#edit_personal_league_leagueId').selectpicker('refresh')
+		$('#join_personal_league_champion_selector').selectpicker('refresh')
+		$('#statistics_personal_league_leagueId').selectpicker('refresh')
 	}
 	function fill_challenge_selector(challengesArray) {
-		$('#edit_personal_challenge_challengeId').find('option').remove()
-		$('#join_personal_challenge_selector').find('option').remove()
-		$('#statistics_personal_challenge_challengeId').find('option').remove()
 		for (var i = 0; i < challengesArray.length; i++) {
 			if (challengesArray[i].creatorId === userId) {
 				var itemToPush = {
@@ -542,7 +514,7 @@ $(document).ready(function () {
 				$('#edit_personal_challenge_challengeId').append($('<option>', {
 					value: itemToPush.id,
 					text: itemToPush.name
-				})).selectpicker('refresh')
+				}))
 			}
 		}
 		for (var i = 0; i < challengesArray.length; i++) {
@@ -553,7 +525,7 @@ $(document).ready(function () {
 			$('#join_personal_challenge_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
 		for (var i = 0; i < challengesArray.length; i++) {
 			var itemToPush = {
@@ -563,8 +535,11 @@ $(document).ready(function () {
 			$('#statistics_personal_challenge_challengeId').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#edit_personal_challenge_challengeId').selectpicker('refresh')
+		$('#join_personal_challenge_selector').selectpicker('refresh')
+		$('#statistics_personal_challenge_challengeId').selectpicker('refresh')
 	}
 	function fill_league_selector(leaguesArray) {
 		$('#play_room_league_leagueId').find('option').remove()
@@ -572,7 +547,7 @@ $(document).ready(function () {
 		$('#play_room_league_leagueId').append($('<option>', {
 			value: 'every',
 			text: 'همه‌ی لیگ‌ها'
-		})).selectpicker('refresh')
+		}))
 		for (var i = 0; i < leaguesArray.length; i++) {
 			var itemToPush = {
 				id: leaguesArray[i].id,
@@ -581,7 +556,7 @@ $(document).ready(function () {
 			$('#play_room_league_leagueId').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
 		for (var i = 0; i < leaguesArray.length; i++) {
 			var itemToPush = {
@@ -591,8 +566,10 @@ $(document).ready(function () {
 			$('#ranking_league_statistics_leagueId').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#play_room_league_leagueId').selectpicker('refresh')
+		$('#ranking_league_statistics_leagueId').selectpicker('refresh')
 	}
 	function fill_team_selector(teamsArray) {
 		$('#aaa_signup_select_team').find('option').remove()
@@ -604,8 +581,9 @@ $(document).ready(function () {
 			$('#aaa_signup_select_team').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#aaa_signup_select_team').selectpicker('refresh')
 	}
 	// ------------------------------ //
 	// 		 	 	Edit Rows Filler				//
@@ -701,7 +679,6 @@ $(document).ready(function () {
 	$(document).on("click", "#aaa_send_phone_button", function (e) {
 		e.preventDefault()
 		phoneNumber = $("#aaa_send_phone_phone_number").val()
-		console.log(phoneNumber)
 		if (!phoneNumber || phoneNumber.includes('_')) {
 			return warningOperation()
 		}
@@ -738,7 +715,6 @@ $(document).ready(function () {
 		}		
 		startProgressBar()
 		var verificationURL = coreEngine_url + 'verifications/' + phoneNum + '/verify/' + code
-		console.log(verificationURL)
 		$.ajax({
 			url: verificationURL,
 			dataType: "json",
@@ -769,7 +745,6 @@ $(document).ready(function () {
 		if (!phoneNum || phoneNum.includes('_')) {
 			return warningOperation()
 		}		
-		console.log(phoneNum)
 		startProgressBar()
 		var passwordURL = coreEngine_url + 'clients/' + phoneNum + '/sendPassword'
 		$.ajax({
@@ -820,7 +795,6 @@ $(document).ready(function () {
 		}
 		if ($("#aaa_signup_referrer").val())
 			data.referrer = $("#aaa_signup_referrer").val()
-		console.log(JSON.stringify(data))
 		startProgressBar()
 		var clientsURL = coreEngine_url + 'clients'
 		$.ajax({
@@ -831,7 +805,6 @@ $(document).ready(function () {
 			type: "POST",
 			success: function (clientResult) {
 				var verifyURL = coreEngine_url + 'verifications/' + phoneNumber + '/sendVerification/'
-				console.log(verifyURL)
 				$.ajax({
 					url: verifyURL,
 					dataType: "json",
@@ -899,7 +872,6 @@ $(document).ready(function () {
 			phoneNumber: phoneNum,
 			password: pass
 		}
-		console.log(JSON.stringify(data))
 		startProgressBar()
 		var loginURL = coreEngine_url + 'clients/login'
 		$.ajax({
@@ -918,17 +890,17 @@ $(document).ready(function () {
 						doneProgressBar()
 						if (err)
 							return failedOperation()
-						getAllUsers(function(err, result) {
-							if (err)
-								return change_page_scene('page_aaa')
-							fill_table_totalStatistics(allUsers)
-						})		
 						fill_table_teamStatistics(userTeamRanking)
 						if (source !== 'telegram') {
 							localStorage.setItem('userCoreAccessToken', coreAccessToken)
 							localStorage.setItem('userId', userId)
 						}
 					})
+					getAllUsers(function(err, result) {
+						if (err)
+							return change_page_scene('page_aaa')
+						fill_table_totalStatistics(result)
+					})			
 					change_page_scene('page_main_menu')
 				})
 			},
@@ -945,11 +917,125 @@ $(document).ready(function () {
 	})
 	$(document).on("click", "#aaa_change_number_button", function (e) {
 		e.preventDefault()
-
+		var phoneNum = $("#aaa_change_number_phone").val()
+		var email = $("#aaa_change_number_email").val()
+		var pass = $("#aaa_change_number_password").val()
+		if (!phoneNum || !pass || !email || phoneNum.includes('_')) {
+			return warningOperation()
+		}
+		var data = {
+			email: email,
+			password: pass,
+			phoneNumber: phoneNum
+		}
+		var str = 'از شماره ' + Persian_Number(phoneNum.toString()) + ' برای ورود و ارسال کد اعتبار سنجی به شما استفاده می‌شود'
+		swal({
+			title: "آیا از شماره وارد شده مطمئن هستید؟",
+			text: str,
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "ادامه",
+			cancelButtonText: "تغییر",
+			closeOnConfirm: true,
+			closeOnCancel: true
+		}, function (isConfirm) {
+			if (isConfirm) {
+				startProgressBar()
+				var clientURL = wrapAccessToken(coreEngine_url + 'clients/changePhone', coreAccessToken);
+				$.ajax({
+					url: clientURL,
+					data: JSON.stringify(data),
+					dataType: "json",
+					contentType: "application/json; charset=utf-8",
+					type: "PUT",
+					success: function (championResult) {
+						var verifyURL = coreEngine_url + 'verifications/' + phoneNum + '/sendVerification'
+						$.ajax({
+							url: verifyURL,
+							dataType: "json",
+							contentType: "application/json; charset=utf-8",
+							type: "POST",
+							success: function (verifyResult) {
+								if (verifyResult === 'already verified')
+									failedOperationByString('خطا! شما در حال حاضر احراز هویت کرده‌اید')
+								$('#sign-in').hide()
+								$('#password').hide()
+								$('#sign-up').hide()
+								$('#phone').show()
+								$('#sendPhone').hide()
+								$('#changePhone').hide()
+								$('#aaa_send_code_phone').val(phoneNum)
+								$('#sendCode').fadeIn()
+								doneProgressBar()
+								successfulOperation()		
+							},
+							error: function (xhr, status, error) {
+								doneProgressBar()
+								if (xhr.responseJSON)
+									if (xhr.responseJSON.error)
+										if (xhr.responseJSON.error.message.includes('خطا')) 
+											return failedOperationByString(xhr.responseJSON.error.message)
+								failedOperation()
+								console.log(xhr.responseText)
+							}
+						})				
+					},
+					error: function (xhr, status, error) {
+						doneProgressBar()
+						if (xhr.responseJSON)
+							if (xhr.responseJSON.error)
+								if (xhr.responseJSON.error.message.includes('خطا')) 
+									return failedOperationByString(xhr.responseJSON.error.message)
+						failedOperation()
+						console.log(xhr.responseText)
+					}
+				})
+			}
+			else {
+				phoneNum = ''
+				$("#aaa_change_number_phone").val('')
+			}
+		})
 	})
 	$(document).on("click", "#aaa_resend_code_button", function (e) {
 		e.preventDefault()
-
+		var phoneNum = $("#aaa_send_code_phone").val()
+		if (!phoneNum || phoneNum.includes('_')) {
+			return warningOperation()
+		}
+		var verifyURL = coreEngine_url + 'verifications/' + phoneNum + '/resendVerification'
+		startProgressBar()
+		$.ajax({
+			url: verifyURL,
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (verifyResult) {
+				if (verifyResult === 'already verified')
+					failedOperationByString('خطا! شما در حال حاضر احراز هویت کرده‌اید')
+				else
+					successfulOperation()
+				doneProgressBar()
+				$('#sign-in').hide()
+				$('#password').hide()
+				$('#sign-up').hide()
+				$('#phone').show()
+				$('#sendPhone').hide()
+				$('#changePhone').hide()
+				$('#aaa_send_code_phone').val(phoneNum)
+				$('#sendCode').fadeIn()
+			},
+			error: function (xhr, status, error) {
+				doneProgressBar()
+				if (xhr.responseJSON)
+					if (xhr.responseJSON.error)
+						if (xhr.responseJSON.error.message.includes('خطا')) 
+							return failedOperationByString(xhr.responseJSON.error.message)
+				failedOperation()
+				console.log(xhr.responseText)
+			}
+		})
 	})
 	$(document).on("click", ".changeNumberHref", function (e) {
 		e.preventDefault()
@@ -1032,7 +1118,6 @@ $(document).ready(function () {
 			clientId: userId,
 			time: Math.floor((new Date).getTime())
 		}
-		console.log(JSON.stringify(data))
 		startProgressBar()
 		var estimateURL = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken);
 		$.ajax({
@@ -1220,6 +1305,9 @@ $(document).ready(function () {
 		if ($('#main_exact_third_answer_selector').prop('disabled') && $('#main_exact_third_answer_selector').val())
 			byEdit++
 
+		if (byEdit == 0)
+			return failedOperationByString('خطا! شما انتخاب جدیدی برای این‌ پیش‌بینی قطعی وارد نکرده‌اید')
+
 		acceptCount += byEdit
 
 		var data = {
@@ -1245,7 +1333,6 @@ $(document).ready(function () {
 			choiceURL = wrapAccessToken(coreEngine_url + 'choices/' + exactChoice.id, coreAccessToken);
 			verb = 'PUT'
 		}
-		console.log(JSON.stringify(data))
 		startProgressBar()
 		$.ajax({
 			url: choiceURL,
@@ -1254,7 +1341,6 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: verb,
 			success: function (choiceResult) {
-				console.log(byEdit)
 				clearExact()
 				showExact()
 				var total = userClient.accountInfoModel.chances
@@ -1300,7 +1386,6 @@ $(document).ready(function () {
 		if (!leagueId) {
 			return warningOperation()
 		}
-		console.log(leagueId)
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
 		$.ajax({
@@ -1337,7 +1422,6 @@ $(document).ready(function () {
 			name: $("#edit_personal_league_name").val(),
 			capacity: Number($("#edit_personal_league_capacity").val())
 		}
-		console.log(JSON.stringify(data))
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
 		$.ajax({
@@ -1376,7 +1460,6 @@ $(document).ready(function () {
 			name: $("#create_personal_league_name").val(),
 			capacity: Number($("#create_personal_league_capacity").val())
 		}
-		console.log(JSON.stringify(data))
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions', coreAccessToken);
 		$.ajax({
@@ -1412,7 +1495,6 @@ $(document).ready(function () {
 		if (!leagueId || !userId) {
 			return warningOperation()
 		}
-		console.log(leagueId)
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/leaveChampion/' + userId, coreAccessToken);
 		$.ajax({
@@ -1445,7 +1527,6 @@ $(document).ready(function () {
 		if (!leagueId || !userId) {
 			return warningOperation()
 		}
-		console.log(leagueId)
 		startProgressBar()
 		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/joinChampion/' + userId, coreAccessToken);
 		$.ajax({
@@ -1482,9 +1563,9 @@ $(document).ready(function () {
 			where: {
 				'championId': leagueId
 			},
-			include: 'clientRel'
+			include: 'clientRel',
+			limit: 50000
 		}
-		console.log(JSON.stringify(filter))
 		startProgressBar()
 		var rankingURL = wrapAccessToken(coreEngine_url + 'rankings', coreAccessToken)
 		var rankingURLWithFilter = wrapFilter(rankingURL, JSON.stringify(filter))
@@ -1499,7 +1580,6 @@ $(document).ready(function () {
 				for (var i = 0; i < rankingResult.length; i++) {
 					userArray.push(rankingResult[i].clientRel)
 				}
-				console.log(userArray)
 				for (var i = 0; i < userChampions.length; i++) {
 					if (userChampions[i].id === leagueId) {
 						function compare(a, b){
@@ -1535,7 +1615,6 @@ $(document).ready(function () {
 		if (!challengeId) {
 			return warningOperation()
 		}
-		console.log(challengeId)
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
 		$.ajax({
@@ -1571,7 +1650,6 @@ $(document).ready(function () {
 		var data = {
 			name: $("#edit_personal_challenge_name").val()
 		}
-		console.log(JSON.stringify(data))
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
 		$.ajax({
@@ -1612,7 +1690,6 @@ $(document).ready(function () {
 			reduceChances: Number($("#create_personal_challenge_chances").val())
 		}
 		startProgressBar()
-		console.log(JSON.stringify(data))
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges', coreAccessToken);
 		$.ajax({
 			url: challengeURL,
@@ -1646,7 +1723,6 @@ $(document).ready(function () {
 		if (!challengeId || !userId) {
 			return warningOperation()
 		}
-		console.log(challengeId)
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/leaveChallenge/' + userId, coreAccessToken);
 		$.ajax({
@@ -1678,7 +1754,6 @@ $(document).ready(function () {
 		if (!challengeId || !userId) {
 			return warningOperation()
 		}
-		console.log(challengeId)
 		startProgressBar()
 		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/joinChallenge/' + userId, coreAccessToken);
 		$.ajax({
@@ -1715,9 +1790,9 @@ $(document).ready(function () {
 			where: {
 				'challengeId': challengeId
 			},
-			include: 'clientRel'
+			include: 'clientRel',
+			limit: 50000
 		}
-		console.log(JSON.stringify(filter))
 		startProgressBar()
 		var competitionURL = wrapAccessToken(coreEngine_url + 'competitions', coreAccessToken)
 		var competitionURLWithFilter = wrapFilter(competitionURL, JSON.stringify(filter))
@@ -1735,7 +1810,6 @@ $(document).ready(function () {
 					competitionResult[i].clientRel.challenges = challenges
 					userArray.push(competitionResult[i].clientRel)
 				}
-				console.log(userArray)
 				for (var i = 0; i < userChallenges.length; i++) {
 					if (userChallenges[i].id === challengeId) {
 						function compare(a, b){
@@ -2033,7 +2107,6 @@ $(document).ready(function () {
 		if (!leagueId || !userId) {
 			return warningOperation()
 		}
-		console.log(leagueId)
 		startProgressBar()
 		var leagueArray = []
 		function compare(a, b){
@@ -2081,7 +2154,6 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "GET",
 			success: function (packageResult) {
-				console.log(JSON.stringify(packageResult))
 				if (packageResult.status === 'Working') {
 					var callbackBaseURI = coreURL + 'transaction.html'
 					var data = {
@@ -2096,7 +2168,6 @@ $(document).ready(function () {
 						})
 					}
 					data.CallbackURL = data.CallbackURL + '&description=' + JSON.stringify(data.Description)
-					console.log(JSON.stringify(data))
 					var transactionURL = wrapAccessToken(zarinPal_url + 'PaymentGatewayImplementationServiceBinding/PaymentRequest', coreAccessToken)
 					$.ajax({
 						url: transactionURL,
@@ -2119,7 +2190,7 @@ $(document).ready(function () {
 							if (xhr.responseJSON)
 								if (xhr.responseJSON.error)
 									if (xhr.responseJSON.error.message.includes('خطا')) 
-										return failedOperationByString(xhr.responseJSON.error.message)
+										return failedOperationByString('خطا! خطایی در شماره یا ایمیل وارد شده وجود دارد')
 							failedOperation()
 							console.log(xhr.responseText)
 						}
@@ -2147,7 +2218,6 @@ $(document).ready(function () {
 	// ------------------------------ //
 	$('input[type=checkbox]').change(
 		function() {
-			console.log(this.checked)
 			if (timerID)
 				clearInterval(timerID)
 			if (this.checked) {
@@ -2252,7 +2322,6 @@ $(document).ready(function () {
 		}
 		var template = "<div class='popover tour'>" +
     "<div class='arrow'></div>" + 
-    "<h3 dir='rtl' class='popover-title'></h3>" + 
 		"<div dir='rtl' style='line-height:200%;' class='popover-content'></div>" + 
     "<div class='popover-navigation'>" + 
         "<button class='btn btn-default' data-role='next'>بعدی</button>" + 
@@ -2261,7 +2330,6 @@ $(document).ready(function () {
 		"</div>"
 		var endTemplate = "<div class='popover tour'>" +
     "<div class='arrow'></div>" + 
-    "<h3 dir='rtl' class='popover-title'></h3>" + 
 		"<div dir='rtl' style='line-height:200%;' class='popover-content'></div>" + 
     "<div class='popover-navigation'>" + 
         "<button class='btn btn-default' data-role='next'>بعدی</button>" + 
@@ -2286,30 +2354,28 @@ $(document).ready(function () {
 			template: template,
 			onEnd: function (tour) {
 				localStorage.setItem('ftour_end', true)
+				$("#play_room_league_leagueId").selectpicker('val', 'every')
 				$("#play_room_league_start_button").click()
 				$(".not-active").removeClass("not-active")
 			},
 			onShown: function(tour) {
 				var stepElement = getTourElement(tour);
-				console.log(stepElement)
 				$('.tour-backdrop').css({'width': $(window).width() + 'px', 'height': $(window).height() + 'px'})
         $(stepElement).after($('.tour-step-background'))
 				$(stepElement).after($('.tour-backdrop'))
-				$(stepElement).addClass('not-active')
     	},
 			steps: [
 			{
 				element: "#main_menu_prediction_button",
-				title: "ثبت پیش‌بینی",
 				placement: "top",
 				content: "اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن",
+				reflex: true,
 				onNext: function (tour) {
 					change_page_scene('page_play_room')
 				}
 			},
 			{
 				element: "#play_room_selector",
-				title: "انتخاب لیگ",
 				placement: "top",
 				content: 'انتخاب کنید که پیش‌بینی‌های مربوط به کدوم لیگ رو می‌خواید ببینید. "همه‌ی لیگ‌ها" تمام پیش‌بینی‌های موجود رو براتون باز می‌کنه',
 				onPrev: function (tour) {
@@ -2318,25 +2384,25 @@ $(document).ready(function () {
 			},
 			{
 				element: "#main_predict_estimates_button",
-				title: "پیش‌بینی‌های تائید شده‌ شما",
 				placement: "top",
 				content: "پیش‌بینی‌هایی که تایید کردید اینجا مشخص میشن. با رنگ سبز و قرمز، درست یا غلط بودن پیش‌بینی‌تون نشون داده میشه"
 			},
 			{
 				element: "#play_room_point_box",
-				title: "فرصت‌های پیش‌بینی",
 				placement: "bottom",
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				},	
 				content: "اینجا تعداد فرصت‌های شما برای تایید پیش‌بینی مشخص شده. بعد از ثبت‌نام، ۲۵ پیش بینی رایگان گرفتید"
 			},
 			{
 				element: "#play_room_notif_center_button",
-				title: "پوشش اخبار کوپا ۹۰",
 				placement: "top",
 				content: "جدیدترین پیش‌بینی‌هایی که به کوپا۹۰ اضافه شده، اینجا اعلام میشن"
 			},
 			{
 				element: "#play_room_league_start_button",
-				title: "شروع بازی",
 				placement: "top",
 				template: endTemplate,
 				content: "برای آشنا شدن و دیدن پیش‌بینی‌ها، ادامه رو بزن"
@@ -2349,7 +2415,7 @@ $(document).ready(function () {
 			keyboard: true,
 			storage: false,
 			debug: false,
-			backdrop: false,
+			backdrop: true,
 			backdropContainer: 'body',
 			backdropPadding: '3px',
 			orphan: true,
@@ -2363,48 +2429,125 @@ $(document).ready(function () {
 			},
 			onShown: function(tour) {
 				var stepElement = getTourElement(tour);
-				console.log(stepElement)
+				$('.tour-backdrop').css({'width': $(window).width() + 'px', 'height': $(window).height() + 'px'})
         $(stepElement).after($('.tour-step-background'))
 				$(stepElement).after($('.tour-backdrop'))
-				$(stepElement).addClass('not-active')
     	},
 			steps: [
 			{
 				element: "#main_predict_nav_bar",
-				title: "انواع پیش‌بینی",
 				placement: "top",
-				content: "توی این چهار تا تب، چهار نوع پیش‌بینی مختلف داریم"
+				content: "توی این چهار تا تب، چهار نوع پیش‌بینی مختلف داریم",
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				}
 			},
 			{
-				element: "#main_predict_div_body",
-				title: "پیش‌بینی",
+				element: "#nav15",
 				placement: "top",
-				content: "برای مثال، نوع اول پیش‌بینی هفتگیه که برای بازی‌هایی از لیگ‌های ایران و اروپاست که توی یک هفته‌ی آتی برگزار میشه"
+				content: "برای مثال، نوع اول پیش‌بینی هفتگیه که برای بازی‌هایی از لیگ‌های ایران و اروپاست که توی یک هفته‌ی آتی برگزار میشه",
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				}
 			},
 			{
 				element: "#main_predict_control",
-				title: "دکمه‌های پیش‌بینی",
-				placement: "top",
+				placement: "bottom",
 				content: "هر پیش‌بینی رو می‌تونی تایید کنی، یا ازش رد بشی و شانست رو نگه داری"
 			},
 			{
 				element: "#main_predict_time_box",
-				title: "زمان باقی‌مانده پیش‌بینی",
 				placement: "top",
 				content: "این زمانیه که فرصت داری تا این پیش‌بینی رو تایید کنی. بعد از اون بازی شروع میشه و پیش‌بینی بسته میشه"
 			},
 			{
 				element: "#main_predict_point_box",
-				title: "امتیاز پیش‌بینی",
 				placement: "top",
 				content: "اگه یه پیش‌بینی رو تایید کردی و اون اتفاق رخ داد، امتیازی که اینجا نوشته رو می‌گیری"
 			},
 			{
 				element: "#main_predict_progress",
-				title: "شانس‌های باقی‌مانده شما",
+				placement: "top",
+				content: "به ازای هر ۱ پیش‌بینی که تایید کنی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد، از طریق دکمه خرید بسته اونو افزایش بده"
+			},
+			{
+				element: "#nav16",
+				placement: "top",
+				content: "در حین برگزاری بازیای فوتبال، اینجا پیش‌بینی‌‌‌های جدید طرح میشه و شاید فقط چند دقیقه فرصت تایید داشته باشی",
+				onShow: function(tour) {
+					$('.nav-tabs a[id="nav16"]').tab('show')
+					tabHandler({ target: { id: 'nav16' } })
+				},
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				}
+			},
+			{
+				element: "#nav17",
+				placement: "top",
+				content: "پیش‌بینی‌های فصلی مثل هفتگیه با این تفاوت که امتیاز بیشتری داره و نتیجه‌اش آخر فصل مشخص میشه",
+				onShow: function(tour) {
+					$('.nav-tabs a[id="nav17"]').tab('show')
+					tabHandler({ target: { id: 'nav17' } })
+				},
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				}
+			},
+			{
+				element: "#nav18",
+				placement: "top",
+				content: "اینجا باید قهرمان و آقای‌ گل و اینجور چیزا رو به صورت دقیق پیش‌بینی کنی!",
+				onShow: function(tour) {
+					$('.nav-tabs a[id="nav18"]').tab('show')
+					tabHandler({ target: { id: 'nav18' } })
+				},
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				}
+			},
+			{
+				element: "#main_exact_selector",
+				placement: "top",
+				content: "اول باید انتخاب کنی که قهرمان یا آقای گل کدوم لیگ رو میخوای پیش‌بینی کنی",
+				onNext: function(tour) {
+					$('#main_exact_selector').selectpicker('val', $("#main_exact_selector").children().last().val())
+					for (var i = 0; i < exactsArray.length; i++) {
+						if (exactsArray[i].id === $("#main_exact_selector").children().last().val()) {
+							currentExact = exactsArray[i]
+							clearExact()
+							showExact()
+							displayExact(function(result){})
+							break
+						}
+					}			
+				}	
+			},
+			{
+				element: "#main_exact_div_body",
+				placement: "top",
+				content: "برای هر نوع پیش‌بینی، میشه یک تا سه اولویت انتخاب کرد. انتخاب هر اولویت، یک فرصت پیش‌بینی کم می‌کنه",
+				backdrop: true,
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				}
+			},
+			{
+				element: "#main_exact_first_answer_selector",
+				placement: "top",
+				content: "امتیاز هر گزینه برای اولویت بالاتر، بیشتره. مثلا اگه چلسی به عنوان اولویت اولت قهرمان بشه امتیاز بیشتری میگیری نسبت به اولویت دوم و سوم"
+			},
+			{
+				element: "#main_exact_accept_button",
 				placement: "top",
 				template: endTemplate,
-				content: "به ازای هر ۱ پیش‌بینی که تایید کنی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد، از طریق دکمه خرید بسته اونو افزایش بده"
+				content: "بعد از تایید، پیش‌بینی‌های قطعی دیگه قابل تغییر نیستن"
 			}
 		]})
 
@@ -2412,12 +2555,12 @@ $(document).ready(function () {
 		secondTour.init()
 	}
 	function startFirstTour() {
-		if (!localStorage.getItem('ftour_end') && firstTour) 
-			firstTour.start(true)
+		// if (!localStorage.getItem('ftour_end') && firstTour) 
+			// firstTour.start(true)
 	}
 	function startSecondTour() {
-		if (!localStorage.getItem('stour_end') && secondTour)
-			secondTour.start(true)
+		// if (!localStorage.getItem('stour_end') && secondTour)
+			// secondTour.start(true)
 	}
 
 	function initUtility() {
@@ -2443,6 +2586,10 @@ $(document).ready(function () {
 		$('.carousel').carousel({
 			interval: false
 		}); 
+
+		$('select').selectpicker({
+			dropupAuto: false
+		});
 	}
 
 	$('#join_personal_league_champion_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
@@ -2542,10 +2689,11 @@ $(document).ready(function () {
 	// ------------------------------ //
 	function fill_table_notifs(notifsArray) {
 		$('#play_room_notif_table tbody').empty()
+		var width = $('#play_room_notif_table tbody').width() - 100
 		for (var i = 0; i < notifsArray.length; i++) {
 			$('#play_room_notif_table').append('<tr id="prnt_addr' + (i) + '"></tr>')
 			$('#prnt_addr' + i).html(
-				'<td align="center" class="col-black" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + notifsArray[i].statement + '</td>'			
+				'<td align="center" class="col-black" style="vertical-align: middle; width: ' + width + 'px; word-wrap:break-word;">' + notifsArray[i].statement + '</td>'			
 			)
 		}
 		fixUITable()
@@ -2553,6 +2701,7 @@ $(document).ready(function () {
 	}
 	function fill_table_mocks(mocksArray) {
 		$('#main_prediction_live_mocks tbody').empty()
+		var width = $('#main_prediction_live_mocks tbody').width() - 100
 		if (mocksArray.length == 0) {
 			var model = {
 				explanation: 'خبر جدیدی برای پوشش زنده نیست.'
@@ -2562,7 +2711,7 @@ $(document).ready(function () {
 		for (var i = 0; i < mocksArray.length; i++) {
 			$('#main_prediction_live_mocks').append('<tr id="mplm_addr' + (i) + '"></tr>')
 			$('#mplm_addr' + i).html(
-				'<td align="center" class="col-black" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + mocksArray[i].explanation + '</td>'			
+				'<td align="center" class="col-black" style="vertical-align: middle; width: ' + width + 'px; word-wrap:break-word;">' + mocksArray[i].explanation + '</td>'			
 			)
 		}
 		fixUITable()
@@ -2608,10 +2757,10 @@ $(document).ready(function () {
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#statistics_personal_challenge_table').append('<tr id="spct_addr' + (i) + '"></tr>')
 			$('#spct_addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle; width: 100px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
-				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number((usersArray[i].challenges[challenge.id]).toString()) + ' امتیاز </td>' +
+				'<th align="center" style="vertical-align: middle;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle;">' + usersArray[i].username + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle;">' + usersArray[i].fullname + '</td>' +
+				'<td align="center" style="vertical-align: middle;">' + Persian_Number((usersArray[i].challenges[challenge.id]).toString()) + '</td>' +
 				str
 			)
 		}
@@ -2622,10 +2771,10 @@ $(document).ready(function () {
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#statistics_personal_league_table').append('<tr id="splt_addr' + (i) + '"></tr>')
 			$('#splt_addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle; width: 100px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
-				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
+				'<th align="center" style="vertical-align: middle;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle;">' + usersArray[i].username + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle;">' + usersArray[i].fullname + '</td>' +
+				'<td align="center" style="vertical-align: middle;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + '</td>'
 			)
 		}
 		fixUITable()
@@ -2636,17 +2785,17 @@ $(document).ready(function () {
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#ranking_total_statistics_table').append('<tr id="rtst_addr' + (i) + '"></tr>')
 			$('#rtst_addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td wrap align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].username + '</td>' +
-				'<td wrap class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
+				'<th align="center" style="vertical-align: middle;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle;">' + usersArray[i].username + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle;">' + usersArray[i].fullname + '</td>' +
+				'<td align="center" style="vertical-align: middle;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + '</td>'
 			)
 			if (usersArray[i].id.toString() === userId.toString()) {
 				$('#rtst_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
 				rowNo = i
 			}
 		}
-		var s = $("#ranking_total_statistics_table tbody > tr:nth-child(" + rowNo + ")").parent().position();
+		var s = $("#ranking_total_statistics_table tbody > tr:nth-child(" + rowNo + ")").position();
 		if (s)
 			$("#ranking_total_statistics_table").parent().parent().parent().scrollTop( s.top );
 		fixUITable()
@@ -2664,10 +2813,10 @@ $(document).ready(function () {
 		for (var i = 0; i < usersArray.length; i++) {
 			$('#ranking_team_statistics_table').append('<tr id="rtst2_addr' + (i) + '"></tr>')
 			$('#rtst2_addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td width="80px" align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
-				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + ' امتیاز </td>'
+				'<th align="center" style="vertical-align: middle;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle;">' + usersArray[i].username + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle;">' + usersArray[i].fullname + '</td>' +
+				'<td align="center" style="vertical-align: middle;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + '</td>'
 			)
 			if (usersArray[i].id.toString() === userId.toString()) {
 				$('#rtst2_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
@@ -2687,10 +2836,10 @@ $(document).ready(function () {
 			$('#ranking_league_statistics_table').append('<tr id="rl2st_addr' + (i) + '"></tr>')
 			
 			$('#rl2st_addr' + i).html(
-				'<th align="center" style="vertical-align: middle; white-space: nowrap; width: 2%;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td width="80px" align="center" style="vertical-align: middle; width: 80px; word-wrap:break-all;">' + usersArray[i].username + '</td>' +
-				'<td class="mobileCell" align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;">' + Persian_Number(p.toString()) + ' امتیاز </td>'
+				'<th align="center" style="vertical-align: middle;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
+				'<td align="center" style="vertical-align: middle;">' + usersArray[i].username + '</td>' +
+				'<td class="mobileCell" align="center" style="vertical-align: middle;">' + usersArray[i].fullname + '</td>' +
+				'<td align="center" style="vertical-align: middle;">' + Persian_Number(p.toString()) + '</td>'
 			)
 			if (usersArray[i].id.toString() === userId.toString()) {
 				$('#rl2st_addr' + i.toString()).closest('tr').children('td,th').css('background-color','#C5FCD1')
@@ -2703,11 +2852,12 @@ $(document).ready(function () {
 		fixUITable()
 	}
 	function fixUITable() {
-		$('table').css({'table-layout': 'fixed', 'width': '100%'})
-		$('td').css({"font-size":'90%'})
-		$('td').css({'word-wrap':'break-all'})
 		if (platform.name.includes('Mobile') || source === 'telegram' || $(window).width() <= 400 || detectmob()) {
 			$('.mobileCell').hide()
+			$('td').css({"font-size":'90%'})
+			$('.row-id').css({"width":'20%'})
+			$('.row-username').css({"width":'55%'})
+			$('.row-point').css({"width":'25%'})
 		}
 	}
 	function fill_table_trophies(userLevel) {
@@ -2752,7 +2902,8 @@ $(document).ready(function () {
 					{'exactId': currentExact.id},
 					{'clientId': userId}
 				]
-			}
+			},
+			limit: 50000
 		}
 		var choiceWithAT = wrapAccessToken(coreEngine_url + 'choices', coreAccessToken)
 		var choiceURL = wrapFilter(choiceWithAT, JSON.stringify(filter))
@@ -2760,7 +2911,6 @@ $(document).ready(function () {
 			url: choiceURL,
 			type: "GET",
 			success: function (choiceResult) {
-				console.log(choiceResult)
 				$('#main_exact_remaining').html(str)
 				$('#main_exact_topic').html(currentExact.name)
 				$('#main_exact_div_body').show()
@@ -2823,7 +2973,6 @@ $(document).ready(function () {
 			if (Math.floor(hours % 24) != 0)
 				str += ' و ' + Persian_Number(Math.floor(hours % 24).toString()) + ' ساعت '	
 		}
-		console.log(hours)
 		$('#main_predict_remaining').html(str)
 		$('#main_predict_point').html(Persian_Number(currentPredict.point.toString()) + ' امتیاز ')
 		$('#main_predict_explanation').html(currentPredict.explanation)
@@ -3127,7 +3276,8 @@ $(document).ready(function () {
 						'and': [
 							{'status': "Working"}
 						]
-					}
+					},
+					limit: 50000
 				}
 				if (currentLeague !== 'every')
 					filter.where.and.push({'leagueId': currentLeague})
@@ -3137,8 +3287,6 @@ $(document).ready(function () {
 					url: exactURL,
 					type: "GET",
 					success: function (exactResult) {
-						console.log(nextObjectResult)
-						console.log(exactResult)
 						mocksArray = []
 						predictsArray = []
 						for (var k = 0; k < nextObjectResult.length; k++) {
@@ -3171,7 +3319,7 @@ $(document).ready(function () {
 	}
 	function getAllPackages(callback) {
 		var packageURLWithAT = wrapAccessToken(coreEngine_url + 'packages', coreAccessToken)
-		var packageURL = wrapFilter(packageURLWithAT, JSON.stringify({'where':{'status': 'Working'}}))
+		var packageURL = wrapFilter(packageURLWithAT, JSON.stringify({'where':{'status': 'Working'}, limit: 50000}))
 		$.ajax({
 			url: packageURL,
 			type: "GET",
@@ -3262,7 +3410,7 @@ $(document).ready(function () {
 	function getAllUsers(callback) {
 		var filter = {
 			skip: '6',
-			limit: 1000,
+			limit: 50000,
 			fields: {
 				'email': false,
 				'time': false,
@@ -3292,7 +3440,6 @@ $(document).ready(function () {
 					return Number(b.accountInfoModel.totalPoints) - Number(a.accountInfoModel.totalPoints)
 				}
 				allUsers.sort(compare)
-				console.log(allUsers)
 				callback(null, allUsers)
 			},
 			error: function (xhr, status, error) {
@@ -3304,7 +3451,8 @@ $(document).ready(function () {
 
 	function getTeamUsers(teamId, callback) {
 		var filter = {
-			order: 'accountInfoModel.totalPoints DESC'
+			order: 'accountInfoModel.totalPoints DESC',
+			limit: 50000
 		}
 		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'teams/' + teamId + '/clients', coreAccessToken)
 		var clientWithFilter = wrapFilter(clientURLWithAT, JSON.stringify(filter))
