@@ -181,7 +181,9 @@ $(document).ready(function () {
 		})
 	}
 	function initTableSchema() {
-		
+		$('select').selectpicker({
+			dropupAuto: false
+		});
 	}
 	function startProgressBar() {
 		$('.cardRainbow').fadeIn()
@@ -261,8 +263,9 @@ $(document).ready(function () {
 			$('#select_management_package_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#select_management_package_selector').selectpicker('refresh')
 	}
 	function fill_client_selectors(clientsArray) {
 		$('#select_management_client_selector').find('option').remove()
@@ -274,8 +277,9 @@ $(document).ready(function () {
 			$('#select_management_client_selector').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#select_management_client_selector').selectpicker('refresh')
 	}
 
 	// ------------------------------ //
