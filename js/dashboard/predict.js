@@ -48,20 +48,83 @@ function fullDateConvertorJalali(myDate) {
 	return (res[0] + ' - ' + res[1])
 }
 
+function sendWarningSwal(callback) {
+		swal({
+			title: "آیا مطمئن هستید؟",
+			text: "بعد از انجام این عملیات، دیگر قادر به بازگرداندن آن نخواهید بود",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "بله، انجام بده",
+			cancelButtonText: "دست نگه دار",
+			closeOnConfirm: false,
+			closeOnCancel: true
+		}, function (isConfirm) {
+			callback(isConfirm)
+		})
+}
+
+function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
+	if (colorName === null || colorName === '') {
+		colorName = 'bg-black';
+	}
+	if (text === null || text === '') {
+		text = 'Turning standard Bootstrap alerts';
+	}
+	if (animateEnter === null || animateEnter === '') {
+		animateEnter = 'animated fadeInDown';
+	}
+	if (animateExit === null || animateExit === '') {
+		animateExit = 'animated fadeOutUp';
+	}
+	var allowDismiss = true;
+
+	$.notify({
+		message: text
+	}, {
+		type: colorName,
+		allow_dismiss: allowDismiss,
+		newest_on_top: true,
+		timer: 1000,
+		placement: {
+			from: placementFrom,
+			align: placementAlign
+		},
+		animate: {
+			enter: animateEnter,
+			exit: animateExit
+		},
+		template: '<div data-notify="container" class="bootstrap-notify-container alert alert-dismissible {0} ' + (allowDismiss ? "p-r-35" : "") + '" role="alert">' +
+			'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+			'<span data-notify="icon"></span> ' +
+			'<span data-notify="title">{1}</span> ' +
+			'<span data-notify="message">{2}</span>' +
+			'<div class="progress" data-notify="progressbar">' +
+			'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+			'</div>' +
+			'<a href="{3}" target="{4}" data-notify="url"></a>' +
+			'</div>'
+	});
+}
+
 function successfulOperation() {
-	swal("موفق شدید", "عملیات درخواست شده شما با موفقیت انجام شد", "success")
+	showNotification('bg-cyan', 'عملیات درخواست شده شما با موفقیت انجام شد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
 function failedOperation() {
-	swal("متاسفیم", "مشکلی پیش آمد، لطفا مجددا تلاش کنید", "error")
+	showNotification('bg-deep-orange', 'مشکلی پیش آمد، لطفا مجددا تلاش کنید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
 function failedOperationByString(sentence) {
-	swal("متاسفیم", sentence, "error")
+	showNotification('bg-deep-orange', sentence, 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
 function warningOperation() {
-	swal("دقت کنید", "شما باید همه ی فیلد های مربوطه و ضروری را پر کنید", "warning")
+	showNotification('bg-orange', 'شما باید همه ی فیلد های مربوطه و ضروری را پر کنید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+}
+
+function authenticationRequiredOperation() {
+	showNotification('bg-deep-orange', 'عذرخواهی میکنیم! نیاز است که مجددا وارد شوید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
 function ensuranceOperation(callback) {
@@ -73,7 +136,7 @@ function ensuranceOperation(callback) {
 		confirmButtonColor: "#DD6B55",
 		confirmButtonText: "بله، انجام بده",
 		cancelButtonText: "خیر، دست نگه دار",
-		closeOnConfirm: false,
+		closeOnConfirm: true,
 		closeOnCancel: true
 	}, function (isConfirm) {
 		if (isConfirm) {
