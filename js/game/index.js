@@ -2555,12 +2555,12 @@ $(document).ready(function () {
 		secondTour.init()
 	}
 	function startFirstTour() {
-		// if (!localStorage.getItem('ftour_end') && firstTour) 
-			// firstTour.start(true)
+		if (!localStorage.getItem('ftour_end') && firstTour) 
+			firstTour.start(true)
 	}
 	function startSecondTour() {
-		// if (!localStorage.getItem('stour_end') && secondTour)
-			// secondTour.start(true)
+		if (!localStorage.getItem('stour_end') && secondTour)
+			secondTour.start(true)
 	}
 
 	function initUtility() {
