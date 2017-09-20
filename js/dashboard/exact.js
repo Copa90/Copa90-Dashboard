@@ -203,7 +203,9 @@ $(document).ready(function () {
 		})
 	}
 	function initTableSchema() {
-		
+		$('select').selectpicker({
+			dropupAuto: false
+		});	
 	}
 	function startProgressBar() {
 		$('.cardRainbow').fadeIn()
@@ -348,8 +350,9 @@ $(document).ready(function () {
 			$(str).append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$(str).selectpicker('refresh')
 		if (!isNew) {
 			$('#select_update_answer').find('option').remove()
 			for (var i = 0; i < answer.length; i++) {
@@ -360,8 +363,9 @@ $(document).ready(function () {
 				$('#select_update_answer').append($('<option>', {
 					value: i.toString(),
 					text: itemToPush.name
-				})).selectpicker('refresh')
-			}	
+				}))
+			}
+			$('#select_update_answer').selectpicker('refresh')
 			for (var i = 0; i < answer.length; i++) {
 				if (answer[i].name === editableExact.answer) {
 					$("#select_update_answer").selectpicker('val', i.toString())
@@ -382,12 +386,14 @@ $(document).ready(function () {
 			$('#select_moreInfo_exact').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 			$('#select_update_exact').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#select_moreInfo_exact').selectpicker('refresh')
+		$('#select_update_exact').selectpicker('refresh')
 	}
 	function fill_league_selectors(leaguesArray) {
 		$('#select_management_league').find('option').remove()
@@ -401,16 +407,19 @@ $(document).ready(function () {
 			$('#select_management_league').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 			$('#select_update_league').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 			$('#select_new_league').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')			
+			}))
 		}
+		$('#select_management_league').selectpicker('refresh')
+		$('#select_update_league').selectpicker('refresh')
+		$('#select_new_league').selectpicker('refresh')
 	}
 
 	// ------------------------------ //
@@ -564,7 +573,7 @@ $(document).ready(function () {
 							getAllChoices(function(err, choice) {
 								if (err)
 									return callback(err)
-								fill_graph(league, exact)
+								fill_graph(league, choice)
 								$("#adminUsername").html(localStorage.getItem('AdminCompanyName'))
 								$("#adminEmail").html(localStorage.getItem('adminEmail'))
 								return callback(null, league, team, player, exact, choice, coach)
