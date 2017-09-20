@@ -396,3 +396,31 @@ button.list-group-item{
     top: 0px;
     left: 0px;
 } */
+
+.users {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+.row-no {
+  width: 10%;
+}
+.row-username {
+  width: 35%;
+}
+.row-name {
+  width: 30%;
+}
+.row-point {
+  width: 25%;
+}
+.users td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.users td,
+.users th {
+  text-align: center;
+  padding: 10px 10px;
+}
