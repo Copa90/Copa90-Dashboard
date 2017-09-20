@@ -314,7 +314,9 @@ $(document).ready(function () {
 		}
 	}
 	function initTableSchema() {
-
+		$('select').selectpicker({
+			dropupAuto: false
+		});
 	}
 	function startProgressBar() {
 		$('.cardRainbow').fadeIn()
@@ -426,12 +428,14 @@ $(document).ready(function () {
 			$('#select_moreInfo_predict').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 			$('#select_update_predict').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 		}
+		$('#select_moreInfo_predict').selectpicker('refresh')
+		$('#select_update_predict').selectpicker('refresh')
 	}
 	function fill_league_selectors(leaguesArray) {
 		$('#select_management_league').find('option').remove()
@@ -445,16 +449,19 @@ $(document).ready(function () {
 			$('#select_management_league').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 			$('#select_update_league').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')
+			}))
 			$('#select_new_league').append($('<option>', {
 				value: itemToPush.id,
 				text: itemToPush.name
-			})).selectpicker('refresh')			
+			}))
 		}
+		$('#select_management_league').selectpicker('refresh')			
+		$('#select_update_league').selectpicker('refresh')
+		$('#select_new_league').selectpicker('refresh')
 	}
 
 	// ------------------------------ //
@@ -463,6 +470,7 @@ $(document).ready(function () {
 	function getAllPredicts(callback) {
 		var predictURLWithAT = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken)
 		$.ajax({
+			async: true,
 			url: predictURLWithAT,
 			type: "GET",
 			success: function (predictResult) {
@@ -480,6 +488,7 @@ $(document).ready(function () {
 	function getAllLeagus(callback) {
 		var leagueURLWithAT = wrapAccessToken(coreEngine_url + 'leagues', coreAccessToken)
 		$.ajax({
+			async: true,
 			url: leagueURLWithAT,
 			type: "GET",
 			success: function (leagueResult) {
@@ -497,6 +506,7 @@ $(document).ready(function () {
 	function getAllEstiamtes(callback) {
 		var estimateURLWithAT = wrapAccessToken(coreEngine_url + 'estimates', coreAccessToken)
 		$.ajax({
+			async: true,
 			url: estimateURLWithAT,
 			type: "GET",
 			success: function (estimateResult) {
@@ -513,6 +523,7 @@ $(document).ready(function () {
 	function getEstimatesOfPredict(predictId, callback) {
 		var estimateOfPredictURLWithAT = wrapAccessToken(coreEngine_url + 'estimates?filter={"where":{"predictId":"' + predictId + '"}}', coreAccessToken)
 		$.ajax({
+			async: true,
 			url: estimateOfPredictURLWithAT,
 			type: "GET",
 			success: function (estimateResult) {
@@ -530,6 +541,7 @@ $(document).ready(function () {
 		var predictURLwithAT = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken)
 		var predictURL = wrapFilter(predictURLwithAT, JSON.stringify(queryFilter))
 		$.ajax({
+			async: true,
 			url: predictURL,
 			type: "GET",
 			success: function (predictResult) {
@@ -776,6 +788,7 @@ $(document).ready(function () {
 				startProgressBar()
 				var predictURL = wrapAccessToken(coreEngine_url + 'predicts/finalizePredict/' + predictId + '?occurrence=' + occurrence, coreAccessToken);
 				$.ajax({
+					async: true,
 					url: predictURL,
 					dataType: "json",
 					contentType: "application/json; charset=utf-8",
@@ -825,12 +838,13 @@ $(document).ready(function () {
 		var parts = predictSection.split("<br>")
 		var predictId = parts[0]
 		localStorage.setItem('estimatePredictId', predictId)
-		var result = []
-		for (var i = 0; i < estimates.length; i++) 
-			if (estimates[i].predictId === predictId)
-				result.push(estimates[i])
-		fill_moreInfo_table(result)
-		$('.nav-tabs a[id="nav6"]').tab('show')
+		getEstimatesOfPredict(predictId, function(err, result) {
+			doneProgressBar()
+			if (err)
+				return failedOperation()
+			fill_moreInfo_table(result)
+			$('.nav-tabs a[id="nav6"]').tab('show')			
+		})
 	})
 	$(document).on("click", ".predictEdit", function (e) {
 		e.preventDefault()
@@ -850,17 +864,18 @@ $(document).ready(function () {
 				startProgressBar()
 				var predictURL = wrapAccessToken(coreEngine_url + 'predicts/' + predictId, coreAccessToken)
 				$.ajax({
+					async: true,
 					url: predictURL,
 					type: "DELETE",
-					success: function (predictResult) {
-						getAllPredicts(function(err) {
-							doneProgressBar()
-							if (err)
-								return failedOperation()
-							successfulOperation()
-							$(e.target).closest('tr').children('td,th').css('background-color','#FCFCC5')
-							doneProgressBar()	
-						})		
+					success: function (predictResult) {a
+						for (var i = 0; i < predicts.length; i++)
+							if (predicts[i].id === predictId)
+								predicts.splice(i, 1)
+						doneProgressBar()
+						predicts.push(predictResult)
+						fill_predict_selectors(predicts)
+						$(e.target).closest('tr').children('td,th').css('background-color','#FCFCC5')
+						successfulOperation()						
 					}
 				})
 			}
@@ -897,6 +912,7 @@ $(document).ready(function () {
 		startProgressBar()
 		var clientURL = wrapAccessToken(coreEngine_url + 'clients/' + clientId, coreAccessToken)
 		$.ajax({
+			async: true,
 			url: clientURL,
 			type: "GET",
 			success: function (clientResult) {
@@ -935,6 +951,7 @@ $(document).ready(function () {
 				startProgressBar()
 				var estimateURL = wrapAccessToken(coreEngine_url + 'estimates/' + estimateId, coreAccessToken)
 				$.ajax({
+					async: true,
 					url: estimateURL,
 					type: "DELETE",
 					success: function (estimateResult) {
@@ -1167,22 +1184,20 @@ $(document).ready(function () {
 			data.possibility = 1
 			data.point = 1
 		}
-		console.log(JSON.stringify(data))
 		var predictURL = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken);
 		$.ajax({
+			async: true,
 			url: predictURL,
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (predictResult) {
-				getAllPredicts(function(err) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-					clear_new_section()
-				})
+				doneProgressBar()
+				predicts.push(predictResult)
+				fill_predict_selectors(predicts)
+				successfulOperation()
+				clear_new_section()
 			}
 		})
 	})
@@ -1221,19 +1236,21 @@ $(document).ready(function () {
 
 		var predictURL = wrapAccessToken(coreEngine_url + 'predicts/' + predictId, coreAccessToken);
 		$.ajax({
+			async: true,
 			url: predictURL,
 			data: JSON.stringify(data),
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			type: "PUT",
 			success: function (predictResult) {
-				getAllPredicts(function(err) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-					empty_update_section()
-				})
+				for (var i = 0; i < predicts.length; i++)
+					if (predicts[i].id === predictId)
+						predicts.splice(i, 1)
+				doneProgressBar()
+				predicts.push(predictResult)
+				fill_predict_selectors(predicts)
+				successfulOperation()
+				empty_update_section()
 			}
 		})
 	})
@@ -1272,6 +1289,7 @@ $(document).ready(function () {
 		}
 		var predictURL = wrapAccessToken(coreEngine_url + 'predicts', coreAccessToken);
 		$.ajax({
+			async: true,
 			url: predictURL,
 			data: JSON.stringify(dataArray),
 			dataType: "json",
