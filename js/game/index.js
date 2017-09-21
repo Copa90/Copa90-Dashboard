@@ -192,7 +192,7 @@ $(document).ready(function () {
 
 	$(document).ajaxError(function myErrorHandler(event, x, ajaxOptions, thrownError) {
 		if (timerID)
-			clearInterval(timerID)	
+			clearTimeout(timerID)	
 		if (x.status == 401 || x.status == 404) {
 			localStorage.clear()
 			empty_all_fields()
@@ -1266,7 +1266,7 @@ $(document).ready(function () {
 		e.preventDefault()
 		startProgressBar()
 		if (timerID)
-			clearInterval(timerID)
+			clearTimeout(timerID)
 		getAllInfo(function(err) {
 			doneProgressBar()
 			if (err)
@@ -2037,8 +2037,8 @@ $(document).ready(function () {
 				}
 			}
 			if (timerID)
-				clearInterval(timerID)	
-			timerID = setInterval(function() {
+				clearTimeout(timerID)	
+			timerID = setTimeout(function() {
 				updateLivePredicts()
 			}, 60 * 1000); 
 		})
@@ -2219,9 +2219,9 @@ $(document).ready(function () {
 	$('input[type=checkbox]').change(
 		function() {
 			if (timerID)
-				clearInterval(timerID)
+				clearTimeout(timerID)
 			if (this.checked) {
-				timerID = setInterval(function() {
+				timerID = setTimeout(function() {
 					updateLivePredicts()
 				}, 60 * 1000); 
 			}
@@ -2265,7 +2265,14 @@ $(document).ready(function () {
 			}
 			$('#main_predict_live_section').show()
 			if (livePredict.length == 0 || liveIndex >= livePredict.length) {
-				return predictOverOperation()
+				$('#main_predict_div_body').show()
+				$('#main_predict_remaining').html('-')
+				$('#main_predict_point').html('-')
+				$('#main_predict_prev_button').prop('disabled', true)
+				$('#main_predict_next_button').prop('disabled', true)
+				$('#main_predict_accept_button').prop('disabled', true)
+				$('#main_predict_explanation').html('در حال حاضر پیش‌بینی زنده‌ای وجود ندارد.')
+				return
 			}
 			currentPredict = livePredict[liveIndex]
 			displayPredict()
@@ -2296,6 +2303,28 @@ $(document).ready(function () {
 			}
 			showExact()
 			fill_exact_selector(exactsArray)
+			var m = ''
+			if (currentLeague === 'every') {
+				$("#main_exact_selector").selectpicker('val', '59abb61377118b1ae71fb91d').selectpicker('refresh')
+				m = '59abb61377118b1ae71fb91d'
+			}
+			else {
+				if (exactsArray.length) {
+					$("#main_exact_selector").selectpicker('val', exactsArray[0].id).selectpicker('refresh')
+					m = exactsArray[0].id
+				}
+			}
+			if (m !== '') {
+				for (var i = 0; i < exactsArray.length; i++) {
+					if (exactsArray[i].id === m) {
+						currentExact = exactsArray[i]
+						clearExact()
+						showExact()
+						displayExact(function(result){})
+						break
+					}
+				}	
+			}
 		}
 		var no = select.replace("nav", "")
 		for (var i = 1; i < 21; i++) {
@@ -2368,7 +2397,7 @@ $(document).ready(function () {
 			{
 				element: "#main_menu_prediction_button",
 				placement: "top",
-				content: "اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن",
+				content: "اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن.",
 				reflex: true,
 				onNext: function (tour) {
 					change_page_scene('page_play_room')
@@ -2377,7 +2406,7 @@ $(document).ready(function () {
 			{
 				element: "#play_room_selector",
 				placement: "top",
-				content: 'انتخاب کنید که پیش‌بینی‌های مربوط به کدوم لیگ رو می‌خواید ببینید. "همه‌ی لیگ‌ها" تمام پیش‌بینی‌های موجود رو براتون باز می‌کنه',
+				content: 'انتخاب کن که پیش‌بینی‌های مربوط به کدوم لیگ رو می‌خوای ببینی. "همه‌ی لیگ‌ها" تمام پیش‌بینی‌های موجود رو باز می‌کنه.',
 				onPrev: function (tour) {
 					change_page_scene('page_main_menu')
 				}
@@ -2385,7 +2414,7 @@ $(document).ready(function () {
 			{
 				element: "#main_predict_estimates_button",
 				placement: "top",
-				content: "پیش‌بینی‌هایی که تایید کردید اینجا مشخص میشن. با رنگ سبز و قرمز، درست یا غلط بودن پیش‌بینی‌تون نشون داده میشه"
+				content: "پیش‌بینی‌هایی که تایید کردی اینجا نشون داده میشن. درست یا غلط بودن پیش‌بینی‌ با رنگ سبز و قرمز مشخص میشه."
 			},
 			{
 				element: "#play_room_point_box",
@@ -2394,18 +2423,22 @@ $(document).ready(function () {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
 				},	
-				content: "اینجا تعداد فرصت‌های شما برای تایید پیش‌بینی مشخص شده. بعد از ثبت‌نام، ۲۵ پیش بینی رایگان گرفتید"
+				content: "اینجا تعداد فرصت‌هات برای تایید پیش‌بینی مشخص شده. بعد از ثبت‌نام، ۲۵ پیش بینی رایگان گرفتی."
 			},
 			{
 				element: "#play_room_notif_center_button",
 				placement: "top",
-				content: "جدیدترین پیش‌بینی‌هایی که به کوپا۹۰ اضافه شده، اینجا اعلام میشن"
+				content: "جدیدترین پیش‌بینی‌هایی که به کوپا۹۰ اضافه شده، اینجا اعلام میشن."
 			},
 			{
 				element: "#play_room_league_start_button",
 				placement: "top",
 				template: endTemplate,
-				content: "برای آشنا شدن و دیدن پیش‌بینی‌ها، ادامه رو بزن"
+				onShown: function(tour) {
+					var stepElement = getTourElement(tour);
+					$(stepElement).addClass('not-active')
+				},
+				content: "برای ادامه آموزش و دیدن پیش‌بینی‌ها، ادامه رو بزن."
 			}
 		]})
 		secondTour = new Tour({
@@ -2437,7 +2470,7 @@ $(document).ready(function () {
 			{
 				element: "#main_predict_nav_bar",
 				placement: "top",
-				content: "توی این چهار تا تب، چهار نوع پیش‌بینی مختلف داریم",
+				content: "توی این چهار تا تب، چهار نوع پیش‌بینی مختلف داریم،",
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
@@ -2446,7 +2479,7 @@ $(document).ready(function () {
 			{
 				element: "#nav15",
 				placement: "top",
-				content: "برای مثال، نوع اول پیش‌بینی هفتگیه که برای بازی‌هایی از لیگ‌های ایران و اروپاست که توی یک هفته‌ی آتی برگزار میشه",
+				content: "پیش‌بینی هفتگی برای بازی‌هایی از لیگ‌های ایران و اروپاست که توی هفته‌ی آتی برگزار میشه.",
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
@@ -2455,27 +2488,27 @@ $(document).ready(function () {
 			{
 				element: "#main_predict_control",
 				placement: "bottom",
-				content: "هر پیش‌بینی رو می‌تونی تایید کنی، یا ازش رد بشی و شانست رو نگه داری"
+				content: "هر پیش‌بینی رو می‌تونی تایید کنی، یا ازش رد بشی و شانست رو نگه داری."
 			},
 			{
 				element: "#main_predict_time_box",
 				placement: "top",
-				content: "این زمانیه که فرصت داری تا این پیش‌بینی رو تایید کنی. بعد از اون بازی شروع میشه و پیش‌بینی بسته میشه"
+				content: "اینجا مدت‌زمانی که فرصت داری تا پیش‌بینی رو تایید کنی،‌ مشخص شده."
 			},
 			{
 				element: "#main_predict_point_box",
 				placement: "top",
-				content: "اگه یه پیش‌بینی رو تایید کردی و اون اتفاق رخ داد، امتیازی که اینجا نوشته رو می‌گیری"
+				content: "اگه یه پیش‌بینی رو تایید کردی و اون اتفاق رخ داد، امتیازی که اینجا نوشته رو می‌گیری."
 			},
 			{
 				element: "#main_predict_progress",
 				placement: "top",
-				content: "به ازای هر ۱ پیش‌بینی که تایید کنی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد، از طریق دکمه خرید بسته اونو افزایش بده"
+				content: "به ازای هر بار تأییدِ پیش‌بینی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد از طریق دکمه خرید بسته اونو افزایش بده."
 			},
 			{
 				element: "#nav16",
 				placement: "top",
-				content: "در حین برگزاری بازیای فوتبال، اینجا پیش‌بینی‌‌‌های جدید طرح میشه و شاید فقط چند دقیقه فرصت تایید داشته باشی",
+				content: "اینجا زمان برگزاری بازیای فوتبال پیش‌بینی‌‌‌های جدید و مرتبط با اتفاقات بازیا مطرح میشه، و شاید فقط چند دقیقه فرصت برای تاییدشون داشته باشی.",
 				onShow: function(tour) {
 					$('.nav-tabs a[id="nav16"]').tab('show')
 					tabHandler({ target: { id: 'nav16' } })
@@ -2488,7 +2521,7 @@ $(document).ready(function () {
 			{
 				element: "#nav17",
 				placement: "top",
-				content: "پیش‌بینی‌های فصلی مثل هفتگیه با این تفاوت که امتیاز بیشتری داره و نتیجه‌اش آخر فصل مشخص میشه",
+				content: "پیش‌بینی‌های فصلی مثل هفتگیه با این تفاوت که امتیاز بیشتری داره و نتیجه‌اش آخر فصل مشخص میشه.",
 				onShow: function(tour) {
 					$('.nav-tabs a[id="nav17"]').tab('show')
 					tabHandler({ target: { id: 'nav17' } })
@@ -2496,42 +2529,35 @@ $(document).ready(function () {
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
+				},
+				onNext: function(tour) {
+					$('.nav-tabs a[id="nav18"]').tab('show')
+					tabHandler({ target: { id: 'nav18' } })
+					tour.redraw()
 				}
 			},
 			{
 				element: "#nav18",
 				placement: "top",
 				content: "اینجا باید قهرمان و آقای‌ گل و اینجور چیزا رو به صورت دقیق پیش‌بینی کنی!",
-				onShow: function(tour) {
-					$('.nav-tabs a[id="nav18"]').tab('show')
-					tabHandler({ target: { id: 'nav18' } })
-				},
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
+					tour.redraw()
+				},
+				onShow: function(tour) {
+					tour.redraw()
 				}
 			},
 			{
-				element: "#main_exact_selector",
+				element: "#main_exact_box",
 				placement: "top",
-				content: "اول باید انتخاب کنی که قهرمان یا آقای گل کدوم لیگ رو میخوای پیش‌بینی کنی",
-				onNext: function(tour) {
-					$('#main_exact_selector').selectpicker('val', $("#main_exact_selector").children().last().val())
-					for (var i = 0; i < exactsArray.length; i++) {
-						if (exactsArray[i].id === $("#main_exact_selector").children().last().val()) {
-							currentExact = exactsArray[i]
-							clearExact()
-							showExact()
-							displayExact(function(result){})
-							break
-						}
-					}			
-				}	
+				content: "اول باید انتخاب کنی که قهرمان یا آقای گل کدوم لیگ رو میخوای پیش‌بینی کنی."
 			},
 			{
 				element: "#main_exact_div_body",
 				placement: "top",
-				content: "برای هر نوع پیش‌بینی، میشه یک تا سه اولویت انتخاب کرد. انتخاب هر اولویت، یک فرصت پیش‌بینی کم می‌کنه",
+				content: "برای هر نوع پیش‌بینی، می‌تونی یک تا سه اولویت انتخاب کنی. انتخاب هر اولویت، یک فرصت پیش‌بینی کم می‌کنه.",
 				backdrop: true,
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
@@ -2539,15 +2565,15 @@ $(document).ready(function () {
 				}
 			},
 			{
-				element: "#main_exact_first_answer_selector",
+				element: "#main_exact_first_answer_box",
 				placement: "top",
-				content: "امتیاز هر گزینه برای اولویت بالاتر، بیشتره. مثلا اگه چلسی به عنوان اولویت اولت قهرمان بشه امتیاز بیشتری میگیری نسبت به اولویت دوم و سوم"
+				content: "امتیازها اینجوریه که مثلا اگه چلسی به عنوان اولویت اولت قهرمان بشه امتیاز بیشتری میگیری نسبت به وقتی که چلسی اولویت دوم یا سومت بوده."
 			},
 			{
 				element: "#main_exact_accept_button",
 				placement: "top",
 				template: endTemplate,
-				content: "بعد از تایید، پیش‌بینی‌های قطعی دیگه قابل تغییر نیستن"
+				content: "بعد از تایید، پیش‌بینی‌های قطعی دیگه قابل تغییر نیستن."
 			}
 		]})
 
@@ -2876,7 +2902,6 @@ $(document).ready(function () {
 	}
 	function clearExact() {
 		$('#main_predict_sort_section').hide()
-		$('#main_exact_selector').selectpicker('val', '')
 		$('#main_exact_div_body').hide()
 		$('#main_exact_select_section').hide()
 		$('#main_predict_live_section').hide()
@@ -2915,11 +2940,14 @@ $(document).ready(function () {
 				$('#main_exact_topic').html(currentExact.name)
 				$('#main_exact_div_body').show()
 				$('#main_exact_select_section').show()
-				fill_exact_answer_selector(currentExact, currentExact.selectors)
 				$('#main_exact_first_answer_selector').prop('disabled', false)
 				$('#main_exact_second_answer_selector').prop('disabled', false)
 				$('#main_exact_third_answer_selector').prop('disabled', false)
+				fill_exact_answer_selector(currentExact, currentExact.selectors)
 				exactChoice = undefined
+				$('#main_exact_first_answer_selector').selectpicker('refresh')
+				$('#main_exact_second_answer_selector').selectpicker('refresh')
+				$('#main_exact_third_answer_selector').selectpicker('refresh')
 				doneProgressBar()
 
 				if (choiceResult.length == 0)
