@@ -54,38 +54,42 @@
 	<!-- Sweetalert Css -->
 	<link href="../../plugins/sweetalert/sweetalert.css" rel="stylesheet" />
 
+    <!-- Morris Css -->
+    <link href="../../plugins/morrisjs/morris.css" rel="stylesheet" />
+
 	<!-- Custom Css -->
 	<link href="../../css/style.css" rel="stylesheet">
     <link href="../../css/rtl.css" rel="stylesheet">
-
-	<!-- Nprogress bar for top in Ajax call-->
-	<link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" />
-
-	<!-- Nprogress bar for top in Ajax call-->
-	<link href="../../plugins/nprogress/nprogress.css" rel="stylesheet" /> </head>
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="../../css/themes/theme-green.css" rel="stylesheet" />
 </head>
 
 <body class="theme-green">
+
 <!-- Page Loader -->
 <div class="page-loader-wrapper">
-    <div class="loader">
-        <div class="preloader">
-            <div class="spinner-layer pl-teal">
-                <div class="circle-clipper left">
-                    <div class="circle"></div>
-                </div>
-                <div class="circle-clipper right">
-                    <div class="circle"></div>
-                </div>
-            </div>
-        </div>
-        <p>لطفا صبر کنید</p>
-    </div>
+	<div id="rainbow-progress-bar1" class="rainbow-progress-bar"></div>
+	<div class="loader">
+		<div class="preloader">
+			<div class="spinner-layer pl-teal">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<h5>لطفا کمی صبر کنید</h5>
+		<br>
+		<h4>شما در حال اتصال به سرورهای کوپا ۹۰ می‌باشید</h4>
+	</div>
 </div>
 <!-- #END# Page Loader -->
+
 <!-- Overlay For Sidebars -->
 <div class="overlay"></div>
 <!-- #END# Overlay For Sidebars -->
@@ -109,8 +113,8 @@
                 <img src="../../images/user.png" width="48" height="48" alt="User" />
             </div>
             <div class="info-container">
-                <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حسام شمسی</div>
-                <div class="email">hesam@example.com</div>
+                <div id="adminUsername" class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">حسام شمسی</div>
+                <div id="adminEmail" class="email">hesam@example.com</div>
                 <div class="btn-group user-helper-dropdown">
                     <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                     <ul class="dropdown-menu pull-left">
@@ -118,7 +122,7 @@
                         <li role="seperator" class="divider"></li>
                         <li><a href="javascript:void(0);"><i class="material-icons">favorite</i> زبان ها </a></li>
                         <li role="seperator" class="divider"></li>
-                        <li><a href="javascript:void(0);"><i class="material-icons">input</i> خروج </a></li>
+                        <li><a href="javascript:void(0);" id="signOutButton"><i class="material-icons">input</i> خروج </a></li>
                     </ul>
                 </div>
             </div>
@@ -128,32 +132,38 @@
         <div class="menu">
             <ul class="list">
                 <li class="header" dir="rtl">منو اصلی</li>
-                <li>
-                    <a href="./dashboard.html">
-                        <i class="material-icons">home</i>
+                <li disabled>
+					<a href="./dashboard.html" style="pointer-events: none;">
+						<i class="material-icons">home</i>
                         <span>پنل مدیریت داده های آماری</span>
                     </a>
                 </li>
-                <li class="active">
-                    <a href="./dashboard.html">
+                <li>
+                    <a href="./control.html">
                         <i class="material-icons">home</i>
                         <span>پنل کنترلی سیستم</span>
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="./predict.html">
                         <i class="material-icons">home</i>
                         <span>پنل کنترل پیش‌بینی‌ها</span>
                     </a>
 				</li>
                 <li>
+                    <a href="./exact.html">
+                        <i class="material-icons">home</i>
+                        <span>پنل کنترل پیش‌بینی‌های دقیق</span>
+                    </a>
+                </li>
+                <li>
                     <a href="./transaction.html">
                         <i class="material-icons">home</i>
                         <span>پنل مدیریت تراکنش‌های مالی ثبت شده</span>
                     </a>
 				</li>
-                <li>
-                    <a href="./trophy.html">
+                <li disabled>
+                    <a href="./trophy.html" style="pointer-events: none;">
                         <i class="material-icons">home</i>
                         <span>پنل مدیریت برندگان و جوایز</span>
                     </a>
@@ -166,7 +176,7 @@
             <div class="copyright">
                 <a href="javascript:void(0);">سیستم پیش‌بینی مسابقات ورزشی کوپا ۹۰</a>
             </div>
-            <div class="version">
+            <div class="version version_controlling">
                 <b>ورژن: </b> اول
             </div>
         </div>
@@ -186,22 +196,28 @@
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<ul class="nav nav-tabs nav-justified tab-col-blue" role="tablist">
 									<li role="presentation" class="active">
-										<a href="#LeagueStatistics" id="nav1" data-toggle="tab" style="font-size: 18px;">مدیریت کاربران</a>
+										<a href="#" id="nav1" data-toggle="tab" style="font-size: 18px;">لیگ</a>
 									</li>
 									<li role="presentation">
-										<a href="#MyLeague" id="nav2" data-toggle="tab" style="font-size: 18px;">مدیریت پکیج‌‌ها</a>
+										<a href="#" id="nav2" data-toggle="tab" style="font-size: 18px;">تیم</a>
 									</li>
 									<li role="presentation">
-										<a href="#CreateLeague" id="nav3" data-toggle="tab" style="font-size: 18px;">مدیریت لیگ‌های عمومی</a>
+										<a href="#" id="nav3" data-toggle="tab" style="font-size: 18px;">مربی</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav4" data-toggle="tab" style="font-size: 18px;">مدیریت لیگ‌های شخصی</a>
+										<a href="#" id="nav4" data-toggle="tab" style="font-size: 18px;">بازیکن</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav5" data-toggle="tab" style="font-size: 18px;">مدیریت چالش‌ها</a>
+										<a href="#" id="nav5" data-toggle="tab" style="font-size: 18px;">بسته</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav5" data-toggle="tab" style="font-size: 18px;">مدیریت تیم‌ها</a>
+										<a href="#" id="nav6" data-toggle="tab" style="font-size: 18px;">نوتیفیکیشن</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav7" data-toggle="tab" style="font-size: 18px;">کاربر</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav8" data-toggle="tab" style="font-size: 18px;">لیگ خصوصی</a>
 									</li>
 								</ul>
 							</div>
@@ -211,18 +227,19 @@
 			</div>
 		</div>
 
-		<div class="row clearfix">
+		<div id="nav5_tab" class="row clearfix">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="card">
 					<div class="header">
-						<h2>پکیج‌های پیش‌بینی</h2>
+						<h2>بسته‌های پیش‌بینی</h2>
 						<ul class="header-dropdown m-r--5">
 							<li class="dropdown">
 								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 									<i class="material-icons">more_vert</i>
 								</a>
 								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="update_package_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_package_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -232,27 +249,37 @@
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
 									<li role="presentation" class="active">
-										<a href="#LeagueStatistics" id="nav1" data-toggle="tab">داده‌های آماری</a>
+										<a href="#" id="nav10" data-toggle="tab">داده‌های آماری</a>
 									</li>
 									<li role="presentation">
-										<a href="#MyLeague" id="nav2" data-toggle="tab">جستجو</a>
+										<a href="#" id="nav11" data-toggle="tab">جستجو</a>
 									</li>
 									<li role="presentation">
-										<a href="#CreateLeague" id="nav3" data-toggle="tab">جدید</a>
+										<a href="#" id="nav12" data-toggle="tab">جدید</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav4" data-toggle="tab">به روز رسانی</a>
+										<a href="#" id="nav13" data-toggle="tab">به روز رسانی</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav5" data-toggle="tab">تکمیلی</a>
+										<a href="#" id="nav14" data-toggle="tab">تکمیلی</a>
 									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<div class="body">
+
+						<!-- Start of Statostics Package  -->
+						<div id="nav10_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div id="package_line_chart" class="graph"></div>
+							</div>
+						</div>
+						<!-- End of Statostics Package  -->
+
 						<!-- Start of Add Package  -->
-						<div class="row clearfix">
+						<div id="nav12_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
@@ -261,27 +288,38 @@
 									<div class="row clearfix">
 										<div class="col-md-1">
 										</div>
-										<div class="col-md-4">
-											<b style="font-size:12px;"> نام پکیج </b>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> نام بسته </b>
 											<div class="input-group">
 												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+													<input id="new_package_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
 												</div>
 											</div>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-3">
 											<b style="font-size:12px;"> نوع ارائه </b>
-											<select class="form-control show-tick text-right" title="انتخاب ارائه">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<select id="new_package_offer" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
+												<option value="General" selected>عمومی</option>
+												<option value="Special">ویژه و محدود</option>
 											</select>
 										</div>
 										<div class="col-md-2">
 											<b style="font-size:12px;"> تعداد شانس‌ها </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
+													<input id="new_package_chance" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> قیمت </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input id="new_package_price" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -297,23 +335,42 @@
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										<div class="col-md-1 col-md-offset-1">
+										<div class="col-md-1">
 										</div>
 										<div class="col-md-4">
-											<b style="font-size:12px;"> زمان شروع فروش پکیج </b>
+											<b style="font-size:12px;"> زمان شروع فروش بسته  <button type="button" id="popover_handler_1" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input id="new_package_beginningTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
 										</div> 
 										<div class="col-md-4">
-											<b style="font-size:12px;"> زمان پایان فروش پکیج </b>
+											<b style="font-size:12px;"> زمان پایان فروش بسته  <button type="button" id="popover_handler_2" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input id="new_package_endingTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> مدت زمان </b>
+											<select id="new_package_period" class="form-control show-tick text-right" data-size="3" title="یک مدت زمان را انتخاب کنید">
+												<option value="86400000">۱ روز</option>
+												<option value="259200000">۳ روز</option>
+												<option value="604800000">۷ روز</option>
+												<option value="864000000">۱۰ روز</option>
+												<option value="1209600000">۱۴ روز</option>
+												<option value="1814400000">۲۱ روز</option>
+												<option value="2592000000">۳۰ روز</option>
+												<option value="3888000000">۴۵ روز</option>
+												<option value="5184000000">۶۰ روز</option>
+												<option value="7776000000">۹۰ روز</option>
+												<option value="10368000000">۱۲۰ روز</option>
+												<option value="12960000000">۱۵۰ روز</option>
+												<option value="15552000000">۱۸۰ روز</option>
+												<option value="18144000000">۲۱۰ روز</option>
+											</select>
 										</div>
 									</div>
 								</div>
@@ -326,15 +383,15 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-6 col-md-offset-2">
-											<b style="font-size:12px;"> توضیحات فروش پکیج </b>
+											<b style="font-size:12px;"> توضیحات فروش بسته </b>
 											<div class="form-group">
 												<div class="form-line">
-													<textarea rows="2" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
+													<textarea id="new_package_explanation" rows="2" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
 												</div>
 											</div>
 										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن پکیج </button>
+											<button type="button" id="new_package_add_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن بسته </button>
 										</div>
 									</div>
 								</div>
@@ -343,17 +400,14 @@
 						<!-- End of Add Package  -->
 
 						<!-- Start of Edit Package  -->
-						<div class="row clearfix">
+						<div id="nav13_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-6">
-									<b style="font-size:12px;"> انتخاب پکیج </b>
-									<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک پکیج را انتخاب کنید">
-										<option>خردل</option>
-										<option>سس گوجه</option>
-										<option>طعم</option>
+									<b style="font-size:12px;"> انتخاب بسته </b>
+									<select id="update_package_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک بسته را انتخاب کنید">
 									</select>
 								</div>
 							</div>
@@ -364,35 +418,40 @@
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										<div class="col-md-4 col-md-offset-1">
-											<b style="font-size:12px;"> نام پکیج </b>
+										<div class="col-md-1">
+										</div>										
+										<div class="col-md-3">
+											<b style="font-size:12px;"> نام بسته </b>
 											<div class="input-group">
 												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+													<input id="update_package_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
 												</div>
 											</div>
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-3">
 											<b style="font-size:12px;"> نوع ارائه </b>
-											<select class="form-control show-tick text-right" title="انتخاب ارائه">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-										<div class="col-md-2 col-md-offset-1">
-											<b style="font-size:12px;"> وضعیت </b>
-											<select class="form-control show-tick text-right" title="انتخاب وضعیت">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<select id="update_package_offer" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
+												<option value="General">عمومی</option>
+												<option value="Special">ویژه و محدود</option>
 											</select>
 										</div>
 										<div class="col-md-2">
 											<b style="font-size:12px;"> تعداد شانس‌ها </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
+													<input id="update_package_chance" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> قیمت </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input id="update_package_price" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -408,23 +467,31 @@
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										<div class="col-md-1 col-md-offset-1">
+										<div class="col-md-1">
 										</div>
 										<div class="col-md-4">
-											<b style="font-size:12px;"> زمان شروع فروش پکیج </b>
+											<b style="font-size:12px;"> زمان شروع فروش بسته  <button type="button" id="popover_handler_3" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input id="update_package_beginningTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
 										</div> 
 										<div class="col-md-4">
-											<b style="font-size:12px;"> زمان پایان فروش پکیج </b>
+											<b style="font-size:12px;"> زمان پایان فروش بسته  <button type="button" id="popover_handler_4" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input id="update_package_endingTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> وضعیت </b>
+											<select id="update_package_status" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک وضعیت را انتخاب کنید">
+												<option value="Created">ایجاد شده</option>
+												<option value="Working">در حال کار</option>
+												<option value="Finished">قطعی شده</option>
+											</select>
 										</div>
 									</div>
 								</div>
@@ -437,15 +504,15 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-6 col-md-offset-2">
-											<b style="font-size:12px;"> توضیحات فروش پکیج </b>
+											<b style="font-size:12px;"> توضیحات فروش بسته </b>
 											<div class="form-group">
 												<div class="form-line">
-													<textarea rows="2" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
+													<textarea id="update_package_explanation" rows="2" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
 												</div>
 											</div>
 										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> ذخیره‌سازی پکیج </button>
+											<button type="button" id="update_package_update_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اعمال تغییرات </button>
 										</div>
 									</div>
 								</div>
@@ -454,42 +521,33 @@
 						<!-- End of Edit Package  -->
 
 						<!-- Start of Search Package  -->
-						<div class="row clearfix">
+						<div id="nav11_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										<div class="col-md-4">
-											<b style="font-size:12px;"> نام پکیج </b>
-											<div class="input-group">
-												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
-												</div>
-											</div>
-										</div>
 										<div class="col-md-2">
 											<b style="font-size:12px;"> نوع ارائه </b>
-											<select class="form-control show-tick text-right" multiple data-live-search="true" data-actions-box="true" data-size=5 data-selected-text-format="count" title="انتخاب ارائه">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<select id="management_package_offer" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="ارائه‌های مورد نظرتان" data-actions-box="true">
+												<option value="General">عمومی</option>
+												<option value="Special">ویژه و محدود</option>
 											</select>
 										</div>
 										<div class="col-md-2">
 											<b style="font-size:12px;"> وضعیت </b>
-											<select class="form-control show-tick text-right" multiple data-live-search="true" data-actions-box="true" data-size=5 data-selected-text-format="count" title="انتخاب وضعیت">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<select id="management_package_status" class="form-control show-tick text-right"  multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="وضعیت‌های مورد نظرتان" data-actions-box="true">
+												<option value="Created">ایجاد شده</option>
+												<option value="Working">در حال کار</option>
+												<option value="Finished">قطعی شده</option>
 											</select>
 										</div>
 										<div class="col-md-2">
 											<b style="font-size:12px;"> حداقل تعداد شانس‌ها </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
+													<input id="management_package_min_chance" type="text" class="form-control text-center" value="1" data-rule="quantity" data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -501,7 +559,31 @@
 											<b style="font-size:12px;"> حداکثر تعداد شانس‌ها </b>
 											<div class="input-group spinner" data-trigger="spinner">
 												<div class="form-line">
-													<input type="text" class="form-control text-center" value="100" data-rule="quantity">
+													<input id="management_package_max_chance" type="text" class="form-control text-center" value="999" data-rule="quantity" data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> حداقل قیمت </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input id="management_package_min_price" type="text" class="form-control text-center" value="10" data-rule="quantity" data-max="5000000">
+												</div>
+												<span class="input-group-addon">
+													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
+													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
+												</span>
+											</div>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> حداکثر قیمت </b>
+											<div class="input-group spinner" data-trigger="spinner">
+												<div class="form-line">
+													<input id="management_package_max_price" type="text" class="form-control text-center" value="100000" data-rule="quantity" data-max="5000000">
 												</div>
 												<span class="input-group-addon">
 													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
@@ -520,32 +602,54 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان شروع فروش پکیج </b>
+											<b style="font-size:12px;"> زمان شروع فروش بسته  <button type="button" id="popover_handler_3" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input id="management_package_beginningTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
 										</div> 
 										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان پایان فروش پکیج </b>
+											<b style="font-size:12px;"> زمان پایان فروش بسته  <button type="button" id="popover_handler_4" class="btn m-r-20 popoverHandler btn-xs">&nbsp;&nbsp;i&nbsp;&nbsp;</button></b>
 											<div class="form-group">
 												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
+													<input id="management_package_endingTime" type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
 												</div>
 											</div>
 										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو پکیج </button>
+											<button type="button" id="management_package_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو بسته </button>
 										</div>
 									</div>
 								</div>
 							</div>
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_management_package" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>شماره بسته</th>
+												<th>نام بسته</th>
+												<th>دوره</th>
+												<th>متن</th>
+												<th>شانس</th>
+												<th>قیمت</th>
+												<th>ارائه</th>
+												<th>وضعیت</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>		
 						</div>
 						<!-- End of Search Package  -->
 
 						<!-- Start of More Info Package  -->
-						<div class="row clearfix">
+						<div id="nav14_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
@@ -555,17 +659,37 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-6 col-md-offset-2">
-											<b style="font-size:12px;"> انتخاب پکیج </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک پکیج را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<b style="font-size:12px;"> انتخاب بسته </b>
+											<select id="moreInfo_package_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک بسته را انتخاب کنید">
 											</select>
 										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی پکیج </button>
+											<button type="button" id="moreInfo_package_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی بسته </button>
 										</div>
 									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<!-- Exportable Table -->
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_moreInfo_package" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>شماره تراکنش</th>
+												<th>زمان</th>
+												<th>قیمت</th>
+												<th>وضعیت تراکنش</th>
+												<th>شماره ثبت</th>
+												<th>کد رهگیری</th>
+												<th>اطلاعات تراکنش</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<!-- #END# Exportable Table -->
 								</div>
 							</div>
 						</div>
@@ -576,7 +700,7 @@
 			</div>
 		</div>
 
-		<div class="row clearfix">
+		<div id="nav2_tab" class="row clearfix">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="card">
 					<div class="header">
@@ -587,7 +711,8 @@
 									<i class="material-icons">more_vert</i>
 								</a>
 								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="update_team_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_team_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -597,28 +722,36 @@
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
 									<li role="presentation" class="active">
-										<a href="#LeagueStatistics" id="nav1" data-toggle="tab">داده‌های آماری</a>
+										<a href="#" id="nav15" data-toggle="tab">داده‌های آماری</a>
 									</li>
 									<li role="presentation">
-										<a href="#MyLeague" id="nav2" data-toggle="tab">جستجو</a>
+										<a href="#" id="nav16" data-toggle="tab">جستجو</a>
 									</li>
 									<li role="presentation">
-										<a href="#CreateLeague" id="nav3" data-toggle="tab">جدید</a>
+										<a href="#" id="nav17" data-toggle="tab">جدید</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav4" data-toggle="tab">به روز رسانی</a>
+										<a href="#" id="nav18" data-toggle="tab">به روز رسانی</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav5" data-toggle="tab">تکمیلی</a>
+										<a href="#" id="nav19" data-toggle="tab">تکمیلی</a>
 									</li>
 								</ul>
 							</div>
 						</div>
 					</div>
 					<div class="body">
+						<!-- Start of Statostics Team  -->
+						<div id="nav15_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div id="team_line_chart" class="graph"></div>
+							</div>
+						</div>
+						<!-- End of Statostics Team  -->
 
 						<!-- Start of Add Team  -->
-						<div class="row clearfix">
+						<div id="nav17_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
@@ -628,23 +761,20 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> انتخاب لیگ عمومی </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="new_team_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ را انتخاب کنید">
 											</select>
 										</div>
 										<div class="col-md-3 col-md-offset-1">
 											<b style="font-size:12px;"> نام تیم </b>
 											<div class="input-group">
 												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+													<input id="new_team_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
 												</div>
 											</div>
 										</div>
 										 <div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن تیم </button>
+											<button type="button" id="new_team_add_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن تیم </button>
 										</div> 
 									</div>
 								</div>
@@ -653,17 +783,14 @@
 						<!-- End of Add Team  -->
 
 						<!-- Start of Edit Team  -->
-						<div class="row clearfix">
+						<div id="nav18_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-6">
 									<b style="font-size:12px;"> انتخاب تیم </b>
-									<select class="form-control show-tick text-right" data-live-search="true"  data-size=5 title="یک تیم را انتخاب کنید">
-										<option>خردل</option>
-										<option>سس گوجه</option>
-										<option>طعم</option>
+									<select id="update_team_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید">
 									</select>
 								</div>
 							</div>
@@ -676,16 +803,21 @@
 									<div class="row clearfix">
 										<div class="col-md-1">
 										</div>
-										<div class="col-md-6 col-md-offset-2">
+										<div class="col-md-3 col-md-offset-1">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="update_team_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-3 col-md-offset-1">
 											<b style="font-size:12px;"> نام تیم </b>
 											<div class="input-group">
 												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+													<input id="update_team_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
 												</div>
 											</div>
 										</div>
 										 <div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> ذخیره‌سازی تیم </button>
+											<button type="button" id="update_team_update_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اعمال تغییرات </button>
 										</div> 
 									</div>
 								</div>
@@ -694,43 +826,59 @@
 						<!-- End of Edit Team  -->
 
 						<!-- Start of Search Team  -->
-						<div class="row clearfix">
+						<div id="nav16_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										 <div class="col-md-1">
+										<div class="col-md-2">
 										</div> 
-										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> انتخاب لیگ عمومی </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-actions-box="true" data-size=5 data-selected-text-format="count" title="لیگ‌های مورد نظرتان را انتخاب کنید" multiple>
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="management_team_league_selector" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="لیگ‌های مورد نظرتان" data-actions-box="true">
 											</select>
 										</div>
-										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> انتخاب تیم </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-actions-box="true" data-size=5 data-selected-text-format="count" title="تیم‌های مورد نظرتان را انتخاب کنید" multiple>
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب مربی </b>
+											<select id="management_team_coach_selector" class="form-control show-tick text-right"  multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="مربی‌های مورد نظرتان" data-actions-box="true">
 											</select>
 										</div>
-
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب بازیکن </b>
+											<select id="management_team_player_selector" class="form-control show-tick text-right"  multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="بازیکن‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو تیم </button>
+											<button type="button" id="management_team_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو تیم </button>
 										</div> 
 									</div>
 								</div>
-							</div>							
+							</div>	
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_management_team" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>اطلاعات تیم</th>
+												<th>اطلاعات لیگ</th>
+												<th>اطلاعات مربی</th>
+												<th>بازیکنان</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>						
 						</div>
 						<!-- End of Search Team  -->
 
 						<!-- Start of More Info Team  -->
-						<div class="row clearfix">
+						<div id="nav19_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
@@ -741,16 +889,35 @@
 										</div>
 										<div class="col-md-6 col-md-offset-2">
 											<b style="font-size:12px;"> انتخاب تیم </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<select id="moreInfo_team_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک تیم را انتخاب کنید">
 											</select>
 										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی تیم </button>
+											<button type="button" id="moreInfo_team_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی تیم </button>
 										</div>
 									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<!-- Exportable Table -->
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_moreInfo_team" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>شماره کاربری</th>
+												<th>نام کاربری</th>
+												<th>نام و نام‌خانوادگی</th>
+												<th>زمان ثبت‌نام</th>
+												<th>امتیاز لیگ</th>
+												<th>امتیاز کل</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<!-- #END# Exportable Table -->
 								</div>
 							</div>
 						</div>
@@ -761,7 +928,7 @@
 			</div>
 		</div>
 
-		<div class="row clearfix">
+		<div id="nav1_tab" class="row clearfix">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="card">
 					<div class="header">
@@ -772,7 +939,8 @@
 									<i class="material-icons">more_vert</i>
 								</a>
 								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="update_league_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_league_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -782,19 +950,19 @@
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
 									<li role="presentation" class="active">
-										<a href="#LeagueStatistics" id="nav1" data-toggle="tab">داده‌های آماری</a>
+										<a href="#" id="nav20" data-toggle="tab">داده‌های آماری</a>
 									</li>
 									<li role="presentation">
-										<a href="#MyLeague" id="nav2" data-toggle="tab">جستجو</a>
+										<a href="#" id="nav21" data-toggle="tab">جستجو</a>
 									</li>
 									<li role="presentation">
-										<a href="#CreateLeague" id="nav3" data-toggle="tab">جدید</a>
+										<a href="#" id="nav22" data-toggle="tab">جدید</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav4" data-toggle="tab">به روز رسانی</a>
+										<a href="#" id="nav23" data-toggle="tab">به روز رسانی</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav5" data-toggle="tab">تکمیلی</a>
+										<a href="#" id="nav24" data-toggle="tab">تکمیلی</a>
 									</li>
 								</ul>
 							</div>
@@ -802,8 +970,17 @@
 					</div>
 					<div class="body">
 
+						<!-- Start of Statostics League  -->
+						<div id="nav20_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div id="league_line_chart" class="graph"></div>
+							</div>
+						</div>
+						<!-- End of Statostics League  -->
+
 						<!-- Start of Add League  -->
-						<div class="row clearfix">
+						<div id="nav22_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
@@ -816,12 +993,12 @@
 											<b style="font-size:12px;"> نام لیگ </b>
 											<div class="input-group">
 												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+													<input id="new_league_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
 												</div>
 											</div>
 										</div>
 										 <div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن لیگ </button>
+											<button type="button" id="new_league_add_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن لیگ </button>
 										</div> 
 									</div>
 								</div>
@@ -830,17 +1007,14 @@
 						<!-- End of Add League  -->
 
 						<!-- Start of Edit League  -->
-						<div class="row clearfix">
+						<div id="nav23_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-6">
 									<b style="font-size:12px;"> انتخاب لیگ عمومی </b>
-									<select class="form-control show-tick text-right" title="یک لیگ را انتخاب کنید">
-										<option>خردل</option>
-										<option>سس گوجه</option>
-										<option>طعم</option>
+									<select id="update_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید">
 									</select>
 								</div>
 							</div>
@@ -857,12 +1031,12 @@
 											<b style="font-size:12px;"> نام لیگ </b>
 											<div class="input-group">
 												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
+													<input id="update_league_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
 												</div>
 											</div>
 										</div>
 										 <div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> ذخیره‌سازی لیگ </button>
+											<button type="button" id="update_league_update_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اعمال تغییرات </button>
 										</div> 
 									</div>
 								</div>
@@ -871,34 +1045,59 @@
 						<!-- End of Edit League  -->
 
 						<!-- Start of Search League  -->
-						<div class="row clearfix">
+						<div id="nav21_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
 								</div>
 								<div class="col-md-10">
 									<div class="row clearfix">
-										<div class="col-md-1">
-										</div>
-										<div class="col-md-6 col-md-offset-2">
-											<b style="font-size:12px;"> انتخاب لیگ عمومی </b>
-											<select class="form-control show-tick text-right" title="لیگ‌های مورد نظرتان را انتخاب کنید" multiple data-live-search="true" data-actions-box="true" data-size=5 data-selected-text-format="count">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+										<div class="col-md-2">
+										</div> 
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="management_league_team_selector" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="تیم‌های مورد نظرتان" data-actions-box="true">
 											</select>
 										</div>
-										 <div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو لیگ </button>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب مربی </b>
+											<select id="management_league_coach_selector" class="form-control show-tick text-right"  multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="مربی‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب بازیکن </b>
+											<select id="management_league_player_selector" class="form-control show-tick text-right"  multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="بازیکن‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
+										<div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="management_league_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو لیگ </button>
 										</div> 
 									</div>
 								</div>
-							</div>							
+							</div>	
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_management_league" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>اطلاعات لیگ</th>
+												<th>مربیان</th>
+												<th>بازیکنان</th>
+												<th>تیم‌ها</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>						
 						</div>
 						<!-- End of Search League  -->
 
 						<!-- Start of More Info League  -->
-						<div class="row clearfix">
+						<div id="nav24_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
@@ -908,21 +1107,556 @@
 										<div class="col-md-1">
 										</div>
 										<div class="col-md-6 col-md-offset-2">
-											<b style="font-size:12px;"> انتخاب لیگ </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="moreInfo_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک لیگ را انتخاب کنید">
 											</select>
 										</div>
 										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی لیگ </button>
+											<button type="button" id="moreInfo_league_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی لیگ </button>
 										</div>
 									</div>
 								</div>
 							</div>
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<!-- Exportable Table -->
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_moreInfo_league" style="vertical-align:middle;">
+										<thead>
+											<tr>
+											<th>شماره پیش‌بینی</th>
+											<th>دوره</th>
+											<th>متن</th>
+											<th>اطلاعات</th>
+											<th>وضعیت</th>
+											<th>تکمیل</th>
+											<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+									<!-- #END# Exportable Table -->
+								</div>
+							</div>
 						</div>
 						<!-- End of More Info League  -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="nav3_tab" class="row clearfix">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="card">
+					<div class="header">
+						<h2>مربی‌های تیم‌ها</h2>
+						<ul class="header-dropdown m-r--5">
+							<li class="dropdown">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+									<i class="material-icons">more_vert</i>
+								</a>
+								<ul class="dropdown-menu pull-left">
+									<li><a href="javascript:void(0);" id="update_coach_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_coach_section">خالی سازی</a></li>
+								</ul>
+							</li>
+						</ul>
+						<div class="row clearfix">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
+									<li role="presentation" class="active">
+										<a href="#" id="nav25" data-toggle="tab">داده‌های آماری</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav26" data-toggle="tab">جستجو</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav27" data-toggle="tab">جدید</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav28" data-toggle="tab">به روز رسانی</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="body">
+						<!-- Start of Statostics Coach  -->
+						<div id="nav25_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div id="coach_line_chart" class="graph"></div>
+							</div>
+						</div>
+						<!-- End of Statostics Coach  -->
+
+						<!-- Start of Add Coach  -->
+						<div id="nav27_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="new_coach_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="new_coach_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک تیم را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> نام مربی </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="new_coach_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
+												</div>
+											</div>
+										</div>
+										 <div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="new_coach_add_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن مربی </button>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Add Coach  -->
+
+						<!-- Start of Edit Coach  -->
+						<div id="nav28_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-3">
+								</div>
+								<div class="col-md-6">
+									<b style="font-size:12px;"> انتخاب مربی </b>
+									<select id="update_coach_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک مربی را انتخاب کنید">
+									</select>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<br>
+								<br>
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="update_coach_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="update_coach_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک تیم را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> نام مربی </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="update_coach_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
+												</div>
+											</div>
+										</div>
+										 <div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="update_coach_update_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اعمال تغییرات </button>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Edit Coach  -->
+
+						<!-- Start of Search Coach  -->
+						<div id="nav26_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-2">
+										</div> 
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="management_coach_league_selector" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="لیگ‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="management_coach_team_selector" class="form-control show-tick text-right"  multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="تیم‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
+										<div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="management_coach_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو مربی </button>
+										</div> 
+									</div>
+								</div>
+							</div>	
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_management_coach" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>شماره مربی</th>
+												<th>اسم مربی</th>
+												<th>اطلاعات لیگ</th>
+												<th>اطلاعات تیم</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>						
+						</div>
+						<!-- End of Search Coach  -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="nav4_tab" class="row clearfix">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="card">
+					<div class="header">
+						<h2>بازیکن‌های تیم‌ها</h2>
+						<ul class="header-dropdown m-r--5">
+							<li class="dropdown">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+									<i class="material-icons">more_vert</i>
+								</a>
+								<ul class="dropdown-menu pull-left">
+									<li><a href="javascript:void(0);" id="update_player_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_player_section">خالی سازی</a></li>
+								</ul>
+							</li>
+						</ul>
+						<div class="row clearfix">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
+									<li role="presentation" class="active">
+										<a href="#" id="nav29" data-toggle="tab">داده‌های آماری</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav30" data-toggle="tab">جستجو</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav31" data-toggle="tab">جدید</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav32" data-toggle="tab">به روز رسانی</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="body">
+						<!-- Start of Statostics Player  -->
+						<div id="nav29_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div id="player_line_chart" class="graph"></div>
+							</div>
+						</div>
+						<!-- End of Statostics Player  -->
+
+						<!-- Start of Add Player  -->
+						<div id="nav31_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="new_player_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="new_player_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک تیم را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> نام مربی </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="new_player_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
+												</div>
+											</div>
+										</div>
+										 <div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="new_player_add_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن بازیکن </button>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Add Player  -->
+
+						<!-- Start of Edit Player  -->
+						<div id="nav28_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-3">
+								</div>
+								<div class="col-md-6">
+									<b style="font-size:12px;"> انتخاب بازیکن </b>
+									<select id="update_player_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک بازیکن را انتخاب کنید">
+									</select>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<br>
+								<br>
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-1">
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="update_player_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک لیگ را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="update_player_league_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک تیم را انتخاب کنید">
+											</select>
+										</div>
+										<div class="col-md-3">
+											<b style="font-size:12px;"> نام مربی </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input id="update_player_name" type="text" class="form-control" placeholder="یک نام پیشنهادی">
+												</div>
+											</div>
+										</div>
+										 <div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="update_player_update_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اعمال تغییرات </button>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Edit Player  -->
+
+						<!-- Start of Search Player  -->
+						<div id="nav26_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-2">
+										</div> 
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب لیگ </b>
+											<select id="management_player_league_selector" class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="لیگ‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
+										<div class="col-md-2">
+											<b style="font-size:12px;"> انتخاب تیم </b>
+											<select id="management_player_team_selector" class="form-control show-tick text-right"  multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="تیم‌های مورد نظرتان" data-actions-box="true">
+											</select>
+										</div>
+										<div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="management_player_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو بازیکن </button>
+										</div> 
+									</div>
+								</div>
+							</div>	
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_management_player" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>شماره بازیکن</th>
+												<th>اسم بازیکن</th>
+												<th>اطلاعات لیگ</th>
+												<th>اطلاعات تیم</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>						
+						</div>
+						<!-- End of Search Player  -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="nav۶_tab" class="row clearfix">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="card">
+					<div class="header">
+						<h2>اطلاع‌رسانی‌های جمعی</h2>
+						<ul class="header-dropdown m-r--5">
+							<li class="dropdown">
+								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+									<i class="material-icons">more_vert</i>
+								</a>
+								<ul class="dropdown-menu pull-left">
+									<li><a href="javascript:void(0);" id="empty_notification_section">خالی سازی</a></li>
+								</ul>
+							</li>
+						</ul>
+						<div class="row clearfix">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+							</div>
+							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
+									<li role="presentation">
+										<a href="#" id="nav33" data-toggle="tab">جستجو</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav34" data-toggle="tab">جدید</a>
+									</li>
+									<li role="presentation">
+										<a href="#" id="nav35" data-toggle="tab">به روز رسانی</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="body">
+
+						<!-- Start of Add Notification  -->
+						<div id="nav34_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-6">
+											<b style="font-size:12px;"> توضیحات پیام ارسالی </b>
+											<div class="form-group">
+												<div class="form-line">
+													<textarea id="new_notification_explanation" rows="2" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
+												</div>
+											</div>
+										</div>
+										 <div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="new_notification_add_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن پیام </button>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Add Notification  -->
+
+						<!-- Start of Edit Notification  -->
+						<div id="nav28_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-3">
+								</div>
+								<div class="col-md-6">
+									<b style="font-size:12px;"> انتخاب پیام </b>
+									<select id="update_notification_selector" class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک پیام را انتخاب کنید">
+									</select>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<br>
+								<br>
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-6">
+											<b style="font-size:12px;"> توضیحات پیام ارسالی </b>
+											<div class="form-group">
+												<div class="form-line">
+													<textarea id="update_notification_explanation" rows="2" class="form-control no-resize auto-growth" placeholder="لطفا متن خود را تایپ نمایید."></textarea>
+												</div>
+											</div>
+										</div>
+										 <div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="update_notification_update_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اعمال تغییرات </button>
+										</div> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End of Edit Notification  -->
+
+						<!-- Start of Search Notification  -->
+						<div id="nav26_tab" class="row clearfix">
+							<br>
+							<div class="row clearfix">
+								<div class="col-md-1">
+								</div>
+								<div class="col-md-10">
+									<div class="row clearfix">
+										<div class="col-md-3">
+										</div> 
+										<div class="col-md-4">
+											<b style="font-size:12px;"> انتخاب جمله </b>
+											<div class="input-group">
+												<div class="form-line">
+													<input type="text" class="form-control" placeholder="یک سری کلمه پیشنهادی">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-2 m-t-10 m-b-10">
+											<button type="button" id="management_notification_search_button" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو پیام </button>
+										</div> 
+									</div>
+								</div>
+							</div>	
+							<div class="row clearfix">
+								<br>
+								<div class="col-md-12">
+									<table class="table table-bordered table-striped table-hover" id="tab_logic_management_notification" style="vertical-align:middle;">
+										<thead>
+											<tr>
+												<th>شماره پیام</th>
+												<th>متن پیام</th>
+												<th>عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>						
+						</div>
+						<!-- End of Search Notification  -->
 
 					</div>
 				</div>
@@ -940,7 +1674,8 @@
 									<i class="material-icons">more_vert</i>
 								</a>
 								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="update_user_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_user_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -950,16 +1685,16 @@
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
 									<li role="presentation" class="active">
-										<a href="#LeagueStatistics" id="nav1" data-toggle="tab">داده‌های آماری</a>
+										<a href="#" id="nav36" data-toggle="tab">داده‌های آماری</a>
 									</li>
 									<li role="presentation">
-										<a href="#MyLeague" id="nav2" data-toggle="tab">جستجو</a>
+										<a href="#" id="nav37" data-toggle="tab">جستجو</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav3" data-toggle="tab">به روز رسانی</a>
+										<a href="#" id="nav38" data-toggle="tab">به روز رسانی</a>
 									</li>
 									<li role="presentation">
-										<a href="#UpdateLeague" id="nav4" data-toggle="tab">تکمیلی</a>
+										<a href="#" id="nav39" data-toggle="tab">تکمیلی</a>
 									</li>
 								</ul>
 							</div>
@@ -968,7 +1703,7 @@
 					<div class="body">
 					
 						<!-- Start of Search User  -->
-						<div class="row clearfix">
+						<div id="nav37_tab" class="row clearfix">
 							<br>
 							<div class="row clearfix">
 								<div class="col-md-1">
@@ -1166,14 +1901,15 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div class="card">
 					<div class="header">
-						<h2>لیگ‌های شخصی</h2>
+						<h2>لیگ‌های شخصی کاربران</h2>
 						<ul class="header-dropdown m-r--5">
 							<li class="dropdown">
 								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
 									<i class="material-icons">more_vert</i>
 								</a>
 								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="update_champion_section">به روز رسانی</a></li>
+									<li><a href="javascript:void(0);" id="empty_champion_section">خالی سازی</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -1541,360 +2277,6 @@
 			</div>
 		</div>
 
-		<div class="row clearfix">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="card">
-					<div class="header">
-						<h2>چالش‌های کاربران</h2>
-						<ul class="header-dropdown m-r--5">
-							<li class="dropdown">
-								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-									<i class="material-icons">more_vert</i>
-								</a>
-								<ul class="dropdown-menu pull-left">
-									<li><a href="javascript:void(0);">به روز رسانی</a></li>
-								</ul>
-							</li>
-						</ul>
-						<div class="row clearfix">
-							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-							</div>
-							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-								<ul class="nav nav-tabs nav-justified tab-col-teal" role="tablist">
-									<li role="presentation" class="active">
-										<a href="#LeagueStatistics" id="nav1" data-toggle="tab">داده‌های آماری</a>
-									</li>
-									<li role="presentation">
-										<a href="#MyLeague" id="nav2" data-toggle="tab">جستجو</a>
-									</li>
-									<li role="presentation">
-										<a href="#CreateLeague" id="nav3" data-toggle="tab">جدید</a>
-									</li>
-									<li role="presentation">
-										<a href="#UpdateLeague" id="nav4" data-toggle="tab">به روز رسانی</a>
-									</li>
-									<li role="presentation">
-										<a href="#UpdateLeague" id="nav5" data-toggle="tab">تکمیلی</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-					<div class="body">
-
-						<!-- Start of Add Challenge  -->
-						<div class="row clearfix">
-							<br>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-1 col-md-offset-1">
-										</div>
-										<div class="col-md-4">
-											<b style="font-size:12px;"> نام چالش کاربری </b>
-											<div class="input-group">
-												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4">
-											<b style="font-size:12px;"> سازنده </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک سازنده را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-1 col-md-offset-1">
-										</div>
-										<div class="col-md-2">
-											<b style="font-size:12px;"> تعداد شانس‌ها </b>
-											<div class="input-group spinner" data-trigger="spinner">
-												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
-												</div>
-												<span class="input-group-addon">
-													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
-													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
-												</span>
-											</div>
-										</div>
-										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> مدت زمان </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="مدت زمان را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> افزودن چالش کاربری </button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End of Add Challenge  -->
-
-						<!-- Start of Edit Challenge  -->
-						<div class="row clearfix">
-							<br>
-							<div class="row clearfix">
-								<div class="col-md-4">
-								</div>
-								<div class="col-md-4">
-									<b style="font-size:12px;"> انتخاب چالش کاربری </b>
-									<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش کاربری را انتخاب کنید">
-										<option>خردل</option>
-										<option>سس گوجه</option>
-										<option>طعم</option>
-									</select>
-								</div>
-							</div>
-							<div class="row clearfix">
-								<br>
-								<br>
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-4 col-md-offset-1">
-											<b style="font-size:12px;"> نام چالش کاربری </b>
-											<div class="input-group">
-												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4 col-md-offset-1"> 
-											<b style="font-size:12px;"> سازنده </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک سازنده را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-										<div class="col-md-2">
-											<b style="font-size:12px;"> وضعیت </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="وضعیت مورد نظرتان">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-2 col-md-offset-1">
-											<b style="font-size:12px;"> تعداد شانس‌ها </b>
-											<div class="input-group spinner" data-trigger="spinner">
-												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
-												</div>
-												<span class="input-group-addon">
-													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
-													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
-												</span>
-											</div>
-										</div>
-										<div class="col-md-3">
-											<b style="font-size:12px;"> زمان شروع چالش </b>
-											<div class="form-group">
-												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
-												</div>
-											</div>
-										</div> 
-										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان پایان چالش </b>
-											<div class="form-group">
-												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> ذخیره‌سازی چالش کاربری </button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End of Edit Challenge  -->
-
-						<!-- Start of Search Challenge  -->
-						<div class="row clearfix">
-							<br>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-4">
-											<b style="font-size:12px;"> نام چالش کاربری </b>
-											<div class="input-group">
-												<div class="form-line">
-													<input type="text" class="form-control" placeholder="یک نام پیشنهادی">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-4 col-md-offset-1"> 
-											<b style="font-size:12px;"> انتخاب سازندگان </b>
-											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="سازنده‌هایتان را انتخاب کنید" data-actions-box="true">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-										<div class="col-md-3">
-											<b style="font-size:12px;"> وضعیت </b>
-											<select class="form-control show-tick text-right" multiple data-live-search="true" data-selected-text-format="count" data-size=5 title="وضعیت‌های مورد نظرتان"  data-actions-box="true">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-2">
-										</div>
-										<div class="col-md-2">
-											<b style="font-size:12px;"> حداقل تعداد شانس‌ها </b>
-											<div class="input-group spinner" data-trigger="spinner">
-												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
-												</div>
-												<span class="input-group-addon">
-													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
-													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
-												</span>
-											</div>
-										</div>
-										<div class="col-md-2">
-											<b style="font-size:12px;"> حداکثر تعداد شانس‌ها </b>
-											<div class="input-group spinner" data-trigger="spinner">
-												<div class="form-line">
-													<input type="text" class="form-control text-center" value="100" data-rule="quantity">
-												</div>
-												<span class="input-group-addon">
-													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
-													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
-												</span>
-											</div>
-										</div>
-										<div class="col-md-2">
-											<b style="font-size:12px;"> حداقل زمانی </b>
-											<div class="input-group spinner" data-trigger="spinner">
-												<div class="form-line">
-													<input type="text" class="form-control text-center" value="10" data-rule="quantity">
-												</div>
-												<span class="input-group-addon">
-													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
-													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
-												</span>
-											</div>
-										</div>
-										<div class="col-md-2">
-											<b style="font-size:12px;"> حداکثر زمانی </b>
-											<div class="input-group spinner" data-trigger="spinner">
-												<div class="form-line">
-													<input type="text" class="form-control text-center" value="100" data-rule="quantity">
-												</div>
-												<span class="input-group-addon">
-													<a href="javascript:;" class="spin-up" data-spin="up"><i class="glyphicon glyphicon-chevron-up"></i></a>
-													<a href="javascript:;" class="spin-down" data-spin="down"><i class="glyphicon glyphicon-chevron-down"></i></a>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-1">
-										</div>
-										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان شروع چالش </b>
-											<div class="form-group">
-												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
-												</div>
-											</div>
-										</div> 
-										<div class="col-md-3 col-md-offset-1">
-											<b style="font-size:12px;"> زمان پایان چالش </b>
-											<div class="form-group">
-												<div class="form-line">
-													<input type="text" class="datetimepicker form-control" placeholder="لطفا تاریخ و زمان را انتخاب کنید">
-												</div>
-											</div>
-										</div>
-										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> جستجو چالش کاربری </button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End of Search Challenge  -->
-							
-						<!-- Start of More Info Challenge  -->
-						<div class="row clearfix">
-							<br>
-							<div class="row clearfix">
-								<div class="col-md-1">
-								</div>
-								<div class="col-md-10">
-									<div class="row clearfix">
-										<div class="col-md-1">
-										</div>
-										<div class="col-md-6 col-md-offset-2">
-											<b style="font-size:12px;"> انتخاب چالش </b>
-											<select class="form-control show-tick text-right" data-live-search="true" data-size=5 title="یک چالش را انتخاب کنید">
-												<option>خردل</option>
-												<option>سس گوجه</option>
-												<option>طعم</option>
-											</select>
-										</div>
-										<div class="col-md-2 m-t-10 m-b-10">
-											<button type="button" id="newCampaignsAddCampaign" class="btn bg-green btn-block m-t-10 m-b-15 btn-lg waves-effect"> اطلاعات تکمیلی چالش </button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- End of More Info Challenge  -->
-
-					</div>
-				</div>
-			</div>
-		</div>
-
 		</div>
     </section>
 
@@ -1934,6 +2316,10 @@
 	<!-- Bootstrap Material Datetime Picker Plugin Js -->
 	<script src="../../plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script>
 
+	<!-- Jalali Date Plugin Js -->
+	<script src="../../plugins/moment/moment.js"></script>
+	<script src="../../plugins/moment-jalaali/build/moment-jalaali.js"></script>
+
 	<!-- noUISlider Plugin Js -->
 	<script src="../../plugins/nouislider/nouislider.js"></script>
 
@@ -1942,6 +2328,11 @@
 
 	<!-- JQuery Steps Plugin Js -->
 	<script src="../../plugins/jquery-steps/jquery.steps.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+
+	<script type="text/javascript" src="../../plugins/simpleExcel/simpleExcel.js"></script>
 
 	<!-- Sweet Alert Plugin Js -->
 	<script src="../../plugins/sweetalert/sweetalert.min.js"></script>
@@ -1954,19 +2345,7 @@
 
 	<!-- Custom Js -->
 	<script src="../../js/admin.js"></script>
-    <!-- <script src="../../js/pages/forms/advanced-form-elements.js"></script> -->
-	<!-- <script src="../../js/pages/index.js"></script>  -->
-
-	<!-- Jquery DataTable Plugin Js -->
-	<script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
-	<script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
-	<script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+	<script src="../../js/dashboard/control.js"></script>  
 
 	<!-- Demo Js -->
 	<script src="../../js/demo.js"></script>
@@ -1974,11 +2353,9 @@
 	<!-- Autosize Plugin Js -->
 	<script src="../../plugins/autosize/autosize.js"></script>
 
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
-
-	<!-- Nprogress Plugin Js -->
-	<script src="../../plugins/nprogress/nprogress.js"></script>
+	<!-- Morris Plugin Js -->
+    <script src="../../plugins/raphael/raphael.min.js"></script>
+    <script src="../../plugins/morrisjs/morris.js"></script>
 </body>
 
 </html>
