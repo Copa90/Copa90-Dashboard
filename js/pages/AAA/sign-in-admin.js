@@ -62,7 +62,7 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (coreResult) {
-				localStorage.setItem('AdminCompanyName', 'کوپا ۹۰');
+				localStorage.setItem('AdminCompanyName', '۶ قدم');
 				localStorage.setItem('adminEmail', data.email);						
 				localStorage.setItem('adminCoreAccessToken', coreResult.id);
 				localStorage.setItem('adminId', coreResult.userId);

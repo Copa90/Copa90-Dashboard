@@ -2423,7 +2423,7 @@ $(document).ready(function () {
 			{
 				element: "#play_room_notif_center_button",
 				placement: "top",
-				content: "جدیدترین پیش‌بینی‌هایی که به کوپا۹۰ اضافه شده، اینجا اعلام میشن."
+				content: "جدیدترین پیش‌بینی‌هایی که به ۶ قدم اضافه شده، اینجا اعلام میشن."
 			},
 			{
 				element: "#play_room_league_start_button",
