@@ -159,13 +159,13 @@ function countryCodeToLeagueId(code) {
 	else if (code == "NAT") 	return '59afb306012e5b0e7a1c3295'
 }
 
-var coreEngine_url 	= "http://185.105.186.68:4000/api/"
-var zarinPal_url 		= "http://185.105.186.68:4010/api/"
-var coreURL 				= 'http://copa90.ir/'
+var coreEngine_url 	= "http://66.70.216.149:4000/api/"
+var zarinPal_url 		= "http://66.70.216.149:4010/api/"
+var coreURL 				= 'http://6ghadam.com/'
 
 // var coreEngine_url 	= "http://127.0.0.1:4000/api/"
 // var zarinPal_url 		= "http://127.0.0.1:4010/api/"
-// var coreURL 				= 'http://copa90.ir/'
+// var coreURL 				= 'http://6Ghadam.com/'
 
 $(document).ready(function () {
 
@@ -368,6 +368,8 @@ $(document).ready(function () {
 	// 		 	 	Graph Controller				//
 	// ------------------------------ //
 	function fill_graph(leaguesArray, estimatesArray) {
+		if (leaguesArray.length == 0)
+			return
 		$('#line_chart').empty()
 		function getRandomColor() {
 			var letters = '0123456789ABCDEF'

@@ -178,13 +178,13 @@ function detectmob() {
   }
 }
 
-var coreEngine_url = "http://185.105.186.68:4000/api/"
-var zarinPal_url = "http://185.105.186.68:4010/api/"
-var coreURL = 'http://copa90.ir/'
+var coreEngine_url = "http://66.70.216.149:4000/api/"
+var zarinPal_url = "http://66.70.216.149:4010/api/"
+var coreURL = 'http://6ghadam.com/'
 
 // var coreEngine_url = "http://127.0.0.1:4000/api/"
 // var zarinPal_url = "http://127.0.0.1:4010/api/"
-// var coreURL = 'http://copa90.ir/'
+// var coreURL = 'http://6Ghadam.com/'
 
 var MID = 'f988546a-817c-11e7-803b-005056a205be'
 
@@ -305,14 +305,9 @@ $(document).ready(function () {
 		})
 	})
 
-	getLatestNotifs(function(err, notifResult) {
-		if (err)
-			return change_page_scene('page_aaa')		
-	})
-
 	getAllPackages(function(err, packageResult) {
 		if (err)
-			return callback(err)
+			return change_page_scene('page_aaa')		
 	})
 
 	if (!userId || !coreAccessToken) {
@@ -327,7 +322,7 @@ $(document).ready(function () {
 	else {
 		getAllInfo(function(err) {
 			if (err)
-				return change_page_scene('page_aaa')
+				return change_page_scene('page_aaa')			
 			getTeamUsers(favTeam, function(err, result) {
 				if (err)
 					return change_page_scene('page_aaa')

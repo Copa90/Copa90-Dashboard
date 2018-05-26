@@ -115,13 +115,13 @@ function warningOperation() {
 	showNotification('bg-orange', 'لطفا همه فیلدهای ضروری را پر کنید', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
-var coreEngine_url = "http://185.105.186.68:4000/api/"
-var zarinPal_url = "http://185.105.186.68:4010/api/"
-var coreURL = 'http://copa90.ir/'
+var coreEngine_url = "http://66.70.216.149:4000/api/"
+var zarinPal_url = "http://66.70.216.149:4010/api/"
+var coreURL = 'http://6ghadam.com/'
 
 // var coreEngine_url = "http://127.0.0.1:4000/api/"
 // var zarinPal_url = "http://127.0.0.1:4010/api/"
-// var coreURL = 'http://copa90.ir/'
+// var coreURL = 'http://6Ghadam.com/'
 
 var MID = 'f988546a-817c-11e7-803b-005056a205be'
 

@@ -1,2 +1,2 @@
-# Copa90-Dashboard
-Dashboard Panel of Copa90
+# 6Ghadam-Dashboard
+Dashboard Panel of 6Ghadam

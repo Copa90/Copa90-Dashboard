@@ -55,13 +55,13 @@ function fullDateConvertorJalali(myDate) {
 	return (res[0] + ' - ' + res[1])
 }
 
-// var coreEngine_url 	= "http://185.105.186.68:4000/api/"
-// var zarinPal_url 		= "http://185.105.186.68:4010/api/"
-// var coreURL 				= 'http://copa90.ir/'
+var coreEngine_url 	= "http://66.70.216.149:4000/api/"
+var zarinPal_url 		= "http://66.70.216.149:4010/api/"
+var coreURL 				= 'http://6Ghadam.com/'
 
-var coreEngine_url 	= "http://127.0.0.1:4000/api/"
-var zarinPal_url 		= "http://127.0.0.1:4010/api/"
-var coreURL 				= 'http://copa90.ir/'
+// var coreEngine_url 	= "http://127.0.0.1:4000/api/"
+// var zarinPal_url 		= "http://127.0.0.1:4010/api/"
+// var coreURL 				= 'http://6Ghadam.com/'
 
 $(document).ready(function () {
 
