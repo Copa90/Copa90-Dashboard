@@ -1,12 +1,11 @@
 var hintArray = [
 	"با ارسال کد معرفی برای دوستانتان، ۵ پیش بینی رایگان هدیه بگیرید",
-	"در لیگ مورد علاقه‌ی خود امتیاز کسب کنید و جایزه بگیرید",
+	"در گروه مورد علاقه‌ی خود امتیاز کسب کنید و جایزه بگیرید",
 	"با دوستان خود چالش پیش‌بینی برگزار کنید و توانایی پیش‌بینی‌تان را به رخ بکشید",
 	"جزء بهترین‌های هفته، ماه و فصل باشید و جایزه ببرید",
 	"اولین خرید بسته‌ی پیش‌بینی توسط دوست معرفی‌شده‌‌ی شما، ۵ پیش‌بینی رایگان دیگر برایتان دارد",
 	"بسته‌‌ی جدید بخرید، بیشتر پیش‌بینی کنید و شانس برنده‌شدن خود را افزایش دهید",
-	"بسته‌های ویژه برای حرفه‌ای‌ها! به‌صرفه‌تر پیش‌بینی کنید",
-	"لیگ‌ شخصی بسازید و با دوستان خود رقابت کنید"
+	"بسته‌های ویژه برای حرفه‌ای‌ها! به‌صرفه‌تر پیش‌بینی کنید"
 ]
 
 var hintNo = getRandomInt(0, hintArray.length)
@@ -150,7 +149,7 @@ function warningOperation() {
 }
 
 function predictOverOperation() {
-	showNotification('bg-orange', 'پیش‌بینی‌ جدیدی برای این لیگ موجود نمی‌باشد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+	showNotification('bg-orange', 'پیش‌بینی‌ جدیدی برای این گروه موجود نمی‌باشد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
 function authenticationRequiredOperation() {
@@ -191,22 +190,7 @@ var MID = 'f988546a-817c-11e7-803b-005056a205be'
 $(document).ready(function () {
 
 	$(document).ajaxError(function myErrorHandler(event, x, ajaxOptions, thrownError) {
-		if (timerID)
-			clearTimeout(timerID)	
-		if (x.status == 401 || x.status == 404) {
-			localStorage.clear()
-			empty_all_fields()
-			empty_all_tables()
-			change_page_scene('page_aaa')
-			authenticationRequiredOperation()
-		}
-		if (x.status == 0) {
-			localStorage.clear()
-			empty_all_fields()
-			empty_all_tables()
-			console.log('Error in Loading Resources')
-			change_page_scene('page_aaa')
-		}
+		failedOperation()
 		doneLoading()
 		doneProgressBar()
 	})
@@ -215,9 +199,6 @@ $(document).ready(function () {
 
 	var firstTour
 	var secondTour
-	var timerID
-	var updateEnable
-	var liveEnable
 
 	var phoneNumber
 	var userClient
@@ -226,24 +207,17 @@ $(document).ready(function () {
 
 	var pageToggle
 
-	var liveIndex, weekIndex, seasonIndex
+	var weekIndex
 
 	var acceptCount
 
 	var clientModel
 	var leaguesArray = []
 	var teamsArray = []
-	var userChampions = []
-	var userChallenges = []
 	var packagesArray = []
 
 	var predictsArray = []
-	var mocksArray = []
 	var weeklyPredict = []
-	var livePredict = []
-	var seasonPredict = []
-
-	var notifsArray = []
 
 	var timeSort = 3
 	var pointSort = 3
@@ -345,7 +319,7 @@ $(document).ready(function () {
 	// 		  	Page Controller					//
 	// ------------------------------ //
 	function change_page_scene(pageName) {
-		var pages = ['page_aaa', 'page_main_menu', 'page_main_prediction', 'page_private_league', 'page_challenge', 'page_play_room', 'page_ranking', 'page_profile', 'page_package', 'page_award']
+		var pages = ['page_aaa', 'page_main_menu', 'page_main_prediction', 'page_play_room', 'page_ranking', 'page_profile', 'page_package']
 		for (var i = 0; i < pages.length; i++) {
 			var str = '#' + pages[i]
 			if (pages[i] === pageName)
@@ -370,25 +344,13 @@ $(document).ready(function () {
 		else if (pageName === 'page_play_room') {
 			$("#play_room_league_leagueId").selectpicker('val', 'every')
 		}
-		else if (pageName === 'page_challenge') {
-			tabHandler({ target: { id: 'nav5' } })
-			$('.nav-tabs a[id="nav5"]').tab('show')
-		}
-		else if (pageName === 'page_private_league') {
-			tabHandler({ target: { id: 'nav1' } })
-			$('.nav-tabs a[id="nav1"]').tab('show')
-		}
 		else if (pageName === 'page_profile') {
-			tabHandler({ target: { id: 'nav12' } })
-			$('.nav-tabs a[id="nav12"]').tab('show')
+			tabHandler({ target: { id: 'nav7' } })
+			$('.nav-tabs a[id="nav7"]').tab('show')
 		}
 		else if (pageName === 'page_ranking') {
-			tabHandler({ target: { id: 'nav9' } })
-			$('.nav-tabs a[id="nav9"]').tab('show')
-		}
-		else if (pageName === 'page_award') {
-			tabHandler({ target: { id: 'nav19' } })
-			$('.nav-tabs a[id="nav19"]').tab('show')
+			tabHandler({ target: { id: 'nav3' } })
+			$('.nav-tabs a[id="nav3"]').tab('show')
 		}
 		else if (pageName === 'page_main_menu') {
 			startFirstTour()
@@ -459,89 +421,12 @@ $(document).ready(function () {
 		$('#main_exact_second_answer_selector').selectpicker('refresh')
 		$('#main_exact_third_answer_selector').selectpicker('refresh')
 	}
-	function fill_champion_selector(championsArray) {
-		$('#edit_personal_league_leagueId').find('option').remove()
-		$('#join_personal_league_champion_selector').find('option').remove()
-		$('#statistics_personal_league_leagueId').find('option').remove()
-		for (var i = 0; i < championsArray.length; i++) {
-			if (championsArray[i].creatorId === userId) {
-				var itemToPush = {
-					id: championsArray[i].id,
-					name: championsArray[i].name
-				}
-				$('#edit_personal_league_leagueId').append($('<option>', {
-					value: itemToPush.id,
-					text: itemToPush.name
-				}))
-			}
-		}
-		for (var i = 0; i < championsArray.length; i++) {
-			var itemToPush = {
-				id: championsArray[i].id,
-				name: championsArray[i].name
-			}
-			$('#join_personal_league_champion_selector').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			}))
-		}
-		for (var i = 0; i < championsArray.length; i++) {
-			var itemToPush = {
-				id: championsArray[i].id,
-				name: championsArray[i].name
-			}
-			$('#statistics_personal_league_leagueId').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			}))
-		}
-		$('#edit_personal_league_leagueId').selectpicker('refresh')
-		$('#join_personal_league_champion_selector').selectpicker('refresh')
-		$('#statistics_personal_league_leagueId').selectpicker('refresh')
-	}
-	function fill_challenge_selector(challengesArray) {
-		for (var i = 0; i < challengesArray.length; i++) {
-			if (challengesArray[i].creatorId === userId) {
-				var itemToPush = {
-					id: challengesArray[i].id,
-					name: challengesArray[i].name
-				}
-				$('#edit_personal_challenge_challengeId').append($('<option>', {
-					value: itemToPush.id,
-					text: itemToPush.name
-				}))
-			}
-		}
-		for (var i = 0; i < challengesArray.length; i++) {
-			var itemToPush = {
-				id: challengesArray[i].id,
-				name: challengesArray[i].name
-			}
-			$('#join_personal_challenge_selector').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			}))
-		}
-		for (var i = 0; i < challengesArray.length; i++) {
-			var itemToPush = {
-				id: challengesArray[i].id,
-				name: challengesArray[i].name
-			}
-			$('#statistics_personal_challenge_challengeId').append($('<option>', {
-				value: itemToPush.id,
-				text: itemToPush.name
-			}))
-		}
-		$('#edit_personal_challenge_challengeId').selectpicker('refresh')
-		$('#join_personal_challenge_selector').selectpicker('refresh')
-		$('#statistics_personal_challenge_challengeId').selectpicker('refresh')
-	}
 	function fill_league_selector(leaguesArray) {
 		$('#play_room_league_leagueId').find('option').remove()
 		$('#ranking_league_statistics_leagueId').find('option').remove()
 		$('#play_room_league_leagueId').append($('<option>', {
 			value: 'every',
-			text: 'همه‌ی لیگ‌ها'
+			text: 'همه‌ی گروه‌ها'
 		}))
 		for (var i = 0; i < leaguesArray.length; i++) {
 			var itemToPush = {
@@ -583,50 +468,7 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 	Edit Rows Filler				//
 	// ------------------------------ //
-	function fill_edit_challenge(challengeId, challengesArray) {
-		$("#edit_personal_challenge_challengeId").selectpicker('val', challengeId)
-		var model
-		for (var i = 0; i < challengesArray.length; i++) {
-			if (challengesArray[i].id === challengeId) {
-				model = challengesArray[i]
-				$("#edit_personal_challenge_name").val(model.name)
-				break
-			}
-		}
-	}
-	function fill_edit_champion(championId, championsArray) {
-		$("#edit_personal_league_leagueId").selectpicker('val', championId)
-		var model
-		for (var i = 0; i < championsArray.length; i++) {
-			if (championsArray[i].id === championId) {
-				model = championsArray[i]
-				$("#edit_personal_league_name").val(model.name)
-				$("#edit_personal_league_capacity").val(Number(model.capacity))
-				$("#edit_personal_league_chances").val(Number(model.reduceChances))
-				break
-			}
-		}
-	}
 	function empty_all_fields() {
-		$("#personal_league_create_clipboard").val('')
-		$("#challenge_create_clipboard").val('')
-		$("#personal_league_clipboard").val('')
-		$("#challenge_clipboard").val('')
-
-		$("#join_personal_challenge_code").val('')
-		$("#join_personal_league_join_button").val('')
-
-		$("#edit_personal_challenge_name").val('')
-		$("#edit_personal_league_name").val('')
-		$("#edit_personal_league_capacity").val(Number('10'))
-		$("#edit_personal_league_chances").val(Number('10'))
-
-		$("#create_personal_challenge_name").val('')
-		$("#create_personal_challenge_chances").val(Number('10'))
-		$("#create_personal_league_name").val('')
-		$("#create_personal_league_capacity").val(Number('10'))
-		$("#create_personal_league_chances").val(Number('10'))
-
 		$('select').selectpicker('deselectAll')
 		$('select').selectpicker('val', '')
 		$('select').selectpicker('refresh')
@@ -656,14 +498,16 @@ $(document).ready(function () {
 	})
 	function redirect_total_point() {
 		change_page_scene('page_profile')
+		tabHandler({ target: { id: 'nav6' } })
+		$('.nav-tabs a[id="nav6"]').tab('show')
 	}
 	function redirect_total_chances() {
 		change_page_scene('page_package')
 	}
 	function redirect_profile_image() {
 		change_page_scene('page_profile')
-		tabHandler({ target: { id: 'nav14' } })
-		$('.nav-tabs a[id="nav14"]').tab('show')
+		tabHandler({ target: { id: 'nav7' } })
+		$('.nav-tabs a[id="nav7"]').tab('show')
 	}
 	$(".card_total_points").parent().parent().parent().click(redirect_total_point)
 	$(".card_rem_predicts").parent().parent().parent().click(redirect_total_chances)
@@ -944,7 +788,7 @@ $(document).ready(function () {
 					dataType: "json",
 					contentType: "application/json; charset=utf-8",
 					type: "PUT",
-					success: function (championResult) {
+					success: function (changePhoneResult) {
 						var verifyURL = coreEngine_url + 'verifications/' + phoneNum + '/sendVerification'
 						$.ajax({
 							url: verifyURL,
@@ -1083,14 +927,6 @@ $(document).ready(function () {
 		e.preventDefault()
 		change_page_scene('page_play_room')
 	})
-	$(document).on("click", "#main_menu_challenge_button", function (e) {
-		e.preventDefault()
-		change_page_scene('page_challenge')
-	})
-	$(document).on("click", "#main_menu_champion_button", function (e) {
-		e.preventDefault()
-		change_page_scene('page_private_league')
-	})
 	$(document).on("click", "#main_menu_profile_button", function (e) {
 		e.preventDefault()
 		change_page_scene('page_profile')
@@ -1098,10 +934,6 @@ $(document).ready(function () {
 	$(document).on("click", "#main_menu_statistics_button", function (e) {
 		e.preventDefault()
 		change_page_scene('page_ranking')
-	})
-	$(document).on("click", "#main_menu_awards_button", function (e) {
-		e.preventDefault()
-		change_page_scene('page_award')
 	})
 	// ------------------------------ //
 	// 				  Main predict					//
@@ -1137,6 +969,7 @@ $(document).ready(function () {
 					else 
 						$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-green").addClass("bg-deep-orange")
 				}
+				fill_progress_bar()
 				acceptCount++
 				clearPredict()
 				if (weekEnable) {
@@ -1148,28 +981,6 @@ $(document).ready(function () {
 					else
 						weekIndex = 0
 					currentPredict = weeklyPredict[weekIndex]	
-					displayPredict()
-				}
-				else if (liveEnable) {
-					var model = livePredict[liveIndex]
-					model.accepted = true
-					livePredict[liveIndex] = model
-					if (liveIndex + 1 < livePredict.length)
-						liveIndex++
-					else
-						liveIndex = 0
-					currentPredict = livePredict[liveIndex]
-					displayPredict()
-				}
-				else if (seasonEnable) {
-					var model = seasonPredict[seasonIndex]
-					model.accepted = true
-					seasonPredict[seasonIndex] = model
-					if (seasonIndex + 1 < seasonPredict.length)
-						seasonIndex++
-					else
-						seasonIndex = 0
-					currentPredict = seasonPredict[seasonIndex]
 					displayPredict()
 				}
 				else {
@@ -1201,22 +1012,6 @@ $(document).ready(function () {
 			currentPredict = weeklyPredict[weekIndex]	
 			displayPredict()		
 		}
-		else if (liveEnable) {
-			if (liveIndex + 1 < livePredict.length)
-				liveIndex++
-			else
-				liveIndex = 0
-			currentPredict = livePredict[liveIndex]
-			displayPredict()
-		}
-		else if (seasonEnable) {
-			if (seasonIndex + 1 < seasonPredict.length)
-				seasonIndex++
-			else
-				seasonIndex = 0
-			currentPredict = seasonPredict[seasonIndex]
-			displayPredict()
-		}
 		else {
 			change_page_scene('page_play_room')
 			predictOverOperation()			
@@ -1235,22 +1030,6 @@ $(document).ready(function () {
 			currentPredict = weeklyPredict[weekIndex]	
 			displayPredict()		
 		}
-		else if (liveEnable) {
-			if (liveIndex - 1 >= 0)
-				liveIndex--
-			else
-				liveIndex = (livePredict.length - 1)
-			currentPredict = livePredict[liveIndex]
-			displayPredict()
-		}
-		else if (seasonEnable) {
-			if (seasonIndex - 1 >= 0)
-				seasonIndex--
-			else
-				seasonIndex = (seasonPredict.length - 1)
-			currentPredict = seasonPredict[seasonIndex]
-			displayPredict()
-		}
 		else {
 			change_page_scene('page_play_room')
 			predictOverOperation()			
@@ -1260,8 +1039,6 @@ $(document).ready(function () {
 	$(document).on("click", "#main_predict_return_menu", function (e) {
 		e.preventDefault()
 		startProgressBar()
-		if (timerID)
-			clearTimeout(timerID)
 		getAllInfo(function(err) {
 			doneProgressBar()
 			if (err)
@@ -1270,8 +1047,6 @@ $(document).ready(function () {
 				empty_all_tables()
 				empty_all_fields()
 				weekIndex = 0
-				liveIndex = 0
-				seasonIndex = 0
 				change_page_scene('page_play_room')
 			}
 		})
@@ -1365,472 +1140,6 @@ $(document).ready(function () {
 			}
 		})
 	})
-	$(document).on("click", "#main_predict_mocks_anchor", function (e) {
-		e.preventDefault()
-		empty_all_tables()
-		fill_table_mocks(mocksArray)
-		$('#mockLiveModal .modal-content').removeAttr('class').addClass('modal-content')
-		$('#mockLiveModal').modal('show')		
-	})
-	// ------------------------------ //
-	// 			  Personal League					//
-	// ------------------------------ //
-	$(document).on("click", "#edit_personal_league_delete_button", function (e) {
-		e.preventDefault()
-		var leagueId = $("#edit_personal_league_leagueId").val()
-		if (!leagueId) {
-			return warningOperation()
-		}
-		startProgressBar()
-		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
-		$.ajax({
-			url: championURL,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "DELETE",
-			success: function (championResult) {
-				getAllUsersChampions(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#edit_personal_league_save_button", function (e) {
-		e.preventDefault()
-		var leagueId = $("#edit_personal_league_leagueId").val()
-		if (!leagueId || !$("#edit_personal_league_name").val() || !$("#edit_personal_league_capacity").val()) {
-			return warningOperation()
-		}
-		var data = {
-			name: $("#edit_personal_league_name").val(),
-			capacity: Number($("#edit_personal_league_capacity").val())
-		}
-		startProgressBar()
-		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId, coreAccessToken);
-		$.ajax({
-			url: championURL,
-			data: JSON.stringify(data),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "PUT",
-			success: function (championResult) {
-				getAllUsersChampions(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-					empty_all_fields()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#create_personal_league_create_button", function (e) {
-		e.preventDefault()
-		if (!userId || !$("#create_personal_league_name").val() || !$("#create_personal_league_capacity").val()) {
-			return warningOperation()
-		}
-		var data = {
-			creatorId: userId,
-			name: $("#create_personal_league_name").val(),
-			capacity: Number($("#create_personal_league_capacity").val())
-		}
-		startProgressBar()
-		var championURL = wrapAccessToken(coreEngine_url + 'champions', coreAccessToken);
-		$.ajax({
-			url: championURL,
-			data: JSON.stringify(data),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "POST",
-			success: function (championResult) {
-				getAllUsersChampions(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					empty_all_fields()
-					$("#personal_league_create_clipboard").val(championResult.id)
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#join_personal_league_exit_button", function (e) {
-		e.preventDefault()
-		var leagueId = $("#join_personal_league_champion_selector").val()
-		if (!leagueId || !userId) {
-			return warningOperation()
-		}
-		startProgressBar()
-		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/leaveChampion/' + userId, coreAccessToken);
-		$.ajax({
-			url: championURL,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "POST",
-			success: function (championResult) {
-				getAllUsersChampions(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#join_personal_league_join_button", function (e) {
-		e.preventDefault()
-		var leagueId = $("#join_personal_league_code").val()
-		if (!leagueId || !userId) {
-			return warningOperation()
-		}
-		startProgressBar()
-		var championURL = wrapAccessToken(coreEngine_url + 'champions/' + leagueId + '/joinChampion/' + userId, coreAccessToken);
-		$.ajax({
-			url: championURL,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "POST",
-			success: function (championResult) {
-				getAllUsersChampions(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#statistics_personal_league_search_button", function (e) {
-		e.preventDefault()
-		var leagueId = $("#statistics_personal_league_leagueId").val()
-		if (!leagueId) {
-			return warningOperation()
-		}
-		var filter = {
-			where: {
-				'championId': leagueId
-			},
-			include: 'clientRel',
-			limit: 50000
-		}
-		startProgressBar()
-		var rankingURL = wrapAccessToken(coreEngine_url + 'rankings', coreAccessToken)
-		var rankingURLWithFilter = wrapFilter(rankingURL, JSON.stringify(filter))
-		$.ajax({
-			url: rankingURLWithFilter,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "GET",
-			success: function (rankingResult) {
-				empty_all_tables()
-				var userArray = []
-				for (var i = 0; i < rankingResult.length; i++) {
-					userArray.push(rankingResult[i].clientRel)
-				}
-				for (var i = 0; i < userChampions.length; i++) {
-					if (userChampions[i].id === leagueId) {
-						function compare(a, b){
-							return Number(b.accountInfoModel.totalPoints) - Number(a.accountInfoModel.totalPoints)
-						}
-						userArray.sort(compare)
-						fill_table_champion(userChampions[i], userArray)
-					}
-				}
-				doneProgressBar()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#statistics_personal_league_result_button", function (e) {
-		e.preventDefault()
-		console.log('not prepared yet')
-	})
-	// ------------------------------ //
-	// 			 Personal Challenge				//
-	// ------------------------------ //
-	$(document).on("click", "#edit_personal_challenge_delete_button", function (e) {
-		e.preventDefault()
-		var challengeId = $("#edit_personal_challenge_challengeId").val()
-		if (!challengeId) {
-			return warningOperation()
-		}
-		startProgressBar()
-		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
-		$.ajax({
-			url: challengeURL,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "DELETE",
-			success: function (challengeResult) {
-				getAllUsersChallanges(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#edit_personal_challenge_save_button", function (e) {
-		e.preventDefault()
-		var challengeId = $("#edit_personal_challenge_challengeId").val()
-		if (!challengeId || !$("#edit_personal_challenge_name").val()) {
-			return warningOperation()
-		}
-		var data = {
-			name: $("#edit_personal_challenge_name").val()
-		}
-		startProgressBar()
-		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId, coreAccessToken);
-		$.ajax({
-			url: challengeURL,
-			data: JSON.stringify(data),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "PUT",
-			success: function (challengeResult) {
-				getAllUsersChallanges(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-					empty_all_fields()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#create_personal_challenge_create_button", function (e) {
-		e.preventDefault()
-		if (!userId || !$("#create_personal_challenge_name").val() || !$("#create_personal_challenge_period").val() || !$("#create_personal_challenge_chances").val()) {
-			return warningOperation()
-		}
-		var data = {
-			creatorId: userId,
-			name: $("#create_personal_challenge_name").val(),
-			period: Number($("#create_personal_challenge_period").val()) * 24 * 60 * 60 * 1000,
-			reduceChances: Number($("#create_personal_challenge_chances").val())
-		}
-		startProgressBar()
-		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges', coreAccessToken);
-		$.ajax({
-			url: challengeURL,
-			data: JSON.stringify(data),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "POST",
-			success: function (challengeResult) {
-				getAllUsersChallanges(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					empty_all_fields()
-					$("#challenge_create_clipboard").val(challengeResult.id)
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-			}
-		})
-	})
-	$(document).on("click", "#join_personal_challenge_exit_button", function (e) {
-		e.preventDefault()
-		var challengeId = $("#join_personal_challenge_selector").val()
-		if (!challengeId || !userId) {
-			return warningOperation()
-		}
-		startProgressBar()
-		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/leaveChallenge/' + userId, coreAccessToken);
-		$.ajax({
-			url: challengeURL,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "POST",
-			success: function (challengeResult) {
-				getAllUsersChallanges(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-			}
-		})
-	})
-	$(document).on("click", "#join_personal_challenge_join_button", function (e) {
-		e.preventDefault()
-		var challengeId = $("#join_personal_challenge_code").val()
-		if (!challengeId || !userId) {
-			return warningOperation()
-		}
-		startProgressBar()
-		var challengeURL = wrapAccessToken(coreEngine_url + 'challenges/' + challengeId + '/joinChallenge/' + userId, coreAccessToken);
-		$.ajax({
-			url: challengeURL,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "POST",
-			success: function (challengeResult) {
-				getAllUsersChallanges(function(err, result) {
-					doneProgressBar()
-					if (err)
-						return failedOperation()
-					successfulOperation()
-				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#statistics_personal_challenge_search_button", function (e) {
-		e.preventDefault()
-		var challengeId = $("#statistics_personal_challenge_challengeId").val()
-		if (!challengeId) {
-			return warningOperation()
-		}
-		var filter = {
-			where: {
-				'challengeId': challengeId
-			},
-			include: 'clientRel',
-			limit: 50000
-		}
-		startProgressBar()
-		var competitionURL = wrapAccessToken(coreEngine_url + 'competitions', coreAccessToken)
-		var competitionURLWithFilter = wrapFilter(competitionURL, JSON.stringify(filter))
-		$.ajax({
-			url: competitionURLWithFilter,
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			type: "GET",
-			success: function (competitionResult) {
-				empty_all_tables()
-				var userArray = []
-				for (var i = 0; i < competitionResult.length; i++) {
-					var challenges = {}
-					challenges[competitionResult[i].challengeId] = competitionResult[i].points
-					competitionResult[i].clientRel.challenges = challenges
-					userArray.push(competitionResult[i].clientRel)
-				}
-				for (var i = 0; i < userChallenges.length; i++) {
-					if (userChallenges[i].id === challengeId) {
-						function compare(a, b){
-							return Number(b.accountInfoModel.totalPoints) - Number(a.accountInfoModel.totalPoints)
-						}
-						userArray.sort(compare)
-						fill_table_challenge(userChallenges[i], userArray)
-					}
-				}
-				doneProgressBar()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
-			}
-		})
-	})
-	$(document).on("click", "#statistics_personal_challenge_result_button", function (e) {
-		e.preventDefault()
-		console.log('not prepared yet')
-	})
 	// ------------------------------ //
 	// 						Play Room						//
 	// ------------------------------ //
@@ -1844,198 +1153,92 @@ $(document).ready(function () {
 			if (err)
 				return failedOperation()
 			$('#main_predict_league_name').html('‌ پیش‌بینی‌های ' + $("#play_room_league_leagueId option:selected").text())
-			if (!updateEnable) {
-				$('#main_predict_progress_white').css('width', '0%')
-				$('#main_predict_progress_fill').css('width', '100%')	
-			}
+			$('#main_predict_progress_white').css('width', '0%')
+			$('#main_predict_progress_fill').css('width', '100%')
 			if (result.length == 0 && exacts.length == 0) {
-				$("#nav15").attr({"data-toggle":''})
-				$('#nav15').parent().addClass('disabled')
-				$("#nav17").attr({"data-toggle":''})
-				$('#nav17').parent().addClass('disabled')
-				$("#nav18").attr({"data-toggle":''})
-				$('#nav18').parent().addClass('disabled')
 				weekEnable = false
-				liveEnable = true
-				seasonEnable = false
-				change_page_scene('page_main_prediction')
-				$('.nav-tabs a[id="nav16"]').tab('show')
-				tabHandler({ target: { id: 'nav16' } })
+				change_page_scene('page_play_room')
+				predictOverOperation()
 			}
 			else {
-				if (updateEnable) {
-					livePredict = []
-					liveIndex = 0
-					for (var k = 0; k < result.length; k++) {
-						if (result[k].tag === 'Live')
-							livePredict.push(result[k])
-					}	
-				}
-				else {
-					weeklyPredict = []
-					seasonPredict = []
-					livePredict = []
-					liveIndex = 0
-					seasonIndex = 0
-					weekIndex = 0	
-					for (var k = 0; k < result.length; k++) {
-						if (result[k].tag === 'Week')
-							weeklyPredict.push(result[k])
-						else if (result[k].tag === 'Live')
-							livePredict.push(result[k])
-						else if (result[k].tag === 'Season')
-							seasonPredict.push(result[k])
-					}	
-				}
+				weeklyPredict = []
+				weekIndex = 0	
+				for (var k = 0; k < result.length; k++) {
+					if (result[k].tag === 'Week')
+						weeklyPredict.push(result[k])
+				}	
 				if (weeklyPredict.length == 0) {
-					$("#nav15").attr({"data-toggle":''})
-					$('#nav15').parent().addClass('disabled')
+					$("#nav1").attr({"data-toggle":''})
+					$('#nav1').parent().addClass('disabled')
 				}
 				else {
-					$("#nav15").attr({"data-toggle":'tab'})
-					$('#nav15').parent().removeClass('disabled')
-				}
-				if (seasonPredict.length == 0) {
-					$("#nav17").attr({"data-toggle":''})
-					$('#nav17').parent().addClass('disabled')
-				}
-				else {
-					$("#nav17").attr({"data-toggle":'tab'})
-					$('#nav17').parent().removeClass('disabled')
+					$("#nav1").attr({"data-toggle":'tab'})
+					$('#nav1').parent().removeClass('disabled')
 				}
 				if (exacts.length == 0) {
-					$("#nav18").attr({"data-toggle":''})
-					$('#nav18').parent().addClass('disabled')
+					$("#nav2").attr({"data-toggle":''})
+					$('#nav2').parent().addClass('disabled')
 				}
 				else {
-					$("#nav18").attr({"data-toggle":'tab'})
-					$('#nav18').parent().removeClass('disabled')					
+					$("#nav2").attr({"data-toggle":'tab'})
+					$('#nav2').parent().removeClass('disabled')					
 				}
 				change_page_scene('page_main_prediction')
-				if (updateEnable) {
-					if (livePredict.length != 0 && liveEnable) {
-						weekEnable = false
-						liveEnable = true
-						seasonEnable = false
-						$('.nav-tabs a[id="nav16"]').tab('show')
-						tabHandler({ target: { id: 'nav16' } })
+				if (timeSort != 3 || pointSort != 3) {
+					if (timeSort != 3) {
+						function compareASC(a, b){
+							var d1 = Number(a.endingTime) - (new Date).getTime()
+							var d2 = Number(b.endingTime) - (new Date).getTime()
+							return Number(d2 - d1)
+						}
+						function compareDSC(a, b){
+							var d1 = Number(a.endingTime) - (new Date).getTime()
+							var d2 = Number(b.endingTime) - (new Date).getTime()
+							return Number(d1 - d2)
+						}
+						if (timeSort == 0) {
+							weeklyPredict.sort(compareDSC)
+						}
+						else {
+							weeklyPredict.sort(compareASC)
+						}
+						weekIndex = 0
 					}
-					updateEnable = false
-					$('#main_predict_next_button').prop('disabled', false)
-					$('#main_predict_prev_button').prop('disabled', false)
-					if (currentPredict.accepted)
-						$('#main_predict_accept_button').prop('disabled', true)
-					else
-						$('#main_predict_accept_button').prop('disabled', false)
+					else if (pointSort != 3) {
+						function compareASC(a, b){
+							return Number(b.point) - Number(a.point)
+						}
+						function compareDSC(a, b){
+							return Number(a.point) - Number(b.point)
+						}
+						if (pointSort == 0) {
+							weeklyPredict.sort(compareDSC)
+						}
+						else {
+							weeklyPredict.sort(compareASC)
+						}
+						weekIndex = 0
+					}
 					if (weekEnable) {
-						if (weekIndex == 0)
-							$('#main_predict_prev_button').prop('disabled', true)
-						if (weekIndex + 1 == weeklyPredict.length)
-							$('#main_predict_next_button').prop('disabled', true)
+						$('.nav-tabs a[id="nav1"]').tab('show')
+						tabHandler({ target: { id: 'nav1' } })
 					}
-					else if (liveEnable) {
-						if (liveIndex == 0)
-							$('#main_predict_prev_button').prop('disabled', true)
-						if (liveIndex + 1 == livePredict.length)
-							$('#main_predict_next_button').prop('disabled', true)
-					}
-					else if (seasonEnable) {
-						if (seasonIndex == 0)
-							$('#main_predict_prev_button').prop('disabled', true)
-						if (seasonIndex + 1 == seasonPredict.length)
-							$('#main_predict_next_button').prop('disabled', true)
-					}			
 				}
 				else {
-					if (timeSort != 3 || pointSort != 3) {
-						if (timeSort != 3) {
-							function compareASC(a, b){
-								var d1 = Number(a.endingTime) - (new Date).getTime()
-								var d2 = Number(b.endingTime) - (new Date).getTime()
-								return Number(d2 - d1)
-							}
-							function compareDSC(a, b){
-								var d1 = Number(a.endingTime) - (new Date).getTime()
-								var d2 = Number(b.endingTime) - (new Date).getTime()
-								return Number(d1 - d2)
-							}
-							if (timeSort == 0) {
-								weeklyPredict.sort(compareDSC)
-								seasonPredict.sort(compareDSC)
-							}
-							else {
-								weeklyPredict.sort(compareASC)
-								seasonPredict.sort(compareASC)
-							}
-							weekIndex = 0
-							seasonIndex = 0
-						}
-						else if (pointSort != 3) {
-							function compareASC(a, b){
-								return Number(b.point) - Number(a.point)
-							}
-							function compareDSC(a, b){
-								return Number(a.point) - Number(b.point)
-							}
-							if (pointSort == 0) {
-								weeklyPredict.sort(compareDSC)
-								seasonPredict.sort(compareDSC)
-							}
-							else {
-								weeklyPredict.sort(compareASC)
-								seasonPredict.sort(compareASC)
-							}
-							weekIndex = 0
-							seasonIndex = 0
-						}
-						if (weekEnable) {
-							$('.nav-tabs a[id="nav15"]').tab('show')
-							tabHandler({ target: { id: 'nav15' } })
-						}
-						else if (seasonEnable) {
-							$('.nav-tabs a[id="nav17"]').tab('show')
-							tabHandler({ target: { id: 'nav17' } })
+					if (weeklyPredict.length == 0) {
+						if (exacts.length != 0) {
+							weekEnable = false
+							$('.nav-tabs a[id="nav2"]').tab('show')
+							tabHandler({ target: { id: 'nav2' } })
 						}
 					}
 					else {
-						if (weeklyPredict.length == 0) {
-							if (livePredict.length != 0 || liveEnable) {
-								weekEnable = false
-								liveEnable = true
-								seasonEnable = false
-								$('.nav-tabs a[id="nav16"]').tab('show')
-								tabHandler({ target: { id: 'nav16' } })
-							}
-							else if (seasonPredict.length != 0) {
-								weekEnable = false
-								liveEnable = false
-								seasonEnable = true
-								$('.nav-tabs a[id="nav17"]').tab('show')
-								tabHandler({ target: { id: 'nav17' } })
-							}
-							else if (exacts.length != 0) {
-								liveEnable = false
-								seasonEnable = false
-								weekEnable = false
-								$('.nav-tabs a[id="nav18"]').tab('show')
-								tabHandler({ target: { id: 'nav18' } })
-							}
-						}
-						else {
-							weekEnable = true
-							liveEnable = false
-							seasonEnable = false
-							$('.nav-tabs a[id="nav15"]').tab('show')
-							tabHandler({ target: { id: 'nav15' } })
-						}		
-					}
+						weekEnable = true
+						$('.nav-tabs a[id="nav1"]').tab('show')
+						tabHandler({ target: { id: 'nav1' } })
+					}		
 				}
 			}
-			if (timerID)
-				clearTimeout(timerID)	
-			timerID = setTimeout(function() {
-				updateLivePredicts()
-			}, 60 * 1000); 
 		})
 	}
 	$(document).on("click", "#play_room_league_start_button", function (e) {
@@ -2078,13 +1281,6 @@ $(document).ready(function () {
 			}
 		})
 	})
-	$(document).on("click", "#play_room_notif_center_button", function (e) {
-		e.preventDefault()
-		empty_all_tables()
-		fill_table_notifs(notifsArray)
-		$('#notifModal .modal-content').removeAttr('class').addClass('modal-content')
-		$('#notifModal').modal('show')
-	})
 	// ------------------------------ //
 	// 			Ranking Statistics				//
 	// ------------------------------ //
@@ -2109,7 +1305,9 @@ $(document).ready(function () {
 		}
 		for (var i = 0; i < allUsers.length; i++) {
 			var model = allUsers[i]
-			model[leagueId] = Number(allUsers[i].checkpointModel.leagues[leagueId] || '0')
+			model[leagueId] = '0'
+			if (allUsers[i].checkpointModel)
+				model[leagueId] = Number(allUsers[i].checkpointModel.leagues[leagueId] || '0')
 			allUsers[i].checkpointModel.leagues[leagueId] = model[leagueId] || 0
 			leagueArray.push(allUsers[i])
 		}
@@ -2209,36 +1407,14 @@ $(document).ready(function () {
 	})
 
 	// ------------------------------ //
-	// 		 CheckBox Controller				//
-	// ------------------------------ //
-	$('input[type=checkbox]').change(
-		function() {
-			if (timerID)
-				clearTimeout(timerID)
-			if (this.checked) {
-				timerID = setTimeout(function() {
-					updateLivePredicts()
-				}, 60 * 1000); 
-			}
-		}
-	)
-	function updateLivePredicts() {
-		updateEnable = true
-		getDataAndFill(function (err, result) {})
-	}
-
-	// ------------------------------ //
 	// 				 Tab Controller					//
 	// ------------------------------ //
 	function tabHandler(e) {
 		var select = $(e.target).attr('id')
-		if (select === 'nav15') {
+		if (select === 'nav1') {
 			clearExact()
 			clearPredict()
-			$('#main_predict_live_section').hide()
 			weekEnable = true
-			liveEnable = false
-			seasonEnable = false
 			if (weeklyPredict.length == 0 || weekIndex >= weeklyPredict.length) {
 				return predictOverOperation()
 			}
@@ -2247,67 +1423,19 @@ $(document).ready(function () {
 			displayPredict()
 			startSecondTour()
 		}
-		else if (select === 'nav16') {
+		else if (select === 'nav2') {
 			clearPredict()
 			clearExact()
 			weekEnable = false
-			liveEnable = true
-			seasonEnable = false
-			$('#main_predict_live_section').show()
-			if (!liveEnable && updateEnable) {
-				updateEnable = false
-				return;
-			}
-			$('#main_predict_live_section').show()
-			if (livePredict.length == 0 || liveIndex >= livePredict.length) {
-				$('#main_predict_div_body').show()
-				$('#main_predict_remaining').html('-')
-				$('#main_predict_point').html('-')
-				$('#main_predict_prev_button').prop('disabled', true)
-				$('#main_predict_next_button').prop('disabled', true)
-				$('#main_predict_accept_button').prop('disabled', true)
-				$('#main_predict_explanation').html('در حال حاضر پیش‌بینی زنده‌ای وجود ندارد.')
-				return
-			}
-			currentPredict = livePredict[liveIndex]
-			displayPredict()
-		}
-		else if (select === 'nav17') {
-			clearPredict()
-			clearExact()
-			$('#main_predict_live_section').hide()
-			weekEnable = false
-			liveEnable = false
-			seasonEnable = true
-			if (seasonPredict.length == 0 || seasonIndex >= seasonPredict.length) {
-				return predictOverOperation()
-			}
-			$('#main_predict_sort_section').show()
-			currentPredict = seasonPredict[seasonIndex]
-			displayPredict()
-		}
-		else if (select === 'nav18') {
-			clearPredict()
-			clearExact()
-			$('#main_predict_live_section').hide()
-			weekEnable = false
-			liveEnable = false
-			seasonEnable = false
 			if (exactsArray.length == 0) {
 				return predictOverOperation()
 			}
 			showExact()
 			fill_exact_selector(exactsArray)
 			var m = ''
-			if (currentLeague === 'every') {
-				$("#main_exact_selector").selectpicker('val', '59abb61377118b1ae71fb91d').selectpicker('refresh')
-				m = '59abb61377118b1ae71fb91d'
-			}
-			else {
-				if (exactsArray.length) {
-					$("#main_exact_selector").selectpicker('val', exactsArray[0].id).selectpicker('refresh')
-					m = exactsArray[0].id
-				}
+			if (exactsArray.length) {
+				$("#main_exact_selector").selectpicker('val', exactsArray[0].id).selectpicker('refresh')
+				m = exactsArray[0].id
 			}
 			if (m !== '') {
 				for (var i = 0; i < exactsArray.length; i++) {
@@ -2322,9 +1450,9 @@ $(document).ready(function () {
 			}
 		}
 		var no = select.replace("nav", "")
-		for (var i = 1; i < 21; i++) {
+		for (var i = 1; i < 9; i++) {
 			var str = '#nav' + i + '_tab'
-			if (i == 16 || i == 17 || i == 15 || i == 18)
+			if (i == 1 || i == 2)
 				continue
 			if (i == Number(no))
 				$(str).fadeIn()
@@ -2392,7 +1520,7 @@ $(document).ready(function () {
 			{
 				element: "#main_menu_prediction_button",
 				placement: "top",
-				content: "اصل بازی اینجاست! با انتخاب لیگ‌ مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن.",
+				content: "اصل بازی اینجاست! با انتخاب گروه مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن.",
 				reflex: true,
 				onNext: function (tour) {
 					change_page_scene('page_play_room')
@@ -2401,7 +1529,7 @@ $(document).ready(function () {
 			{
 				element: "#play_room_selector",
 				placement: "top",
-				content: 'انتخاب کن که پیش‌بینی‌های مربوط به کدوم لیگ رو می‌خوای ببینی. "همه‌ی لیگ‌ها" تمام پیش‌بینی‌های موجود رو باز می‌کنه.',
+				content: 'انتخاب کن که پیش‌بینی‌های مربوط به کدوم گروه رو می‌خوای ببینی. "همه‌ی گروه‌ها" تمام پیش‌بینی‌های موجود رو باز می‌کنه.',
 				onPrev: function (tour) {
 					change_page_scene('page_main_menu')
 				}
@@ -2419,11 +1547,6 @@ $(document).ready(function () {
 					$(stepElement).addClass('not-active')
 				},	
 				content: "اینجا تعداد فرصت‌هات برای تایید پیش‌بینی مشخص شده. بعد از ثبت‌نام، ۲۵ پیش بینی رایگان گرفتی."
-			},
-			{
-				element: "#play_room_notif_center_button",
-				placement: "top",
-				content: "جدیدترین پیش‌بینی‌هایی که به ۶ قدم اضافه شده، اینجا اعلام میشن."
 			},
 			{
 				element: "#play_room_league_start_button",
@@ -2465,16 +1588,16 @@ $(document).ready(function () {
 			{
 				element: "#main_predict_nav_bar",
 				placement: "top",
-				content: "توی این چهار تا تب، چهار نوع پیش‌بینی مختلف داریم،",
+				content: "توی این ۲ تا تب، دو نوع پیش‌بینی مختلف داریم،",
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
 				}
 			},
 			{
-				element: "#nav15",
+				element: "#nav1",
 				placement: "top",
-				content: "پیش‌بینی هفتگی برای بازی‌هایی از لیگ‌های ایران و اروپاست که توی هفته‌ی آتی برگزار میشه.",
+				content: "پیش‌بینی هفتگی برای بازی‌های جام‌جهانی ۲۰۱۸ هست که توی هفته‌ی آتی برگزار میشه.",
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
@@ -2498,41 +1621,15 @@ $(document).ready(function () {
 			{
 				element: "#main_predict_progress",
 				placement: "top",
-				content: "به ازای هر بار تأییدِ پیش‌بینی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد از طریق دکمه خرید بسته اونو افزایش بده."
-			},
-			{
-				element: "#nav16",
-				placement: "top",
-				content: "اینجا زمان برگزاری بازیای فوتبال پیش‌بینی‌‌‌های جدید و مرتبط با اتفاقات بازیا مطرح میشه، و شاید فقط چند دقیقه فرصت برای تاییدشون داشته باشی.",
-				onShow: function(tour) {
-					$('.nav-tabs a[id="nav16"]').tab('show')
-					tabHandler({ target: { id: 'nav16' } })
-				},
-				onShown: function(tour) {
-					var stepElement = getTourElement(tour);
-					$(stepElement).addClass('not-active')
-				}
-			},
-			{
-				element: "#nav17",
-				placement: "top",
-				content: "پیش‌بینی‌های فصلی مثل هفتگیه با این تفاوت که امتیاز بیشتری داره و نتیجه‌اش آخر فصل مشخص میشه.",
-				onShow: function(tour) {
-					$('.nav-tabs a[id="nav17"]').tab('show')
-					tabHandler({ target: { id: 'nav17' } })
-				},
-				onShown: function(tour) {
-					var stepElement = getTourElement(tour);
-					$(stepElement).addClass('not-active')
-				},
+				content: "به ازای هر بار تأییدِ پیش‌بینی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد از طریق دکمه خرید بسته اونو افزایش بده.",
 				onNext: function(tour) {
-					$('.nav-tabs a[id="nav18"]').tab('show')
-					tabHandler({ target: { id: 'nav18' } })
+					$('.nav-tabs a[id="nav2"]').tab('show')
+					tabHandler({ target: { id: 'nav2' } })
 					tour.redraw()
 				}
 			},
 			{
-				element: "#nav18",
+				element: "#nav2",
 				placement: "top",
 				content: "اینجا باید قهرمان و آقای‌ گل و اینجور چیزا رو به صورت دقیق پیش‌بینی کنی!",
 				onShown: function(tour) {
@@ -2547,7 +1644,7 @@ $(document).ready(function () {
 			{
 				element: "#main_exact_box",
 				placement: "top",
-				content: "اول باید انتخاب کنی که قهرمان یا آقای گل کدوم لیگ رو میخوای پیش‌بینی کنی."
+				content: "اول باید انتخاب کنی که بین قهرمان یا آقای گل و غیره کدوم رو میخوای پیش‌بینی کنی."
 			},
 			{
 				element: "#main_exact_div_body",
@@ -2562,7 +1659,7 @@ $(document).ready(function () {
 			{
 				element: "#main_exact_first_answer_box",
 				placement: "top",
-				content: "امتیازها اینجوریه که مثلا اگه چلسی به عنوان اولویت اولت قهرمان بشه امتیاز بیشتری میگیری نسبت به وقتی که چلسی اولویت دوم یا سومت بوده."
+				content: "امتیازها اینجوریه که مثلا اگه اسپانیا به عنوان اولویت اولت قهرمان بشه امتیاز بیشتری میگیری نسبت به وقتی که اسپانیا اولویت دوم یا سومت بوده."
 			},
 			{
 				element: "#main_exact_accept_button",
@@ -2612,26 +1709,6 @@ $(document).ready(function () {
 			dropupAuto: false
 		});
 	}
-
-	$('#join_personal_league_champion_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
-		var selected = $(this).find('option').eq(clickedIndex).val()
-		$('#personal_league_clipboard').val(selected)
-	})
-
-	$('#join_personal_challenge_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
-		var selected = $(this).find('option').eq(clickedIndex).val()
-		$('#challenge_clipboard').val(selected)
-	})
-
-	$('#edit_personal_league_leagueId').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
-		var selected = $(this).find('option').eq(clickedIndex).val()
-		fill_edit_champion(selected, userChampions)
-	})
-
-	$('#edit_personal_challenge_challengeId').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
-		var selected = $(this).find('option').eq(clickedIndex).val()
-		fill_edit_challenge(selected, userChallenges)
-	})
 
 	$('#main_exact_selector').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
 		var selected = $(this).find('option').eq(clickedIndex).val()
@@ -2708,45 +1785,15 @@ $(document).ready(function () {
 	// ------------------------------ //
 	// 		 	 Table Construction				//
 	// ------------------------------ //
-	function fill_table_notifs(notifsArray) {
-		$('#play_room_notif_table tbody').empty()
-		var width = $('#play_room_notif_table tbody').width() - 100
-		for (var i = 0; i < notifsArray.length; i++) {
-			$('#play_room_notif_table').append('<tr id="prnt_addr' + (i) + '"></tr>')
-			$('#prnt_addr' + i).html(
-				'<td align="center" class="col-black" style="vertical-align: middle; width: ' + width + 'px; word-wrap:break-word;">' + notifsArray[i].statement + '</td>'			
-			)
-		}
-		fixUITable()
-		$('#play_room_notif_table').css({'word-break': 'break-word;'})
-	}
-	function fill_table_mocks(mocksArray) {
-		$('#main_prediction_live_mocks tbody').empty()
-		var width = $('#main_prediction_live_mocks tbody').width() - 100
-		if (mocksArray.length == 0) {
-			var model = {
-				explanation: 'خبر جدیدی برای پوشش زنده نیست.'
-			}
-			mocksArray.push(model)
-		}
-		for (var i = 0; i < mocksArray.length; i++) {
-			$('#main_prediction_live_mocks').append('<tr id="mplm_addr' + (i) + '"></tr>')
-			$('#mplm_addr' + i).html(
-				'<td align="center" class="col-black" style="vertical-align: middle; width: ' + width + 'px; word-wrap:break-word;">' + mocksArray[i].explanation + '</td>'			
-			)
-		}
-		fixUITable()
-		$('#main_prediction_live_mocks').css({'word-break': 'break-word;'})
-	}
 	function fill_table_estimates(estimatesArray) {
 		$('#play_room_estimates tbody').empty()
 		var width = $('#play_room_estimates tbody').width() - 250
-		if (mocksArray.length == 0) {
+		if (estimatesArray.length == 0) {
 			var model = {
-				explanation: 'هنوز پیش‌بینی‌ای تایید نکرده‌اید.',
+				explanation: 'هنوز پیش‌بینی‌ای رو تایید نکردی.',
 				leagueName: ''
 			}
-			mocksArray.push(model)
+			estimatesArray.push(model)
 		}
 		for (var i = 0; i < estimatesArray.length; i++) {
 			var statusColor
@@ -2765,40 +1812,6 @@ $(document).ready(function () {
 		}
 		fixUITable()
 		$('#play_room_estimates').css({'word-break': 'break-word;'})
-	}
-	function fill_table_challenge(challenge, usersArray) {
-		$('#statistics_personal_challenge_table tbody').empty()
-		var statusColor
-		if (challenge.status === 'Working') statusColor = 'bg-green'
-		else if (challenge.status === 'Created') statusColor = 'bg-light-blue'
-		else if (challenge.status === 'Finished') statusColor = 'bg-deep-orange'
-		var str = ''
-		if (source !== 'telegram' && !platform.name.includes('Mobile') && !detectmob())
-			str = '<td align="center" style="vertical-align: middle; white-space: nowrap; width: 5%;"><span class="label font-13 ' + statusColor + '">' + challenge.status + '</span></td>'
-		for (var i = 0; i < usersArray.length; i++) {
-			$('#statistics_personal_challenge_table').append('<tr id="spct_addr' + (i) + '"></tr>')
-			$('#spct_addr' + i).html(
-				'<th align="center" style="vertical-align: middle;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle;">' + usersArray[i].username + '</td>' +
-				'<td class="mobileCell" align="center" style="vertical-align: middle;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle;">' + Persian_Number((usersArray[i].challenges[challenge.id]).toString()) + '</td>' +
-				str
-			)
-		}
-		fixUITable()
-	}
-	function fill_table_champion(champion, usersArray) {
-		$('#statistics_personal_league_table tbody').empty()
-		for (var i = 0; i < usersArray.length; i++) {
-			$('#statistics_personal_league_table').append('<tr id="splt_addr' + (i) + '"></tr>')
-			$('#splt_addr' + i).html(
-				'<th align="center" style="vertical-align: middle;" scope="row">' + Persian_Number((i + 1).toString()) + '</th>' +
-				'<td align="center" style="vertical-align: middle;">' + usersArray[i].username + '</td>' +
-				'<td class="mobileCell" align="center" style="vertical-align: middle;">' + usersArray[i].fullname + '</td>' +
-				'<td align="center" style="vertical-align: middle;">' + Persian_Number(usersArray[i].accountInfoModel.totalPoints.toString()) + '</td>'
-			)
-		}
-		fixUITable()
 	}
 	function fill_table_totalStatistics(usersArray) {
 		$('#ranking_total_statistics_table tbody').empty()
@@ -2882,24 +1895,19 @@ $(document).ready(function () {
 		}
 	}
 	function fill_table_trophies(userLevel) {
-		for (var i = Number(userLevel); i < 11; i++) {
+		for (var i = Number(userLevel) + 1; i < 11; i++) {
 			var str = '#trophy_' + i
 			$(str).css({"-webkit-filter":'grayscale(100%)', "filter": 'grayscale(100%)'})
 		}
 		fixUITable()
 	}
 	function empty_all_tables() {
-		$('#statistics_personal_league_table tbody').empty()
-		$('#statistics_personal_challenge_table tbody').empty()
 		$('#play_room_estimates tbody').empty()
-		$('#main_prediction_live_mocks tbody').empty()
-		$('#play_room_notif_table tbody').empty()
 	}
 	function clearExact() {
 		$('#main_predict_sort_section').hide()
 		$('#main_exact_div_body').hide()
 		$('#main_exact_select_section').hide()
-		$('#main_predict_live_section').hide()
 	}
 	function showExact() {
 		$('#main_exact_select_section').show()
@@ -3012,18 +2020,6 @@ $(document).ready(function () {
 			if (weekIndex + 1 == weeklyPredict.length)
 				$('#main_predict_next_button').prop('disabled', true)
 		}
-		else if (liveEnable) {
-			if (liveIndex == 0)
-				$('#main_predict_prev_button').prop('disabled', true)
-			if (liveIndex + 1 == livePredict.length)
-				$('#main_predict_next_button').prop('disabled', true)
-		}
-		else if (seasonEnable) {
-			if (seasonIndex == 0)
-				$('#main_predict_prev_button').prop('disabled', true)
-			if (seasonIndex + 1 == seasonPredict.length)
-				$('#main_predict_next_button').prop('disabled', true)
-		}
 	}
 	// ------------------------------ //
 	// 		 	 		Data Fetchers					//
@@ -3039,15 +2035,7 @@ $(document).ready(function () {
 					getUserInfo(function(err, userInfo) {
 						if (err)
 							return callback(err)
-						getAllUsersChallanges(function(err, challengeResult) {
-							if (err)
-								return callback(err)
-							getAllUsersChampions(function(err, championResult) {
-								if (err)
-									return callback(err)
-								return callback(null)
-							})
-						})
+						return callback(null)
 					})
 				}
 				else {
@@ -3256,38 +2244,6 @@ $(document).ready(function () {
 			}
 		})
 	}
-	function getAllUsersChampions(callback) {
-		var userChampionsURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/champions', coreAccessToken)
-		$.ajax({
-			url: userChampionsURLWithAT,
-			type: "GET",
-			success: function (userChampionsResult) {
-				userChampions = userChampionsResult
-				fill_champion_selector(userChampions)
-				callback(null, userChampions)
-			},
-			error: function (xhr, status, error) {
-				callback(error)
-				console.log(xhr.responseText)
-			}
-		})
-	}
-	function getAllUsersChallanges(callback) {
-		var userChallengesURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/challenges', coreAccessToken)
-		$.ajax({
-			url: userChallengesURLWithAT,
-			type: "GET",
-			success: function (userChallengesResult) {
-				userChallenges = userChallengesResult
-				fill_challenge_selector(userChallenges)
-				callback(null, userChallenges)
-			},
-			error: function (xhr, status, error) {
-				callback(error)
-				console.log(xhr.responseText)
-			}
-		})
-	}
 	function getNextObjectArray(callback) {
 		var nextObjectURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId + '/nextObject/' + currentLeague, coreAccessToken)
 		$.ajax({
@@ -3310,12 +2266,8 @@ $(document).ready(function () {
 					url: exactURL,
 					type: "GET",
 					success: function (exactResult) {
-						mocksArray = []
 						predictsArray = []
 						for (var k = 0; k < nextObjectResult.length; k++) {
-							if (nextObjectResult[k].tag === 'Mock')
-								mocksArray.push(nextObjectResult[k])
-							else 
 								predictsArray.push(nextObjectResult[k])
 						}
 						function compare(a, b){
@@ -3485,29 +2437,6 @@ $(document).ready(function () {
 			success: function (clientResult) {
 				userTeamRanking = clientResult
 				callback(null, clientResult)
-			},
-			error: function (xhr, status, error) {
-				callback(error)
-				console.log(xhr.responseText)
-			}
-		})		
-	}
-
-	function getLatestNotifs(callback) {
-		var notifURLWithAT = wrapAccessToken(coreEngine_url + 'notifications', coreAccessToken)
-		$.ajax({
-			url: notifURLWithAT,
-			type: "GET",
-			success: function (notifResult) {
-				notifResult.reverse()
-				var result = []
-				var count = 10
-				if (notifResult.length < 10)
-					count = notifResult.length
-				for (var i = 0; i < count; i++)
-					result.push(notifResult[i])
-				notifsArray = result
-				callback(null, result)
 			},
 			error: function (xhr, status, error) {
 				callback(error)
