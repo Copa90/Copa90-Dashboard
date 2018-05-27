@@ -3431,31 +3431,31 @@ $(document).ready(function () {
 	}
 
 	function getAllUsers(callback) {
-		var filter = {
-			skip: '6',
-			limit: 50000,
-			fields: {
-				'email': false,
-				'time': false,
-				'phoneNumber': false,
-				'emailVerified': false,
-				'trophyModel': false,
-				'teamId': false,
-				'referralModel': false,
-				'checkpointModel': true,
-				'emps': false,
-				'status': false,
-				'profilePath': false,
-				'accountInfoModel': true,
-				'username': true,
-				'fullname': true,
-				'id': true
-			}
-		}
-		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients', coreAccessToken)
-		var clientURL = wrapFilter(clientURLWithAT, JSON.stringify(filter))
+		// var filter = {
+		// 	skip: '6',
+		// 	limit: 50000,
+		// 	fields: {
+		// 		'email': false,
+		// 		'time': false,
+		// 		'phoneNumber': false,
+		// 		'emailVerified': false,
+		// 		'trophyModel': false,
+		// 		'teamId': false,
+		// 		'referralModel': false,
+		// 		'checkpointModel': true,
+		// 		'emps': false,
+		// 		'status': false,
+		// 		'profilePath': false,
+		// 		'accountInfoModel': true,
+		// 		'username': true,
+		// 		'fullname': true,
+		// 		'id': true
+		// 	}
+		// }
+		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients/statistics', coreAccessToken)
+		// var clientURL = wrapFilter(clientURLWithAT, JSON.stringify(filter))
 		$.ajax({
-			url: clientURL,
+			url: clientURLWithAT,
 			type: "GET",
 			success: function (clientResult) {
 				allUsers = clientResult
