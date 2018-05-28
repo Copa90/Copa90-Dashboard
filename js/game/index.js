@@ -1361,7 +1361,7 @@ $(document).ready(function () {
 						})
 					}
 					data.CallbackURL = data.CallbackURL + '&description=' + JSON.stringify(data.Description)
-					var transactionURL = wrapAccessToken(zarinPal_url + 'PaymentGatewayImplementationServiceBinding/PaymentRequest', coreAccessToken)
+					var transactionURL = wrapAccessToken(coreEngine_url + 'PaymentGatewayImplementationServiceBinding/PaymentRequest', coreAccessToken)
 					$.ajax({
 						url: transactionURL,
 						dataType: "json",

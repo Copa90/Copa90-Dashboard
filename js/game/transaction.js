@@ -150,7 +150,7 @@ $(document).ready(function () {
 	}
 	else {
 		if (status === 'OK') {
-			var verificationURLWithAT = wrapAccessToken(zarinPal_url + 'PaymentGatewayImplementationServiceBinding/PaymentVerification', coreAccessToken)
+			var verificationURLWithAT = wrapAccessToken(coreEngine_url + 'PaymentGatewayImplementationServiceBinding/PaymentVerification', coreAccessToken)
 			var data = {
 				MerchantID: MID,
 				Authority: authority,
