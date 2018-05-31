@@ -123,8 +123,6 @@ var coreURL = 'http://6ghadam.com/'
 // var zarinPal_url = "http://127.0.0.1:4010/api/"
 // var coreURL = 'http://6Ghadam.com/'
 
-var MID = 'f988546a-817c-11e7-803b-005056a205be'
-
 $(document).ready(function () {
 
 	startLoading()
@@ -138,49 +136,42 @@ $(document).ready(function () {
 		$('#rainbow-progress-bar1').fadeOut()
 	}
 
-	var status = getUrlVars()["Status"]
-	var authority = getUrlVars()["Authority"]
-	var amount = getUrlVars()["amount"]
+	var price = getUrlVars()["price"]
 	var userId = getUrlVars()["userId"]
 	var coreAccessToken = getUrlVars()["userCoreAccessToken"]
-	
-	if (!userId || !coreAccessToken || !authority || !status || !amount) {
+	var description = JSON.parse(getUrlVars()["description"])
+	var refNumber = localStorage.getItem('REFNUM')
+	if (!userId || !coreAccessToken || !amount || !refNumber) {
 		failedOperation()
 		doneLoading()
 	}
 	else {
-		if (status === 'OK') {
-			var verificationURLWithAT = wrapAccessToken(coreEngine_url + 'PaymentGatewayImplementationServiceBinding/PaymentVerification', coreAccessToken)
-			var data = {
-				MerchantID: MID,
-				Authority: authority,
-				Amount: amount
+		var verificationURLWithAT = wrapAccessToken(coreEngine_url + 'WebServiceSoap/verifyPayment', coreAccessToken)
+		var data = {
+			Price: price
+			RefNum: refNumber
+		}
+		console.log(JSON.stringify(data))
+		var str = 'شماره پکیج: ' + description.packageId
+		$.ajax({
+			url: verificationURLWithAT,
+			dataType: "json",
+			data: JSON.stringify(data),
+			contentType: "application/json; charset=utf-8",
+			type: "POST",
+			success: function (verificationResult) {
+				console.log(JSON.stringify(verificationResult))
+				successfulOperation()
+				doneLoading()
+				fill_table_transaction((Number(verificationResult.VerifyPaymentResult.PayementedPrice) / 10), str, verificationResult.VerifyPaymentResult.ResultStatus, refNumber)
+			},
+			error: function (xhr, status, error) {
+				doneLoading()
+				failedOperation()
+				console.log(JSON.stringify(xhr))
+				console.error(xhr.responseText)
 			}
-			console.log(JSON.stringify(data))
-			$.ajax({
-				url: verificationURLWithAT,
-				dataType: "json",
-				data: JSON.stringify(data),
-				contentType: "application/json; charset=utf-8",
-				type: "POST",
-				success: function (verificationResult) {
-					console.log(JSON.stringify(verificationResult))
-					successfulOperation()
-					doneLoading()
-					fill_table_transaction(amount, authority,verificationResult.Status, verificationResult.RefID)
-				},
-				error: function (xhr, status, error) {
-					doneLoading()
-					failedOperation()
-					console.log(JSON.stringify(xhr))
-					console.error(xhr.responseText)
-				}
-			})
-		}
-		else {
-			failedOperation()
-			doneLoading()
-		}
+		})
 	}
 
 	// ------------------------------ //
@@ -195,10 +186,10 @@ $(document).ready(function () {
 		window.location.href = './index.html'
 	})
 
-	function fill_table_transaction(price, auth, status, refId) {
+	function fill_table_transaction(price, desc, status, refId) {
 		$('#transaction_price').html(price)
 		$('#transaction_status').html(status)
-		$('#transaction_description').html(auth)
+		$('#transaction_description').html(desc)
 		$('#transaction_refId').html(refId)
 		fixUITable()
 	}

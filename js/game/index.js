@@ -179,13 +179,11 @@ function detectmob() {
 
 var coreEngine_url = "http://66.70.216.149:4000/api/"
 var zarinPal_url = "http://66.70.216.149:4010/api/"
-var coreURL = 'http://6ghadam.com/'
+var coreURL = 'http://6ghadam.com/6ghadam/'
 
 // var coreEngine_url = "http://127.0.0.1:4000/api/"
 // var zarinPal_url = "http://127.0.0.1:4010/api/"
 // var coreURL = 'http://6Ghadam.com/'
-
-var MID = 'f988546a-817c-11e7-803b-005056a205be'
 
 $(document).ready(function () {
 
@@ -1350,18 +1348,19 @@ $(document).ready(function () {
 				if (packageResult.status === 'Working') {
 					var callbackBaseURI = coreURL + 'transaction.html'
 					var data = {
-						MerchantID: MID,
-						Amount: packageResult.price,
+						Price: (Number(packageResult.price) * 10),
 						Email: userClient.email,
+						Paymenter: userClient.fullname,
 						Mobile: userClient.phoneNumber,
-						CallbackURL: callbackBaseURI + '?userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&amount=' + packageResult.price,
+						ReturnPath: callbackBaseURI + '?userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&price=' + (Number(packageResult.price) * 10).toString(),
 						Description: JSON.stringify({
 							clientId: userId,
 							packageId: packageResult.id
 						})
 					}
-					data.CallbackURL = data.CallbackURL + '&description=' + JSON.stringify(data.Description)
-					var transactionURL = wrapAccessToken(coreEngine_url + 'PaymentGatewayImplementationServiceBinding/PaymentRequest', coreAccessToken)
+					data.ReturnPath = data.ReturnPath + '&description=' + JSON.stringify(data.Description)
+					console.log(JSON.stringify(data))
+					var transactionURL = wrapAccessToken(coreEngine_url + 'WebServiceSoap/RequestPayment', coreAccessToken)
 					$.ajax({
 						url: transactionURL,
 						dataType: "json",
@@ -1371,8 +1370,9 @@ $(document).ready(function () {
 						success: function (transactionResult) {
 							console.log(JSON.stringify(transactionResult))
 							doneProgressBar()
-							if (transactionResult.Status == 100) {
-								window.location.href = 'https://www.zarinpal.com/pg/StartPay/' + transactionResult.Authority
+							if (transactionResult.RequestPaymentResult.ResultStatus === 'Succeed') {
+								localStorage.setItem('REFNUM', transactionResult.RefNumber)
+								window.location.href = transactionResult.RequestPaymentResult.PaymentPath
 							}
 							else {
 								failedOperation()
