@@ -126,6 +126,10 @@ var coreURL = 'http://6ghadam.com/'
 $(document).ready(function () {
 
 	startLoading()
+	
+	var userId
+	var coreAccessToken
+	var refNumber
 
 	function startLoading() {
 		$('.page-loader-wrapper').fadeIn()
@@ -135,20 +139,28 @@ $(document).ready(function () {
 		$('.page-loader-wrapper').fadeOut()
 		$('#rainbow-progress-bar1').fadeOut()
 	}
+	
+	function readFromLocalStorage() {
+		if (localStorage.getItem('userId'))
+			userId = localStorage.getItem('userId')
+		if (localStorage.getItem('userCoreAccessToken'))
+			coreAccessToken = localStorage.getItem('userCoreAccessToken')
+		if (localStorage.getItem('REFNUM'))
+			refNumber = localStorage.getItem('REFNUM')
+	}
+
+	readFromLocalStorage()
 
 	var price = getUrlVars()["price"]
-	var userId = getUrlVars()["userId"]
-	var coreAccessToken = getUrlVars()["userCoreAccessToken"]
-	var description = JSON.parse(getUrlVars()["description"])
-	var refNumber = localStorage.getItem('REFNUM')
-	if (!userId || !coreAccessToken || !amount || !refNumber) {
+	var description = JSON.parse(getUrlVars()["desc"])
+	if (!userId || !coreAccessToken || !price || !refNumber) {
 		failedOperation()
 		doneLoading()
 	}
 	else {
 		var verificationURLWithAT = wrapAccessToken(coreEngine_url + 'WebServiceSoap/verifyPayment', coreAccessToken)
 		var data = {
-			Price: price
+			Price: price,
 			RefNum: refNumber
 		}
 		console.log(JSON.stringify(data))
@@ -163,7 +175,7 @@ $(document).ready(function () {
 				console.log(JSON.stringify(verificationResult))
 				successfulOperation()
 				doneLoading()
-				fill_table_transaction((Number(verificationResult.VerifyPaymentResult.PayementedPrice) / 10), str, verificationResult.VerifyPaymentResult.ResultStatus, refNumber)
+				fill_table_transaction((Number(verificationResult.VerifyPaymentResult.PayementedPrice)), str, verificationResult.VerifyPaymentResult.ResultStatus, refNumber)
 			},
 			error: function (xhr, status, error) {
 				doneLoading()

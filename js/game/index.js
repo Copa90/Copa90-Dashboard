@@ -1348,17 +1348,14 @@ $(document).ready(function () {
 				if (packageResult.status === 'Working') {
 					var callbackBaseURI = coreURL + 'transaction.html'
 					var data = {
-						Price: (Number(packageResult.price) * 10),
+						Price: (Number(packageResult.price)),
 						Email: userClient.email,
 						Paymenter: userClient.fullname,
 						Mobile: userClient.phoneNumber,
-						ReturnPath: callbackBaseURI + '?userCoreAccessToken=' + coreAccessToken + '&userId=' + userId + '&price=' + (Number(packageResult.price) * 10).toString(),
-						Description: JSON.stringify({
-							clientId: userId,
-							packageId: packageResult.id
-						})
+						ReturnPath: callbackBaseURI + '?price=' + (Number(packageResult.price)).toString(),
+						Description: 'خرید بسته شانس از وبسایت ۶قدم'
 					}
-					data.ReturnPath = data.ReturnPath + '&description=' + JSON.stringify(data.Description)
+					data.ReturnPath = data.ReturnPath + '&desc=' + JSON.stringify({clientId: userId,packageId: packageResult.id})
 					console.log(JSON.stringify(data))
 					var transactionURL = wrapAccessToken(coreEngine_url + 'WebServiceSoap/RequestPayment', coreAccessToken)
 					$.ajax({
