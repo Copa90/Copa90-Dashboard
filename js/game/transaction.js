@@ -129,7 +129,7 @@ $(document).ready(function () {
 	
 	var userId
 	var coreAccessToken
-	var refNumber
+	var resNumber
 
 	function startLoading() {
 		$('.page-loader-wrapper').fadeIn()
@@ -145,26 +145,49 @@ $(document).ready(function () {
 			userId = localStorage.getItem('userId')
 		if (localStorage.getItem('userCoreAccessToken'))
 			coreAccessToken = localStorage.getItem('userCoreAccessToken')
-		if (localStorage.getItem('REFNUM'))
-			refNumber = localStorage.getItem('REFNUM')
+		if (localStorage.getItem('RESNUM'))
+			resNumber = localStorage.getItem('RESNUM')
 	}
 
 	readFromLocalStorage()
 
 	var price = getUrlVars()["price"]
-	var description = JSON.parse(getUrlVars()["desc"])
-	if (!userId || !coreAccessToken || !price || !refNumber) {
+	var status = getUrlVars()["status"]
+	var refnumber = getUrlVars()["refnumber"]
+	var resnumber = getUrlVars()["resnumber"]
+
+	if (!userId || !coreAccessToken || !price || !resNumber || !status || !refnumber || !resnumber) {
 		failedOperation()
 		doneLoading()
 	}
 	else {
+		if (resnumber !== resNumber) {
+			failedOperation()
+			doneLoading()
+			return
+		}
+		if (Number(status) != 100) {
+			var res = Number(status)
+			var text
+			if (res == -99)
+				text = "انصراف از پرداخت";
+			else if (res == -88)
+				text = "پرداخت ناموفق";
+			else if (res == -77)
+				text = "منقضی شدن زمان ";
+			else if (res == -66)
+				text = "قبلا پرداخت شده است .";
+			failedOperationByString(text)
+			doneLoading()
+			return	
+		}
 		var verificationURLWithAT = wrapAccessToken(coreEngine_url + 'WebServiceSoap/verifyPayment', coreAccessToken)
 		var data = {
 			Price: price,
-			RefNum: refNumber
+			RefNum: refnumber,
+			ResNum: resnumber
 		}
-		console.log(JSON.stringify(data))
-		var str = 'شماره پکیج: ' + description.packageId
+		var str = 'خرید بسته شانس از وبسایت ۶قدم'
 		$.ajax({
 			url: verificationURLWithAT,
 			dataType: "json",
@@ -172,10 +195,13 @@ $(document).ready(function () {
 			contentType: "application/json; charset=utf-8",
 			type: "POST",
 			success: function (verificationResult) {
-				console.log(JSON.stringify(verificationResult))
 				successfulOperation()
 				doneLoading()
-				fill_table_transaction((Number(verificationResult.VerifyPaymentResult.PayementedPrice)), str, verificationResult.VerifyPaymentResult.ResultStatus, refNumber)
+				localStorage.removeItem('RESNUM')
+				var de = 'موفقیت‌آمیز'
+				if (verificationResult.verifyPaymentResult.ResultStatus !== 'Success')
+					de = verificationResult.verifyPaymentResult.ResultStatus
+				fill_table_transaction((Number(verificationResult.verifyPaymentResult.PayementedPrice)), resnumber, de, refnumber)
 			},
 			error: function (xhr, status, error) {
 				doneLoading()
