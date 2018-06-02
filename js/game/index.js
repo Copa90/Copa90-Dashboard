@@ -1346,17 +1346,18 @@ $(document).ready(function () {
 			type: "GET",
 			success: function (packageResult) {
 				if (packageResult.status === 'Working') {
-					var callbackBaseURI = coreURL + 'transaction.html'
+					var callbackBaseURI = coreURL + 'transaction.aspx'
 					var data = {
 						Price: (Number(packageResult.price)),
 						Email: userClient.email,
 						Paymenter: userClient.fullname,
 						Mobile: userClient.phoneNumber,
 						ReturnPath: callbackBaseURI + '?price=' + (Number(packageResult.price)).toString(),
-						Description: 'خرید بسته شانس از وبسایت ۶قدم'
+						Description: JSON.stringify({
+							clientId: userId,
+							packageId: packageResult.id
+						})
 					}
-					data.ReturnPath = data.ReturnPath + '&desc=' + JSON.stringify({clientId: userId,packageId: packageResult.id})
-					console.log(JSON.stringify(data))
 					var transactionURL = wrapAccessToken(coreEngine_url + 'WebServiceSoap/RequestPayment', coreAccessToken)
 					$.ajax({
 						url: transactionURL,
@@ -1365,10 +1366,9 @@ $(document).ready(function () {
 						contentType: "application/json; charset=utf-8",
 						type: "POST",
 						success: function (transactionResult) {
-							console.log(JSON.stringify(transactionResult))
 							doneProgressBar()
 							if (transactionResult.RequestPaymentResult.ResultStatus === 'Succeed') {
-								localStorage.setItem('REFNUM', transactionResult.RefNumber)
+								localStorage.setItem('RESNUM', transactionResult.RefNumber)
 								window.location.href = transactionResult.RequestPaymentResult.PaymentPath
 							}
 							else {
