@@ -423,3 +423,55 @@ button.list-group-item{
   text-align: center;
   padding: 10px 10px;
 }
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0px 12px 14px rgb(0, 0, 0, 0.08);
+}
+
+a {
+    color: #0F5499
+}
+
+.bg-worldcup-blue {
+    background-color: #0F5499;
+    color: white;
+}
+
+.bg-worldcup-green {
+    background-color: #0F9982;
+    color: white;
+}
+
+.bg-worldcup-white {
+    background-color: white;
+}
+
+.info-box-3 {
+    box-shadow: 0 0 0; 
+}
+
+.blue-border {
+    border-color: #0F5499;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.yellow-border {
+    border-color: #FFB300;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.green-border {
+    border-color: #2DB500;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.btn-black {
+    color: black;
+}
