@@ -1,19 +1,18 @@
 @import url("../plugins/material-desing-icons/material-icons.css") all;
 @font-face {
-    font-family: 'yekan';
-    src: url('../font/Yekan-modified.eot');
-    src: url('../font/Yekan-modified.eot#iefix') format('embedded-opentype'),
-    url('../font/Yekan-modified.woff') format('woff'),
-    url('../font/Yekan-modified.ttf') format('truetype'),
-    url('../font/Yekan-modified.svg#CartoGothicStdBook') format('svg');
+    font-family: 'samim';
+    src: url('../font/Samim.eot');
+    src: url('../font/Samim.eot#iefix') format('embedded-opentype'),
+    url('../font/Samim.woff') format('woff'),
+    url('../font/Samim.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 .waitMe_text{
-    font-family: yekan , "Roboto", sans-serif !important;
+    font-family: samim , "Roboto", sans-serif !important;
 }
 body , .navbar , .sidebar  , h2 ,  .popover .popover-title , * , .waitMe_text{
-    font-family: yekan , "Roboto", sans-serif;
+    font-family: samim , "Roboto", sans-serif;
 
 }
 .content{
@@ -222,7 +221,7 @@ text-align: right;
     text-align: right;
 }
 .dashboard-donut-chart{
-    font-family: 'yekan' !important;
+    font-family: 'samim' !important;
 }
 @media (max-width: 991px) and (min-width: 768px) {
     .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {

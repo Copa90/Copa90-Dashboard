@@ -147,7 +147,7 @@ function getMorris(type, element) {
     } else if (type === 'donut') {
         Morris.Donut({
             element: element,
-                gridTextFamily : "yekan",
+                gridTextFamily : "samim",
 
             data: [{
                 label: 'مربا',

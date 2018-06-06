@@ -1,4 +1,4 @@
-Chart.defaults.global.defaultFontFamily = 'yekan , aria';
+Chart.defaults.global.defaultFontFamily = 'samim , aria';
 $(function () {
 
     new Chart(document.getElementById("line_chart").getContext("2d"), getChartJs('line'));
