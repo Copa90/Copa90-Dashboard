@@ -136,6 +136,10 @@ function successfulOperation() {
 	showNotification('bg-cyan', 'عملیات شما با موفقیت انجام شد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
 
+function successfulOperationByString(sentence) {
+	showNotification('bg-green', sentence, 'top', 'center', 'animated fadeIn', 'animated fadeOut')
+}
+
 function failedOperation() {
 	showNotification('bg-deep-orange', 'عملیات شما با شکست مواجه شد', 'top', 'center', 'animated fadeIn', 'animated fadeOut')
 }
@@ -194,13 +198,12 @@ $(document).ready(function () {
 		if (x.responseJSON.error)
 			if (x.responseJSON.error.message.includes('خطا')) 
 				return failedOperationByString(x.responseJSON.error.message)
-		failedOperation()
+		// failedOperation()
 	})
 
 	startLoading()
 
 	var firstTour
-	var secondTour
 
 	var phoneNumber
 	var userClient
@@ -248,7 +251,6 @@ $(document).ready(function () {
 
 	function resetAll() {
 		firstTour = null
-		secondTour = null
 		phoneNumber = null
 		userClient = null
 		currentPredict = null
@@ -394,7 +396,7 @@ $(document).ready(function () {
 			tabHandler({ target: { id: 'nav3' } })
 			$('.nav-tabs a[id="nav3"]').tab('show')
 		}
-		else if (pageName === 'page_main_menu') {
+		else if (pageName === 'page_main_prediction') {
 			startFirstTour()
 		}
 	}
@@ -1510,7 +1512,6 @@ $(document).ready(function () {
 			$('#main_predict_sort_section').show()
 			currentPredict = weeklyPredict[weekIndex]
 			displayPredict()
-			startSecondTour()
 		}
 		else if (select === 'nav2') {
 			clearPredict()
@@ -1565,90 +1566,20 @@ $(document).ready(function () {
     "<div class='arrow'></div>" + 
 		"<div dir='rtl' style='line-height:200%;' class='popover-content'></div>" + 
     "<div class='popover-navigation'>" + 
-        "<button class='btn btn-default' data-role='next'>بعدی</button>" + 
-        "<button class='btn btn-default' data-role='prev'>قبلی</button>" + 
+        "<button class='btn btn-default' style='border:1px solid #DBDBDB;' data-role='next'>بعدی</button>" + 
+        "<button class='btn btn-default' style='border:1px solid #DBDBDB;' data-role='prev'>قبلی</button>" + 
     "</div>" +
 		"</div>"
 		var endTemplate = "<div class='popover tour'>" +
     "<div class='arrow'></div>" + 
 		"<div dir='rtl' style='line-height:200%;' class='popover-content'></div>" + 
     "<div class='popover-navigation'>" + 
-        "<button class='btn btn-default' data-role='next'>بعدی</button>" + 
-				"<button class='btn btn-default' data-role='prev'>قبلی</button>" + 
-				"<button class='btn btn-default' data-role='end'>ادامه</button>" +
+        "<button class='btn btn-default' style='border:1px solid #DBDBDB;' data-role='next'>بعدی</button>" + 
+				"<button class='btn btn-default' style='border:1px solid #DBDBDB;' data-role='prev'>قبلی</button>" + 
+				"<button class='btn btn-default' style='border:1px solid #DBDBDB;' data-role='end'>بستن</button>" +
 		"</div>" +
 		"</div>"
 		firstTour = new Tour({
-			name: "ftour",
-			container: "body",
-			smartPlacement: true,
-			keyboard: true,
-			storage: false,
-			debug: false,
-			backdrop: true,
-			backdropContainer: 'body',
-			backdropPadding: '3px',
-			orphan: true,
-			duration: false,
-			delay: false,
-			basePath: "",
-			template: template,
-			onEnd: function (tour) {
-				localStorage.setItem('ftour_end', true)
-				$("#play_room_league_leagueId").selectpicker('val', 'every')
-				$("#play_room_league_start_button").click()
-				$(".not-active").removeClass("not-active")
-			},
-			onShown: function(tour) {
-				var stepElement = getTourElement(tour);
-				$('.tour-backdrop').css({'width': $(window).width() + 'px', 'height': $(window).height() + 'px'})
-        $(stepElement).after($('.tour-step-background'))
-				$(stepElement).after($('.tour-backdrop'))
-    	},
-			steps: [
-			{
-				element: "#main_menu_prediction_button",
-				placement: "top",
-				content: "اصل بازی اینجاست! با انتخاب گروه مورد نظرت، پیش‌بینی‌ها رو تایید یا رد کن.",
-				reflex: true,
-				onNext: function (tour) {
-					change_page_scene('page_play_room')
-				}
-			},
-			{
-				element: "#play_room_selector",
-				placement: "top",
-				content: 'انتخاب کن که پیش‌بینی‌های مربوط به کدوم گروه رو می‌خوای ببینی. "همه‌ی گروه‌ها" تمام پیش‌بینی‌های موجود رو باز می‌کنه.',
-				onPrev: function (tour) {
-					change_page_scene('page_main_menu')
-				}
-			},
-			{
-				element: "#main_predict_estimates_button",
-				placement: "top",
-				content: "پیش‌بینی‌هایی که تایید کردی اینجا نشون داده میشن. درست یا غلط بودن پیش‌بینی‌ با رنگ سبز و قرمز مشخص میشه."
-			},
-			{
-				element: "#play_room_point_box",
-				placement: "bottom",
-				onShown: function(tour) {
-					var stepElement = getTourElement(tour);
-					$(stepElement).addClass('not-active')
-				},	
-				content: "اینجا تعداد فرصت‌هات برای تایید پیش‌بینی مشخص شده. بعد از ثبت‌نام، ۲۵ پیش بینی رایگان گرفتی."
-			},
-			{
-				element: "#play_room_league_start_button",
-				placement: "top",
-				template: endTemplate,
-				onShown: function(tour) {
-					var stepElement = getTourElement(tour);
-					$(stepElement).addClass('not-active')
-				},
-				content: "برای ادامه آموزش و دیدن پیش‌بینی‌ها، ادامه رو بزن."
-			}
-		]})
-		secondTour = new Tour({
 			name: "stour",
 			container: "body",
 			smartPlacement: true,
@@ -1664,7 +1595,7 @@ $(document).ready(function () {
 			basePath: "",
 			template: template,
 			onEnd: function (tour) {
-				localStorage.setItem('stour_end', true)
+				localStorage.setItem('tour_end', true)
 				$(".not-active").removeClass("not-active")
 			},
 			onShown: function(tour) {
@@ -1676,17 +1607,19 @@ $(document).ready(function () {
 			steps: [
 			{
 				element: "#main_predict_nav_bar",
-				placement: "top",
-				content: "توی این ۲ تا تب، دو نوع پیش‌بینی مختلف داریم،",
+				placement: "bottom",
+				template: endTemplate,
+				content: "اصل بازی از اینجا شروع میشه! جایی که پیش‌بینی‌های مختلفی رو میبینی و اونارو یا تایید یا رد می‌کنی.",
 				onShown: function(tour) {
+					tour.redraw()
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
 				}
 			},
 			{
 				element: "#nav1",
-				placement: "top",
-				content: "پیش‌بینی هفتگی برای بازی‌های جام‌جهانی ۲۰۱۸ هست که توی هفته‌ی آتی برگزار میشه.",
+				placement: "bottom",
+				content: "پیش‌بینی مسابقه‌ای برای بازی‌های جام‌جهانی ۲۰۱۸ هست که توی روز‌های آتی برگزار میشه.",
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
 					$(stepElement).addClass('not-active')
@@ -1710,7 +1643,12 @@ $(document).ready(function () {
 			{
 				element: "#main_predict_progress",
 				placement: "top",
-				content: "به ازای هر بار تأییدِ پیش‌بینی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد از طریق دکمه خرید بسته اونو افزایش بده.",
+				content: "به ازای هر بار تأییدِ پیش‌بینی، یک فرصت ازت کم میشه. اگه فرصت‌هات تموم شد از طریق دکمه خرید بسته اونو افزایش بده."
+			},
+			{
+				element: "#main_predict_estimates_button",
+				placement: "top",
+				content: "پیش‌بینی‌هایی که تایید کردی اینجا نشون داده میشن. درست یا غلط بودن پیش‌بینی‌ با رنگ سبز و قرمز مشخص میشه.",
 				onNext: function(tour) {
 					$('.nav-tabs a[id="nav2"]').tab('show')
 					tabHandler({ target: { id: 'nav2' } })
@@ -1719,7 +1657,7 @@ $(document).ready(function () {
 			},
 			{
 				element: "#nav2",
-				placement: "top",
+				placement: "bottom",
 				content: "اینجا باید قهرمان و آقای‌ گل و اینجور چیزا رو به صورت دقیق پیش‌بینی کنی!",
 				onShown: function(tour) {
 					var stepElement = getTourElement(tour);
@@ -1759,15 +1697,10 @@ $(document).ready(function () {
 		]})
 
 		firstTour.init()
-		secondTour.init()
 	}
 	function startFirstTour() {
-		// if (!localStorage.getItem('ftour_end') && firstTour) 
-		// 	firstTour.start(true)
-	}
-	function startSecondTour() {
-		// if (!localStorage.getItem('stour_end') && secondTour)
-		// 	secondTour.start(true)
+		if (!localStorage.getItem('tour_end') && firstTour)
+			firstTour.start(true)
 	}
 
 	function initUtility() {
@@ -2143,6 +2076,11 @@ $(document).ready(function () {
 	}
 	function getUserInfo(callback) {
 		askDailyAward(function(err, result) {
+			if (result)
+				if (result.current) {
+					var awardStr = 'شما امروز  ' + Persian_Number(result.award.toString()) + '  پیش‌بینی هدیه گرفتید، بریم سراغ بازی' 
+					successfulOperationByString(awardStr)
+				}
 			var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients/' + userId, coreAccessToken)
 			$.ajax({
 				url: clientURLWithAT,
@@ -2174,7 +2112,7 @@ $(document).ready(function () {
 											return Persian_Number(value.toFixed(0))
 									}
 							})
-							fill_table_trophies(userClient.trophyModel.level)
+							fill_table_trophies(Number(userClient.trophyModel.level))
 							var totalWinCount = 0, totalLoseCount = 0, totalCount = 0, totalPoints = 0
 							var weekWinCount = 0, weekLoseCount = 0, weekCount = 0, weekPoints = 0
 							var monthWinCount = 0, monthLoseCount = 0, monthCount = 0, monthPoints = 0
