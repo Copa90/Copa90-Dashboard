@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="212px" height="50px" viewBox="0 0 212 50" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 50 (54983) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="6ghadam---home" transform="translate(-728.000000, -116.000000)">
+            <g id="Group-2" transform="translate(728.000000, 116.000000)">
+                <rect id="Rectangle-3" fill="#FFFFFF" x="0" y="0" width="212" height="50" rx="10"></rect>
+                <g id="round-account_circle-24px" transform="translate(165.000000, 7.000000)">
+                    <g id="Bounding_Boxes">
+                        <polygon id="Shape" points="0 0 36 0 36 36 0 36"></polygon>
+                    </g>
+                    <g id="Rounded" transform="translate(3.000000, 3.000000)"></g>
+                </g>
+                <circle id="Oval" fill="#EDEFF2" cx="183" cy="25" r="18"></circle>
+                <path d="M182.880952,10 C174.666667,10 168,16.6666667 168,24.8809524 C168,33.0952381 174.666667,39.7619048 182.880952,39.7619048 C191.095238,39.7619048 197.761905,33.0952381 197.761905,24.8809524 C197.761905,16.6666667 191.095238,10 182.880952,10 Z M182.880952,14.4642857 C185.35119,14.4642857 187.345238,16.4583333 187.345238,18.9285714 C187.345238,21.3988095 185.35119,23.3928571 182.880952,23.3928571 C180.410714,23.3928571 178.416667,21.3988095 178.416667,18.9285714 C178.416667,16.4583333 180.410714,14.4642857 182.880952,14.4642857 Z M182.880952,35.5952381 C179.160714,35.5952381 175.872024,33.6904762 173.952381,30.8035714 C173.997024,27.8422619 179.904762,26.2202381 182.880952,26.2202381 C185.842262,26.2202381 191.764881,27.8422619 191.809524,30.8035714 C189.889881,33.6904762 186.60119,35.5952381 182.880952,35.5952381 Z" id="Shape" fill="#89A5B4" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>
