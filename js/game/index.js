@@ -181,13 +181,13 @@ function detectmob() {
   }
 }
 
-var coreEngine_url = "http://66.70.216.149:4000/api/"
-var zarinPal_url = "http://66.70.216.149:4010/api/"
-var coreURL = 'http://6ghadam.com/6ghadam/'
+// var coreEngine_url = "http://66.70.216.149:4000/api/"
+// var zarinPal_url = "http://66.70.216.149:4010/api/"
+// var coreURL = 'http://6ghadam.com/6ghadam/'
 
-// var coreEngine_url = "http://127.0.0.1:4000/api/"
-// var zarinPal_url = "http://127.0.0.1:4010/api/"
-// var coreURL = 'http://6Ghadam.com/'
+var coreEngine_url = "https://core-6ghadam.herokuapp.com/api/"
+var zarinPal_url = "https://core-6ghadam.herokuapp.com/api/"
+var coreURL = 'https://6Ghadam.com/'
 
 $(document).ready(function () {
 
@@ -1540,7 +1540,7 @@ $(document).ready(function () {
 			}
 		}
 		var no = select.replace("nav", "")
-		for (var i = 1; i < 8; i++) {
+		for (var i = 1; i < 9; i++) {
 			var str = '#nav' + i + '_tab'
 			if (i == 1 || i == 2)
 				continue
@@ -2345,34 +2345,53 @@ $(document).ready(function () {
 								$('#introduction_totalEstimates_count').html(estimatesStr)
 								var winners = 0
 								var award = 0
+								var rankingRemainig = 0
+								var awardsPicture = '../../images/awards/'
 								if (numberOfClients <= 500) {
 									winners = 10
 									award = 200000 + (numberOfClients * 2000)
+									rankingRemainig = (500 - numberOfClients) + 1
+									awardsPicture += 'Awards1.png'
 								}
 								else if (numberOfClients >= 501 && numberOfClients <= 600) {
 									winners = 11
 									award = 1200000 + ((numberOfClients - 500) * 2250)
+									rankingRemainig = (600 - numberOfClients) + 1
+									awardsPicture += 'Awards2.png'
 								}
 								else if (numberOfClients >= 601 && numberOfClients <= 700) {
 									winners = 12
 									award = 1425000 + ((numberOfClients - 600) * 2500)
+									rankingRemainig = (700 - numberOfClients) + 1
+									awardsPicture += 'Awards3.png'
 								}
 								else if (numberOfClients >= 701 && numberOfClients <= 800) {
 									winners = 13
 									award = 1675000 + ((numberOfClients - 700) * 3000)
+									rankingRemainig = (800 - numberOfClients) + 1
+									awardsPicture += 'Awards4.png'
 								}
 								else if (numberOfClients >= 801 && numberOfClients <= 900) {
 									winners = 14
 									award = 1975000 + ((numberOfClients - 800) * 3500)
+									rankingRemainig = (900 - numberOfClients) + 1
+									awardsPicture += 'Awards5.png'
 								}
 								else if (numberOfClients >= 901) {
 									winners = 15
 									award = 2325000 + ((numberOfClients - 900) * 4000)
+									rankingRemainig = (1000 - numberOfClients) + 1
+									awardsPicture += 'Awards6.png'
 								}
 								var winnerStr = Persian_Number(winners.toString()) + '  نفر'
 								var awardStr = Persian_Number(award.toString()) + '  هزار تومان'
+								var rankingCurrentUsers = Persian_Number(numberOfClients.toString()) + '  کاربر در ۶قدم هستند.'
+								var rankingRemainingUsers = Persian_Number(rankingRemainig.toString()) + '  کاربر تا افزایش جایزه'
 								$('#introduction_totalBudget_count').html(awardStr)
 								$('#introduction_totalWinners_count').html(winnerStr)
+								$('#ranking_awards_players_in').html(rankingCurrentUsers)
+								$('#ranking_awards_players_remaining').html(rankingRemainingUsers)
+								$('#ranking_awards_picture').attr('src', awardsPicture)
 								predictsArray = []
 								for (var k = 0; k < sampleObjectResult.length; k++)
 									predictsArray.push(sampleObjectResult[k])

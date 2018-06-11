@@ -12,13 +12,13 @@
 
 	<meta property="og:title" content="۶ قدم" />
 	<meta property="og:image" content="../../images/6ghadamlogo.svg" />
-	<meta property="og:url" content="http://6Ghadam.com/index.html" />
+	<meta property="og:url" content="https://6Ghadam.com/index.html" />
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="6Ghadam" />
 	<meta property="og:description" content="⚽️ در ۶ قدم فوتبال رو هم بازی و هم پیش‌بینی کنید. متفاوت‌ترین سایت بازی فوتبالی، برای شما که حرفه‌ای فوتبال می‌بینید ⚽️" />
 
 	<meta name="twitter:card" content="app">
-	<meta name="twitter:site" content="http://6Ghadam.com/index.html">
+	<meta name="twitter:site" content="https://6Ghadam.com/index.html">
 	<meta name="twitter:title" content="۶ قدم">
 	<meta name="twitter:description" content="⚽️ در ۶ قدم فوتبال رو هم بازی و هم پیش‌بینی کنید ⚽️">
 	<meta name="twitter:creator" content="@MrWooJ">
@@ -767,7 +767,7 @@
 												</div>
 												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 													<b style="font-size:12px;"> اولویت اول </b>
-													<select id="main_exact_first_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
+													<select id="main_exact_first_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید" multiple data-max-options="1">
 													</select>	
 												</div>
 											</div>
@@ -776,7 +776,7 @@
 												</div>
 												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 													<b style="font-size:12px;"> اولویت دوم </b>
-													<select id="main_exact_second_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
+													<select id="main_exact_second_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید" multiple data-max-options="1">
 													</select>	
 												</div>
 											</div>
@@ -785,7 +785,7 @@
 												</div>
 												<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
 													<b style="font-size:12px;"> اولویت سوم </b>
-													<select id="main_exact_third_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید">
+													<select id="main_exact_third_answer_selector" class="form-control show-tick text-right" data-live-search="true" data-size="3" title="یک نوع را انتخاب کنید" multiple data-max-options="1">
 													</select>	
 												</div>
 											</div>
@@ -845,11 +845,14 @@
 								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<div class="row clearfix">
 										<ul class="nav nav-tabs tab-col-blue" role="tablist">
-											<li role="presentation" class="active col-sm-6 col-md-6 col-lg-6 col-xs-6 p-r-0 p-l-0" style="margin-bottom: 0;">
+											<li role="presentation" class="active col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0" style="margin-bottom: 0;">
 												<a href="#" class="text-center p-r-0 p-l-0 font-bold" id="nav3" data-toggle="tab" style="font-size: 17px; padding-left: 0px; padding-right: 0px; padding-bottom: 20px;">رده‌بندی کلی</a>
 											</li>
-											<li role="presentation" class="col-sm-6 col-md-6 col-lg-6 col-xs-6 p-r-0 p-l-0" style="margin-bottom: 0;">
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0" style="margin-bottom: 0;">
 												<a href="#" class="text-center p-r-0 p-l-0 font-bold" id="nav4" data-toggle="tab" style="font-size: 17px; padding-left: 0px; padding-right: 0px; padding-bottom: 20px;">رده‌بندی تیمی</a>
+											</li>
+											<li role="presentation" class="col-sm-4 col-md-4 col-lg-4 col-xs-4 p-r-0 p-l-0" style="margin-bottom: 0;">
+												<a href="#" class="text-center p-r-0 p-l-0 font-bold" id="nav8" data-toggle="tab" style="font-size: 17px; padding-left: 0px; padding-right: 0px; padding-bottom: 20px;">برندگان و جوایز</a>
 											</li>
 										</ul>
 									</div>
@@ -927,6 +930,35 @@
 								</div>
 							</div>
 							<!-- End of Total Statistics -->
+							<!-- Start of Awards -->
+							<div class="row clearfix" id="nav8_tab" style="overflow-x: hidden;">
+								<h5 class="text-center" style="color:gray;" id="ranking_awards_players_in"></h5>
+								<h4 class="text-center" id="ranking_awards_players_remaining"></h4>
+								<div class="row clearfix m-t-10">
+									<div class="col-lg-1 col-md-1">
+									</div>
+									<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+										<div class="logo text-center"> 
+											<div class="image">
+												<img id="ranking_awards_picture" width="100%" src="../../images/awards/Awards1.png" alt="Awards"/>
+											</div>
+										</div> 
+									</div>
+								</div>
+								<h6 class="text-center" style="line-height: 170%;">با دعوت از دوستانتون<br>شانس برنده شدنتون زیاد تر می‌شه<br>و جایزه‌ی بهتری هم در انتظارتون خواهد بود.</h6>
+								<br>
+								<div class="row clearfix" style="bottom:0;" style="overflow-x: hidden;">
+									<div class="col-lg-3 col-md-2 col-sm-2">
+									</div>
+									<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+										<button type="button" onclick="location.href='http://bit.ly/6GhadamAwards'" href="http://bit.ly/6GhadamAwards" class="btn bg-worldcup-blue btn-block btn-lg waves-effect waves-light"> اطلاعات بیشتر </button>
+									</div>
+									<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6">
+										<button type="button" class="returnMain btn btn-block btn-lg waves-effect" style="border: 1px solid #0F5499"> بازگشت </button>
+									</div>
+								</div>
+							</div>
+							<!-- End of Awards -->
 						</div>
 					</div>
 				</div>
