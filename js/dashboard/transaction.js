@@ -84,13 +84,13 @@ function ensuranceOperation(callback) {
 	})
 }
 
-var coreEngine_url 	= "http://66.70.216.149:4000/api/"
-var zarinPal_url 		= "http://66.70.216.149:4010/api/"
-var coreURL 				= 'http://6ghadam.com/'
+// var coreEngine_url 	= "http://66.70.216.149:4000/api/"
+// var zarinPal_url 		= "http://66.70.216.149:4010/api/"
+// var coreURL 				= 'http://6ghadam.com/'
 
-// var coreEngine_url 	= "http://127.0.0.1:4000/api/"
-// var zarinPal_url 		= "http://127.0.0.1:4010/api/"
-// var coreURL 				= 'http://6Ghadam.com/'
+var coreEngine_url 	= "https://core-6ghadam.herokuapp.com/api/"
+var zarinPal_url 		= "https://core-6ghadam.herokuapp.com/api/"
+var coreURL 				= 'https://6Ghadam.com/'
 
 $(document).ready(function () {
 

@@ -148,24 +148,16 @@ function ensuranceOperation(callback) {
 }
 
 function countryCodeToLeagueId(code) {
-	if 			(code == "GB") 		return '5992c2021098a97b42e3bf5b'
-	else if (code == "IT") 		return '5992c1f71098a97b42e3bf5a'
-	else if (code == "FR") 		return '5992c20b1098a97b42e3bf5c'
-	else if (code == "ES") 		return '5992c2141098a97b42e3bf5d'
-	else if (code == "DE") 		return '5992c21a1098a97b42e3bf5e'
-	else if (code == "IR") 		return '5992c2351098a97b42e3bf5f'
-	else if (code == "CLE") 	return '5992c23e1098a97b42e3bf60'
-	else if (code == "ELE") 	return '5992c2461098a97b42e3bf61'
-	else if (code == "NAT") 	return '59afb306012e5b0e7a1c3295'
+	if 			(code == "FWC") 		return '5b1e0340f7e51c0014fb1fb6'
 }
 
-var coreEngine_url 	= "http://66.70.216.149:4000/api/"
-var zarinPal_url 		= "http://66.70.216.149:4010/api/"
-var coreURL 				= 'http://6ghadam.com/'
+// var coreEngine_url 	= "http://66.70.216.149:4000/api/"
+// var zarinPal_url 		= "http://66.70.216.149:4010/api/"
+// var coreURL 				= 'http://6ghadam.com/'
 
-// var coreEngine_url 	= "http://127.0.0.1:4000/api/"
-// var zarinPal_url 		= "http://127.0.0.1:4010/api/"
-// var coreURL 				= 'http://6Ghadam.com/'
+var coreEngine_url 	= "https://core-6ghadam.herokuapp.com/api/"
+var zarinPal_url 		= "https://core-6ghadam.herokuapp.com/api/"
+var coreURL 				= 'https://6Ghadam.com/'
 
 $(document).ready(function () {
 

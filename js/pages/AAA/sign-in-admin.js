@@ -1,6 +1,6 @@
-var coreEngine_url = "http://66.70.216.149:4000/api/clients/login"
+// var coreEngine_url = "http://66.70.216.149:4000/api/clients/login"
 
-// var coreEngine_url = "http://127.0.0.1:4000/api/clients/login";
+var coreEngine_url = "https://core-6ghadam.herokuapp.com/api/clients/login";
 
 $(document).ready(function () {
 	function showNotification(colorName, text, placementFrom, placementAlign, animateEnter, animateExit) {
