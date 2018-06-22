@@ -198,7 +198,7 @@ $(document).ready(function () {
 		if (x.responseJSON.error)
 			if (x.responseJSON.error.message.includes('خطا')) 
 				return failedOperationByString(x.responseJSON.error.message)
-		// failedOperation()
+		failedOperation()
 	})
 
 	startLoading()
@@ -578,15 +578,6 @@ $(document).ready(function () {
 				$('#password').hide()
 				$('#sign-up').hide()
 				$('#phone').hide()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -610,15 +601,6 @@ $(document).ready(function () {
 				$('#password').hide()
 				$('#sign-up').hide()
 				$('#phone').hide()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -679,37 +661,10 @@ $(document).ready(function () {
 								$('#sendPhone').hide()
 								$('#aaa_send_code_phone').val(phoneNumber)
 								$('#sendCode').fadeIn()
-							},
-							error: function (xhr, status, error) {
-								doneProgressBar()
-								if (xhr.responseJSON)
-									if (xhr.responseJSON.error)
-										if (xhr.responseJSON.error.message.includes('خطا')) 
-											return failedOperationByString(xhr.responseJSON.error.message)
-								failedOperation()
-								console.log(xhr.responseText)
 							}
 						})
-					},
-					error: function (xhr, status, error) {
-						doneProgressBar()
-						if (xhr.responseJSON)
-							if (xhr.responseJSON.error)
-								if (xhr.responseJSON.error.message.includes('خطا')) 
-									return failedOperationByString(xhr.responseJSON.error.message)
-						failedOperation()
-						console.log(xhr.responseText)
 					}
 				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -765,15 +720,6 @@ $(document).ready(function () {
 						change_page_scene('page_main_menu')
 					}
 				})
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -831,26 +777,8 @@ $(document).ready(function () {
 								$('#sendCode').fadeIn()
 								doneProgressBar()
 								successfulOperation()		
-							},
-							error: function (xhr, status, error) {
-								doneProgressBar()
-								if (xhr.responseJSON)
-									if (xhr.responseJSON.error)
-										if (xhr.responseJSON.error.message.includes('خطا')) 
-											return failedOperationByString(xhr.responseJSON.error.message)
-								failedOperation()
-								console.log(xhr.responseText)
 							}
 						})				
-					},
-					error: function (xhr, status, error) {
-						doneProgressBar()
-						if (xhr.responseJSON)
-							if (xhr.responseJSON.error)
-								if (xhr.responseJSON.error.message.includes('خطا')) 
-									return failedOperationByString(xhr.responseJSON.error.message)
-						failedOperation()
-						console.log(xhr.responseText)
 					}
 				})
 			}
@@ -887,15 +815,6 @@ $(document).ready(function () {
 				$('#changePhone').hide()
 				$('#aaa_send_code_phone').val(phoneNum)
 				$('#sendCode').fadeIn()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1056,15 +975,6 @@ $(document).ready(function () {
 					predictOverOperation()			
 				}
 				doneProgressBar()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1241,15 +1151,6 @@ $(document).ready(function () {
 					$("#main_predict_progress_fill").removeClass("bg-orange bg-yellow bg-green").addClass("bg-deep-orange")
 				doneProgressBar()
 				successfulOperation()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1391,15 +1292,6 @@ $(document).ready(function () {
 				$('#defaultModal .modal-content').removeAttr('class').addClass('modal-content')
 				$('#defaultModal').modal('show')		
 				doneProgressBar()
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1468,15 +1360,6 @@ $(document).ready(function () {
 							else {
 								failedOperation()
 							}
-						},
-						error: function (xhr, status, error) {
-							doneProgressBar()
-							if (xhr.responseJSON)
-								if (xhr.responseJSON.error)
-									if (xhr.responseJSON.error.message.includes('خطا')) 
-										return failedOperationByString('خطا! خطایی در شماره یا ایمیل وارد شده وجود دارد')
-							failedOperation()
-							console.log(xhr.responseText)
 						}
 					})
 				}
@@ -1484,15 +1367,6 @@ $(document).ready(function () {
 					doneProgressBar()
 					failedOperation()
 				}
-			},
-			error: function (xhr, status, error) {
-				doneProgressBar()
-				if (xhr.responseJSON)
-					if (xhr.responseJSON.error)
-						if (xhr.responseJSON.error.message.includes('خطا')) 
-							return failedOperationByString(xhr.responseJSON.error.message)
-				failedOperation()
-				console.log(xhr.responseText)
 			}
 		})
 	})
@@ -1715,7 +1589,7 @@ $(document).ready(function () {
 		$('.btn').css({"padding-left":'0px', "padding-right": '0px'})
 		var $demoMaskedInput = $('.demo-masked-input');
 
-    $demoMaskedInput.find('.mobile-phone-number').inputmask('09999999999', { placeholder: '0__________' });
+    $demoMaskedInput.find('.mobile-phone-number').inputmask('99999999999', { placeholder: '___________' });
 		$demoMaskedInput.find('.receivedCode').inputmask('9999', { placeholder: '____' });
 
 		$('[data-toggle="tooltip"]').tooltip({
@@ -1981,7 +1855,6 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				doneProgressBar()
-				console.log(xhr.responseText)
 				callback(0)
 			}
 		})
@@ -2007,6 +1880,8 @@ $(document).ready(function () {
 		$('#main_predict_div_body').show()
 		$('#main_predict_prev_button').prop('disabled', false)
 		$('#main_predict_next_button').prop('disabled', false)
+		var remText = Persian_Number((weekIndex + 1).toString()) + '  از  ' + Persian_Number((weeklyPredict.length - 1).toString())
+		$('#main_predict_stat').html(remText)
 		if (currentPredict.accepted)
 			$('#main_predict_accept_button').prop('disabled', true)
 		else
@@ -2187,7 +2062,7 @@ $(document).ready(function () {
 								$('#progressBar_total').hide()
 							}
 							favTeam = userClient.teamId
-							$('#user_data_profile_image').attr('src', coreEngine_url + (userClient.profilePath || ('containers/' + userClient.id + '/download/profile.png')))
+							// $('#user_data_profile_image').attr('src', coreEngine_url + (userClient.profilePath || ('containers/' + userClient.id + '/download/profile.png')))
 							$('#user_data_phone_number').val(Persian_Number(userClient.phoneNumber.toString()))
 							$('#user_data_name').val(userClient.username)
 							$('#user_data_code').val('http://6Ghadam.com/index.html?ref=' + userClient.id)
@@ -2202,13 +2077,11 @@ $(document).ready(function () {
 						},
 						error: function (xhr, status, error) {
 							callback(error)
-							console.log(xhr.responseText)
 						}
 					})
 				},
 				error: function (xhr, status, error) {
 					callback(error)
-					console.log(xhr.responseText)
 				}
 			})
 		})
@@ -2224,7 +2097,6 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -2240,7 +2112,6 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -2255,7 +2126,6 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -2270,7 +2140,6 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -2312,13 +2181,11 @@ $(document).ready(function () {
 					},
 					error: function (xhr, status, error) {
 						callback(error)
-						console.log(xhr.responseText)
 					}
 				})
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -2387,8 +2254,8 @@ $(document).ready(function () {
 								var awardStr = Persian_Number(award.toString()) + '  هزار تومان'
 								var rankingCurrentUsers = Persian_Number(numberOfClients.toString()) + '  کاربر در ۶قدم هستند.'
 								var rankingRemainingUsers = Persian_Number(rankingRemainig.toString()) + '  کاربر تا افزایش جایزه'
-								$('#introduction_totalBudget_count').html(awardStr)
-								$('#introduction_totalWinners_count').html(winnerStr)
+								// $('#introduction_totalBudget_count').html(awardStr)
+								// $('#introduction_totalWinners_count').html(winnerStr)
 								$('#ranking_awards_players_in').html(rankingCurrentUsers)
 								$('#ranking_awards_players_remaining').html(rankingRemainingUsers)
 								$('#ranking_awards_picture').attr('src', awardsPicture)
@@ -2399,19 +2266,16 @@ $(document).ready(function () {
 							},
 							error: function (xhr, status, error) {
 								callback(error)
-								console.log(xhr.responseText)
 							}
 						})		
 					},
 					error: function (xhr, status, error) {
 						callback(error)
-						console.log(xhr.responseText)
 					}
 				})		
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -2500,35 +2364,12 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
 
 	function getAllUsers(callback) {
-		// var filter = {
-		// 	skip: '6',
-		// 	limit: 50000,
-		// 	fields: {
-		// 		'email': false,
-		// 		'time': false,
-		// 		'phoneNumber': false,
-		// 		'emailVerified': false,
-		// 		'trophyModel': false,
-		// 		'teamId': false,
-		// 		'referralModel': false,
-		// 		'checkpointModel': true,
-		// 		'emps': false,
-		// 		'status': false,
-		// 		'profilePath': false,
-		// 		'accountInfoModel': true,
-		// 		'username': true,
-		// 		'fullname': true,
-		// 		'id': true
-		// 	}
-		// }
 		var clientURLWithAT = wrapAccessToken(coreEngine_url + 'clients/statistics', coreAccessToken)
-		// var clientURL = wrapFilter(clientURLWithAT, JSON.stringify(filter))
 		$.ajax({
 			url: clientURLWithAT,
 			type: "GET",
@@ -2542,7 +2383,6 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})
 	}
@@ -2563,7 +2403,6 @@ $(document).ready(function () {
 			},
 			error: function (xhr, status, error) {
 				callback(error)
-				console.log(xhr.responseText)
 			}
 		})		
 	}
