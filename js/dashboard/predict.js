@@ -821,9 +821,11 @@ $(document).ready(function () {
 		var parts = predictSection.split("<br>")
 		var predictId = parts[0]
 		finalizePredict(predictId, 2, function(result) {
-			$(firstKey).prop('disabled', true)
-			$(secondKey).prop('disabled', true)				
-			$(e.target).closest('tr').children('td,th').css('background-color','#FACFD2')			
+			if (result) {
+				$(firstKey).prop('disabled', true)
+				$(secondKey).prop('disabled', true)				
+				$(e.target).closest('tr').children('td,th').css('background-color','#FACFD2')			
+			}
 		})
 	})
 	$(document).on("click", ".predictInfo", function (e) {
@@ -861,7 +863,7 @@ $(document).ready(function () {
 					async: true,
 					url: predictURL,
 					type: "DELETE",
-					success: function (predictResult) {a
+					success: function (predictResult) {
 						for (var i = 0; i < predicts.length; i++)
 							if (predicts[i].id === predictId)
 								predicts.splice(i, 1)
